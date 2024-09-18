@@ -17,11 +17,17 @@ const geistMono = localFont({
   weight: '100 900',
 })
 
-const title = 'Kloda | Клода'
-
+// ToDo: description
 export const metadata: Metadata = {
-  title,
-  description: title,
+  title: {
+    template: '%s | Kloda',
+    default: 'Kloda | Клода',
+  },
+  description: 'Kloda | Клода',
+  generator: 'Next.js',
+  applicationName: 'Kloda',
+  keywords: ['Kloda', 'Клода'],
+  creator: 'Sergei Fediaev',
   icons:
     'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="100" font-size="170">♠</text></svg>',
 }
