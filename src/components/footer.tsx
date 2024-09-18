@@ -14,7 +14,8 @@ export const Footer = () => (
         →
       </span>
       <span>
-        © 2024 <a href='mailto:SergFediaev@gmail.com'>Sergei Fediaev</a> ✉
+        © {new Date().getFullYear()}{' '}
+        <a href='mailto:SergFediaev@gmail.com'>Sergei Fediaev</a> ✉
       </span>
       <span>
         <a
