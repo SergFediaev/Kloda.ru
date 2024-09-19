@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
+import { ThemeProvider } from 'next-themes'
 import type { ReactNode } from 'react'
 
 const geistSans = localFont({
@@ -38,15 +39,17 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className={'flex flex-col min-h-screen'}>
-          <Header />
-          <main className={'flex-grow'}>{children}</main>
-          <Footer />
-        </div>
+        <ThemeProvider attribute='class'>
+          <div className='flex flex-col min-h-screen bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50'>
+            <Header />
+            <main className='flex-grow'>{children}</main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -1,8 +1,8 @@
 import { Container } from '@/components/container'
 
 export const Footer = () => (
-  <footer className={'bg-gray-200'}>
-    <Container className={'flex justify-between underline-offset-4'}>
+  <footer className='bg-gray-200 dark:bg-gray-800'>
+    <Container className='flex justify-between underline-offset-4'>
       <span>
         <a
           href='https://github.com/SergFediaev/kloda'
