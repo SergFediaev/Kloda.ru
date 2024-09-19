@@ -71,7 +71,6 @@ export const CardForm = () => {
         label={'Categories'}
         placeholder={'Comma-separated categories'}
         error={errors.categories?.message}
-        required
       />
       <FormInput
         control={control}
