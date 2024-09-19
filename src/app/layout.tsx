@@ -47,7 +47,7 @@ export default function RootLayout({
         <ThemeProvider attribute='class'>
           <div className='flex flex-col min-h-svh bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50'>
             <Header />
-            <main className='flex-grow'>
+            <main className='flex flex-grow'>
               <Providers>{children}</Providers>
             </main>
             <Footer />

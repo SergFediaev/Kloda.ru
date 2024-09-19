@@ -13,7 +13,7 @@ export const Footer = () => (
           >
             Kloda GitHub
           </a>{' '}
-          →
+          ↗
         </span>
         <span>
           © {new Date().getFullYear()}{' '}
@@ -27,7 +27,7 @@ export const Footer = () => (
           >
             Kloda API Swagger
           </a>{' '}
-          →
+          ↗
         </span>
       </Wrapper>
     </Container>

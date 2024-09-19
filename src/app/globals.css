@@ -31,3 +31,9 @@ body {
     @apply underline underline-offset-4 text-orange-600 dark:text-orange-400;
   }
 }
+
+@layer components {
+  textarea {
+    field-sizing: content;
+  }
+}

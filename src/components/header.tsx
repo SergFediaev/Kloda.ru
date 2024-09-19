@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 const title = 'Kloda'
 const logo = ' ♤'
 
+// ToDo: useTheme custom hook
 export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
