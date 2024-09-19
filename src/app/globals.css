@@ -28,6 +28,6 @@ body {
 
 @layer base {
   a {
-    @apply underline;
+    @apply underline underline-offset-4 text-orange-600 dark:text-orange-400;
   }
 }

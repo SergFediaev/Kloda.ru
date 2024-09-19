@@ -1,6 +1,7 @@
 'use client'
 
 import { Container } from '@/components/container'
+import { Wrapper } from '@/components/wrapper'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -21,7 +22,9 @@ export const Header = () => {
     </>
   ) : (
     <>
-      <Link href='/'>{title}</Link>
+      <Link href='/' className='underline-offset-8'>
+        {title}
+      </Link>
       {logo}
     </>
   )
@@ -42,13 +45,24 @@ export const Header = () => {
   }
 
   return (
-    <header className='bg-gray-200 dark:bg-gray-800'>
-      <Container className='flex justify-between text-2xl underline-offset-8'>
-        <h1>{titleElement}</h1>
-        {isNotCreateCardPage && <Link href='/create'>Create card</Link>}
-        <button onClick={toggleTheme} type='button' title={themeTitle}>
-          {themeIcon}
-        </button>
+    <header className='bg-neutral-200 dark:bg-neutral-800'>
+      <Container>
+        <Wrapper className='text-3xl gap-4'>
+          <h1>{titleElement}</h1>
+          {isNotCreateCardPage && (
+            <Link href='/create' className='underline-offset-8'>
+              Create card
+            </Link>
+          )}
+          <button
+            onClick={toggleTheme}
+            type='button'
+            title={themeTitle}
+            className='text-orange-600 dark:text-orange-400'
+          >
+            {themeIcon}
+          </button>
+        </Wrapper>
       </Container>
     </header>
   )

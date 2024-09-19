@@ -45,7 +45,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute='class'>
-          <div className='flex flex-col min-h-svh bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50'>
+          <div className='flex flex-col min-h-svh bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50'>
             <Header />
             <main className='flex-grow'>
               <Providers>{children}</Providers>
