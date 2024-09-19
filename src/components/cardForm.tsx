@@ -17,13 +17,22 @@ const cardSchema = z.object({
 
 type CardSchema = z.infer<typeof cardSchema>
 
-const defaultValues: CardSchema = {
+// ToDo: Mock data
+/*const defaultValues: CardSchema = {
   title: 'New card title',
   content:
     'Very informative and interesting content of the new card.\n\nCreated in app by user.',
   categories: 'JS, TS, Elysia, Next.js, Custom card',
   author: 'Tester',
   email: 'tester@gmail.com',
+}*/
+
+const defaultValues: CardSchema = {
+  title: '',
+  content: '',
+  categories: '',
+  author: '',
+  email: '',
 }
 
 export const CardForm = () => {
@@ -44,7 +53,7 @@ export const CardForm = () => {
         control={control}
         name={'title'}
         label={'Title'}
-        placeholder={'Title'}
+        placeholder={'Card title'}
         error={errors.title?.message}
         required
       />
@@ -52,7 +61,7 @@ export const CardForm = () => {
         control={control}
         name={'content'}
         label={'Content'}
-        placeholder={'Content'}
+        placeholder={'Card content'}
         error={errors.content?.message}
         required
       />
@@ -60,7 +69,7 @@ export const CardForm = () => {
         control={control}
         name={'categories'}
         label={'Categories'}
-        placeholder={'Categories'}
+        placeholder={'Comma-separated categories'}
         error={errors.categories?.message}
         required
       />
@@ -68,7 +77,7 @@ export const CardForm = () => {
         control={control}
         name={'author'}
         label={'Author'}
-        placeholder={'Author'}
+        placeholder={'Username'}
         error={errors.author?.message}
         required
       />
