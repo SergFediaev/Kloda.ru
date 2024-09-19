@@ -45,7 +45,7 @@ export const Header = () => {
   }
 
   return (
-    <header className='bg-neutral-200 dark:bg-neutral-800'>
+    <header className='bg-neutral-200 dark:bg-neutral-800 shadow-md'>
       <Container>
         <Wrapper className='text-3xl gap-4'>
           <h1>{titleElement}</h1>

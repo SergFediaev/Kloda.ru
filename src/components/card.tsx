@@ -21,7 +21,7 @@ export const Card = ({
     updatedAt,
   },
 }: CardProps) => (
-  <article className='bg-neutral-200 dark:bg-neutral-800 rounded-3xl p-8 flex flex-col gap-8 break-inside-avoid'>
+  <article className='bg-neutral-200 dark:bg-neutral-800 rounded-3xl p-8 flex flex-col gap-8 break-inside-avoid shadow-lg'>
     <h2 className='text-2xl'>{title}</h2>
     <p className='whitespace-break-spaces'>{content}</p>
     <aside>
