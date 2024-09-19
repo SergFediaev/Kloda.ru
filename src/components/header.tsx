@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 const title = 'Kloda'
 const logo = ' ♤'
 
+// ToDo: Button icon
 // ToDo: useTheme custom hook
 export const Header = () => {
   const pathname = usePathname()
@@ -48,7 +49,7 @@ export const Header = () => {
   return (
     <header className='bg-neutral-200 dark:bg-neutral-800 shadow-md'>
       <Container>
-        <Wrapper className='text-3xl gap-4'>
+        <Wrapper className='text-3xl gap-y-4'>
           <h1>{titleElement}</h1>
           {isNotCreateCardPage && (
             <Link href='/create' className='underline-offset-8'>
@@ -59,7 +60,7 @@ export const Header = () => {
             onClick={toggleTheme}
             type='button'
             title={themeTitle}
-            className='text-orange-600 dark:text-orange-400'
+            className='text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300'
           >
             {themeIcon}
           </button>

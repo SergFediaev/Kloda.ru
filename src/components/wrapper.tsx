@@ -7,6 +7,6 @@ export const Wrapper = ({
 }: ComponentPropsWithoutRef<'div'>) => (
   <div
     {...restProps}
-    className={clsx(className, 'flex justify-between flex-wrap')}
+    className={clsx(className, 'flex justify-between flex-wrap gap-x-4')}
   />
 )

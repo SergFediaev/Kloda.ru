@@ -79,7 +79,7 @@ export const CardForm = () => {
         placeholder={'example@mail.com'}
         error={errors.email?.message}
       />
-      <div className='flex flex-wrap gap-10'>
+      <div className='flex flex-wrap gap-x-10 gap-y-6'>
         <Button type={'submit'} className='flex-grow'>
           Create
         </Button>
