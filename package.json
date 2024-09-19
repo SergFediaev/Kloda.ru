@@ -1,5 +1,5 @@
 {
-  "name": "kloda",
+  "name": "koda",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.56.2",
     "clsx": "^2.1.1",
     "next": "14.2.11",
     "next-themes": "^0.3.0",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.1",
+    "@tanstack/react-query-devtools": "^5.56.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

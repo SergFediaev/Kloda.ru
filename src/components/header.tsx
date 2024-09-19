@@ -12,7 +12,7 @@ export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
   const isNotCreateCardPage = pathname !== '/create'
-  const logo = <span className='text-3xl'> ♠</span>
+  const logo = <span className='text-3xl'> ♠ ♤</span>
 
   const titleElement = isRootPage ? (
     <>
@@ -30,7 +30,7 @@ export const Header = () => {
   const { systemTheme, theme, setTheme } = useTheme()
   const currentTheme = theme === 'system' ? systemTheme : theme
   const isDarkTheme = currentTheme === 'dark'
-  const themeIcon = isDarkTheme ? '☀' : '☽'
+  const themeIcon = isDarkTheme ? '☀ ☼' : '☽'
   const themeTitle = isDarkTheme ? 'Enable light theme' : 'Enable dark theme'
 
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
