@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   keywords: ['Kloda', 'Клода'],
   creator: 'Sergei Fediaev',
   icons:
-    'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="100">♤</text></svg>',
+    'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".8em" font-size="120">♤</text></svg>',
 }
 
 export default function RootLayout({

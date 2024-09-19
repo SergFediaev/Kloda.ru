@@ -7,12 +7,12 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const title = 'Kloda'
+const logo = ' ♤'
 
 export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
   const isNotCreateCardPage = pathname !== '/create'
-  const logo = <span className='text-3xl'> ♠ ♤</span>
 
   const titleElement = isRootPage ? (
     <>
@@ -30,7 +30,7 @@ export const Header = () => {
   const { systemTheme, theme, setTheme } = useTheme()
   const currentTheme = theme === 'system' ? systemTheme : theme
   const isDarkTheme = currentTheme === 'dark'
-  const themeIcon = isDarkTheme ? '☀ ☼' : '☽'
+  const themeIcon = isDarkTheme ? '☼' : '☽'
   const themeTitle = isDarkTheme ? 'Enable light theme' : 'Enable dark theme'
 
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
@@ -46,12 +46,7 @@ export const Header = () => {
       <Container className='flex justify-between text-2xl underline-offset-8'>
         <h1>{titleElement}</h1>
         {isNotCreateCardPage && <Link href='/create'>Create card</Link>}
-        <button
-          onClick={toggleTheme}
-          type='button'
-          title={themeTitle}
-          className='text-3xl'
-        >
+        <button onClick={toggleTheme} type='button' title={themeTitle}>
           {themeIcon}
         </button>
       </Container>
