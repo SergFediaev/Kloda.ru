@@ -109,6 +109,7 @@ export const CardForm = () => {
         control={control}
         name={'email'}
         label={'Email'}
+        type={'email'}
         placeholder={'example@mail.com'}
         error={errors.email?.message}
       />
