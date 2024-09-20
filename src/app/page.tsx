@@ -2,11 +2,12 @@
 
 import { Card } from '@/components/card'
 import { Container } from '@/components/container'
+import { Loader } from '@/components/loader'
 import type { CardResponse } from '@/services/cards/cards.types'
 import { useQuery } from '@tanstack/react-query'
 
 // ToDo: README.md
-// ToDo: Loader, Error
+// ToDo: Error
 export default function Home() {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['cards'],
@@ -17,7 +18,11 @@ export default function Home() {
   })
 
   if (isPending) {
-    return 'Loading ↻'
+    return (
+      <Container>
+        <Loader className='text-3xl' />
+      </Container>
+    )
   }
 
   if (isError) {

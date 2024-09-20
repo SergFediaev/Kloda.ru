@@ -1,9 +1,14 @@
 'use client'
 
+import { createCard } from '@/app/actions'
+import { getQueryClient } from '@/app/getQueryClient'
 import { FormInput } from '@/components/FormInput'
 import { FormTextArea } from '@/components/FormTextArea'
 import { Button } from '@/components/button'
+import type { CardArgs } from '@/services/cards/cards.types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -36,6 +41,17 @@ const defaultValues: CardSchema = {
 }
 
 export const CardForm = () => {
+  const router = useRouter()
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: createCard,
+    onSuccess: data => {
+      console.log(data)
+      void getQueryClient().invalidateQueries({ queryKey: ['cards'] })
+      router.push('/')
+    },
+  })
+
   const {
     control,
     reset,
@@ -43,7 +59,17 @@ export const CardForm = () => {
     formState: { errors },
   } = useForm<CardSchema>({ defaultValues, resolver: zodResolver(cardSchema) })
 
-  const onSubmit = handleSubmit(data => console.log(data))
+  const onSubmit = handleSubmit(({ categories, author, ...restData }) => {
+    const card: CardArgs = {
+      ...restData,
+      categories: categories.split(','),
+      likes: 0,
+      dislikes: 0,
+      authorId: author,
+    }
+
+    mutate(card)
+  })
 
   const onReset = () => reset(defaultValues)
 
@@ -88,13 +114,14 @@ export const CardForm = () => {
         error={errors.email?.message}
       />
       <div className='flex flex-wrap gap-x-10 gap-y-6'>
-        <Button type={'submit'} className='flex-grow'>
+        <Button type={'submit'} className='flex-grow' isLoading={isPending}>
           Create
         </Button>
         <Button type={'reset'} onClick={onReset} className='flex-grow'>
           Reset
         </Button>
       </div>
+      <p className='text-red-500'>{error?.message}</p>
     </form>
   )
 }
