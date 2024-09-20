@@ -1,18 +1,23 @@
 'use client'
 
 import { Card } from '@/components/card'
+import { CenteredContainer } from '@/components/centeredContainer'
 import { Container } from '@/components/container'
 import { Loader } from '@/components/loader'
 import type { CardResponse } from '@/services/cards/cards.types'
 import { useQuery } from '@tanstack/react-query'
 
-// ToDo: README.md
-// ToDo: Error
-export default function Home() {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['cards'],
+// ToDo: Error, CardPage > Card or all pages > Page
+export default function CardPage({
+  params: { id },
+}: { params: { id: string } }) {
+  const { isPending, isError, error, data } = useQuery({
+    queryKey: ['card', id],
     queryFn: async (): Promise<CardResponse[]> => {
-      const response = await fetch('https://api.kloda.fediaev.ru/v1/cards')
+      const response = await fetch(
+        `https://api.kloda.fediaev.ru/v1/cards/${id}`,
+      )
+
       return response.json()
     },
   })
@@ -29,17 +34,11 @@ export default function Home() {
     return `Error: ${error.message}`
   }
 
-  if (!data?.length) {
-    return <Container>Cards not found 🙈</Container>
-  }
-
   return (
-    <Container>
-      <div className='space-y-8 gap-x-8 columns-lg'>
-        {data.map(card => (
-          <Card key={card.id} card={card} />
-        ))}
+    <CenteredContainer>
+      <div className='max-w-xl'>
+        <Card card={data[0]} isExpanded />
       </div>
-    </Container>
+    </CenteredContainer>
   )
 }

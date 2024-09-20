@@ -45,10 +45,9 @@ export const CardForm = () => {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: createCard,
-    onSuccess: data => {
-      console.log(data)
+    onSuccess: ({ id }) => {
       void getQueryClient().invalidateQueries({ queryKey: ['cards'] })
-      router.push('/')
+      router.push(`card/${id}`)
     },
   })
 

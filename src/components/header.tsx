@@ -49,8 +49,13 @@ export const Header = () => {
   return (
     <header className='bg-neutral-200 dark:bg-neutral-800 shadow-md'>
       <Container>
-        <Wrapper className='text-3xl gap-y-4'>
+        <Wrapper className='justify-between text-3xl gap-y-4'>
           <h1>{titleElement}</h1>
+          {!isRootPage && (
+            <Link href='/' className='underline-offset-8'>
+              Cards
+            </Link>
+          )}
           {isNotCreateCardPage && (
             <Link href='/create' className='underline-offset-8'>
               Create card

@@ -4,7 +4,7 @@ import { Wrapper } from '@/components/wrapper'
 export const Footer = () => (
   <footer className='bg-neutral-200 dark:bg-neutral-800 shadow-inner'>
     <Container>
-      <Wrapper className='gap-y-4'>
+      <Wrapper className='justify-between gap-y-4'>
         <span>
           <a
             href='https://github.com/SergFediaev/kloda'
