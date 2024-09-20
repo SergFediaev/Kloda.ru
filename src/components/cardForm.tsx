@@ -17,7 +17,7 @@ const cardSchema = z.object({
   content: z.string(),
   categories: z.string(),
   author: z.string(),
-  email: z.string().email(),
+  email: z.union([z.literal(''), z.string().email()]),
 })
 
 type CardSchema = z.infer<typeof cardSchema>
