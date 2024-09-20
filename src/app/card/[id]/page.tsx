@@ -37,7 +37,7 @@ export default function CardPage({
   return (
     <CenteredContainer>
       <div className='max-w-xl'>
-        <Card card={data[0]} isExpanded />
+        <Card card={data[0]} isExpanded isOpen />
       </div>
     </CenteredContainer>
   )

@@ -2,13 +2,16 @@ import { Button } from '@/components/button'
 import { Wrapper } from '@/components/wrapper'
 import type { CardResponse } from '@/services/cards/cards.types'
 import { dateToLocale } from '@/utils/dateToLocale'
+import Link from 'next/link'
 import { type ComponentPropsWithoutRef, useState } from 'react'
 
 type CardProps = {
   card: CardResponse
   isExpanded?: boolean
+  isOpen?: boolean
 } & ComponentPropsWithoutRef<'article'>
 
+// ToDo: Uncategorized
 // ToDo: Author email
 export const Card = ({
   card: {
@@ -22,6 +25,7 @@ export const Card = ({
     createdAt,
     updatedAt,
   },
+  isOpen,
   ...restProps
 }: CardProps) => {
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
@@ -32,10 +36,13 @@ export const Card = ({
     <article className='bg-neutral-200 dark:bg-neutral-800 rounded-3xl p-8 flex flex-col gap-8 break-inside-avoid shadow-lg'>
       <h2 className='text-2xl'>{title}</h2>
       <p className='whitespace-break-spaces'>{content}</p>
-      <Wrapper className='gap-y-4'>
-        <Button onClick={toggleIsExpanded}>{isExpandedText}</Button>
-        <Button disabled>Like</Button>
-        <Button disabled>Dislike</Button>
+      <Wrapper className='justify-between items-center gap-y-4'>
+        <Wrapper className='gap-y-4'>
+          <Button onClick={toggleIsExpanded}>{isExpandedText}</Button>
+          <Button disabled>Like</Button>
+          <Button disabled>Dislike</Button>
+        </Wrapper>
+        {!isOpen && <Link href={`/card/${id}`}>Open</Link>}
       </Wrapper>
       {isExpanded && (
         <aside>
