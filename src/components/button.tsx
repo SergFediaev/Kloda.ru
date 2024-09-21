@@ -4,7 +4,6 @@ import type { ComponentPropsWithoutRef } from 'react'
 
 type ButtonVariant = 'primary' | 'text'
 
-// ToDo: isStretched
 type Props = {
   variant?: ButtonVariant
   isStretched?: boolean
@@ -15,6 +14,7 @@ export const Button = ({
   children,
   className,
   variant = 'primary',
+  isStretched,
   isLoading,
   ...restProps
 }: Props) => (
@@ -28,6 +28,7 @@ export const Button = ({
         'text-accent hover:enabled:text-accent-variant',
         'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
       ],
+      isStretched && 'flex-grow',
       isLoading &&
         'cursor-wait bg-accent-dark-alternate dark:bg-accent-alternate',
       className,

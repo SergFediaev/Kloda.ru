@@ -114,10 +114,10 @@ export const CardForm = () => {
         error={errors.email?.message}
       />
       <div className='flex flex-wrap gap-x-10 gap-y-6'>
-        <Button type={'submit'} className='flex-grow' isLoading={isPending}>
+        <Button type={'submit'} isStretched isLoading={isPending}>
           Create
         </Button>
-        <Button type={'reset'} onClick={onReset} className='flex-grow'>
+        <Button type={'reset'} isStretched onClick={onReset}>
           Reset
         </Button>
       </div>

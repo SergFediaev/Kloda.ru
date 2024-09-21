@@ -77,7 +77,7 @@ export const Card = ({
       {isExpanded && (
         <aside>
           <p>Categories: {categories.join(', ')}</p>
-          <Wrapper className='justify-between'>
+          <Wrapper className='justify-between gap-x-4'>
             <Wrapper>
               Author:&nbsp;<a href={`mailto:${authorId}`}>{authorId}</a>
               &nbsp;
@@ -85,7 +85,7 @@ export const Card = ({
             </Wrapper>
             <span>Card ID: {id}</span>
           </Wrapper>
-          <Wrapper className='justify-between'>
+          <Wrapper className='justify-between gap-x-4'>
             <span>
               Created: <time>{dateToLocale(createdAt)}</time>
             </span>
