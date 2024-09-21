@@ -32,7 +32,7 @@ body {
   }
 
   :disabled {
-    @apply disabled:opacity-50
+    @apply disabled:opacity-50;
   }
 }
 
