@@ -24,7 +24,7 @@ export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
   const isNotCreateCardPage = pathname !== '/create'
-  const [isOnline, setIsOnline] = useState(navigator.onLine)
+  const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
     <Spade />
@@ -58,6 +58,7 @@ export const Header = () => {
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
 
   useEffect(() => {
+    setIsOnline(navigator.onLine)
     setIsMounted(true)
 
     const onOnline = () => setIsOnline(true)
