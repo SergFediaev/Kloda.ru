@@ -28,7 +28,7 @@ body {
 
 @layer base {
   a {
-    @apply underline underline-offset-4 text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant;
+    @apply underline underline-offset-4 text-accent hover:enabled:text-accent-variant dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant;
   }
 
   :disabled {

@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef } from 'react'
 type ButtonVariant = 'primary' | 'text'
 
 // ToDo: isStretched
-type ButtonProps = {
+type Props = {
   variant?: ButtonVariant
   isStretched?: boolean
   isLoading?: boolean
@@ -17,21 +17,22 @@ export const Button = ({
   variant = 'primary',
   isLoading,
   ...restProps
-}: ButtonProps) => (
+}: Props) => (
   <button
-    {...restProps}
     className={cn(
       variant === 'primary' && [
-        'rounded-3xl bg-accent-dark-variant px-4 py-2',
-        'hover:bg-accent-dark-alternate disabled:hover:bg-accent-dark-variant',
-        'dark:bg-accent-variant dark:hover:bg-accent-alternate dark:disabled:hover:bg-accent-variant',
+        'rounded-3xl bg-accent-dark-variant px-4 py-2 hover:enabled:bg-accent-dark-alternate',
+        'dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
       ],
-      variant === 'text' &&
-        'text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant',
+      variant === 'text' && [
+        'text-accent hover:enabled:text-accent-variant',
+        'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
+      ],
       isLoading &&
         'cursor-wait bg-accent-dark-alternate dark:bg-accent-alternate',
       className,
     )}
+    {...restProps}
   >
     {isLoading ? <Loader /> : children}
   </button>

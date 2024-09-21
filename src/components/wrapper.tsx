@@ -1,9 +1,29 @@
 import { cn } from '@/utils/mergeClasses'
-import type { ComponentPropsWithoutRef } from 'react'
+import type { ComponentPropsWithoutRef, ElementType } from 'react'
 
-export const Wrapper = ({
+const DEFAULT_TYPE = 'span'
+
+type Props<T extends ElementType = typeof DEFAULT_TYPE> = {
+  as?: T
+  hasGaps?: boolean
+} & ComponentPropsWithoutRef<T>
+
+export const Wrapper = <T extends ElementType = typeof DEFAULT_TYPE>({
+  as,
+  hasGaps,
   className,
   ...restProps
-}: ComponentPropsWithoutRef<'div'>) => (
-  <div {...restProps} className={cn('flex flex-wrap gap-x-4', className)} />
-)
+}: Props<T>) => {
+  const Component = as ?? DEFAULT_TYPE
+
+  return (
+    <Component
+      className={cn(
+        'flex flex-wrap items-center',
+        hasGaps && 'gap-4',
+        className,
+      )}
+      {...restProps}
+    />
+  )
+}
