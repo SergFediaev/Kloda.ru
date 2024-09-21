@@ -3,7 +3,14 @@
 import { Button } from '@/components/button'
 import { Container } from '@/components/container'
 import { Wrapper } from '@/components/wrapper'
-import { LayoutDashboard, Moon, Spade, SquarePen, Sun } from 'lucide-react'
+import {
+  LayoutDashboard,
+  Moon,
+  Spade,
+  SquarePen,
+  Sun,
+  Unplug,
+} from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -17,18 +24,27 @@ export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
   const isNotCreateCardPage = pathname !== '/create'
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  const logo = isOnline ? (
+    <Spade />
+  ) : (
+    <span title='Offline'>
+      <Unplug className='text-danger' />
+    </span>
+  )
 
   const titleElement = isRootPage ? (
     <Wrapper>
       {TITLE}
       &nbsp;
-      <Spade />
+      {logo}
     </Wrapper>
   ) : (
     <Wrapper>
       <Link href='/'>{TITLE}</Link>
       &nbsp;
-      <Spade />
+      {logo}
     </Wrapper>
   )
 
@@ -41,7 +57,20 @@ export const Header = () => {
 
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
 
-  useEffect(() => setIsMounted(true), [])
+  useEffect(() => {
+    setIsMounted(true)
+
+    const onOnline = () => setIsOnline(true)
+    const onOffline = () => setIsOnline(false)
+
+    addEventListener('online', onOnline)
+    addEventListener('offline', onOffline)
+
+    return () => {
+      removeEventListener('online', onOnline)
+      removeEventListener('offline', onOffline)
+    }
+  }, [])
 
   if (!isMounted) {
     return null

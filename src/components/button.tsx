@@ -31,7 +31,7 @@ export const Button = ({
       ],
       isStretched && 'flex-grow',
       isLoading &&
-        'cursor-wait bg-accent-dark-alternate dark:bg-accent-alternate',
+        'cursor-progress bg-accent-dark-alternate dark:bg-accent-alternate',
       className,
     )}
     {...restProps}
