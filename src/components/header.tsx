@@ -3,7 +3,7 @@
 import { Button } from '@/components/button'
 import { Container } from '@/components/container'
 import { Wrapper } from '@/components/wrapper'
-import { Moon, Spade, Sun } from 'lucide-react'
+import { LayoutDashboard, Moon, Spade, SquarePen, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -53,8 +53,16 @@ export const Header = () => {
         <Wrapper as='div' hasGaps className='justify-between text-2xl'>
           <h1>{titleElement}</h1>
           <Wrapper hasGaps>
-            {!isRootPage && <Link href='/'>Cards</Link>}
-            {isNotCreateCardPage && <Link href='/create'>Create card</Link>}
+            {!isRootPage && (
+              <Link href='/' title='Cards'>
+                <LayoutDashboard />
+              </Link>
+            )}
+            {isNotCreateCardPage && (
+              <Link href='/create' title='Create card'>
+                <SquarePen />
+              </Link>
+            )}
             <Button variant='text' onClick={toggleTheme} title={themeTitle}>
               {themeIcon}
             </Button>
