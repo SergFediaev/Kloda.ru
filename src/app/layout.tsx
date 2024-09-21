@@ -42,10 +42,10 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable}${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute='class'>
-          <div className='flex flex-col min-h-svh bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50'>
+          <div className='flex min-h-svh flex-col bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50'>
             <Header />
             <main className='flex flex-grow'>
               <Providers>{children}</Providers>

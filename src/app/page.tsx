@@ -35,7 +35,7 @@ export default function Home() {
 
   return (
     <Container>
-      <div className='space-y-8 gap-x-8 columns-lg'>
+      <div className='columns-lg gap-x-8 space-y-8'>
         {data.map(card => (
           <Card key={card.id} card={card} />
         ))}

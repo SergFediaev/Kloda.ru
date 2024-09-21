@@ -9,7 +9,7 @@ export const CenteredContainer = ({
     {...restProps}
     className={clsx(
       className,
-      'w-full flex flex-grow justify-center items-center p-8',
+      'flex w-full flex-grow items-center justify-center p-8',
     )}
   />
 )

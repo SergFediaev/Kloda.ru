@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function Create() {
   return (
     <CenteredContainer>
-      <div className='w-full max-w-xl flex flex-col gap-8 rounded-3xl p-8 shadow-lg bg-neutral-200 dark:bg-neutral-800'>
-        <h2 className='text-2xl self-center'>Create card</h2>
+      <div className='flex w-full max-w-xl flex-col gap-8 rounded-3xl bg-neutral-200 p-8 shadow-lg dark:bg-neutral-800'>
+        <h2 className='self-center text-2xl'>Create card</h2>
         <CardForm />
         <span className='self-center'>
           ← <Link href='/'>Back to cards</Link>

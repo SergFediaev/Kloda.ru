@@ -19,7 +19,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       <div className='flex flex-col gap-1'>
         <label
           htmlFor={textAreaId}
-          className={clsx(required && 'after:content-["*"] after:text-red-500')}
+          className={clsx(required && 'after:text-red-500 after:content-["*"]')}
         >
           {label}
         </label>
@@ -29,7 +29,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={textAreaId}
           name={name}
           required={required}
-          className='shadow-inner rounded-xl py-2 px-4 whitespace-pre-wrap min-h-24'
+          className='min-h-24 whitespace-pre-wrap rounded-xl px-4 py-2 shadow-inner'
         />
         <p className='text-red-500'>{error}</p>
       </div>

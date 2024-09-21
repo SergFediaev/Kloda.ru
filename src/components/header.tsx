@@ -47,9 +47,9 @@ export const Header = () => {
   }
 
   return (
-    <header className='bg-neutral-200 dark:bg-neutral-800 shadow-md'>
+    <header className='bg-neutral-200 shadow-md dark:bg-neutral-800'>
       <Container>
-        <Wrapper className='justify-between text-3xl gap-y-4'>
+        <Wrapper className='justify-between gap-y-4 text-3xl'>
           <h1>{titleElement}</h1>
           {!isRootPage && (
             <Link href='/' className='underline-offset-8'>
