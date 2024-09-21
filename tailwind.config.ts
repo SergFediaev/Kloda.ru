@@ -33,9 +33,11 @@ const config: Config = {
         accent: {
           DEFAULT: colors.orange['600'],
           variant: colors.orange['700'],
+          alternate: colors.orange['800'],
           dark: {
             DEFAULT: colors.orange['400'],
             variant: colors.orange['300'],
+            alternate: colors.orange['200'],
           },
         },
         danger: {

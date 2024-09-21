@@ -121,7 +121,7 @@ export const CardForm = () => {
           Reset
         </Button>
       </div>
-      <p className='text-red-500'>{error?.message}</p>
+      <p className='text-danger'>{error?.message}</p>
     </form>
   )
 }

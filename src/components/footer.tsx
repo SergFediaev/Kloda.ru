@@ -2,7 +2,7 @@ import { Container } from '@/components/container'
 import { Wrapper } from '@/components/wrapper'
 
 export const Footer = () => (
-  <footer className='bg-neutral-200 shadow-inner dark:bg-neutral-800'>
+  <footer className='bg-surface shadow-inner dark:bg-surface-dark'>
     <Container>
       <Wrapper className='justify-between gap-y-4'>
         <span>

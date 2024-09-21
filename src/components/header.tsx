@@ -47,7 +47,7 @@ export const Header = () => {
   }
 
   return (
-    <header className='bg-neutral-200 shadow-md dark:bg-neutral-800'>
+    <header className='bg-surface shadow-md dark:bg-surface-dark'>
       <Container>
         <Wrapper className='justify-between gap-y-4 text-3xl'>
           <h1>{titleElement}</h1>
@@ -65,7 +65,7 @@ export const Header = () => {
             onClick={toggleTheme}
             type='button'
             title={themeTitle}
-            className='text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300'
+            className='text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant'
           >
             {themeIcon}
           </button>

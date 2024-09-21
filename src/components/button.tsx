@@ -18,10 +18,11 @@ export const Button = ({
     {...restProps}
     className={cn(
       className,
-      'rounded-3xl bg-orange-300 px-4 py-2',
-      'hover:bg-orange-200 disabled:opacity-50 disabled:hover:bg-orange-300',
-      'dark:bg-orange-700 dark:hover:bg-orange-800 dark:disabled:hover:bg-orange-700',
-      isLoading && 'cursor-wait bg-orange-200 dark:bg-orange-800',
+      'rounded-3xl bg-accent-dark-variant px-4 py-2',
+      'hover:bg-accent-dark-alternate disabled:opacity-50 disabled:hover:bg-accent-dark-variant',
+      'dark:bg-accent-variant dark:hover:bg-accent-alternate dark:disabled:hover:bg-accent-variant',
+      isLoading &&
+        'cursor-wait bg-accent-dark-alternate dark:bg-accent-alternate',
     )}
   >
     {isLoading ? <Loader /> : children}

@@ -19,7 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className='flex flex-col gap-1'>
         <label
           htmlFor={inputId}
-          className={clsx(required && 'after:text-red-500 after:content-["*"]')}
+          className={clsx(required && 'after:text-danger after:content-["*"]')}
         >
           {label}
         </label>
@@ -31,7 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           required={required}
           className='truncate rounded-xl px-4 py-2 shadow-inner'
         />
-        <p className='text-red-500'>{error}</p>
+        <p className='text-danger'>{error}</p>
       </div>
     )
   },
