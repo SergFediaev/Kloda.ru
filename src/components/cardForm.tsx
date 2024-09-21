@@ -5,6 +5,7 @@ import { getQueryClient } from '@/app/getQueryClient'
 import { FormInput } from '@/components/FormInput'
 import { FormTextArea } from '@/components/FormTextArea'
 import { Button } from '@/components/button'
+import { Wrapper } from '@/components/wrapper'
 import type { CardArgs } from '@/services/cards/cards.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -50,6 +51,8 @@ export const CardForm = () => {
       router.push(`card/${id}`)
     },
   })
+
+  const createText = isPending ? 'Creating' : 'Create'
 
   const {
     control,
@@ -113,14 +116,14 @@ export const CardForm = () => {
         placeholder={'example@mail.com'}
         error={errors.email?.message}
       />
-      <div className='flex flex-wrap gap-x-10 gap-y-6'>
+      <Wrapper as='div' className='gap-x-10 gap-y-6'>
         <Button type={'submit'} isStretched isLoading={isPending}>
-          Create
+          {createText}
         </Button>
         <Button type={'reset'} isStretched onClick={onReset}>
           Reset
         </Button>
-      </div>
+      </Wrapper>
       <p className='text-danger'>{error?.message}</p>
     </form>
   )

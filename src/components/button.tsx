@@ -1,5 +1,5 @@
-import { Loader } from '@/components/loader'
 import { cn } from '@/utils/mergeClasses'
+import { LoaderCircle } from 'lucide-react'
 import type { ComponentPropsWithoutRef } from 'react'
 
 type ButtonVariant = 'primary' | 'text'
@@ -20,6 +20,7 @@ export const Button = ({
 }: Props) => (
   <button
     className={cn(
+      'flex items-center justify-center',
       variant === 'primary' && [
         'rounded-3xl bg-accent-dark-variant px-4 py-2 hover:enabled:bg-accent-dark-alternate',
         'dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
@@ -35,6 +36,12 @@ export const Button = ({
     )}
     {...restProps}
   >
-    {isLoading ? <Loader /> : children}
+    {children}
+    {isLoading && (
+      <>
+        &nbsp;
+        <LoaderCircle size={16} className='animate-spin' />
+      </>
+    )}
   </button>
 )

@@ -1,7 +1,15 @@
-import type { ComponentPropsWithoutRef } from 'react'
+import { Wrapper } from '@/components/wrapper'
+import { LoaderCircle } from 'lucide-react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
-export const Loader = (props: ComponentPropsWithoutRef<'span'>) => (
-  <span {...props}>
-    Loading <span className='inline-block animate-spin'>↻</span>
-  </span>
+type Props = {
+  message?: ReactNode
+} & ComponentPropsWithoutRef<'span'>
+
+export const Loader = ({ message, ...restProps }: Props) => (
+  <Wrapper {...restProps}>
+    {message ?? 'Loading'}
+    &nbsp;
+    <LoaderCircle className='animate-spin' />
+  </Wrapper>
 )

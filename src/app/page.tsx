@@ -20,7 +20,7 @@ export default function Home() {
   if (isPending) {
     return (
       <Container>
-        <Loader className='text-2xl' />
+        <Loader message='Fetching cards' className='text-2xl' />
       </Container>
     )
   }
