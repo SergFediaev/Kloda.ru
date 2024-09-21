@@ -25,7 +25,7 @@ export default function CardPage({
   if (isPending) {
     return (
       <Container>
-        <Loader className='text-3xl' />
+        <Loader className='text-2xl' />
       </Container>
     )
   }

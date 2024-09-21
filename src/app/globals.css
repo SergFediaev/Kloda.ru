@@ -30,6 +30,10 @@ body {
   a {
     @apply underline underline-offset-4 text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant;
   }
+
+  :disabled {
+    @apply disabled:opacity-50
+  }
 }
 
 @layer components {

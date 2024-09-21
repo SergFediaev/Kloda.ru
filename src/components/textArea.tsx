@@ -1,5 +1,5 @@
 import { useGenerateId } from '@/hooks/useGenerateId'
-import { clsx } from 'clsx'
+import { cn } from '@/utils/mergeClasses'
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
@@ -12,14 +12,14 @@ export type TextAreaProps = {
 } & ComponentPropsWithoutRef<'textarea'>
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ label, error, id, name, required, ...restProps }, ref) => {
+  ({ label, error, id, name, required, className, ...restProps }, ref) => {
     const textAreaId = useGenerateId(id, name)
 
     return (
-      <div className='flex flex-col gap-1'>
+      <div className={cn('flex flex-col gap-1', className)}>
         <label
           htmlFor={textAreaId}
-          className={clsx(required && 'after:text-danger after:content-["*"]')}
+          className={cn(required && 'after:text-danger after:content-["*"]')}
         >
           {label}
         </label>

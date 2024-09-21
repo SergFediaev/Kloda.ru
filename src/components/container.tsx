@@ -5,5 +5,5 @@ export const Container = ({
   className,
   ...restProps
 }: ComponentPropsWithoutRef<'div'>) => (
-  <div {...restProps} className={cn('container mx-auto p-8', className)} />
+  <div {...restProps} className={cn('container mx-auto p-6', className)} />
 )

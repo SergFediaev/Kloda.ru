@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/button'
 import { Container } from '@/components/container'
 import { Wrapper } from '@/components/wrapper'
 import { useTheme } from 'next-themes'
@@ -24,9 +25,7 @@ export const Header = () => {
     </>
   ) : (
     <>
-      <Link href='/' className='underline-offset-8'>
-        {title}
-      </Link>
+      <Link href='/'>{title}</Link>
       {logo}
     </>
   )
@@ -49,26 +48,15 @@ export const Header = () => {
   return (
     <header className='bg-surface shadow-md dark:bg-surface-dark'>
       <Container>
-        <Wrapper className='justify-between gap-y-4 text-3xl'>
+        <Wrapper className='justify-between gap-y-4 text-2xl'>
           <h1>{titleElement}</h1>
-          {!isRootPage && (
-            <Link href='/' className='underline-offset-8'>
-              Cards
-            </Link>
-          )}
-          {isNotCreateCardPage && (
-            <Link href='/create' className='underline-offset-8'>
-              Create card
-            </Link>
-          )}
-          <button
-            onClick={toggleTheme}
-            type='button'
-            title={themeTitle}
-            className='text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant'
-          >
-            {themeIcon}
-          </button>
+          <Wrapper className='gap-y-4'>
+            {!isRootPage && <Link href='/'>Cards</Link>}
+            {isNotCreateCardPage && <Link href='/create'>Create card</Link>}
+            <Button variant='text' onClick={toggleTheme} title={themeTitle}>
+              {themeIcon}
+            </Button>
+          </Wrapper>
         </Wrapper>
       </Container>
     </header>

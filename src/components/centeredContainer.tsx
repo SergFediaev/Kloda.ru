@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { cn } from '@/utils/mergeClasses'
 import type { ComponentPropsWithoutRef } from 'react'
 
 export const CenteredContainer = ({
@@ -7,9 +7,9 @@ export const CenteredContainer = ({
 }: ComponentPropsWithoutRef<'div'>) => (
   <div
     {...restProps}
-    className={clsx(
+    className={cn(
+      'flex w-full flex-grow items-center justify-center p-6',
       className,
-      'flex w-full flex-grow items-center justify-center p-8',
     )}
   />
 )

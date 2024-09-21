@@ -20,7 +20,7 @@ export default function Home() {
   if (isPending) {
     return (
       <Container>
-        <Loader className='text-3xl' />
+        <Loader className='text-2xl' />
       </Container>
     )
   }
@@ -35,7 +35,7 @@ export default function Home() {
 
   return (
     <Container>
-      <div className='columns-lg gap-x-8 space-y-8'>
+      <div className='columns-lg gap-x-6 space-y-6'>
         {data.map(card => (
           <Card key={card.id} card={card} />
         ))}

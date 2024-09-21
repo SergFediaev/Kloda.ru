@@ -33,7 +33,7 @@ export const Card = ({
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
 
   return (
-    <article className='flex break-inside-avoid flex-col gap-8 rounded-3xl bg-surface p-8 shadow-lg dark:bg-surface-dark'>
+    <article className='flex break-inside-avoid flex-col gap-8 rounded-3xl bg-surface p-6 shadow-lg dark:bg-surface-dark'>
       <h2 className='text-2xl'>{title}</h2>
       <p className='whitespace-pre-wrap break-words'>{content}</p>
       <Wrapper className='items-center justify-between gap-y-4'>
