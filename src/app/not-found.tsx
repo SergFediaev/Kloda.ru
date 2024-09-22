@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title,
 }
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <div className='flex flex-grow bg-[url(/gifs/not_found.gif)] bg-contain bg-right-top bg-no-repeat'>
       <Container isCentered>

@@ -1,41 +1,21 @@
-'use client'
-
-import { Card } from '@/components/card'
+import { CardDetails } from '@/components/cardDetails'
 import { Container } from '@/components/container'
-import { Loader } from '@/components/loader'
-import type { CardResponse } from '@/services/cards/cards.types'
-import { useQuery } from '@tanstack/react-query'
+import type { Metadata } from 'next'
 
-// ToDo: Metadata, Error, CardPage > Card or all pages > Page
-export default function CardPage({
-  params: { id },
-}: { params: { id: string } }) {
-  const { isPending, isError, error, data } = useQuery({
-    queryKey: ['card', id],
-    queryFn: async (): Promise<CardResponse[]> => {
-      const response = await fetch(
-        `https://api.kloda.fediaev.ru/v1/cards/${id}`,
-      )
-
-      return response.json()
-    },
-  })
-
-  if (isPending) {
-    return (
-      <Container>
-        <Loader message='Fetching card' className='text-2xl' />
-      </Container>
-    )
+type Props = {
+  params: {
+    id: string
   }
+}
 
-  if (isError) {
-    return `Error: ${error.message}`
-  }
+export const generateMetadata = ({ params: { id } }: Props): Metadata => ({
+  title: `Card #${id}`,
+})
 
+export default function CardPage({ params: { id } }: Props) {
   return (
     <Container isCentered>
-      <Card card={data[0]} isExpanded isOpen />
+      <CardDetails id={id} />
     </Container>
   )
 }

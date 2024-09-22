@@ -2,10 +2,10 @@ import { cn } from '@/utils/mergeClasses'
 import { LoaderCircle } from 'lucide-react'
 import type { ComponentPropsWithoutRef } from 'react'
 
-type ButtonVariant = 'primary' | 'text'
+type Variant = 'primary' | 'text'
 
 type Props = {
-  variant?: ButtonVariant
+  variant?: Variant
   isStretched?: boolean
   isLoading?: boolean
 } & ComponentPropsWithoutRef<'button'>

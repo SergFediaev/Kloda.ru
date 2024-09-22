@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Create card',
 }
 
-export default function Create() {
+export default function CreateCardPage() {
   return (
     <Container isCentered>
       <Block isConstrained>

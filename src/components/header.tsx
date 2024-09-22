@@ -18,12 +18,11 @@ import { useEffect, useState } from 'react'
 
 const TITLE = 'Kloda'
 
-// ToDo: Button icon
 // ToDo: useTheme custom hook
 export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
-  const isNotCreateCardPage = pathname !== '/create'
+  const isNotCreateCardPage = pathname !== '/create-card'
   const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
@@ -89,7 +88,7 @@ export const Header = () => {
               </Link>
             )}
             {isNotCreateCardPage && (
-              <Link href='/create' title='Create card'>
+              <Link href='/create-card' title='Create card'>
                 <SquarePen />
               </Link>
             )}

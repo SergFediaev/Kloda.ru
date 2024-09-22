@@ -6,7 +6,7 @@ import {
   useController,
 } from 'react-hook-form'
 
-type FormInputProps<T extends FieldValues> = {
+type Props<T extends FieldValues> = {
   control: Control<T>
 } & Omit<InputProps, 'value' | 'onChange'> &
   Omit<UseControllerProps<T>, 'control' | 'defaultValue' | 'rules'>
@@ -17,7 +17,7 @@ export const FormInput = <T extends FieldValues>({
   name,
   shouldUnregister,
   ...restProps
-}: FormInputProps<T>) => {
+}: Props<T>) => {
   const {
     field,
     fieldState: { error },
