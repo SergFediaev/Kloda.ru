@@ -6,6 +6,7 @@ import { Wrapper } from '@/components/wrapper'
 import {
   LayoutDashboard,
   Moon,
+  Settings,
   Spade,
   SquarePen,
   Sun,
@@ -17,6 +18,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const TITLE = 'Kloda'
+const NETWORK_STATUS = 'Network status:'
 
 // ToDo: useTheme custom hook
 export const Header = () => {
@@ -26,9 +28,11 @@ export const Header = () => {
   const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
-    <Spade />
+    <span title={`${NETWORK_STATUS} online`}>
+      <Spade className='hover:animate-heartbeat' />
+    </span>
   ) : (
-    <span title='Offline'>
+    <span title={`${NETWORK_STATUS} offline`}>
       <Unplug className='text-danger' />
     </span>
   )
@@ -51,8 +55,12 @@ export const Header = () => {
   const { systemTheme, theme, setTheme } = useTheme()
   const currentTheme = theme === 'system' ? systemTheme : theme
   const isDarkTheme = currentTheme === 'dark'
-  const themeIcon = isDarkTheme ? <Sun /> : <Moon />
   const themeTitle = isDarkTheme ? 'Enable light theme' : 'Enable dark theme'
+  const themeIcon = isDarkTheme ? (
+    <Sun className='hover:animate-spin' />
+  ) : (
+    <Moon />
+  )
 
   const toggleTheme = () => setTheme(isDarkTheme ? 'light' : 'dark')
 
@@ -94,6 +102,9 @@ export const Header = () => {
             )}
             <Button variant='text' onClick={toggleTheme} title={themeTitle}>
               {themeIcon}
+            </Button>
+            <Button variant='text' title='Open settings'>
+              <Settings className='hover:animate-spin' />
             </Button>
           </Wrapper>
         </Wrapper>

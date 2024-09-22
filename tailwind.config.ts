@@ -44,6 +44,16 @@ const config: Config = {
           DEFAULT: colors.red['500'],
         },
       },
+      animation: {
+        heartbeat: 'heartbeat .25s infinite alternate',
+      },
+      keyframes: {
+        heartbeat: {
+          to: {
+            transform: 'scale(1.2)',
+          },
+        },
+      },
     },
   },
   plugins: [],
