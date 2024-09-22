@@ -1,5 +1,8 @@
+import { Block } from '@/components/block'
 import { CardForm } from '@/components/cardForm'
-import { CenteredContainer } from '@/components/centeredContainer'
+import { Container } from '@/components/container'
+import { Wrapper } from '@/components/wrapper'
+import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -9,14 +12,16 @@ export const metadata: Metadata = {
 
 export default function Create() {
   return (
-    <CenteredContainer>
-      <div className='flex w-full max-w-xl flex-col gap-8 rounded-3xl bg-surface p-8 shadow-lg dark:bg-surface-dark'>
+    <Container isCentered>
+      <Block isConstrained>
         <h2 className='self-center text-2xl'>Create card</h2>
         <CardForm />
-        <span className='self-center'>
-          ← <Link href='/'>Back to cards</Link>
-        </span>
-      </div>
-    </CenteredContainer>
+        <Wrapper className='self-center'>
+          <ArrowLeft size={16} />
+          &nbsp;
+          <Link href='/'>Back to cards</Link>
+        </Wrapper>
+      </Block>
+    </Container>
   )
 }

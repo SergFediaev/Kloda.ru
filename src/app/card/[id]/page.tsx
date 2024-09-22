@@ -1,13 +1,12 @@
 'use client'
 
 import { Card } from '@/components/card'
-import { CenteredContainer } from '@/components/centeredContainer'
 import { Container } from '@/components/container'
 import { Loader } from '@/components/loader'
 import type { CardResponse } from '@/services/cards/cards.types'
 import { useQuery } from '@tanstack/react-query'
 
-// ToDo: Error, CardPage > Card or all pages > Page
+// ToDo: Metadata, Error, CardPage > Card or all pages > Page
 export default function CardPage({
   params: { id },
 }: { params: { id: string } }) {
@@ -35,10 +34,8 @@ export default function CardPage({
   }
 
   return (
-    <CenteredContainer>
-      <div className='max-w-xl'>
-        <Card card={data[0]} isExpanded isOpen />
-      </div>
-    </CenteredContainer>
+    <Container isCentered>
+      <Card card={data[0]} isExpanded isOpen />
+    </Container>
   )
 }

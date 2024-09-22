@@ -1,3 +1,4 @@
+import { Block } from '@/components/block'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/wrapper'
 import type { CardResponse } from '@/services/cards/cards.types'
@@ -45,7 +46,7 @@ export const Card = ({
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
 
   return (
-    <article className='flex break-inside-avoid flex-col gap-8 rounded-3xl bg-surface p-6 shadow-lg dark:bg-surface-dark'>
+    <Block as='article' isConstrained={isOpen} {...restProps}>
       <h2 className='text-2xl'>{title}</h2>
       <p className='whitespace-pre-wrap break-words'>{content}</p>
       <Wrapper as='div' hasGaps className='justify-between'>
@@ -95,6 +96,6 @@ export const Card = ({
           </Wrapper>
         </aside>
       )}
-    </article>
+    </Block>
   )
 }

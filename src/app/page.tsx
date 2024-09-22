@@ -37,7 +37,7 @@ export default function Home() {
     <Container>
       <div className='columns-lg gap-x-6 space-y-6'>
         {data.map(card => (
-          <Card key={card.id} card={card} />
+          <Card key={card.id} card={card} className='break-inside-avoid' />
         ))}
       </div>
     </Container>
