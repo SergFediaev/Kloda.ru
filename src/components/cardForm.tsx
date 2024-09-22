@@ -2,9 +2,9 @@
 
 import { createCard } from '@/app/actions'
 import { getQueryClient } from '@/app/getQueryClient'
-import { FormInput } from '@/components/FormInput'
-import { FormTextArea } from '@/components/FormTextArea'
 import { Button } from '@/components/button'
+import { FormInput } from '@/components/formInput'
+import { FormTextArea } from '@/components/formTextArea'
 import { Wrapper } from '@/components/wrapper'
 import type { CardArgs } from '@/services/cards/cards.types'
 import { zodResolver } from '@hookform/resolvers/zod'
