@@ -92,14 +92,14 @@ export const Card = ({
             onClick={copyCardContent}
             title='Copy card content to clipboard'
           >
-            <Copy />
+            <Copy size={16} />
           </Button>
           <Button
             variant='text'
             onClick={copyCardLink}
             title='Copy card link to clipboard'
           >
-            <LinkIcon />
+            <LinkIcon size={16} />
           </Button>
         </Wrapper>
         {isOpen ? (
