@@ -3,7 +3,7 @@ import { Container } from '@/components/container'
 import { Wrapper } from '@/components/wrapper'
 import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 
 const title = 'Not found'
 

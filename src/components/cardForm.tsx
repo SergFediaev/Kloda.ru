@@ -9,7 +9,7 @@ import { Wrapper } from '@/components/wrapper'
 import type { CardArgs } from '@/services/cards/cards.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -42,7 +42,7 @@ const defaultValues: CardSchema = {
 }
 
 export const CardForm = () => {
-  const router = useRouter()
+  const router = useTransitionRouter()
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: createCard,

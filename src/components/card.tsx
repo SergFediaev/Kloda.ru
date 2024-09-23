@@ -10,7 +10,7 @@ import {
   ThumbsDown,
   ThumbsUp,
 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { type ComponentPropsWithoutRef, useState } from 'react'
 
 type Props = {

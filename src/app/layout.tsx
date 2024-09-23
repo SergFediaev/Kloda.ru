@@ -5,6 +5,7 @@ import { Providers } from '@/app/providers'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { ThemeProvider } from 'next-themes'
+import { ViewTransitions } from 'next-view-transitions'
 import type { ReactNode } from 'react'
 
 const geistSans = localFont({
@@ -40,20 +41,22 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable}${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider attribute='class'>
-          <div className='flex min-h-svh flex-col bg-ground text-primary dark:bg-ground-dark dark:text-primary-dark'>
-            <Header />
-            <main className='flex flex-grow'>
-              <Providers>{children}</Providers>
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang='en' suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable}${geistMono.variable} antialiased`}
+        >
+          <ThemeProvider attribute='class'>
+            <div className='flex min-h-svh flex-col bg-ground text-primary dark:bg-ground-dark dark:text-primary-dark'>
+              <Header />
+              <main className='flex flex-grow'>
+                <Providers>{children}</Providers>
+              </main>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }
