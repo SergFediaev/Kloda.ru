@@ -2,14 +2,18 @@ import type { CardResponse } from '@/api/cards/cards.types'
 import { Block } from '@/components/block'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/wrapper'
+import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
 import {
   ChevronDown,
   ChevronUp,
+  Copy,
+  Link as LinkIcon,
   Mail,
   ThumbsDown,
   ThumbsUp,
 } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { Link } from 'next-view-transitions'
 import { type ComponentPropsWithoutRef, useState } from 'react'
 
@@ -36,6 +40,7 @@ export const Card = ({
   isOpen,
   ...restProps
 }: Props) => {
+  const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
   const expandIcon = isExpanded ? (
@@ -44,6 +49,20 @@ export const Card = ({
     <ChevronDown size={16} />
   )
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
+
+  const copyCardContent = () =>
+    copyToClipboard(
+      `${title}\n\n${content}`,
+      'Card content copied to clipboard',
+      theme,
+    )
+
+  const copyCardLink = () =>
+    copyToClipboard(
+      `${window.location.origin}/card/${id}`,
+      'Card link copied to clipboard',
+      theme,
+    )
 
   return (
     <Block as='article' isConstrained={isOpen} {...restProps}>
@@ -68,6 +87,20 @@ export const Card = ({
             &nbsp;
             {dislikes}
           </Wrapper>
+          <Button
+            variant='text'
+            onClick={copyCardContent}
+            title='Copy card content to clipboard'
+          >
+            <Copy />
+          </Button>
+          <Button
+            variant='text'
+            onClick={copyCardLink}
+            title='Copy card link to clipboard'
+          >
+            <LinkIcon />
+          </Button>
         </Wrapper>
         {isOpen ? (
           <Link href={'/'}>Close</Link>
