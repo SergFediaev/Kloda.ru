@@ -8,13 +8,23 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-// ToDo: Passwords match
-const registerSchema = z.object({
-  username: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-  confirmPassword: z.string(),
-})
+// ToDo: Passwords regex, min, max
+const registerSchema = z
+  .object({
+    username: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+    confirmPassword: z.string(),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords don't match",
+        path: ['confirmPassword'],
+      })
+    }
+  })
 
 type RegisterSchema = z.infer<typeof registerSchema>
 
