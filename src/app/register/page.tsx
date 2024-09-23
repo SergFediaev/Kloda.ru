@@ -1,25 +1,29 @@
 import { Block } from '@/components/block'
-import { CardForm } from '@/components/cardForm'
 import { Container } from '@/components/container'
+import { RegisterForm } from '@/components/registerForm'
 import { ReturnToCards } from '@/components/returnToCards'
 import type { Metadata } from 'next'
+import { Link } from 'next-view-transitions'
 
-const title = 'Create card'
+const title = 'Register'
 
 export const metadata: Metadata = {
   title,
 }
 
-export default function CreateCardPage() {
+export default function RegisterPage() {
   return (
     <Container isCentered>
       <Block
         heading={title}
         isHeadingCentered
         isConstrained
-        className='max-w-xl'
+        className='max-w-md'
       >
-        <CardForm />
+        <RegisterForm />
+        <Link href='/login' className='self-center'>
+          Login
+        </Link>
         <ReturnToCards />
       </Block>
     </Container>

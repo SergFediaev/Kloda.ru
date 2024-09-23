@@ -2,9 +2,11 @@
 
 import { Button } from '@/components/button'
 import { Container } from '@/components/container'
+import { Heading } from '@/components/heading'
 import { Wrapper } from '@/components/wrapper'
 import {
   LayoutDashboard,
+  LogIn,
   Moon,
   Settings,
   Spade,
@@ -25,6 +27,7 @@ export const Header = () => {
   const pathname = usePathname()
   const isRootPage = pathname === '/'
   const isNotCreateCardPage = pathname !== '/create-card'
+  const isNotLoginPage = pathname !== '/login'
   const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
@@ -88,8 +91,13 @@ export const Header = () => {
     <header className='bg-surface shadow-md dark:bg-surface-dark'>
       <Container>
         <Wrapper as='div' hasGaps className='justify-between text-2xl'>
-          <h1>{titleElement}</h1>
-          <Wrapper hasGaps>
+          <Heading as='h1'>{titleElement}</Heading>
+          <Wrapper as='nav' hasGaps>
+            {isNotLoginPage && (
+              <Link href='/login' title='Login'>
+                <LogIn />
+              </Link>
+            )}
             {!isRootPage && (
               <Link href='/' title='Cards'>
                 <LayoutDashboard />
@@ -103,9 +111,9 @@ export const Header = () => {
             <Button variant='text' onClick={toggleTheme} title={themeTitle}>
               {themeIcon}
             </Button>
-            <Button variant='text' title='Open settings'>
+            <Link href='/settings' title='Open settings'>
               <Settings className='hover:animate-spin' />
-            </Button>
+            </Link>
           </Wrapper>
         </Wrapper>
       </Container>

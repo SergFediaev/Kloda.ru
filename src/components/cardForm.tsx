@@ -2,9 +2,10 @@
 
 import type { CardArgs } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
+import { ButtonsContainer } from '@/components/buttonsContainer'
+import { Form } from '@/components/form'
 import { FormInput } from '@/components/formInput'
 import { FormTextArea } from '@/components/formTextArea'
-import { Wrapper } from '@/components/wrapper'
 import { useCreateCard } from '@/hooks/useCards'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTransitionRouter } from 'next-view-transitions'
@@ -71,7 +72,7 @@ export const CardForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='flex flex-col gap-6'>
+    <Form onSubmit={onSubmit} error={error?.message}>
       <FormInput
         control={control}
         name={'title'}
@@ -111,15 +112,14 @@ export const CardForm = () => {
         placeholder={'example@mail.com'}
         error={errors.email?.message}
       />
-      <Wrapper as='div' className='gap-x-10 gap-y-6'>
-        <Button type={'submit'} isStretched isLoading={isPending}>
+      <ButtonsContainer>
+        <Button isStretched isLoading={isPending}>
           {createText}
         </Button>
         <Button type={'reset'} isStretched onClick={onReset}>
           Reset
         </Button>
-      </Wrapper>
-      <p className='text-danger'>{error?.message}</p>
-    </form>
+      </ButtonsContainer>
+    </Form>
   )
 }

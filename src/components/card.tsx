@@ -65,8 +65,13 @@ export const Card = ({
     )
 
   return (
-    <Block as='article' isConstrained={isOpen} {...restProps}>
-      <h2 className='text-2xl'>{title}</h2>
+    <Block
+      as='article'
+      heading={title}
+      isConstrained={isOpen}
+      className='max-w-2xl'
+      {...restProps}
+    >
       <p className='whitespace-pre-wrap break-words'>{content}</p>
       <Wrapper as='div' hasGaps className='justify-between'>
         <Wrapper hasGaps>
