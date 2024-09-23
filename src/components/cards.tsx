@@ -2,18 +2,11 @@
 
 import { Card } from '@/components/card'
 import { Loader } from '@/components/loader'
-import type { CardResponse } from '@/services/cards/cards.types'
-import { useQuery } from '@tanstack/react-query'
+import { useGetCards } from '@/hooks/useCards'
 
 // ToDo: Error
 export const Cards = () => {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['cards'],
-    queryFn: async (): Promise<CardResponse[]> => {
-      const response = await fetch('https://api.kloda.fediaev.ru/v1/cards')
-      return response.json()
-    },
-  })
+  const { isPending, isError, data, error } = useGetCards()
 
   if (isPending) {
     return <Loader message='Fetching cards' className='text-2xl' />

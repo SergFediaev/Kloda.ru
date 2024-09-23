@@ -1,14 +1,12 @@
 'use client'
 
-import { createCard } from '@/app/actions'
-import { getQueryClient } from '@/app/getQueryClient'
+import type { CardArgs } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { FormInput } from '@/components/formInput'
 import { FormTextArea } from '@/components/formTextArea'
 import { Wrapper } from '@/components/wrapper'
-import type { CardArgs } from '@/services/cards/cards.types'
+import { useCreateCard } from '@/hooks/useCards'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -43,14 +41,7 @@ const defaultValues: CardSchema = {
 
 export const CardForm = () => {
   const router = useTransitionRouter()
-
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: createCard,
-    onSuccess: ({ id }) => {
-      void getQueryClient().invalidateQueries({ queryKey: ['cards'] })
-      router.push(`card/${id}`)
-    },
-  })
+  const { data, mutate, isPending, error, isSuccess } = useCreateCard()
 
   const createText = isPending ? 'Creating' : 'Create'
 
@@ -74,6 +65,10 @@ export const CardForm = () => {
   })
 
   const onReset = () => reset(defaultValues)
+
+  if (isSuccess) {
+    router.push(`card/${data.id}`)
+  }
 
   return (
     <form onSubmit={onSubmit} className='flex flex-col gap-6'>

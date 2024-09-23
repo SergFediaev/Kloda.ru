@@ -1,7 +1,7 @@
+import type { CardResponse } from '@/api/cards/cards.types'
 import { Block } from '@/components/block'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/wrapper'
-import type { CardResponse } from '@/services/cards/cards.types'
 import { dateToLocale } from '@/utils/dateToLocale'
 import {
   ChevronDown,

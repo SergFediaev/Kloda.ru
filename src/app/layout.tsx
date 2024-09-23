@@ -4,7 +4,6 @@ import './globals.css'
 import { Providers } from '@/app/providers'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
-import { ThemeProvider } from 'next-themes'
 import { ViewTransitions } from 'next-view-transitions'
 import type { ReactNode } from 'react'
 
@@ -54,15 +53,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable}${geistMono.variable} antialiased`}
         >
-          <ThemeProvider attribute='class'>
+          <Providers>
             <div className='flex min-h-svh flex-col bg-ground text-primary dark:bg-ground-dark dark:text-primary-dark'>
               <Header />
-              <main className='flex flex-grow'>
-                <Providers>{children}</Providers>
-              </main>
+              <main className='flex flex-grow'>{children}</main>
               <Footer />
             </div>
-          </ThemeProvider>
+          </Providers>
         </body>
       </html>
     </ViewTransitions>
