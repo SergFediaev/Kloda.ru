@@ -33,6 +33,14 @@ export const metadata: Metadata = {
   creator: 'Sergei Fediaev',
   icons:
     'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".8em" font-size="120">♤</text></svg>',
+  metadataBase: new URL('https://kloda.fediaev.ru'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+      'ru-RU': '/ru-RU',
+    },
+  },
 }
 
 export default function RootLayout({
