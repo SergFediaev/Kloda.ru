@@ -4,6 +4,7 @@ import { Button } from '@/components/button'
 import { ButtonsContainer } from '@/components/buttonsContainer'
 import { Form } from '@/components/form'
 import { FormInput } from '@/components/formInput'
+import { useRegister } from '@/hooks/useAuth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -35,8 +36,11 @@ const defaultValues: RegisterSchema = {
   confirmPassword: '',
 }
 
-// ToDo: Form error
 export const RegisterForm = () => {
+  const { mutate, isPending, error } = useRegister()
+
+  const registerText = isPending ? 'Registering' : 'Register'
+
   const {
     control,
     handleSubmit,
@@ -47,12 +51,12 @@ export const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
   })
 
-  const onSubmit = handleSubmit(data => console.log(data))
+  const onSubmit = handleSubmit(data => mutate(data))
 
   const onReset = () => reset(defaultValues)
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} error={error?.message}>
       <FormInput
         control={control}
         name='username'
@@ -91,7 +95,9 @@ export const RegisterForm = () => {
         error={errors.confirmPassword?.message}
       />
       <ButtonsContainer>
-        <Button isStretched>Register</Button>
+        <Button isStretched isLoading={isPending}>
+          {registerText}
+        </Button>
         <Button type={'reset'} isStretched onClick={onReset}>
           Reset
         </Button>

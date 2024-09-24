@@ -1,4 +1,4 @@
-import { createCard, getCard, getCards } from '@/api/cards/cardsApi'
+import { createCard, getCard, getCards } from '@/api/cards/cards.api'
 import { getQueryClient } from '@/app/getQueryClient'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
