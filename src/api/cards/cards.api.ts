@@ -10,4 +10,4 @@ export const getCards = () => cardsApi('').json<CardResponse[]>()
 export const getCard = (id: string) => cardsApi(id).json<CardResponse[]>()
 
 export const createCard = (json: CardArgs) =>
-  cardsApi.post('', { json }).json<CardResponse>()
+  cardsApi.post('', { json }).json<CardResponse[]>()

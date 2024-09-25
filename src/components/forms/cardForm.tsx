@@ -68,7 +68,7 @@ export const CardForm = () => {
   const onReset = () => reset(defaultValues)
 
   if (isSuccess) {
-    router.push(`card/${data.id}`)
+    router.push(`card/${data[0].id}`)
   }
 
   return (
