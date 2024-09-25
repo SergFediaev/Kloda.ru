@@ -1,4 +1,10 @@
-import { createCard, getCard, getCards } from '@/api/cards/cards.api'
+import {
+  createCard,
+  dislikeCard,
+  getCard,
+  getCards,
+  likeCard,
+} from '@/api/cards/cards.api'
 import { getQueryClient } from '@/app/getQueryClient'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
@@ -20,3 +26,21 @@ export const useCreateCard = () =>
     onSuccess: () =>
       getQueryClient().invalidateQueries({ queryKey: ['cards'] }),
   })
+
+export const useLikeCard = () =>
+  useMutation({
+    mutationFn: likeCard,
+    onSuccess: (_, variables) => invalidateCards(variables),
+  })
+
+export const useDislikeCard = () =>
+  useMutation({
+    mutationFn: dislikeCard,
+    onSuccess: (_, variables) => invalidateCards(variables),
+  })
+
+const invalidateCards = (id: number) => {
+  const queryClient = getQueryClient()
+  void queryClient.invalidateQueries({ queryKey: ['cards'] })
+  void queryClient.invalidateQueries({ queryKey: ['card', String(id)] })
+}

@@ -11,3 +11,8 @@ export const getCard = (id: string) => cardsApi(id).json<CardResponse[]>()
 
 export const createCard = (json: CardArgs) =>
   cardsApi.post('', { json }).json<CardResponse[]>()
+
+export const likeCard = (id: number) => cardsApi.patch(`${id}/like`).json()
+
+export const dislikeCard = (id: number) =>
+  cardsApi.patch(`${id}/dislike`).json()

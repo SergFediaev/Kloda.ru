@@ -2,6 +2,7 @@ import type { CardResponse } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
+import { useDislikeCard, useLikeCard } from '@/hooks/useCards'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
 import {
@@ -15,7 +16,8 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Link } from 'next-view-transitions'
-import { type ComponentPropsWithoutRef, useState } from 'react'
+import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 type Props = {
   card: CardResponse
@@ -39,6 +41,20 @@ export const Card = ({
   isOpen,
   ...restProps
 }: Props) => {
+  const {
+    mutate: like,
+    isSuccess: isLikeSuccess,
+    isError: isLikeError,
+    error: likeError,
+  } = useLikeCard()
+
+  const {
+    mutate: dislike,
+    isSuccess: isDislikeSuccess,
+    isError: isDislikeError,
+    error: dislikeError,
+  } = useDislikeCard()
+
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
@@ -63,6 +79,38 @@ export const Card = ({
       theme,
     )
 
+  const onLike = () => like(id)
+
+  const onDislike = () => dislike(id)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isLikeError) {
+      toast(likeError.message, { theme, type: 'error' })
+    }
+  }, [isLikeError, likeError])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isDislikeError) {
+      toast(dislikeError.message, { theme, type: 'error' })
+    }
+  }, [isDislikeError, dislikeError])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isLikeSuccess) {
+      toast('Card liked', { theme, type: 'success' })
+    }
+  }, [isLikeSuccess])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isDislikeSuccess) {
+      toast('Card disliked', { theme, type: 'success' })
+    }
+  }, [isDislikeSuccess])
+
   return (
     <Block
       as='article'
@@ -78,14 +126,14 @@ export const Card = ({
             {expandIcon}
           </Button>
           <Wrapper>
-            <Button variant='text' title='Like'>
+            <Button variant='text' title='Like' onClick={onLike}>
               <ThumbsUp size={16} />
             </Button>
             &nbsp;
             {likes}
           </Wrapper>
           <Wrapper>
-            <Button variant='text' title='Dislike'>
+            <Button variant='text' title='Dislike' onClick={onDislike}>
               <ThumbsDown size={16} />
             </Button>
             &nbsp;

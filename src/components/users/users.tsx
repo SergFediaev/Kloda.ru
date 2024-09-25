@@ -22,9 +22,13 @@ export const Users = () => {
     return <ErrorMessage>Users not found 🙈</ErrorMessage>
   }
 
+  const sortedUsers = data.sort((a, b) =>
+    b.registeredAt.localeCompare(a.registeredAt),
+  )
+
   return (
     <Columns className='columns-md'>
-      {data.map(user => (
+      {sortedUsers.map(user => (
         <User key={user.id} user={user} className='break-inside-avoid' />
       ))}
     </Columns>

@@ -21,9 +21,13 @@ export const Cards = () => {
     return <ErrorMessage>Cards not found 🙈</ErrorMessage>
   }
 
+  const sortedCards = data.sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  )
+
   return (
     <Columns>
-      {data.map(card => (
+      {sortedCards.map(card => (
         <Card key={card.id} card={card} className='break-inside-avoid' />
       ))}
     </Columns>
