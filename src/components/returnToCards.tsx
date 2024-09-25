@@ -1,4 +1,4 @@
-import { Wrapper } from '@/components/wrapper'
+import { Wrapper } from '@/components/containers/wrapper'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 

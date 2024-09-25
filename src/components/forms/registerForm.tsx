@@ -1,11 +1,12 @@
 'use client'
 
 import { Button } from '@/components/button'
-import { ButtonsContainer } from '@/components/buttonsContainer'
-import { Form } from '@/components/form'
-import { FormInput } from '@/components/formInput'
+import { ButtonsContainer } from '@/components/containers/buttonsContainer'
+import { Form } from '@/components/forms/form'
+import { FormInput } from '@/components/forms/formInput'
 import { useRegister } from '@/hooks/useAuth'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -37,7 +38,8 @@ const defaultValues: RegisterSchema = {
 }
 
 export const RegisterForm = () => {
-  const { mutate, isPending, error } = useRegister()
+  const router = useTransitionRouter()
+  const { data, mutate, isPending, error, isSuccess } = useRegister()
 
   const registerText = isPending ? 'Registering' : 'Register'
 
@@ -54,6 +56,10 @@ export const RegisterForm = () => {
   const onSubmit = handleSubmit(data => mutate(data))
 
   const onReset = () => reset(defaultValues)
+
+  if (isSuccess) {
+    router.push(`user/${data.id}`)
+  }
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>

@@ -1,30 +1,31 @@
 'use client'
 
-import { Card } from '@/components/card'
+import { Card } from '@/components/cards/card'
+import { Columns } from '@/components/containers/columns'
+import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { useGetCards } from '@/hooks/useCards'
 
-// ToDo: Error
 export const Cards = () => {
   const { isPending, isError, data, error } = useGetCards()
 
   if (isPending) {
-    return <Loader message='Fetching cards' className='text-2xl' />
+    return <Loader className='text-2xl'>Fetching cards</Loader>
   }
 
   if (isError) {
-    return `Error: ${error.message}`
+    return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
   if (!data?.length) {
-    return 'Cards not found 🙈'
+    return <ErrorMessage>Cards not found 🙈</ErrorMessage>
   }
 
   return (
-    <div className='columns-lg gap-x-6 space-y-6'>
+    <Columns>
       {data.map(card => (
         <Card key={card.id} card={card} className='break-inside-avoid' />
       ))}
-    </div>
+    </Columns>
   )
 }

@@ -1,16 +1,15 @@
-import { Cards } from '@/components/cards/cards'
 import { Container } from '@/components/containers/container'
+import { Users } from '@/components/users/users'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Cards | Kloda',
+  title: 'Users',
 }
 
-// ToDo: README.md
-export default function CardsPage() {
+export default function UsersPage() {
   return (
     <Container>
-      <Cards />
+      <Users />
     </Container>
   )
 }

@@ -1,5 +1,5 @@
-import { Block } from '@/components/block'
-import { Container } from '@/components/container'
+import { Block } from '@/components/containers/block'
+import { Container } from '@/components/containers/container'
 import { ReturnToCards } from '@/components/returnToCards'
 import type { Metadata } from 'next'
 

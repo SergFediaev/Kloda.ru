@@ -1,9 +1,9 @@
 'use client'
 
 import { Button } from '@/components/button'
-import { Container } from '@/components/container'
+import { Container } from '@/components/containers/container'
+import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
-import { Wrapper } from '@/components/wrapper'
 import {
   LayoutDashboard,
   LogIn,
@@ -13,6 +13,7 @@ import {
   SquarePen,
   Sun,
   Unplug,
+  Users,
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Link } from 'next-view-transitions'
@@ -28,6 +29,7 @@ export const Header = () => {
   const isRootPage = pathname === '/'
   const isNotCreateCardPage = pathname !== '/create-card'
   const isNotLoginPage = pathname !== '/login'
+  const isNotUsersPage = pathname !== '/users'
   const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
@@ -96,6 +98,11 @@ export const Header = () => {
             {isNotLoginPage && (
               <Link href='/login' title='Login'>
                 <LogIn />
+              </Link>
+            )}
+            {isNotUsersPage && (
+              <Link href='/users' title='Users'>
+                <Users />
               </Link>
             )}
             {!isRootPage && (

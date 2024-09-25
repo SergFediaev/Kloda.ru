@@ -1,7 +1,7 @@
 import type { CardResponse } from '@/api/cards/cards.types'
-import { Block } from '@/components/block'
 import { Button } from '@/components/button'
-import { Wrapper } from '@/components/wrapper'
+import { Block } from '@/components/containers/block'
+import { Wrapper } from '@/components/containers/wrapper'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
 import {
@@ -23,8 +23,7 @@ type Props = {
   isOpen?: boolean
 } & ComponentPropsWithoutRef<'article'>
 
-// ToDo: Uncategorized
-// ToDo: Author email
+// ToDo: Uncategorized, author email, TypeError: Cannot read properties of undefined (reading 'id')
 export const Card = ({
   card: {
     id,

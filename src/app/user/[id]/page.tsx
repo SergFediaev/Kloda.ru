@@ -1,5 +1,5 @@
-import { CardDetails } from '@/components/cards/cardDetails'
 import { Container } from '@/components/containers/container'
+import { UserProfile } from '@/components/users/userProfile'
 import type { Metadata } from 'next'
 
 type Props = {
@@ -9,13 +9,13 @@ type Props = {
 }
 
 export const generateMetadata = ({ params: { id } }: Props): Metadata => ({
-  title: `Card #${id}`,
+  title: `User #${id}`,
 })
 
-export default function CardPage({ params: { id } }: Props) {
+export default function UserPage({ params: { id } }: Props) {
   return (
     <Container isCentered>
-      <CardDetails id={id} />
+      <UserProfile id={id} />
     </Container>
   )
 }

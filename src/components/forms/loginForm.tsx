@@ -1,8 +1,8 @@
 'use client'
 
 import { Button } from '@/components/button'
-import { Form } from '@/components/form'
-import { FormInput } from '@/components/formInput'
+import { Form } from '@/components/forms/form'
+import { FormInput } from '@/components/forms/formInput'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'

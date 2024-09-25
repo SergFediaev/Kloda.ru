@@ -6,4 +6,5 @@ export type RegisterArgs = {
 
 export type RegisterResponse = {
   accessToken: string
+  id: number
 }

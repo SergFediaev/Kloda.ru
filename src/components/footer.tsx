@@ -1,5 +1,5 @@
-import { Container } from '@/components/container'
-import { Wrapper } from '@/components/wrapper'
+import { Container } from '@/components/containers/container'
+import { Wrapper } from '@/components/containers/wrapper'
 import { Copyright, ExternalLink, Mail } from 'lucide-react'
 
 export const Footer = () => (

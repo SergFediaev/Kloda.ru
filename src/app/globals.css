@@ -20,12 +20,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @layer base {
   a {
     @apply underline underline-offset-4 text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant;

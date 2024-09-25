@@ -1,14 +1,12 @@
-import { Wrapper } from '@/components/wrapper'
 import { cn } from '@/utils/mergeClasses'
 import type { ComponentPropsWithoutRef } from 'react'
 
-export const ButtonsContainer = ({
+export const Columns = ({
   className,
   ...restProps
 }: ComponentPropsWithoutRef<'div'>) => (
-  <Wrapper
-    as='div'
-    className={cn('gap-x-10 gap-y-6', className)}
+  <div
+    className={cn('columns-lg gap-x-6 space-y-6', className)}
     {...restProps}
   />
 )

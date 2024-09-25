@@ -1,4 +1,4 @@
-import { Input, type InputProps } from '@/components/input'
+import { Input, type InputProps } from '@/components/forms/input'
 import {
   type Control,
   type FieldValues,

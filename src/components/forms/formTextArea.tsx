@@ -1,4 +1,4 @@
-import { TextArea, type TextAreaProps } from '@/components/textArea'
+import { TextArea, type TextAreaProps } from '@/components/forms/textArea'
 import {
   type Control,
   type FieldValues,

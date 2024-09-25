@@ -1,6 +1,6 @@
-import { Block } from '@/components/block'
-import { CardForm } from '@/components/cardForm'
-import { Container } from '@/components/container'
+import { Block } from '@/components/containers/block'
+import { Container } from '@/components/containers/container'
+import { CardForm } from '@/components/forms/cardForm'
 import { ReturnToCards } from '@/components/returnToCards'
 import type { Metadata } from 'next'
 
