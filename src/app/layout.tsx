@@ -19,7 +19,7 @@ const geistMono = localFont({
   weight: '100 900',
 })
 
-// ToDo: description
+// ToDo: description, SVG favicon
 export const metadata: Metadata = {
   title: {
     template: '%s | Kloda',

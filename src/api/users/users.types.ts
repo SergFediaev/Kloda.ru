@@ -6,5 +6,5 @@ export type UserResponse = {
   favoriteCards: string[]
   likedCards: string[]
   dislikedCards: string[]
-  createdAt: string
+  registeredAt: string
 }

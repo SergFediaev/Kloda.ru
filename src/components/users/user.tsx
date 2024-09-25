@@ -21,7 +21,7 @@ export const User = ({
     favoriteCards,
     likedCards,
     dislikedCards,
-    createdAt,
+    registeredAt,
   },
   isOpen,
   ...restProps
@@ -41,7 +41,7 @@ export const User = ({
         <Mail size={16} />
       </Wrapper>
       <p>
-        Created: <time>{dateToLocale(createdAt)}</time>
+        Registered: <time>{dateToLocale(registeredAt)}</time>
       </p>
     </div>
     <div>
