@@ -28,11 +28,11 @@ export const Footer = () => (
         </Wrapper>
         <Wrapper>
           <a
-            href='https://api.kloda.fediaev.ru/swagger'
+            href='https://api.kloda.fediaev.ru'
             target='_blank'
             rel='noopener noreferrer'
           >
-            Kloda API Swagger
+            Kloda API
           </a>
           &nbsp;
           <ExternalLink size={16} />
