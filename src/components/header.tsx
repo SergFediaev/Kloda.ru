@@ -4,7 +4,9 @@ import { Button } from '@/components/button'
 import { Container } from '@/components/containers/container'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
+import { useMe } from '@/hooks/useAuth'
 import {
+  CircleUser,
   LayoutDashboard,
   LogIn,
   Moon,
@@ -25,11 +27,13 @@ const NETWORK_STATUS = 'Network status:'
 
 // ToDo: useTheme custom hook
 export const Header = () => {
+  const { isSuccess, data } = useMe()
   const pathname = usePathname()
   const isRootPage = pathname === '/'
-  const isNotCreateCardPage = pathname !== '/create-card'
+  const isNotCreatePage = pathname !== '/create-card'
   const isNotLoginPage = pathname !== '/login'
   const isNotUsersPage = pathname !== '/users'
+  const isNotUserPage = isSuccess && pathname !== `/user/${data.id}`
   const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
@@ -95,9 +99,14 @@ export const Header = () => {
         <Wrapper as='div' hasGaps className='justify-between text-2xl'>
           <Heading as='h1'>{titleElement}</Heading>
           <Wrapper as='nav' hasGaps>
-            {isNotLoginPage && (
+            {isNotLoginPage && !isSuccess && (
               <Link href='/login' title='Login'>
                 <LogIn />
+              </Link>
+            )}
+            {isNotUserPage && (
+              <Link href={`/user/${data.id}`} title='Profile'>
+                <CircleUser />
               </Link>
             )}
             {isNotUsersPage && (
@@ -110,7 +119,7 @@ export const Header = () => {
                 <LayoutDashboard />
               </Link>
             )}
-            {isNotCreateCardPage && (
+            {isNotCreatePage && (
               <Link href='/create-card' title='Create card'>
                 <SquarePen />
               </Link>
