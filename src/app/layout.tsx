@@ -1,23 +1,13 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import './globals.css'
 import { Providers } from '@/app/providers'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { ViewTransitions } from 'next-view-transitions'
+import { Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-})
-
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
-})
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 // ToDo: description, SVG favicon
 export const metadata: Metadata = {
@@ -50,9 +40,7 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang='en' suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable}${geistMono.variable} antialiased`}
-        >
+        <body className={`${inter.className} antialiased`}>
           <Providers>
             <div className='flex min-h-svh flex-col bg-ground text-primary dark:bg-ground-dark dark:text-primary-dark'>
               <Header />
