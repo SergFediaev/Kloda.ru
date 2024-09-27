@@ -18,7 +18,11 @@ export const Heading = <T extends ElementType = typeof DEFAULT_TYPE>({
 
   return (
     <Component
-      className={cn('text-2xl', isCentered && 'self-center', className)}
+      className={cn(
+        'break-words text-2xl',
+        isCentered && 'self-center',
+        className,
+      )}
       {...restProps}
     />
   )

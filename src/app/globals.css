@@ -21,8 +21,12 @@ body {
 }
 
 @layer base {
+  body {
+    min-width: 360px;
+  }
+
   a {
-    @apply underline underline-offset-4 text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant;
+    @apply break-all underline underline-offset-4 text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant;
   }
 
   :disabled {
