@@ -6,7 +6,7 @@ export type RegisterArgs = {
 
 export type RegisterResponse = {
   accessToken: string
-  id: number
+  userId: number
 }
 
 export type LoginArgs = {
@@ -17,7 +17,7 @@ export type LoginArgs = {
 // ToDo: Duplicate types
 export type LoginResponse = {
   accessToken: string
-  id: number
+  userId: number
 }
 
 export type RefreshResponse = {

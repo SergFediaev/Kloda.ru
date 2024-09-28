@@ -7,4 +7,5 @@ export type UserResponse = {
   likedCards: string[]
   dislikedCards: string[]
   registeredAt: string
+  lastLoginAt: string
 }

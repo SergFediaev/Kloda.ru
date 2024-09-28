@@ -24,6 +24,7 @@ export const User = ({
     likedCards,
     dislikedCards,
     registeredAt,
+    lastLoginAt,
   },
   isOpen,
   ...restProps
@@ -53,6 +54,9 @@ export const User = ({
         </Wrapper>
         <p>
           Registered: <time>{dateToLocale(registeredAt)}</time>
+        </p>
+        <p>
+          Last login: <time>{dateToLocale(lastLoginAt)}</time>
         </p>
       </div>
       <div>

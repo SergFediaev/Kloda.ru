@@ -37,7 +37,7 @@ export const LoginForm = () => {
   const onSubmit = handleSubmit(data => mutate(data))
 
   if (isSuccess) {
-    router.push(`/user/${data.id}`)
+    router.push(`/user/${data.userId}`)
   }
 
   return (
