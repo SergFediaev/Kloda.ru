@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title,
 }
 
+// ToDo: Fix background gif
 export default function NotFoundPage() {
   return (
     <div className='flex flex-grow bg-[url(/gifs/not_found.gif)] bg-contain bg-right-top bg-no-repeat'>

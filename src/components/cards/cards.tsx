@@ -6,8 +6,13 @@ import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { useGetCards } from '@/hooks/useCards'
 
-export const Cards = () => {
-  const { isPending, isError, data, error } = useGetCards()
+type Props = {
+  search: string
+  page: number
+}
+
+export const Cards = (props: Props) => {
+  const { isPending, isError, data, error } = useGetCards(props)
 
   if (isPending) {
     return <Loader className='text-2xl'>Fetching cards</Loader>
@@ -17,11 +22,11 @@ export const Cards = () => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
-  if (!data?.length) {
+  if (!data.cards.length) {
     return <ErrorMessage>Cards not found 🙈</ErrorMessage>
   }
 
-  const sortedCards = data.sort((a, b) =>
+  const sortedCards = data.cards.sort((a, b) =>
     b.createdAt.localeCompare(a.createdAt),
   )
 

@@ -5,13 +5,14 @@ import {
   getCards,
   likeCard,
 } from '@/api/cards/cards.api'
+import type { CardsArgs } from '@/api/cards/cards.types'
 import { getQueryClient } from '@/app/getQueryClient'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const useGetCards = () =>
+export const useGetCards = (args: CardsArgs) =>
   useQuery({
-    queryKey: ['cards'],
-    queryFn: getCards,
+    queryKey: ['cards', args.search, args.page],
+    queryFn: () => getCards(args),
   })
 
 export const useGetCard = (id: string) =>

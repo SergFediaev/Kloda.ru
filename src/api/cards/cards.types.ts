@@ -18,3 +18,13 @@ export type CardResponse = {
   createdAt: string
   updatedAt: string
 }
+
+export type CardsArgs = {
+  search: string
+  page: number
+}
+
+export type CardsResponse = {
+  cards: CardResponse[]
+  total: number
+}

@@ -7,21 +7,21 @@ export const useRegister = () =>
   useMutation<RegisterResponse, Error, RegisterArgs>({
     mutationFn: register,
     onSuccess: ({ accessToken }) =>
-      localStorage.setItem('access_token', accessToken),
+      sessionStorage.setItem('access_token', accessToken),
   })
 
 export const useLogin = () =>
   useMutation({
     mutationFn: login,
     onSuccess: ({ accessToken }) =>
-      localStorage.setItem('access_token', accessToken),
+      sessionStorage.setItem('access_token', accessToken),
   })
 
 export const useLogout = () =>
   useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      localStorage.removeItem('access_token')
+      sessionStorage.removeItem('access_token')
       void getQueryClient().invalidateQueries({ queryKey: ['me'] })
     },
   })

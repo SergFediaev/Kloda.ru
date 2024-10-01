@@ -4,6 +4,7 @@ import { Button } from '@/components/button'
 import { Container } from '@/components/containers/container'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
+import { Search } from '@/components/search'
 import { useMe } from '@/hooks/useAuth'
 import {
   CircleUser,
@@ -34,6 +35,7 @@ export const Header = () => {
   const isNotLoginPage = pathname !== '/login'
   const isNotUsersPage = pathname !== '/users'
   const isNotUserPage = isSuccess && pathname !== `/user/${data.id}`
+  const isSearchablePage = pathname === '/' || pathname === '/users'
   const [isOnline, setIsOnline] = useState(true)
 
   const logo = isOnline ? (
@@ -94,10 +96,11 @@ export const Header = () => {
   }
 
   return (
-    <header className='bg-surface shadow-md dark:bg-surface-dark'>
+    <header className='sticky top-0 bg-surface shadow-md dark:bg-surface-dark'>
       <Container>
-        <Wrapper as='div' hasGaps className='justify-between text-2xl'>
+        <Wrapper as='div' hasGaps className='justify-between'>
           <Heading as='h1'>{titleElement}</Heading>
+          {isSearchablePage && <Search />}
           <Wrapper as='nav' hasGaps>
             {isNotLoginPage && !isSuccess && (
               <Link href='/login' title='Login'>

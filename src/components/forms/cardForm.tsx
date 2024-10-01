@@ -80,6 +80,7 @@ export const CardForm = () => {
         placeholder={'Card title'}
         error={errors.title?.message}
         required
+        spellCheck
       />
       <FormTextArea
         control={control}
@@ -88,6 +89,7 @@ export const CardForm = () => {
         placeholder={'Card content'}
         error={errors.content?.message}
         required
+        spellCheck
       />
       <FormInput
         control={control}

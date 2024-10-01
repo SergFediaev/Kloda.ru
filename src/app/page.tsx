@@ -6,11 +6,21 @@ export const metadata: Metadata = {
   title: 'Cards | Kloda',
 }
 
+type Props = {
+  searchParams?: {
+    search?: string
+    page?: string
+  }
+}
+
 // ToDo: README.md
-export default function CardsPage() {
+export default function CardsPage({ searchParams }: Props) {
+  const search = searchParams?.search ?? ''
+  const page = Number(searchParams?.page) || 1
+
   return (
     <Container>
-      <Cards />
+      <Cards search={search} page={page} />
     </Container>
   )
 }

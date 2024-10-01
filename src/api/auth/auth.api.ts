@@ -15,7 +15,7 @@ const authApi = ky.create({
   hooks: {
     beforeRequest: [
       ({ headers }) => {
-        const accessToken = localStorage.getItem('access_token')
+        const accessToken = sessionStorage.getItem('access_token')
 
         if (!accessToken) {
           return
@@ -31,9 +31,10 @@ const authApi = ky.create({
   },
 })
 
+// ToDo: Handle errors
 export const register = async (json: RegisterArgs) => {
   try {
-    return await authApi.post('register', { json }).json<RegisterResponse>()
+    return await authApi.post<RegisterResponse>('register', { json }).json()
   } catch (error) {
     if (error instanceof HTTPError) {
       const errorMessage = await handleHttpError(error)
@@ -46,14 +47,14 @@ export const register = async (json: RegisterArgs) => {
 }
 
 export const login = (json: LoginArgs) =>
-  authApi.post('login', { json }).json<LoginResponse>()
+  authApi.post<LoginResponse>('login', { json }).json()
 
 export const logout = () => authApi.post('logout').json()
 
-export const me = () => authApi('me').json<UserResponse>()
+export const me = () => authApi<UserResponse>('me').json()
 
 export const refresh = async () => {
-  const { accessToken } = await authApi.post('refresh').json<RefreshResponse>()
+  const { accessToken } = await authApi.post<RefreshResponse>('refresh').json()
 
-  localStorage.setItem('access_token', accessToken)
+  sessionStorage.setItem('access_token', accessToken)
 }
