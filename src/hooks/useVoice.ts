@@ -3,9 +3,14 @@ import { useEffect, useState } from 'react'
 
 let speechRecognition: Nullable<SpeechRecognition> = null
 
-if (typeof window !== 'undefined' && window.webkitSpeechRecognition) {
-  speechRecognition = new webkitSpeechRecognition()
-  speechRecognition.lang = 'ru-RU' // ToDo: Set lang
+if (typeof window !== 'undefined') {
+  const SpeechRecognitionConstructor =
+    window.SpeechRecognition || window.webkitSpeechRecognition
+
+  if (SpeechRecognitionConstructor) {
+    speechRecognition = new SpeechRecognitionConstructor()
+    speechRecognition.lang = 'ru-RU' // ToDo: Set lang
+  }
 }
 
 export const useVoice = () => {
