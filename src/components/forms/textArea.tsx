@@ -24,12 +24,12 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           {label}
         </label>
         <textarea
-          {...restProps}
           ref={ref}
           id={textAreaId}
           name={name}
           required={required}
           className='min-h-24 whitespace-pre-wrap rounded-xl px-4 py-2 shadow-inner'
+          {...restProps}
         />
         <p className='text-danger'>{error}</p>
       </div>

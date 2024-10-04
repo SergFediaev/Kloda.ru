@@ -95,8 +95,9 @@ export const Header = () => {
     return null
   }
 
+  // ToDo: Refactor background styles to style
   return (
-    <header className='sticky top-0 bg-surface shadow-md dark:bg-surface-dark'>
+    <header className='sticky top-0 bg-surface bg-opacity-70 shadow-md backdrop-blur-xl dark:bg-surface-dark dark:bg-opacity-70'>
       <Container>
         <Wrapper as='div' hasGaps className='justify-between'>
           <Heading as='h1'>{titleElement}</Heading>

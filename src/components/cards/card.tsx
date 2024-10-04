@@ -5,12 +5,14 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { useDislikeCard, useLikeCard } from '@/hooks/useCards'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
+import { cn } from '@/utils/mergeClasses'
 import {
   ChevronDown,
   ChevronUp,
   Copy,
   Link as LinkIcon,
   Mail,
+  Speech,
   ThumbsDown,
   ThumbsUp,
 } from 'lucide-react'
@@ -23,22 +25,17 @@ type Props = {
   card: CardResponse
   isExpanded?: boolean
   isOpen?: boolean
+  isCardToSpeech?: boolean
+  setCardToSpeech?: (card: CardResponse) => void
 } & ComponentPropsWithoutRef<'article'>
 
 // ToDo: Uncategorized, author email, TypeError: Cannot read properties of undefined (reading 'id')
 export const Card = ({
-  card: {
-    id,
-    title,
-    content,
-    categories,
-    likes,
-    dislikes,
-    authorId,
-    createdAt,
-    updatedAt,
-  },
+  card,
   isOpen,
+  isCardToSpeech,
+  setCardToSpeech,
+  className,
   ...restProps
 }: Props) => {
   const {
@@ -58,12 +55,22 @@ export const Card = ({
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
-  const expandIcon = isExpanded ? (
-    <ChevronUp size={16} />
-  ) : (
-    <ChevronDown size={16} />
-  )
+  const expandIcon = isExpanded ? <ChevronUp /> : <ChevronDown />
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
+
+  const onCardToSpeech = () => setCardToSpeech?.(card)
+
+  const {
+    id,
+    title,
+    content,
+    categories,
+    likes,
+    dislikes,
+    authorId,
+    createdAt,
+    updatedAt,
+  } = card
 
   const copyCardContent = () =>
     copyToClipboard(
@@ -116,7 +123,11 @@ export const Card = ({
       as='article'
       heading={title}
       isConstrained={isOpen}
-      className='max-w-2xl'
+      className={cn(
+        isCardToSpeech &&
+          'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
+        className,
+      )}
       {...restProps}
     >
       <p className='whitespace-pre-wrap break-words'>{content}</p>
@@ -127,14 +138,14 @@ export const Card = ({
           </Button>
           <Wrapper>
             <Button variant='text' title='Like' onClick={onLike}>
-              <ThumbsUp size={16} />
+              <ThumbsUp />
             </Button>
             &nbsp;
             {likes}
           </Wrapper>
           <Wrapper>
             <Button variant='text' title='Dislike' onClick={onDislike}>
-              <ThumbsDown size={16} />
+              <ThumbsDown />
             </Button>
             &nbsp;
             {dislikes}
@@ -144,15 +155,20 @@ export const Card = ({
             onClick={copyCardContent}
             title='Copy card content to clipboard'
           >
-            <Copy size={16} />
+            <Copy />
           </Button>
           <Button
             variant='text'
             onClick={copyCardLink}
             title='Copy card link to clipboard'
           >
-            <LinkIcon size={16} />
+            <LinkIcon />
           </Button>
+          {setCardToSpeech && (
+            <Button variant='text' onClick={onCardToSpeech}>
+              <Speech />
+            </Button>
+          )}
         </Wrapper>
         {isOpen ? (
           <Link href={'/'}>Close</Link>

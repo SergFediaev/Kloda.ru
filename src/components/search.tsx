@@ -1,69 +1,83 @@
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
+import { VoiceSearch } from '@/components/voiceSearch'
+import { useDebounce } from '@/hooks/useDebounce'
 import { useGenerateId } from '@/hooks/useGenerateId'
+import { useVoice } from '@/hooks/useVoice'
 import { Search as SearchIcon, X } from 'lucide-react'
-import { useTransitionRouter } from 'next-view-transitions'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { type ChangeEvent, useRef } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { type ChangeEvent, useEffect, useState } from 'react'
 
-const SEARCH = 'search'
+const SEARCH_PARAM = 'search'
 
 export const Search = () => {
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const { replace } = useTransitionRouter()
+  const { replace } = useRouter()
   const searchId = useGenerateId()
-  const searchRef = useRef<HTMLInputElement>(null)
+  const [search, setSearch] = useState(
+    searchParams.get(SEARCH_PARAM)?.toString() ?? '',
+  )
+  const debouncedSearch = useDebounce(search, 500)
+  const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
 
-  const searchQuery = searchParams.get(SEARCH)?.toString()
   const searchBy = pathname === '/' ? 'cards' : 'users'
-  const params = new URLSearchParams(searchParams)
 
-  const deleteQueryParams = () => params.delete(SEARCH)
+  const onSearch = ({
+    currentTarget: { value },
+  }: ChangeEvent<HTMLInputElement>) => setSearch(value)
 
-  const replacePathParams = () => replace(`${pathname}?${params}`)
+  const onReset = () => setSearch('')
 
-  const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    const term = event.target.value
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams)
 
-    if (term) {
-      params.set(SEARCH, term)
+    if (debouncedSearch) {
+      params.set(SEARCH_PARAM, debouncedSearch)
     } else {
-      deleteQueryParams()
+      params.delete(SEARCH_PARAM)
     }
 
-    replacePathParams()
-  }
+    replace(`${pathname}?${params}`)
+  }, [debouncedSearch, replace, pathname, searchParams])
 
-  const onReset = () => {
-    if (searchRef.current) {
-      searchRef.current.value = ''
+  useEffect(() => {
+    if (transcript) {
+      setSearch(transcript)
     }
-
-    deleteQueryParams()
-    replacePathParams()
-  }
+  }, [transcript])
 
   return (
     <Wrapper as='div' className='gap-2 truncate'>
       <label title='Search' htmlFor={searchId}>
         <SearchIcon />
       </label>
-      <input
-        ref={searchRef}
-        type='search'
-        className='min-w-0 truncate rounded-3xl border-2 border-accent px-3 py-1 dark:border-accent-dark'
-        placeholder={`Search ${searchBy}`}
-        onChange={onSearch}
-        spellCheck
-        defaultValue={searchQuery}
-        id={searchId}
+      <div className='relative flex min-w-0'>
+        <input
+          value={search}
+          type='search'
+          className='min-w-0 truncate rounded-3xl border-2 border-accent py-1 pr-8 pl-3 dark:border-accent-dark'
+          placeholder={`Search ${searchBy}`}
+          onChange={onSearch}
+          spellCheck
+          id={searchId}
+        />
+        {search && (
+          <Button
+            variant='text'
+            onClick={onReset}
+            title='Reset search'
+            className='-translate-y-1/2 absolute top-1/2 right-2'
+          >
+            <X />
+          </Button>
+        )}
+      </div>
+      <VoiceSearch
+        isVoiceSupported={isVoiceSupported}
+        onListen={onListen}
+        isListening={isListening}
       />
-      {searchQuery && (
-        <Button variant='text' onClick={onReset} title='Reset search'>
-          <X />
-        </Button>
-      )}
     </Wrapper>
   )
 }
