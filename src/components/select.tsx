@@ -9,9 +9,9 @@ export const Select = ({ label, id, name, ...restProps }: Props) => {
   const selectId = useGenerateId(id, name)
 
   return (
-    <div className='flex flex-col'>
-      <label htmlFor={selectId}>{label}</label>
+    <label htmlFor={selectId} className='flex flex-col'>
+      {label}
       <select id={selectId} name={name} {...restProps} />
-    </div>
+    </label>
   )
 }

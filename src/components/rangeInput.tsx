@@ -9,9 +9,9 @@ export const RangeInput = ({ label, id, name, ...restProps }: Props) => {
   const inputId = useGenerateId(id, name)
 
   return (
-    <div className='flex flex-col'>
-      <label htmlFor={inputId}>{label}</label>
+    <label htmlFor={inputId} className='flex flex-col'>
+      {label}
       <input type='range' id={inputId} name={name} {...restProps} />
-    </div>
+    </label>
   )
 }

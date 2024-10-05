@@ -5,22 +5,24 @@ import { Heading } from '@/components/heading'
 import { RangeInput } from '@/components/rangeInput'
 import { Select } from '@/components/select'
 import type { Nullable } from '@/types/nullable'
+import { formatToPercent } from '@/utils/formatToPercent'
 import {
   ArrowRightToLine,
   CircleArrowLeft,
   CircleArrowRight,
   CirclePause,
   CirclePlay,
-  CircleSlash,
   CircleStop,
-  CircleX,
   Dices,
   Disc3,
   ListMusic,
   ListRestart,
   Play,
   Repeat1,
+  Settings2,
   Shuffle,
+  Undo2,
+  X,
 } from 'lucide-react'
 import Image from 'next/image'
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react'
@@ -70,6 +72,7 @@ export const TextToSpeech = ({
   const [isPaused, setIsPaused] = useState(false)
   const [isPlaylistExpanded, setIsPlaylistExpanded] = useState(false)
   const [isVisualizationExpanded, setIsVisualizationExpanded] = useState(false)
+  const [isSettingsExpanded, setIsSettingsExpanded] = useState(true)
   const [playMode, setPlayMode] = useState<PlayMode>(DEFAULT_PLAY_MODE)
 
   const hasCards = cards.length > 1
@@ -80,6 +83,9 @@ export const TextToSpeech = ({
   const visualizationTitle = isVisualizationExpanded
     ? 'Collapse visualization'
     : 'Expand visualization'
+  const settingsTitle = isSettingsExpanded
+    ? 'Collapse settings'
+    : 'Expand settings'
 
   useEffect(() => speechSynth.cancel(), [])
 
@@ -300,6 +306,8 @@ export const TextToSpeech = ({
   const onVisualization = () =>
     setIsVisualizationExpanded(!isVisualizationExpanded)
 
+  const onSettings = () => setIsSettingsExpanded(!isSettingsExpanded)
+
   // ToDo: Refactor handlers naming
   const onVoiceChange = ({
     currentTarget: { value },
@@ -329,7 +337,7 @@ export const TextToSpeech = ({
 
   // ToDo: Refactor JSX
   return (
-    <div className='sticky bottom-6 mx-auto mt-6 flex max-w-fit flex-wrap justify-center rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
+    <div className='sticky bottom-6 mx-auto mt-6 flex max-w-fit flex-wrap justify-center truncate rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
       <div className='flex flex-col gap-4 p-6'>
         <Heading as='h3' className='flex flex-wrap text-xl'>
           Text to speech:&nbsp;
@@ -342,16 +350,6 @@ export const TextToSpeech = ({
           </Button>
         </Heading>
         <Wrapper className='gap-4'>
-          <Button variant='text' onClick={onClose} title='Close'>
-            <CircleX />
-          </Button>
-          <Button
-            variant='text'
-            title={playModeTitle}
-            onClick={onChangePlayMode}
-          >
-            {playModeIcon}
-          </Button>
           {hasCards && (
             <Button variant='text' onClick={onPrev} title='Previous card'>
               <CircleArrowLeft />
@@ -376,6 +374,13 @@ export const TextToSpeech = ({
               <Dices />
             </Button>
           )}
+          <Button
+            variant='text'
+            title={playModeTitle}
+            onClick={onChangePlayMode}
+          >
+            {playModeIcon}
+          </Button>
           {hasCards && (
             <Button variant='text' onClick={onPlaylist} title={playlistTitle}>
               <ListMusic />
@@ -388,12 +393,18 @@ export const TextToSpeech = ({
           >
             <Disc3 className='hover:animate-spin' />
           </Button>
+          <Button variant='text' onClick={onSettings} title={settingsTitle}>
+            <Settings2 />
+          </Button>
           <Button
             variant='text'
             onClick={onResetSettings}
             title='Reset settings'
           >
-            <CircleSlash />
+            <Undo2 />
+          </Button>
+          <Button variant='text' onClick={onClose} title='Close'>
+            <X />
           </Button>
         </Wrapper>
         {isPlaylistExpanded && (
@@ -418,45 +429,49 @@ export const TextToSpeech = ({
             ))}
           </ul>
         )}
-        <Select
-          label='Voice'
-          value={voice.name}
-          onChange={onVoiceChange}
-          className='w-full max-w-fit truncate'
-        >
-          {voices.map(({ name }) => (
-            <option key={name}>{name}</option>
-          ))}
-        </Select>
-        <Wrapper className='gap-4'>
-          <RangeInput
-            label={`Volume: ${volume * 100}%`}
-            value={volume}
-            onChange={onVolumeChange}
-            min={0}
-            max={1}
-            step={0.1}
-          />
-          <RangeInput
-            label={`Rate: ${rate}`}
-            value={rate}
-            onChange={onRateChange}
-            min={0.1}
-            max={10}
-            step={0.1}
-          />
-          <RangeInput
-            label={`Pitch: ${pitch}`}
-            value={pitch}
-            onChange={onPitchChange}
-            min={0}
-            max={2}
-            step={0.1}
-          />
-        </Wrapper>
+        {isSettingsExpanded && (
+          <>
+            <Select
+              label='Voice'
+              value={voice.name}
+              onChange={onVoiceChange}
+              className='w-full max-w-fit truncate'
+            >
+              {voices.map(({ name }) => (
+                <option key={name}>{name}</option>
+              ))}
+            </Select>
+            <Wrapper className='gap-4'>
+              <RangeInput
+                label={formatToPercent(volume, 'Volume: ')}
+                value={volume}
+                onChange={onVolumeChange}
+                min={0}
+                max={1}
+                step={0.01}
+              />
+              <RangeInput
+                label={`Rate: ${rate}`}
+                value={rate}
+                onChange={onRateChange}
+                min={0.1}
+                max={10}
+                step={0.1}
+              />
+              <RangeInput
+                label={`Pitch: ${pitch}`}
+                value={pitch}
+                onChange={onPitchChange}
+                min={0}
+                max={2}
+                step={0.1}
+              />
+            </Wrapper>
+          </>
+        )}
       </div>
       {isVisualizationExpanded && (
-        <div className='self-end px-6 pt-6'>
+        <div className='self-end'>
           <Image
             src='/gifs/visualization.gif'
             alt='Visualization'
