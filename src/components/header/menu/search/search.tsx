@@ -1,6 +1,6 @@
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
-import { VoiceSearch } from '@/components/voiceSearch'
+import { VoiceSearch } from '@/components/header/menu/search/voiceSearch'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useGenerateId } from '@/hooks/useGenerateId'
 import { useVoice } from '@/hooks/useVoice'
@@ -11,8 +11,13 @@ import { type ChangeEvent, useEffect, useState } from 'react'
 const SEARCH_PARAM = 'search'
 
 export const Search = () => {
-  const searchParams = useSearchParams()
   const pathname = usePathname()
+
+  if (!(pathname === '/' || pathname === '/users')) {
+    return null
+  }
+
+  const searchParams = useSearchParams()
   const { replace } = useRouter()
   const searchId = useGenerateId()
   const [search, setSearch] = useState(
@@ -48,7 +53,7 @@ export const Search = () => {
   }, [transcript])
 
   return (
-    <Wrapper as='div' className='gap-2 truncate'>
+    <Wrapper as='div' className='flex-nowrap gap-2 truncate'>
       <label title='Search' htmlFor={searchId}>
         <SearchIcon />
       </label>

@@ -8,8 +8,8 @@ import type { Nullable } from '@/types/nullable'
 import { formatToPercent } from '@/utils/formatToPercent'
 import {
   ArrowRightToLine,
-  CircleArrowLeft,
-  CircleArrowRight,
+  CircleChevronLeft,
+  CircleChevronRight,
   CirclePause,
   CirclePlay,
   CircleStop,
@@ -352,7 +352,7 @@ export const TextToSpeech = ({
         <Wrapper className='gap-4'>
           {hasCards && (
             <Button variant='text' onClick={onPrev} title='Previous card'>
-              <CircleArrowLeft />
+              <CircleChevronLeft />
             </Button>
           )}
           <Button variant='text' onClick={onPlay} title='Play'>
@@ -366,7 +366,7 @@ export const TextToSpeech = ({
           </Button>
           {hasCards && (
             <Button variant='text' onClick={onNext} title='Next card'>
-              <CircleArrowRight />
+              <CircleChevronRight />
             </Button>
           )}
           {hasShuffleCards && (
