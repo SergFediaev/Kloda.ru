@@ -31,7 +31,7 @@ export const Button = ({
         'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
       ],
       variant === 'floating' &&
-        'fixed right-0 rounded-bl-full bg-accent-dark-variant pt-2 pr-2 pb-5 pl-5 opacity-50 transition hover:opacity-100 dark:bg-accent-variant',
+        'fixed right-0 z-10 rounded-bl-full bg-accent-dark-variant pt-2 pr-2 pb-5 pl-5 opacity-50 transition hover:opacity-100 dark:bg-accent-variant',
       isStretched && 'flex-grow',
       isLoading &&
         'cursor-progress bg-accent-dark-alternate dark:bg-accent-alternate',
