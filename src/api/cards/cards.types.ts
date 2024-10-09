@@ -22,9 +22,13 @@ export type CardResponse = {
 export type CardsArgs = {
   search: string
   page: number
+  limit: number
+  orderBy: string
+  sortBy: string
 }
 
 export type CardsResponse = {
   cards: CardResponse[]
-  total: number
+  totalCards: number
+  totalPages: number
 }

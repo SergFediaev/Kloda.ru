@@ -337,7 +337,7 @@ export const TextToSpeech = ({
 
   // ToDo: Refactor JSX
   return (
-    <div className='sticky bottom-6 mx-auto mt-6 flex max-w-fit flex-wrap justify-center truncate rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
+    <div className='flex flex-wrap justify-center rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
       <div className='flex flex-col gap-4 p-6'>
         <Heading as='h3' className='flex flex-wrap text-xl'>
           Text to speech:&nbsp;
@@ -408,29 +408,36 @@ export const TextToSpeech = ({
           </Button>
         </Wrapper>
         {isPlaylistExpanded && (
-          <ul>
-            <li>Playlist:</li>
-            {cards.map(card => (
-              <li key={card.id}>
-                {card.id === cardToSpeech.id ? (
-                  <Wrapper>
-                    <Play size={16} />
-                    &nbsp;
-                    {`#${card.id} ${card.title}`}
-                  </Wrapper>
-                ) : (
-                  <Button
-                    variant='text'
-                    onClick={() => onChangeCard(card)}
-                    title='Play card'
-                  >{`#${card.id} ${card.title}`}</Button>
-                )}
-              </li>
-            ))}
-          </ul>
+          <div>
+            <Heading as='h4' className='text-lg'>
+              Playlist:
+            </Heading>
+            <ul className='max-h-96 overflow-y-auto'>
+              {cards.map(card => (
+                <li key={card.id}>
+                  {card.id === cardToSpeech.id ? (
+                    <Wrapper>
+                      <Play size={16} />
+                      &nbsp;
+                      {`#${card.id} ${card.title}`}
+                    </Wrapper>
+                  ) : (
+                    <Button
+                      variant='text'
+                      onClick={() => onChangeCard(card)}
+                      title='Play card'
+                    >{`#${card.id} ${card.title}`}</Button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
         {isSettingsExpanded && (
           <>
+            <Heading as='h4' className='text-lg'>
+              Settings:
+            </Heading>
             <Select
               label='Voice'
               value={voice.name}
@@ -438,7 +445,9 @@ export const TextToSpeech = ({
               className='w-full max-w-fit truncate'
             >
               {voices.map(({ name }) => (
-                <option key={name}>{name}</option>
+                <option key={name} value={name}>
+                  {name}
+                </option>
               ))}
             </Select>
             <Wrapper className='gap-4'>

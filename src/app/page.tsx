@@ -10,17 +10,23 @@ type Props = {
   searchParams?: {
     search?: string
     page?: string
+    limit?: string
+    orderBy?: string
+    sortBy?: string
   }
 }
 
 // ToDo: README.md
 export default function CardsPage({ searchParams }: Props) {
-  const search = searchParams?.search ?? ''
-  const page = Number(searchParams?.page) || 1
-
   return (
     <Container>
-      <Cards search={search} page={page} />
+      <Cards
+        search={searchParams?.search ?? ''}
+        page={Number(searchParams?.page) || 1}
+        limit={Number(searchParams?.limit) || 10}
+        orderBy={searchParams?.orderBy ?? 'desc'}
+        sortBy={searchParams?.sortBy ?? 'createdAt'}
+      />
     </Container>
   )
 }

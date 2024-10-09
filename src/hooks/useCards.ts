@@ -11,7 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 
 export const useGetCards = (args: CardsArgs) =>
   useQuery({
-    queryKey: ['cards', args.search, args.page],
+    queryKey: ['cards', ...Object.values(args)],
     queryFn: () => getCards(args),
   })
 

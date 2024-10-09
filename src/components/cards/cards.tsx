@@ -5,13 +5,29 @@ import { Card } from '@/components/cards/card'
 import { Columns } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
+import { Pagination } from '@/components/pagination'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCards } from '@/hooks/useCards'
 import { useState } from 'react'
 
+const sorts = {
+  id: 'ID',
+  title: 'Title',
+  content: 'Content',
+  categories: 'Categories',
+  likes: 'Likes',
+  dislikes: 'Dislikes',
+  authorId: 'Author',
+  createdAt: 'Created',
+  updatedAt: 'Updated',
+}
+
 type Props = {
   search: string
   page: number
+  limit: number
+  orderBy: string
+  sortBy: string
 }
 
 export const Cards = (props: Props) => {
@@ -26,19 +42,17 @@ export const Cards = (props: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
-  if (!data.cards.length) {
+  const { cards, totalCards, totalPages } = data
+
+  if (!cards.length) {
     return <ErrorMessage>Cards not found 🙈</ErrorMessage>
   }
-
-  const sortedCards = data.cards.sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
-  )
 
   // ToDo: Refactor fragment
   return (
     <>
       <Columns>
-        {sortedCards.map(card => (
+        {cards.map(card => (
           <Card
             id={String(card.id)}
             key={card.id}
@@ -49,11 +63,23 @@ export const Cards = (props: Props) => {
           />
         ))}
       </Columns>
-      <TextToSpeech
-        cards={sortedCards}
-        cardToSpeech={cardToSpeech}
-        setCardToSpeech={setCardToSpeech}
-      />
+      <aside className='sticky bottom-6 mt-6 flex flex-col items-center gap-6'>
+        <TextToSpeech
+          cards={cards}
+          cardToSpeech={cardToSpeech}
+          setCardToSpeech={setCardToSpeech}
+        />
+        <Pagination
+          itemsName='Cards'
+          page={props.page}
+          limit={props.limit}
+          orderBy={props.orderBy}
+          sortBy={props.sortBy}
+          sorts={sorts}
+          totalItems={totalCards}
+          totalPages={totalPages}
+        />
+      </aside>
     </>
   )
 }
