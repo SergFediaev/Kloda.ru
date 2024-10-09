@@ -23,8 +23,8 @@ export type CardsArgs = {
   search: string
   page: number
   limit: number
-  orderBy: string
-  sortBy: string
+  order: string
+  sort: string
 }
 
 export type CardsResponse = {

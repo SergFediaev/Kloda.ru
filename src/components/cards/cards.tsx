@@ -26,8 +26,8 @@ type Props = {
   search: string
   page: number
   limit: number
-  orderBy: string
-  sortBy: string
+  order: string
+  sort: string
 }
 
 export const Cards = (props: Props) => {
@@ -73,11 +73,12 @@ export const Cards = (props: Props) => {
           itemsName='Cards'
           page={props.page}
           limit={props.limit}
-          orderBy={props.orderBy}
-          sortBy={props.sortBy}
+          order={props.order}
+          sort={props.sort}
           sorts={sorts}
           totalItems={totalCards}
           totalPages={totalPages}
+          itemsCount={cards.length}
         />
       </aside>
     </>

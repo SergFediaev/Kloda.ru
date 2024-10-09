@@ -11,28 +11,30 @@ const ORDERS = {
 
 const QUANTITIES = [5, 10, 15, 20, 25, 30, 50, 70, 100] as const
 
-type Key = 'page' | 'limit' | 'orderBy' | 'sortBy'
+type Key = 'page' | 'limit' | 'order' | 'sort'
 
 type Props = {
   itemsName?: string
   page: number
   limit: number
-  orderBy: string
-  sortBy: string
+  order: string
+  sort: string
   sorts: Record<string, string>
   totalItems: number
   totalPages: number
+  itemsCount: number
 }
 
 export const Pagination = ({
   itemsName = 'Items',
   page,
   limit,
-  orderBy,
-  sortBy,
+  order,
+  sort,
   sorts,
   totalItems,
   totalPages,
+  itemsCount,
 }: Props) => {
   const { replace } = useTransitionRouter()
   const searchParams = useSearchParams()
@@ -55,7 +57,9 @@ export const Pagination = ({
     <div className='flex flex-wrap items-center justify-around gap-4 rounded-3xl border-2 border-accent bg-ground bg-opacity-70 p-6 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
       <span className='text-center'>
         <p>{itemsName}</p>
-        <p>{totalItems}</p>
+        <p>
+          {itemsCount} / {totalItems}
+        </p>
       </span>
       {hasPages && (
         <>
@@ -85,9 +89,9 @@ export const Pagination = ({
       )}
       <Select
         label='Order by'
-        value={orderBy}
+        value={order}
         onChange={({ currentTarget: { value } }) =>
-          onChangeParams('orderBy', value)
+          onChangeParams('order', value)
         }
       >
         {Object.entries(ORDERS).map(([value, label]) => (
@@ -98,9 +102,9 @@ export const Pagination = ({
       </Select>
       <Select
         label='Sort by'
-        value={sortBy}
+        value={sort}
         onChange={({ currentTarget: { value } }) =>
-          onChangeParams('sortBy', value)
+          onChangeParams('sort', value)
         }
       >
         {Object.entries(sorts).map(([value, label]) => (

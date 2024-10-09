@@ -11,8 +11,8 @@ type Props = {
     search?: string
     page?: string
     limit?: string
-    orderBy?: string
-    sortBy?: string
+    order?: string
+    sort?: string
   }
 }
 
@@ -24,8 +24,8 @@ export default function CardsPage({ searchParams }: Props) {
         search={searchParams?.search ?? ''}
         page={Number(searchParams?.page) || 1}
         limit={Number(searchParams?.limit) || 10}
-        orderBy={searchParams?.orderBy ?? 'desc'}
-        sortBy={searchParams?.sortBy ?? 'createdAt'}
+        order={searchParams?.order ?? 'desc'}
+        sort={searchParams?.sort ?? 'createdAt'}
       />
     </Container>
   )
