@@ -10,7 +10,7 @@ import { handleHttpError } from '@/utils/handleHttpError'
 import ky, { HTTPError } from 'ky'
 
 const authApi = ky.create({
-  prefixUrl: 'https://api.kloda.fediaev.ru/v1/auth',
+  prefixUrl: `${process.env.NEXT_PUBLIC_API_URL}v1/auth`,
   credentials: 'include',
   hooks: {
     beforeRequest: [

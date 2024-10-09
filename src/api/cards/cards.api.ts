@@ -7,7 +7,7 @@ import type {
 import ky from 'ky'
 
 const cardsApi = ky.create({
-  prefixUrl: 'https://api.kloda.fediaev.ru/v1/cards',
+  prefixUrl: `${process.env.NEXT_PUBLIC_API_URL}v1/cards`,
 })
 
 export const getCards = (searchParams: CardsArgs) =>
