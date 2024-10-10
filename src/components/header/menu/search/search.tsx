@@ -12,11 +12,6 @@ const SEARCH_PARAM = 'search'
 
 export const Search = () => {
   const pathname = usePathname()
-
-  if (!(pathname === '/' || pathname === '/users')) {
-    return null
-  }
-
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   const searchId = useGenerateId()
@@ -51,6 +46,10 @@ export const Search = () => {
       setSearch(transcript)
     }
   }, [transcript])
+
+  if (!(pathname === '/' || pathname === '/users')) {
+    return null
+  }
 
   return (
     <Wrapper as='div' className='flex-nowrap gap-2 truncate'>

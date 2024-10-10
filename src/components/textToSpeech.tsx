@@ -2,9 +2,9 @@ import type { CardResponse } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
-import { Select } from '@/components/select'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
+import { Select, SelectItem } from '@nextui-org/select'
 import { Slider } from '@nextui-org/slider'
 import {
   ArrowRightToLine,
@@ -315,9 +315,9 @@ export const TextToSpeech = ({
 
   const onSettings = () => setIsSettingsExpanded(!isSettingsExpanded)
 
-  // ToDo: Refactor handlers naming
+  // ToDo: Refactor handlers naming and targets
   const onVoiceChange = ({
-    currentTarget: { value },
+    target: { value },
   }: ChangeEvent<HTMLSelectElement>) =>
     setVoice(voices.find(({ name }) => name === value) ?? voices[DEFAULT_VOICE])
 
@@ -440,15 +440,18 @@ export const TextToSpeech = ({
             </Heading>
             <Select
               label='Voice'
-              value={voice.name}
+              selectedKeys={[voice.name]}
               onChange={onVoiceChange}
-              className='w-full max-w-fit truncate'
+              color='warning'
+              items={voices}
+              placeholder='Select voice'
+              description='Available voices on your device'
             >
-              {voices.map(({ name }) => (
-                <option key={name} value={name}>
+              {({ name }) => (
+                <SelectItem key={name} value={name}>
                   {name}
-                </option>
-              ))}
+                </SelectItem>
+              )}
             </Select>
             <Wrapper className='gap-4'>
               <Slider

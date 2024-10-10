@@ -1,5 +1,5 @@
 import { Button } from '@/components/button'
-import { Select } from '@/components/select'
+import { Select, SelectItem } from '@nextui-org/select'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useSearchParams } from 'next/navigation'
@@ -9,6 +9,7 @@ const ORDERS = {
   desc: 'Descending',
 } as const
 
+// ToDo: string[]
 const QUANTITIES = [5, 10, 15, 20, 25, 30, 50, 70, 100] as const
 
 type Key = 'page' | 'limit' | 'order' | 'sort'
@@ -89,41 +90,47 @@ export const Pagination = ({
       )}
       <Select
         label='Order by'
-        value={order}
-        onChange={({ currentTarget: { value } }) =>
-          onChangeParams('order', value)
-        }
+        selectedKeys={[order]}
+        onChange={({ target: { value } }) => onChangeParams('order', value)}
+        className='w-auto min-w-36'
+        color='warning'
+        items={Object.entries(ORDERS)}
       >
-        {Object.entries(ORDERS).map(([value, label]) => (
-          <option key={value} value={value}>
+        {([value, label]) => (
+          <SelectItem key={value} value={value}>
             {label}
-          </option>
-        ))}
+          </SelectItem>
+        )}
       </Select>
       <Select
         label='Sort by'
-        value={sort}
-        onChange={({ currentTarget: { value } }) =>
-          onChangeParams('sort', value)
-        }
+        selectedKeys={[sort]}
+        onChange={({ target: { value } }) => onChangeParams('sort', value)}
+        className='w-auto min-w-36'
+        color='warning'
+        items={Object.entries(sorts)}
       >
-        {Object.entries(sorts).map(([value, label]) => (
-          <option key={value} value={value}>
+        {([value, label]) => (
+          <SelectItem key={value} value={value}>
             {label}
-          </option>
-        ))}
+          </SelectItem>
+        )}
       </Select>
       <Select
         label={`${itemsName} per page`}
-        value={limit}
-        onChange={({ currentTarget: { value } }) =>
-          onChangeParams('limit', value)
-        }
+        selectedKeys={[String(limit)]}
+        onChange={({ target: { value } }) => onChangeParams('limit', value)}
+        className='w-auto min-w-36'
+        color='warning'
       >
         {QUANTITIES.map(quantity => (
-          <option key={quantity} value={quantity}>
+          <SelectItem
+            key={quantity}
+            value={quantity}
+            textValue={String(quantity)}
+          >
             {quantity}
-          </option>
+          </SelectItem>
         ))}
       </Select>
     </div>
