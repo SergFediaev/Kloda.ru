@@ -2,10 +2,10 @@ import type { CardResponse } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
-import { RangeInput } from '@/components/rangeInput'
 import { Select } from '@/components/select'
 import type { Nullable } from '@/types/nullable'
-import { formatToPercent } from '@/utils/formatToPercent'
+import { cn } from '@/utils/mergeClasses'
+import { Slider } from '@nextui-org/slider'
 import {
   ArrowRightToLine,
   CircleChevronLeft,
@@ -31,6 +31,8 @@ type Props = {
   cards: CardResponse[]
   cardToSpeech?: CardResponse
   setCardToSpeech: (card?: CardResponse) => void
+  setIsCardPlaying?: (isPlaying: boolean) => void
+  playlistName?: string
 }
 
 type PlayMode = 'once' | 'repeat' | 'playlist' | 'shuffle'
@@ -59,6 +61,8 @@ export const TextToSpeech = ({
   cards,
   cardToSpeech,
   setCardToSpeech,
+  setIsCardPlaying,
+  playlistName,
 }: Props) => {
   if (!speechSynth || !utterance) {
     return null
@@ -69,10 +73,11 @@ export const TextToSpeech = ({
   const [volume, setVolume] = useState(DEFAULT_VOLUME)
   const [rate, setRate] = useState(DEFAULT_RATE)
   const [pitch, setPitch] = useState(DEFAULT_PITCH)
+  const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [isPlaylistExpanded, setIsPlaylistExpanded] = useState(false)
   const [isVisualizationExpanded, setIsVisualizationExpanded] = useState(false)
-  const [isSettingsExpanded, setIsSettingsExpanded] = useState(true)
+  const [isSettingsExpanded, setIsSettingsExpanded] = useState(false)
   const [playMode, setPlayMode] = useState<PlayMode>(DEFAULT_PLAY_MODE)
 
   const hasCards = cards.length > 1
@@ -144,6 +149,8 @@ export const TextToSpeech = ({
     if (!hasShuffleCards && playMode === 'shuffle') setPlayMode('playlist')
   }, [hasCards, hasShuffleCards, isPlaylistExpanded, playMode])
 
+  useEffect(() => setIsCardPlaying?.(isPlaying), [setIsCardPlaying, isPlaying])
+
   if (!cardToSpeech || !voices || !voice) {
     return null
   }
@@ -171,16 +178,15 @@ export const TextToSpeech = ({
 
   const onClose = () => {
     speechSynth.cancel()
-
-    if (isPaused) setIsPaused(false)
-
+    setIsPlaying(false)
+    setIsPaused(false)
     setCardToSpeech(undefined)
   }
 
   const onPrev = () => {
     speechSynth.cancel()
-
-    if (isPaused) setIsPaused(false)
+    setIsPlaying(true)
+    setIsPaused(false)
 
     const cardToSpeechIndex = getCardIndex(cards, cardToSpeech.id)
 
@@ -202,30 +208,31 @@ export const TextToSpeech = ({
   const onPlay = () => {
     if (isPaused) {
       speechSynth.resume()
-
-      setIsPaused(false)
     } else {
       speechSynth.cancel()
       speechSynth.speak(utterance)
     }
+
+    setIsPlaying(true)
+    setIsPaused(false)
   }
 
   const onPause = () => {
     speechSynth.pause()
-
-    if (!isPaused) setIsPaused(true)
+    setIsPlaying(false)
+    setIsPaused(true)
   }
 
   const onStop = () => {
     speechSynth.cancel()
-
-    if (isPaused) setIsPaused(false)
+    setIsPlaying(false)
+    setIsPaused(false)
   }
 
   const onNext = () => {
     speechSynth.cancel()
-
-    if (isPaused) setIsPaused(false)
+    setIsPlaying(true)
+    setIsPaused(false)
 
     const cardToSpeechIndex = getCardIndex(cards, cardToSpeech.id)
 
@@ -245,14 +252,15 @@ export const TextToSpeech = ({
   }
 
   const onShuffle = () => {
-    speechSynth.cancel()
-
     const shuffledCard = cards[Math.floor(Math.random() * cards.length)]
 
     if (shuffledCard.id === cardToSpeech.id) {
       return onShuffle()
     }
 
+    speechSynth.cancel()
+    setIsPlaying(true)
+    setIsPaused(false)
     setCardToSpeech(shuffledCard)
 
     utterance.text = getCardText(shuffledCard)
@@ -282,9 +290,8 @@ export const TextToSpeech = ({
 
   const onChangeCard = (card: CardResponse) => {
     speechSynth.cancel()
-
-    if (isPaused) setIsPaused(false)
-
+    setIsPlaying(true)
+    setIsPaused(false)
     setCardToSpeech(card)
 
     utterance.text = getCardText(card)
@@ -314,17 +321,10 @@ export const TextToSpeech = ({
   }: ChangeEvent<HTMLSelectElement>) =>
     setVoice(voices.find(({ name }) => name === value) ?? voices[DEFAULT_VOICE])
 
-  const onVolumeChange = ({
-    currentTarget: { value },
-  }: ChangeEvent<HTMLInputElement>) => setVolume(Number(value))
-
-  const onRateChange = ({
-    currentTarget: { value },
-  }: ChangeEvent<HTMLInputElement>) => setRate(Number(value))
-
-  const onPitchChange = ({
-    currentTarget: { value },
-  }: ChangeEvent<HTMLInputElement>) => setPitch(Number(value))
+  const onSliderChange = (
+    value: number | number[],
+    set: (value: number) => void,
+  ) => set(Array.isArray(value) ? value[0] : value)
 
   const scrollToElement = (elementId: string) => {
     const element = document.getElementById(elementId)
@@ -356,10 +356,10 @@ export const TextToSpeech = ({
             </Button>
           )}
           <Button variant='text' onClick={onPlay} title='Play'>
-            <CirclePlay />
+            <CirclePlay className={cn(isPlaying && 'animate-pulse')} />
           </Button>
           <Button variant='text' onClick={onPause} title='Pause'>
-            <CirclePause />
+            <CirclePause className={cn(isPaused && 'animate-pulse')} />
           </Button>
           <Button variant='text' onClick={onStop} title='Stop'>
             <CircleStop />
@@ -410,7 +410,7 @@ export const TextToSpeech = ({
         {isPlaylistExpanded && (
           <div>
             <Heading as='h4' className='text-lg'>
-              Playlist:
+              Playlist <q>{playlistName}</q>
             </Heading>
             <ul className='max-h-96 overflow-y-auto'>
               {cards.map(card => (
@@ -451,29 +451,37 @@ export const TextToSpeech = ({
               ))}
             </Select>
             <Wrapper className='gap-4'>
-              <RangeInput
-                label={formatToPercent(volume, 'Volume: ')}
-                value={volume}
-                onChange={onVolumeChange}
-                min={0}
-                max={1}
+              <Slider
+                label='Volume'
+                defaultValue={volume}
+                onChangeEnd={volume => onSliderChange(volume, setVolume)}
+                minValue={0}
+                maxValue={1}
                 step={0.01}
+                size='lg'
+                color='warning'
+                formatOptions={{ style: 'percent' }}
               />
-              <RangeInput
-                label={`Rate: ${rate}`}
-                value={rate}
-                onChange={onRateChange}
-                min={0.1}
-                max={10}
+              <Slider
+                label='Rate'
+                defaultValue={rate}
+                onChangeEnd={rate => onSliderChange(rate, setRate)}
+                minValue={0.1}
+                maxValue={10}
                 step={0.1}
+                size='lg'
+                color='warning'
               />
-              <RangeInput
-                label={`Pitch: ${pitch}`}
-                value={pitch}
-                onChange={onPitchChange}
-                min={0}
-                max={2}
+              <Slider
+                label='Pitch'
+                defaultValue={pitch}
+                onChangeEnd={pitch => onSliderChange(pitch, setPitch)}
+                minValue={0}
+                maxValue={2}
                 step={0.1}
+                size='lg'
+                color='warning'
+                showSteps
               />
             </Wrapper>
           </>

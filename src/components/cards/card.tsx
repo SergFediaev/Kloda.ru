@@ -27,6 +27,7 @@ type Props = {
   isOpen?: boolean
   isCardToSpeech?: boolean
   setCardToSpeech?: (card: CardResponse) => void
+  isCardPlaying?: boolean
 } & ComponentPropsWithoutRef<'article'>
 
 // ToDo: Uncategorized, author email, TypeError: Cannot read properties of undefined (reading 'id')
@@ -35,6 +36,7 @@ export const Card = ({
   isOpen,
   isCardToSpeech,
   setCardToSpeech,
+  isCardPlaying,
   className,
   ...restProps
 }: Props) => {
@@ -166,7 +168,7 @@ export const Card = ({
           </Button>
           {setCardToSpeech && (
             <Button variant='text' onClick={onCardToSpeech}>
-              <Speech />
+              <Speech className={cn(isCardPlaying && 'animate-pulse')} />
             </Button>
           )}
         </Wrapper>

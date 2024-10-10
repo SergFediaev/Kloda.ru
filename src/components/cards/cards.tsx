@@ -33,6 +33,7 @@ type Props = {
 export const Cards = (props: Props) => {
   const { isPending, isError, data, error } = useGetCards(props)
   const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
+  const [isCardPlaying, setIsCardPlaying] = useState(false)
 
   if (isPending) {
     return <Loader className='text-2xl'>Fetching cards</Loader>
@@ -48,33 +49,46 @@ export const Cards = (props: Props) => {
     return <ErrorMessage>Cards not found 🙈</ErrorMessage>
   }
 
+  const { search, page, limit, order, sort } = props
+  const pages = `${page}/${totalPages}`
+  const playlistName = search
+    ? `Search: ${search} (page ${pages})`
+    : `Page ${pages}`
+
   // ToDo: Refactor fragment
   return (
     <>
       <Columns>
-        {cards.map(card => (
-          <Card
-            id={String(card.id)}
-            key={card.id}
-            card={card}
-            className='break-inside-avoid'
-            isCardToSpeech={card.id === cardToSpeech?.id}
-            setCardToSpeech={setCardToSpeech}
-          />
-        ))}
+        {cards.map(card => {
+          const isCardToSpeech = card.id === cardToSpeech?.id
+
+          return (
+            <Card
+              id={String(card.id)}
+              key={card.id}
+              card={card}
+              className='break-inside-avoid'
+              isCardToSpeech={isCardToSpeech}
+              setCardToSpeech={setCardToSpeech}
+              isCardPlaying={isCardToSpeech && isCardPlaying}
+            />
+          )
+        })}
       </Columns>
       <aside className='sticky bottom-6 mt-6 flex flex-col items-center gap-6'>
         <TextToSpeech
           cards={cards}
           cardToSpeech={cardToSpeech}
           setCardToSpeech={setCardToSpeech}
+          setIsCardPlaying={setIsCardPlaying}
+          playlistName={playlistName}
         />
         <Pagination
           itemsName='Cards'
-          page={props.page}
-          limit={props.limit}
-          order={props.order}
-          sort={props.sort}
+          page={page}
+          limit={limit}
+          order={order}
+          sort={sort}
           sorts={sorts}
           totalItems={totalCards}
           totalPages={totalPages}

@@ -1,3 +1,4 @@
+import { nextui } from '@nextui-org/theme'
 import type { Config } from 'tailwindcss'
 import colors from 'tailwindcss/colors'
 
@@ -6,6 +7,7 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@nextui-org/theme/dist/components/(select|slider).js',
   ],
   theme: {
     extend: {
@@ -56,7 +58,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [nextui()],
   darkMode: 'selector',
 }
 
