@@ -45,9 +45,27 @@ export const Cards = (props: Props) => {
 
   const { cards, totalCards, totalPages } = data
 
-  if (!cards.length) {
-    return <ErrorMessage>Cards not found 🙈</ErrorMessage>
-  }
+  const cardsElement = cards.length ? (
+    <Columns>
+      {cards.map(card => {
+        const isCardToSpeech = card.id === cardToSpeech?.id
+
+        return (
+          <Card
+            id={String(card.id)}
+            key={card.id}
+            card={card}
+            className='break-inside-avoid'
+            isCardToSpeech={isCardToSpeech}
+            setCardToSpeech={setCardToSpeech}
+            isCardPlaying={isCardToSpeech && isCardPlaying}
+          />
+        )
+      })}
+    </Columns>
+  ) : (
+    <ErrorMessage isCentered>Cards not found 🙈</ErrorMessage>
+  )
 
   const { search, page, limit, order, sort } = props
   const pages = `${page}/${totalPages}`
@@ -58,23 +76,7 @@ export const Cards = (props: Props) => {
   // ToDo: Refactor fragment
   return (
     <>
-      <Columns>
-        {cards.map(card => {
-          const isCardToSpeech = card.id === cardToSpeech?.id
-
-          return (
-            <Card
-              id={String(card.id)}
-              key={card.id}
-              card={card}
-              className='break-inside-avoid'
-              isCardToSpeech={isCardToSpeech}
-              setCardToSpeech={setCardToSpeech}
-              isCardPlaying={isCardToSpeech && isCardPlaying}
-            />
-          )
-        })}
-      </Columns>
+      {cardsElement}
       <aside className='sticky bottom-6 mt-6 flex flex-col items-center gap-6'>
         <TextToSpeech
           cards={cards}

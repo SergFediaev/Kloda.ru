@@ -6,7 +6,7 @@ import { useGenerateId } from '@/hooks/useGenerateId'
 import { useVoice } from '@/hooks/useVoice'
 import { Search as SearchIcon, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { type ChangeEvent, useEffect, useState } from 'react'
+import { type ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 const SEARCH_PARAM = 'search'
 
@@ -28,19 +28,32 @@ export const Search = () => {
     currentTarget: { value },
   }: ChangeEvent<HTMLInputElement>) => setSearch(value)
 
-  const onReset = () => setSearch('')
+  const onReset = useCallback(() => setSearch(''), [])
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
 
     if (debouncedSearch) {
       params.set(SEARCH_PARAM, encodeURIComponent(debouncedSearch))
+
+      if (searchParams.get(SEARCH_PARAM) !== debouncedSearch)
+        params.set('page', String(1))
     } else {
       params.delete(SEARCH_PARAM)
     }
 
     replace(`${pathname}?${params}`)
   }, [debouncedSearch, replace, pathname, searchParams])
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams)
+
+    replace(`${pathname}?${params}`)
+  }, [searchParams, replace, pathname])
+
+  useEffect(() => {
+    if (!searchParams.get(SEARCH_PARAM)) onReset()
+  }, [searchParams, onReset])
 
   useEffect(() => {
     if (transcript) {

@@ -2,7 +2,7 @@ import { Button } from '@/components/button'
 import { Select, SelectItem } from '@nextui-org/select'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 const ORDERS = {
   asc: 'Ascending',
@@ -39,9 +39,12 @@ export const Pagination = ({
 }: Props) => {
   const { replace } = useTransitionRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   const hasPages = page > 1
   const isNotLastPage = page < totalPages
+  const hasNotItems = itemsCount < 2
+  const hasSearchParams = searchParams.toString() !== ''
 
   const onChangeParams = (key: Key, value: string) => {
     const params = new URLSearchParams(searchParams)
@@ -53,6 +56,12 @@ export const Pagination = ({
   }
 
   const onChangePage = (page: number) => onChangeParams('page', String(page))
+
+  const onReset = () => replace(pathname)
+
+  if (!itemsCount) {
+    return null
+  }
 
   return (
     <div className='flex flex-wrap items-center justify-around gap-4 rounded-3xl border-2 border-accent bg-ground bg-opacity-70 p-6 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
@@ -95,6 +104,7 @@ export const Pagination = ({
         className='w-auto min-w-36'
         color='warning'
         items={Object.entries(ORDERS)}
+        isDisabled={hasNotItems}
       >
         {([value, label]) => (
           <SelectItem key={value} value={value}>
@@ -109,6 +119,7 @@ export const Pagination = ({
         className='w-auto min-w-36'
         color='warning'
         items={Object.entries(sorts)}
+        isDisabled={hasNotItems}
       >
         {([value, label]) => (
           <SelectItem key={value} value={value}>
@@ -122,6 +133,7 @@ export const Pagination = ({
         onChange={({ target: { value } }) => onChangeParams('limit', value)}
         className='w-auto min-w-36'
         color='warning'
+        isDisabled={hasNotItems}
       >
         {QUANTITIES.map(quantity => (
           <SelectItem
@@ -133,6 +145,7 @@ export const Pagination = ({
           </SelectItem>
         ))}
       </Select>
+      {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
     </div>
   )
 }
