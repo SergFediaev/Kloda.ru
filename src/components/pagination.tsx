@@ -1,8 +1,10 @@
 import { Button } from '@/components/button'
+import { Input } from '@/components/forms/input'
 import { Select, SelectItem } from '@nextui-org/select'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
+import type { ChangeEvent } from 'react'
 
 const ORDERS = {
   asc: 'Ascending',
@@ -44,6 +46,7 @@ export const Pagination = ({
   const hasPages = page > 1
   const isNotLastPage = page < totalPages
   const hasNotItems = itemsCount < 2
+  const hasNotPages = totalPages < 2
   const hasSearchParams = searchParams.toString() !== ''
 
   const onChangeParams = (key: Key, value: string) => {
@@ -56,6 +59,18 @@ export const Pagination = ({
   }
 
   const onChangePage = (page: number) => onChangeParams('page', String(page))
+
+  const onGoTo = ({
+    currentTarget: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    const pageNumber = Number(value)
+
+    if (pageNumber < 1 || pageNumber > totalPages) {
+      return
+    }
+
+    onChangePage(pageNumber)
+  }
 
   const onReset = () => replace(pathname)
 
@@ -97,6 +112,15 @@ export const Pagination = ({
           </Button>
         </>
       )}
+      <Input
+        label='Go to page'
+        value={page}
+        type='number'
+        min={1}
+        max={totalPages}
+        onChange={onGoTo}
+        disabled={hasNotPages}
+      />
       <Select
         label='Order by'
         selectedKeys={[order]}
