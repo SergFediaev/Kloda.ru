@@ -15,8 +15,9 @@ export const Search = () => {
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   const searchId = useGenerateId()
+  const initialSearch = searchParams.get(SEARCH_PARAM)
   const [search, setSearch] = useState(
-    searchParams.get(SEARCH_PARAM)?.toString() ?? '',
+    initialSearch ? decodeURIComponent(initialSearch) : '',
   )
   const debouncedSearch = useDebounce(search, 500)
   const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
@@ -33,7 +34,7 @@ export const Search = () => {
     const params = new URLSearchParams(searchParams)
 
     if (debouncedSearch) {
-      params.set(SEARCH_PARAM, debouncedSearch)
+      params.set(SEARCH_PARAM, encodeURIComponent(debouncedSearch))
     } else {
       params.delete(SEARCH_PARAM)
     }

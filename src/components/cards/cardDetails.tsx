@@ -37,11 +37,13 @@ export const CardDetails = ({ id }: Props) => {
         setCardToSpeech={setCardToSpeech}
         className='max-w-2xl'
       />
-      <TextToSpeech
-        cards={data}
-        setCardToSpeech={setCardToSpeech}
-        cardToSpeech={cardToSpeech}
-      />
+      <aside className='sticky bottom-6 mt-6'>
+        <TextToSpeech
+          cards={data}
+          setCardToSpeech={setCardToSpeech}
+          cardToSpeech={cardToSpeech}
+        />
+      </aside>
     </div>
   )
 }
