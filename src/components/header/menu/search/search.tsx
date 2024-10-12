@@ -4,6 +4,7 @@ import { VoiceSearch } from '@/components/header/menu/search/voiceSearch'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useGenerateId } from '@/hooks/useGenerateId'
 import { useVoice } from '@/hooks/useVoice'
+import { useWidth } from '@/hooks/useWidth'
 import { Search as SearchIcon, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {
@@ -28,8 +29,9 @@ export const Search = () => {
   const debouncedSearch = useDebounce(search, 500)
   const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
   const searchRef = useRef<HTMLInputElement>(null)
+  const { isDesktopWidth } = useWidth()
 
-  const searchBy = pathname === '/' ? 'cards' : 'users'
+  const searchPlaceholder = `Search ${pathname === '/' ? 'cards' : 'users'}${isDesktopWidth ? ' (Ctrl + K)' : ''}`
 
   const onSearch = ({
     currentTarget: { value },
@@ -96,7 +98,7 @@ export const Search = () => {
           value={search}
           type='search'
           className='min-w-0 truncate rounded-3xl border-2 border-accent py-1 pr-8 pl-3 dark:border-accent-dark'
-          placeholder={`Search ${searchBy} (Ctrl + K)`}
+          placeholder={searchPlaceholder}
           onChange={onSearch}
           spellCheck
           id={searchId}
