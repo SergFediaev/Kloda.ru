@@ -77,7 +77,7 @@ export const Cards = (props: Props) => {
   return (
     <>
       {cardsElement}
-      <aside className='sticky bottom-6 mt-6 flex flex-col items-center gap-6'>
+      <aside className='bottom-6 mt-6 flex flex-col items-center gap-6 sm:sticky'>
         <TextToSpeech
           cards={cards}
           cardToSpeech={cardToSpeech}
