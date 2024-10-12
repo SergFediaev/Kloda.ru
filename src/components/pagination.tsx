@@ -1,10 +1,15 @@
 import { Button } from '@/components/button'
 import { Input } from '@/components/forms/input'
 import { Select, SelectItem } from '@nextui-org/select'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import {
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
-import type { ChangeEvent } from 'react'
+import { useCallback, useEffect } from 'react'
 
 const ORDERS = {
   asc: 'Ascending',
@@ -43,36 +48,64 @@ export const Pagination = ({
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
-  const hasPages = page > 1
-  const isNotLastPage = page < totalPages
-  const hasNotItems = itemsCount < 2
-  const hasNotPages = totalPages < 2
+  const isLastPage = page === totalPages
   const hasSearchParams = searchParams.toString() !== ''
+  const hasNotItems = itemsCount < 2
+  const hasNotPages = page < 2
+  const hasNotTotalPages = totalPages < 2
 
-  const onChangeParams = (key: Key, value: string) => {
-    const params = new URLSearchParams(searchParams)
+  const onChangeParams = useCallback(
+    (key: Key, value: string) => {
+      const params = new URLSearchParams(searchParams)
 
-    if (key === 'limit') params.set('page', String(1))
+      if (key === 'limit') params.set('page', String(1))
 
-    params.set(key, value)
-    replace(`?${params}`)
-  }
+      params.set(key, value)
+      replace(`?${params}`)
+    },
+    [searchParams, replace],
+  )
 
-  const onChangePage = (page: number) => onChangeParams('page', String(page))
-
-  const onGoTo = ({
-    currentTarget: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
-    const pageNumber = Number(value)
-
-    if (pageNumber < 1 || pageNumber > totalPages) {
-      return
-    }
-
-    onChangePage(pageNumber)
-  }
+  const onChangePage = useCallback(
+    (pageNumber: number, event?: KeyboardEvent) => {
+      if (pageNumber > 0 && pageNumber <= totalPages) {
+        event?.preventDefault()
+        onChangeParams('page', String(pageNumber))
+      }
+    },
+    [totalPages, onChangeParams],
+  )
 
   const onReset = () => replace(pathname)
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey) {
+        switch (event.key) {
+          case 'Home':
+            onChangePage(1, event)
+            break
+          case 'ArrowLeft':
+            onChangePage(page - 1, event)
+            break
+          case 'ArrowRight':
+            onChangePage(page + 1, event)
+            break
+          case 'End':
+            onChangePage(totalPages, event)
+            break
+          default: {
+            const keyNumber = Number(event.key)
+
+            if (!Number.isNaN(keyNumber)) onChangePage(keyNumber, event)
+          }
+        }
+      }
+    }
+
+    addEventListener('keydown', onKeyDown)
+    return () => removeEventListener('keydown', onKeyDown)
+  }, [page, totalPages, onChangePage])
 
   if (!itemsCount) {
     return null
@@ -86,40 +119,53 @@ export const Pagination = ({
           {itemsCount} / {totalItems}
         </p>
       </span>
-      {hasPages && (
-        <>
-          <Button variant='round' onClick={() => onChangePage(1)}>
-            1
-          </Button>
-          <Button variant='round' onClick={() => onChangePage(page - 1)}>
-            <ChevronLeft />
-          </Button>
-        </>
-      )}
+      <Button
+        variant='round'
+        onClick={() => onChangePage(1)}
+        disabled={hasNotPages}
+        title='Ctrl + Home'
+      >
+        <ChevronFirst />
+      </Button>
+      <Button
+        variant='round'
+        onClick={() => onChangePage(page - 1)}
+        disabled={hasNotPages}
+        title='Ctrl + Left arrow'
+      >
+        <ChevronLeft />
+      </Button>
       <span className='text-center'>
         <p>Pages</p>
         <p>
           {page} / {totalPages}
         </p>
       </span>
-      {isNotLastPage && (
-        <>
-          <Button variant='round' onClick={() => onChangePage(page + 1)}>
-            <ChevronRight />
-          </Button>
-          <Button variant='round' onClick={() => onChangePage(totalPages)}>
-            {totalPages}
-          </Button>
-        </>
-      )}
+      <Button
+        variant='round'
+        onClick={() => onChangePage(page + 1)}
+        disabled={isLastPage}
+        title='Ctrl + Right arrow'
+      >
+        <ChevronRight />
+      </Button>
+      <Button
+        variant='round'
+        onClick={() => onChangePage(totalPages)}
+        disabled={isLastPage}
+        title='Ctrl + End'
+      >
+        <ChevronLast />
+      </Button>
       <Input
         label='Go to page'
         value={page}
         type='number'
         min={1}
         max={totalPages}
-        onChange={onGoTo}
-        disabled={hasNotPages}
+        onChange={({ currentTarget: { value } }) => onChangePage(Number(value))}
+        disabled={hasNotTotalPages}
+        title='Ctrl + Page number'
       />
       <Select
         label='Order by'

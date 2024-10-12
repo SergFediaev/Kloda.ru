@@ -6,7 +6,13 @@ import { useGenerateId } from '@/hooks/useGenerateId'
 import { useVoice } from '@/hooks/useVoice'
 import { Search as SearchIcon, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { type ChangeEvent, useCallback, useEffect, useState } from 'react'
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 const SEARCH_PARAM = 'search'
 
@@ -21,6 +27,7 @@ export const Search = () => {
   )
   const debouncedSearch = useDebounce(search, 500)
   const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
+  const searchRef = useRef<HTMLInputElement>(null)
 
   const searchBy = pathname === '/' ? 'cards' : 'users'
 
@@ -61,6 +68,20 @@ export const Search = () => {
     }
   }, [transcript])
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey) {
+        if (event.key.toLowerCase() === 'k') {
+          event.preventDefault()
+          searchRef.current?.focus()
+        }
+      }
+    }
+
+    addEventListener('keydown', onKeyDown)
+    return () => removeEventListener('keydown', onKeyDown)
+  }, [])
+
   if (!(pathname === '/' || pathname === '/users')) {
     return null
   }
@@ -75,10 +96,11 @@ export const Search = () => {
           value={search}
           type='search'
           className='min-w-0 truncate rounded-3xl border-2 border-accent py-1 pr-8 pl-3 dark:border-accent-dark'
-          placeholder={`Search ${searchBy}`}
+          placeholder={`Search ${searchBy} (Ctrl + K)`}
           onChange={onSearch}
           spellCheck
           id={searchId}
+          ref={searchRef}
         />
         {search && (
           <Button
