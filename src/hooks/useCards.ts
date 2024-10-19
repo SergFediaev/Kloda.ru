@@ -24,8 +24,11 @@ export const useGetCard = (id: string) =>
 export const useCreateCard = () =>
   useMutation({
     mutationFn: createCard,
-    onSuccess: () =>
-      getQueryClient().invalidateQueries({ queryKey: ['cards'] }),
+    onSuccess: () => {
+      const queryClient = getQueryClient()
+      void queryClient.invalidateQueries({ queryKey: ['cards'] })
+      void queryClient.invalidateQueries({ queryKey: ['categories'] })
+    },
   })
 
 export const useLikeCard = () =>

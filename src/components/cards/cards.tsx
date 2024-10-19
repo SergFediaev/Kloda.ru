@@ -28,10 +28,17 @@ type Props = {
   limit: number
   order: string
   sort: string
+  categories: string[]
 }
 
-export const Cards = (props: Props) => {
-  const { isPending, isError, data, error } = useGetCards(props)
+// ToDo: Refactor all search params to lower case
+export const Cards = ({ categories, ...restProps }: Props) => {
+  categories = categories.map(category => category.toLowerCase())
+
+  const { isPending, isError, data, error } = useGetCards({
+    categories,
+    ...restProps,
+  })
   const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
   const [isCardPlaying, setIsCardPlaying] = useState(false)
 
@@ -67,7 +74,7 @@ export const Cards = (props: Props) => {
     <ErrorMessage isCentered>Cards not found 🙈</ErrorMessage>
   )
 
-  const { search, page, limit, order, sort } = props
+  const { search, page, limit, order, sort } = restProps
   const pages = `${page}/${totalPages}`
   const playlistName = search
     ? `Search: ${search} (page ${pages})`
@@ -92,6 +99,7 @@ export const Cards = (props: Props) => {
           order={order}
           sort={sort}
           sorts={sorts}
+          selectedCategories={categories}
           totalItems={totalCards}
           totalPages={totalPages}
           itemsCount={cards.length}

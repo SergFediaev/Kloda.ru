@@ -24,14 +24,12 @@ export const CardDetails = ({ id }: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
-  const card = data[0]
-
   // ToDo: Refactor wrapper, optional card & cards to speech
   return (
     <div className='flex flex-col items-center'>
       <Card
-        id={String(card.id)}
-        card={card}
+        id={String(data.id)}
+        card={data}
         isExpanded
         isOpen
         setCardToSpeech={setCardToSpeech}
@@ -39,7 +37,7 @@ export const CardDetails = ({ id }: Props) => {
       />
       <aside className='sticky bottom-6 mt-6'>
         <TextToSpeech
-          cards={data}
+          cards={[data]}
           setCardToSpeech={setCardToSpeech}
           cardToSpeech={cardToSpeech}
         />

@@ -4,7 +4,7 @@ export type CardArgs = {
   categories: string[]
   likes: number
   dislikes: number
-  authorId: string
+  authorId: number
 }
 
 export type CardResponse = {
@@ -25,6 +25,7 @@ export type CardsArgs = {
   limit: number
   order: string
   sort: string
+  categories: string[]
 }
 
 export type CardsResponse = {

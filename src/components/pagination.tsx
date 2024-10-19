@@ -1,5 +1,6 @@
 import { Button } from '@/components/button'
 import { Input } from '@/components/forms/input'
+import { useGetCategories } from '@/hooks/useCategories'
 import { Select, SelectItem } from '@nextui-org/select'
 import {
   ChevronFirst,
@@ -9,7 +10,10 @@ import {
 } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect } from 'react'
+import { type ChangeEvent, useCallback, useEffect } from 'react'
+
+const PAGE_PARAM = 'page'
+const CATEGORIES_PARAM = 'categories'
 
 const ORDERS = {
   asc: 'Ascending',
@@ -19,7 +23,7 @@ const ORDERS = {
 // ToDo: string[]
 const QUANTITIES = [5, 10, 15, 20, 25, 30, 50, 70, 100] as const
 
-type Key = 'page' | 'limit' | 'order' | 'sort'
+type Key = typeof PAGE_PARAM | 'limit' | 'order' | 'sort'
 
 type Props = {
   itemsName?: string
@@ -28,6 +32,7 @@ type Props = {
   order: string
   sort: string
   sorts: Record<string, string>
+  selectedCategories: string[]
   totalItems: number
   totalPages: number
   itemsCount: number
@@ -40,6 +45,7 @@ export const Pagination = ({
   order,
   sort,
   sorts,
+  selectedCategories,
   totalItems,
   totalPages,
   itemsCount,
@@ -47,18 +53,21 @@ export const Pagination = ({
   const { replace } = useTransitionRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
+  const { data, isPending } = useGetCategories() // ToDo: Handle error
 
+  const categories = data ?? []
   const isLastPage = page === totalPages
   const hasSearchParams = searchParams.toString() !== ''
   const hasNotItems = itemsCount < 2
   const hasNotPages = page < 2
   const hasNotTotalPages = totalPages < 2
+  const hasNotCategories = data?.length === 0
 
   const onChangeParams = useCallback(
     (key: Key, value: string) => {
       const params = new URLSearchParams(searchParams)
 
-      if (key === 'limit') params.set('page', String(1))
+      if (key === 'limit') params.set(PAGE_PARAM, String(1))
 
       params.set(key, value)
       replace(`?${params}`)
@@ -70,11 +79,25 @@ export const Pagination = ({
     (pageNumber: number, event?: KeyboardEvent) => {
       if (pageNumber > 0 && pageNumber <= totalPages) {
         event?.preventDefault()
-        onChangeParams('page', String(pageNumber))
+        onChangeParams(PAGE_PARAM, String(pageNumber))
       }
     },
     [totalPages, onChangeParams],
   )
+
+  const onChangeCategories = ({
+    target: { value },
+  }: ChangeEvent<HTMLSelectElement>) => {
+    const categories = value.split(',')
+    const params = new URLSearchParams(searchParams)
+    params.delete(CATEGORIES_PARAM)
+
+    for (const category of categories) {
+      params.append(CATEGORIES_PARAM, encodeURIComponent(category))
+    }
+
+    replace(`?${params}`)
+  }
 
   const onReset = () => replace(pathname)
 
@@ -107,18 +130,8 @@ export const Pagination = ({
     return () => removeEventListener('keydown', onKeyDown)
   }, [page, totalPages, onChangePage])
 
-  if (!itemsCount) {
-    return null
-  }
-
   return (
     <div className='flex flex-wrap items-center justify-around gap-4 rounded-3xl border-2 border-accent bg-ground bg-opacity-70 p-6 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
-      <span className='text-center'>
-        <p>{itemsName}</p>
-        <p>
-          {itemsCount} / {totalItems}
-        </p>
-      </span>
       <Button
         variant='round'
         onClick={() => onChangePage(1)}
@@ -167,6 +180,30 @@ export const Pagination = ({
         disabled={hasNotTotalPages}
         title='Ctrl + Page number'
       />
+      <span className='text-center'>
+        <p>{itemsName}</p>
+        <p>
+          {itemsCount} / {totalItems}
+        </p>
+      </span>
+      <Select
+        label={`${itemsName} per page`}
+        selectedKeys={[String(limit)]}
+        onChange={({ target: { value } }) => onChangeParams('limit', value)}
+        className='w-auto min-w-36'
+        color='warning'
+        isDisabled={hasNotItems}
+      >
+        {QUANTITIES.map(quantity => (
+          <SelectItem
+            key={quantity}
+            value={quantity}
+            textValue={String(quantity)}
+          >
+            {quantity}
+          </SelectItem>
+        ))}
+      </Select>
       <Select
         label='Order by'
         selectedKeys={[order]}
@@ -198,22 +235,26 @@ export const Pagination = ({
         )}
       </Select>
       <Select
-        label={`${itemsName} per page`}
-        selectedKeys={[String(limit)]}
-        onChange={({ target: { value } }) => onChangeParams('limit', value)}
+        label='Categories'
+        selectedKeys={selectedCategories}
+        onChange={onChangeCategories}
         className='w-auto min-w-36'
         color='warning'
-        isDisabled={hasNotItems}
+        placeholder='All'
+        isDisabled={hasNotCategories}
+        selectionMode='multiple'
+        isLoading={isPending}
+        items={categories}
       >
-        {QUANTITIES.map(quantity => (
+        {({ name, displayName, cardsCount }) => (
           <SelectItem
-            key={quantity}
-            value={quantity}
-            textValue={String(quantity)}
+            key={name}
+            value={name}
+            textValue={`${displayName} (${cardsCount})`}
           >
-            {quantity}
+            {displayName}&nbsp;({cardsCount})
           </SelectItem>
-        ))}
+        )}
       </Select>
       {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
     </div>

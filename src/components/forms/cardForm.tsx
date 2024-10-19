@@ -12,11 +12,12 @@ import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+// ToDo: Refactor author ID & email, fix input type='number'
 const cardSchema = z.object({
   title: z.string(),
   content: z.string(),
   categories: z.string(),
-  author: z.string(),
+  author: z.number(),
   email: z.union([z.literal(''), z.string().email()]),
 })
 
@@ -36,7 +37,7 @@ const defaultValues: CardSchema = {
   title: '',
   content: '',
   categories: '',
-  author: '',
+  author: 0,
   email: '',
 }
 
@@ -68,7 +69,7 @@ export const CardForm = () => {
   const onReset = () => reset(defaultValues)
 
   if (isSuccess) {
-    router.push(`/card/${data[0].id}`)
+    router.push(`/card/${data.id}`)
   }
 
   return (
@@ -105,6 +106,7 @@ export const CardForm = () => {
         placeholder={'Username'}
         error={errors.author?.message}
         required
+        type='number'
       />
       <FormInput
         control={control}

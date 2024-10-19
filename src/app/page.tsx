@@ -13,6 +13,7 @@ type Props = {
     limit?: string
     order?: string
     sort?: string
+    categories?: string | string[]
   }
 }
 
@@ -26,6 +27,13 @@ export default function CardsPage({ searchParams }: Props) {
         limit={Number(searchParams?.limit) || 10}
         order={searchParams?.order ?? 'desc'}
         sort={searchParams?.sort ?? 'createdAt'}
+        categories={
+          searchParams?.categories
+            ? Array.isArray(searchParams.categories)
+              ? searchParams.categories
+              : [searchParams.categories]
+            : []
+        }
       />
     </Container>
   )
