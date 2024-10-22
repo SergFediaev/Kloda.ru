@@ -23,6 +23,9 @@ const ORDERS = {
 // ToDo: string[]
 const QUANTITIES = [5, 10, 15, 20, 25, 30, 50, 70, 100] as const
 
+const setFirstPage = (params: URLSearchParams) =>
+  params.set(PAGE_PARAM, String(1))
+
 type Key = typeof PAGE_PARAM | 'limit' | 'order' | 'sort'
 
 type Props = {
@@ -67,7 +70,7 @@ export const Pagination = ({
     (key: Key, value: string) => {
       const params = new URLSearchParams(searchParams)
 
-      if (key === 'limit') params.set(PAGE_PARAM, String(1))
+      if (key === 'limit') setFirstPage(params)
 
       params.set(key, value)
       replace(`?${params}`)
@@ -91,9 +94,10 @@ export const Pagination = ({
     const categories = value.split(',')
     const params = new URLSearchParams(searchParams)
     params.delete(CATEGORIES_PARAM)
+    setFirstPage(params)
 
     for (const category of categories) {
-      params.append(CATEGORIES_PARAM, encodeURIComponent(category))
+      params.append(CATEGORIES_PARAM, category)
     }
 
     replace(`?${params}`)

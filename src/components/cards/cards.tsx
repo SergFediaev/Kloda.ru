@@ -14,7 +14,6 @@ const sorts = {
   id: 'ID',
   title: 'Title',
   content: 'Content',
-  categories: 'Categories',
   likes: 'Likes',
   dislikes: 'Dislikes',
   authorId: 'Author',
