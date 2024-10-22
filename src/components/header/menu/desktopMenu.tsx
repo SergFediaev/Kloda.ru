@@ -1,6 +1,7 @@
 import { Wrapper } from '@/components/containers/wrapper'
 import { MenuButton } from '@/components/header/menu/menuButton'
 import { CardsLink } from '@/components/header/menu/nav/cardsLInk'
+import { CategoriesSelect } from '@/components/header/menu/nav/categoriesSelect'
 import { CreateCardLink } from '@/components/header/menu/nav/createCardLink'
 import { LoginLink } from '@/components/header/menu/nav/loginLink'
 import { Logo } from '@/components/header/menu/nav/logo'
@@ -20,7 +21,10 @@ export type MenuProps = {
 export const DesktopMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
   <Wrapper as='div' hasGaps className='justify-between'>
     <Logo />
-    <Search />
+    <Wrapper as='nav' hasGaps>
+      <Search />
+      <CategoriesSelect />
+    </Wrapper>
     <Wrapper as='nav' hasGaps>
       <LoginLink isUserLoggedIn={restProps.isUserLoggedIn} />
       <ProfileLink {...restProps} />

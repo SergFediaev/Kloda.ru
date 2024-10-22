@@ -1,6 +1,6 @@
 import { Button } from '@/components/button'
 import { Input } from '@/components/forms/input'
-import { useGetCategories } from '@/hooks/useCategories'
+import { setFirstPage } from '@/utils/setFirstPage'
 import { Select, SelectItem } from '@nextui-org/select'
 import {
   ChevronFirst,
@@ -10,10 +10,7 @@ import {
 } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { type ChangeEvent, useCallback, useEffect } from 'react'
-
-const PAGE_PARAM = 'page'
-const CATEGORIES_PARAM = 'categories'
+import { useCallback, useEffect } from 'react'
 
 const ORDERS = {
   asc: 'Ascending',
@@ -23,10 +20,7 @@ const ORDERS = {
 // ToDo: string[]
 const QUANTITIES = [5, 10, 15, 20, 25, 30, 50, 70, 100] as const
 
-const setFirstPage = (params: URLSearchParams) =>
-  params.set(PAGE_PARAM, String(1))
-
-type Key = typeof PAGE_PARAM | 'limit' | 'order' | 'sort'
+type Key = 'page' | 'limit' | 'order' | 'sort'
 
 type Props = {
   itemsName?: string
@@ -35,7 +29,6 @@ type Props = {
   order: string
   sort: string
   sorts: Record<string, string>
-  selectedCategories: string[]
   totalItems: number
   totalPages: number
   itemsCount: number
@@ -48,7 +41,6 @@ export const Pagination = ({
   order,
   sort,
   sorts,
-  selectedCategories,
   totalItems,
   totalPages,
   itemsCount,
@@ -56,15 +48,12 @@ export const Pagination = ({
   const { replace } = useTransitionRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const { data, isPending } = useGetCategories() // ToDo: Handle error
 
-  const categories = data ?? []
   const isLastPage = page === totalPages
   const hasSearchParams = searchParams.toString() !== ''
   const hasNotItems = itemsCount < 2
   const hasNotPages = page < 2
   const hasNotTotalPages = totalPages < 2
-  const hasNotCategories = data?.length === 0
 
   const onChangeParams = useCallback(
     (key: Key, value: string) => {
@@ -82,26 +71,11 @@ export const Pagination = ({
     (pageNumber: number, event?: KeyboardEvent) => {
       if (pageNumber > 0 && pageNumber <= totalPages) {
         event?.preventDefault()
-        onChangeParams(PAGE_PARAM, String(pageNumber))
+        onChangeParams('page', String(pageNumber))
       }
     },
     [totalPages, onChangeParams],
   )
-
-  const onChangeCategories = ({
-    target: { value },
-  }: ChangeEvent<HTMLSelectElement>) => {
-    const categories = value.split(',')
-    const params = new URLSearchParams(searchParams)
-    params.delete(CATEGORIES_PARAM)
-    setFirstPage(params)
-
-    for (const category of categories) {
-      params.append(CATEGORIES_PARAM, category)
-    }
-
-    replace(`?${params}`)
-  }
 
   const onReset = () => replace(pathname)
 
@@ -235,28 +209,6 @@ export const Pagination = ({
         {([value, label]) => (
           <SelectItem key={value} value={value}>
             {label}
-          </SelectItem>
-        )}
-      </Select>
-      <Select
-        label='Categories'
-        selectedKeys={selectedCategories}
-        onChange={onChangeCategories}
-        className='w-auto min-w-36'
-        color='warning'
-        placeholder='All'
-        isDisabled={hasNotCategories}
-        selectionMode='multiple'
-        isLoading={isPending}
-        items={categories}
-      >
-        {({ name, displayName, cardsCount }) => (
-          <SelectItem
-            key={name}
-            value={name}
-            textValue={`${displayName} (${cardsCount})`}
-          >
-            {displayName}&nbsp;({cardsCount})
           </SelectItem>
         )}
       </Select>

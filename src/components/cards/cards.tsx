@@ -98,7 +98,6 @@ export const Cards = ({ categories, ...restProps }: Props) => {
           order={order}
           sort={sort}
           sorts={sorts}
-          selectedCategories={categories}
           totalItems={totalCards}
           totalPages={totalPages}
           itemsCount={cards.length}

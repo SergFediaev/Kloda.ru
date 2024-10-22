@@ -2,6 +2,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import type { MenuProps } from '@/components/header/menu/desktopMenu'
 import { MenuButton } from '@/components/header/menu/menuButton'
 import { CardsLink } from '@/components/header/menu/nav/cardsLInk'
+import { CategoriesSelect } from '@/components/header/menu/nav/categoriesSelect'
 import { CreateCardLink } from '@/components/header/menu/nav/createCardLink'
 import { LoginLink } from '@/components/header/menu/nav/loginLink'
 import { Logo } from '@/components/header/menu/nav/logo'
@@ -23,5 +24,6 @@ export const MobileMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
     <SettingsLink />
     <MenuButton collapseMenu={collapseMenu} />
     <Search />
+    <CategoriesSelect />
   </Wrapper>
 )
