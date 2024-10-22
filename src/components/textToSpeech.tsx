@@ -337,7 +337,7 @@ export const TextToSpeech = ({
 
   // ToDo: Refactor JSX
   return (
-    <div className='sticky bottom-6 mx-auto mt-6 flex max-w-fit flex-wrap justify-center truncate rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
+    <div className='sticky bottom-6 z-10 mx-auto mt-6 flex max-w-fit flex-wrap justify-center truncate rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
       <div className='flex flex-col gap-4 p-6'>
         <Heading as='h3' className='flex flex-wrap text-xl'>
           Text to speech:&nbsp;

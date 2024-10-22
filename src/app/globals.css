@@ -40,7 +40,13 @@ body {
     field-sizing: content;
   }
 
-  input[type="search"]::-webkit-search-cancel-button {
-    appearance: none;
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }
