@@ -1,14 +1,16 @@
 'use client'
 
-import { Columns } from '@/components/containers/columns'
+import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
+import { useState } from 'react'
 
 // ToDo: Refactor columns style, error message size, break-inside-avoid if not open
 export const Users = () => {
   const { isPending, isError, data, error } = useGetUsers()
+  const [columnsCount, setColumnsCount] = useState<ColumnsCount>('3') // ToDo: Users pagination
 
   if (isPending) {
     return <Loader className='text-2xl'>Fetching users</Loader>
@@ -27,7 +29,7 @@ export const Users = () => {
   )
 
   return (
-    <Columns className='columns-md'>
+    <Columns count={columnsCount}>
       {sortedUsers.map(user => (
         <User key={user.id} user={user} className='break-inside-avoid' />
       ))}

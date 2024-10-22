@@ -2,7 +2,7 @@
 
 import type { CardResponse } from '@/api/cards/cards.types'
 import { Card } from '@/components/cards/card'
-import { Columns } from '@/components/containers/columns'
+import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { Pagination } from '@/components/pagination'
@@ -40,6 +40,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   })
   const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
   const [isCardPlaying, setIsCardPlaying] = useState(false)
+  const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2')
 
   if (isPending) {
     return <Loader className='text-2xl'>Fetching cards</Loader>
@@ -52,7 +53,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   const { cards, totalCards, totalPages } = data
 
   const cardsElement = cards.length ? (
-    <Columns>
+    <Columns count={columnsCount}>
       {cards.map(card => {
         const isCardToSpeech = card.id === cardToSpeech?.id
 
@@ -92,6 +93,8 @@ export const Cards = ({ categories, ...restProps }: Props) => {
         totalItems={totalCards}
         totalPages={totalPages}
         itemsCount={cards.length}
+        columnsCount={columnsCount}
+        setColumnsCount={setColumnsCount}
       />
       {cardsElement}
       <TextToSpeech

@@ -1,12 +1,17 @@
 import { Button } from '@/components/button'
+import type { ColumnsCount } from '@/components/containers/columns'
 import { Input } from '@/components/forms/input'
 import { setFirstPage } from '@/utils/setFirstPage'
+import { Radio, RadioGroup } from '@nextui-org/radio'
 import { Select, SelectItem } from '@nextui-org/select'
 import {
   ChevronFirst,
   ChevronLast,
   ChevronLeft,
   ChevronRight,
+  Columns2,
+  Columns3,
+  Rows4,
 } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -32,6 +37,8 @@ type Props = {
   totalItems: number
   totalPages: number
   itemsCount: number
+  columnsCount: ColumnsCount
+  setColumnsCount: (columnsCount: ColumnsCount) => void
 }
 
 export const Pagination = ({
@@ -44,6 +51,8 @@ export const Pagination = ({
   totalItems,
   totalPages,
   itemsCount,
+  columnsCount,
+  setColumnsCount,
 }: Props) => {
   const { replace } = useTransitionRouter()
   const searchParams = useSearchParams()
@@ -212,6 +221,24 @@ export const Pagination = ({
           </SelectItem>
         )}
       </Select>
+      <RadioGroup
+        label='Columns'
+        orientation='horizontal'
+        value={columnsCount}
+        onValueChange={value => setColumnsCount(value as ColumnsCount)}
+        color='warning'
+        className='text-center'
+      >
+        <Radio value='1' title='1'>
+          <Rows4 />
+        </Radio>
+        <Radio value='2' title='2'>
+          <Columns2 />
+        </Radio>
+        <Radio value='3' title='3'>
+          <Columns3 />
+        </Radio>
+      </RadioGroup>
       {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
     </div>
   )
