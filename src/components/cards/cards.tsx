@@ -82,27 +82,25 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   // ToDo: Refactor fragment
   return (
     <>
+      <Pagination
+        itemsName='Cards'
+        page={page}
+        limit={limit}
+        order={order}
+        sort={sort}
+        sorts={sorts}
+        totalItems={totalCards}
+        totalPages={totalPages}
+        itemsCount={cards.length}
+      />
       {cardsElement}
-      <aside className='bottom-6 mt-6 flex flex-col items-center gap-6 sm:sticky'>
-        <TextToSpeech
-          cards={cards}
-          cardToSpeech={cardToSpeech}
-          setCardToSpeech={setCardToSpeech}
-          setIsCardPlaying={setIsCardPlaying}
-          playlistName={playlistName}
-        />
-        <Pagination
-          itemsName='Cards'
-          page={page}
-          limit={limit}
-          order={order}
-          sort={sort}
-          sorts={sorts}
-          totalItems={totalCards}
-          totalPages={totalPages}
-          itemsCount={cards.length}
-        />
-      </aside>
+      <TextToSpeech
+        cards={cards}
+        cardToSpeech={cardToSpeech}
+        setCardToSpeech={setCardToSpeech}
+        setIsCardPlaying={setIsCardPlaying}
+        playlistName={playlistName}
+      />
     </>
   )
 }

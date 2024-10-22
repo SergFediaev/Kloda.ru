@@ -109,7 +109,7 @@ export const Pagination = ({
   }, [page, totalPages, onChangePage])
 
   return (
-    <div className='flex flex-wrap items-center justify-around gap-4 rounded-3xl border-2 border-accent bg-ground bg-opacity-70 p-6 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
+    <div className='mx-auto mb-6 flex w-fit flex-wrap items-center justify-around gap-4'>
       <Button
         variant='round'
         onClick={() => onChangePage(1)}
