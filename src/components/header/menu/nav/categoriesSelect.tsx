@@ -1,4 +1,5 @@
 import { useGetCategories } from '@/hooks/useCategories'
+import { useWidth } from '@/hooks/useWidth'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { Select, SelectItem } from '@nextui-org/select'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -10,6 +11,7 @@ export const CategoriesSelect = () => {
   const { data, isPending } = useGetCategories() // ToDo: Handle error
   const searchParams = useSearchParams()
   const { replace } = useRouter()
+  const { isDesktopWidth } = useWidth()
 
   const categories = data ?? []
   const hasNotCategories = data?.length === 0
@@ -35,14 +37,14 @@ export const CategoriesSelect = () => {
       label='Categories'
       selectedKeys={selectedCategories}
       onChange={onChangeCategories}
-      className='w-auto min-w-40 max-w-56 items-center'
+      className='items-center sm:w-auto sm:min-w-40 sm:max-w-56'
       color='warning'
       placeholder='All'
       isDisabled={hasNotCategories}
       selectionMode='multiple'
       isLoading={isPending}
       items={categories}
-      labelPlacement='outside-left'
+      labelPlacement={isDesktopWidth ? 'outside-left' : 'inside'}
     >
       {({ name, displayName, cardsCount }) => (
         <SelectItem
