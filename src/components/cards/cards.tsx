@@ -8,6 +8,7 @@ import { Loader } from '@/components/loader'
 import { Pagination } from '@/components/pagination'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCards } from '@/hooks/useCards'
+import { useCardsMode } from '@/hooks/useCardsMode'
 import { useState } from 'react'
 
 const sorts = {
@@ -38,9 +39,11 @@ export const Cards = ({ categories, ...restProps }: Props) => {
     categories,
     ...restProps,
   })
+
   const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
   const [isCardPlaying, setIsCardPlaying] = useState(false)
   const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2')
+  const { isStudyMode } = useCardsMode()
 
   if (isPending) {
     return <Loader className='text-2xl'>Fetching cards</Loader>
@@ -66,6 +69,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
             isCardToSpeech={isCardToSpeech}
             setCardToSpeech={setCardToSpeech}
             isCardPlaying={isCardToSpeech && isCardPlaying}
+            isStudyMode={isStudyMode}
           />
         )
       })}

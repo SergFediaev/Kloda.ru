@@ -2,6 +2,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import type { MenuProps } from '@/components/header/menu/desktopMenu'
 import { MenuButton } from '@/components/header/menu/menuButton'
 import { CardsLink } from '@/components/header/menu/nav/cardsLInk'
+import { CardsModeButton } from '@/components/header/menu/nav/cardsModeButton'
 import { CategoriesSelect } from '@/components/header/menu/nav/categoriesSelect'
 import { CreateCardLink } from '@/components/header/menu/nav/createCardLink'
 import { LoginLink } from '@/components/header/menu/nav/loginLink'
@@ -20,6 +21,7 @@ export const MobileMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
     <UsersLink />
     <CardsLink />
     <CreateCardLink />
+    <CardsModeButton />
     <ThemeButton />
     <SettingsLink />
     <MenuButton collapseMenu={collapseMenu} />

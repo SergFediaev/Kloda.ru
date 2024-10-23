@@ -6,6 +6,7 @@ import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCard } from '@/hooks/useCards'
+import { useCardsMode } from '@/hooks/useCardsMode'
 import { useState } from 'react'
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
 export const CardDetails = ({ id }: Props) => {
   const { isPending, isError, error, data } = useGetCard(id)
   const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
+  const { isStudyMode } = useCardsMode()
 
   if (isPending) {
     return <Loader className='text-2xl'>Fetching card #{id}</Loader>
@@ -33,6 +35,7 @@ export const CardDetails = ({ id }: Props) => {
         isExpanded
         isOpen
         setCardToSpeech={setCardToSpeech}
+        isStudyMode={isStudyMode}
         className='max-w-2xl'
       />
       <aside className='sticky bottom-6 mt-6'>

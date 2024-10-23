@@ -10,6 +10,8 @@ import {
   ChevronDown,
   ChevronUp,
   Copy,
+  Eye,
+  EyeOff,
   Link as LinkIcon,
   Mail,
   Speech,
@@ -28,6 +30,7 @@ type Props = {
   isCardToSpeech?: boolean
   setCardToSpeech?: (card: CardResponse) => void
   isCardPlaying?: boolean
+  isStudyMode: boolean
 } & ComponentPropsWithoutRef<'article'>
 
 // ToDo: Uncategorized, author email, TypeError: Cannot read properties of undefined (reading 'id')
@@ -37,6 +40,7 @@ export const Card = ({
   isCardToSpeech,
   setCardToSpeech,
   isCardPlaying,
+  isStudyMode,
   className,
   ...restProps
 }: Props) => {
@@ -56,11 +60,12 @@ export const Card = ({
 
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
+  const [isShown, setIsShown] = useState(isStudyMode)
+
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
   const expandIcon = isExpanded ? <ChevronUp /> : <ChevronDown />
-  const toggleIsExpanded = () => setIsExpanded(!isExpanded)
-
-  const onCardToSpeech = () => setCardToSpeech?.(card)
+  const showTitle = isShown ? 'Hide content' : 'Show content'
+  const showIcon = isShown ? <EyeOff /> : <Eye />
 
   const {
     id,
@@ -73,6 +78,12 @@ export const Card = ({
     createdAt,
     updatedAt,
   } = card
+
+  const toggleIsExpanded = () => setIsExpanded(!isExpanded)
+
+  const toggleIsShown = () => setIsShown(!isShown)
+
+  const onCardToSpeech = () => setCardToSpeech?.(card)
 
   const copyCardContent = () =>
     copyToClipboard(
@@ -120,6 +131,8 @@ export const Card = ({
     }
   }, [isDislikeSuccess])
 
+  useEffect(() => setIsShown(isStudyMode), [isStudyMode])
+
   return (
     <Block
       as='article'
@@ -132,7 +145,7 @@ export const Card = ({
       )}
       {...restProps}
     >
-      <p className='whitespace-pre-wrap break-words'>{content}</p>
+      {isShown && <p className='whitespace-pre-wrap break-words'>{content}</p>}
       <Wrapper as='div' hasGaps className='justify-between'>
         <Wrapper hasGaps>
           <Button variant='text' onClick={toggleIsExpanded} title={expandTitle}>
@@ -171,6 +184,9 @@ export const Card = ({
               <Speech className={cn(isCardPlaying && 'animate-pulse')} />
             </Button>
           )}
+          <Button variant='text' title={showTitle} onClick={toggleIsShown}>
+            {showIcon}
+          </Button>
         </Wrapper>
         {isOpen ? (
           <Link href={'/'}>Close</Link>
