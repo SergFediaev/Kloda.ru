@@ -21,6 +21,7 @@ import {
 import { useTheme } from 'next-themes'
 import { Link } from 'next-view-transitions'
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { MagicMotion } from 'react-magic-motion'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -134,87 +135,95 @@ export const Card = ({
   useEffect(() => setIsShown(isStudyMode), [isStudyMode])
 
   return (
-    <Block
-      as='article'
-      heading={title}
-      isConstrained={isOpen}
-      className={cn(
-        isCardToSpeech &&
-          'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
-        className,
-      )}
-      {...restProps}
-    >
-      {isShown && <p className='whitespace-pre-wrap break-words'>{content}</p>}
-      <Wrapper as='div' hasGaps className='justify-between'>
-        <Wrapper hasGaps>
-          <Button variant='text' onClick={toggleIsExpanded} title={expandTitle}>
-            {expandIcon}
-          </Button>
-          <Wrapper>
-            <Button variant='text' title='Like' onClick={onLike}>
-              <ThumbsUp />
-            </Button>
-            &nbsp;
-            {likes}
-          </Wrapper>
-          <Wrapper>
-            <Button variant='text' title='Dislike' onClick={onDislike}>
-              <ThumbsDown />
-            </Button>
-            &nbsp;
-            {dislikes}
-          </Wrapper>
-          <Button
-            variant='text'
-            onClick={copyCardContent}
-            title='Copy card content to clipboard'
-          >
-            <Copy />
-          </Button>
-          <Button
-            variant='text'
-            onClick={copyCardLink}
-            title='Copy card link to clipboard'
-          >
-            <LinkIcon />
-          </Button>
-          {setCardToSpeech && (
-            <Button variant='text' onClick={onCardToSpeech}>
-              <Speech className={cn(isCardPlaying && 'animate-pulse')} />
-            </Button>
-          )}
-          <Button variant='text' title={showTitle} onClick={toggleIsShown}>
-            {showIcon}
-          </Button>
-        </Wrapper>
-        {isOpen ? (
-          <Link href={'/'}>Close</Link>
-        ) : (
-          <Link href={`/card/${id}`}>Open</Link>
+    <MagicMotion>
+      <Block
+        as='article'
+        heading={title}
+        isConstrained={isOpen}
+        className={cn(
+          isCardToSpeech &&
+            'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
+          className,
         )}
-      </Wrapper>
-      {isExpanded && (
-        <aside>
-          <p>Categories: {categories.join(', ')}</p>
-          <Wrapper className='justify-between gap-x-4'>
+        {...restProps}
+      >
+        {isShown && (
+          <p className='whitespace-pre-wrap break-words'>{content}</p>
+        )}
+        <Wrapper as='div' hasGaps className='justify-between'>
+          <Wrapper hasGaps>
+            <Button
+              variant='text'
+              onClick={toggleIsExpanded}
+              title={expandTitle}
+            >
+              {expandIcon}
+            </Button>
             <Wrapper>
-              Author:&nbsp;<a href={`mailto:${authorId}`}>{authorId}</a>
+              <Button variant='text' title='Like' onClick={onLike}>
+                <ThumbsUp />
+              </Button>
               &nbsp;
-              <Mail size={16} />
+              {likes}
             </Wrapper>
-            <span>Card ID: {id}</span>
+            <Wrapper>
+              <Button variant='text' title='Dislike' onClick={onDislike}>
+                <ThumbsDown />
+              </Button>
+              &nbsp;
+              {dislikes}
+            </Wrapper>
+            <Button
+              variant='text'
+              onClick={copyCardContent}
+              title='Copy card content to clipboard'
+            >
+              <Copy />
+            </Button>
+            <Button
+              variant='text'
+              onClick={copyCardLink}
+              title='Copy card link to clipboard'
+            >
+              <LinkIcon />
+            </Button>
+            {setCardToSpeech && (
+              <Button variant='text' onClick={onCardToSpeech}>
+                <Speech className={cn(isCardPlaying && 'animate-pulse')} />
+              </Button>
+            )}
+            <Button variant='text' title={showTitle} onClick={toggleIsShown}>
+              {showIcon}
+            </Button>
           </Wrapper>
-          <Wrapper className='justify-between gap-x-4'>
-            <span>
-              Created: <time>{dateToLocale(createdAt)}</time>
-            </span>
-            <span>
-              Updated: <time>{dateToLocale(updatedAt)}</time>
-            </span>
-          </Wrapper>
-        </aside>
-      )}
-    </Block>
+          {isOpen ? (
+            <Link href={'/'}>Close</Link>
+          ) : (
+            <Link href={`/card/${id}`}>Open</Link>
+          )}
+        </Wrapper>
+        {isExpanded && (
+          <aside>
+            <p>Categories: {categories.join(', ')}</p>
+            <Wrapper className='justify-between gap-x-4'>
+              <Wrapper>
+                Author:&nbsp;<a href={`mailto:${authorId}`}>{authorId}</a>
+                &nbsp;
+                <Mail size={16} />
+              </Wrapper>
+              <span>Card ID: {id}</span>
+            </Wrapper>
+            <Wrapper className='justify-between gap-x-4'>
+              <span>
+                Created: <time>{dateToLocale(createdAt)}</time>
+              </span>
+              <span>
+                Updated: <time>{dateToLocale(updatedAt)}</time>
+              </span>
+            </Wrapper>
+          </aside>
+        )}
+      </Block>
+    </MagicMotion>
   )
 }
