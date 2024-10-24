@@ -14,6 +14,8 @@ type Props = {
     order?: string
     sort?: string
     categories?: string | string[]
+    user?: string
+    action?: string
   }
 }
 
@@ -34,6 +36,8 @@ export default function CardsPage({ searchParams }: Props) {
               : [searchParams.categories]
             : []
         }
+        user={Number(searchParams?.user) || undefined}
+        action={searchParams?.action}
       />
     </Container>
   )

@@ -26,6 +26,8 @@ export type CardsArgs = {
   order: string
   sort: string
   categories: string[]
+  user?: number
+  action?: string
 }
 
 export type CardsResponse = {

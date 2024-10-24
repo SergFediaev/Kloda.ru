@@ -29,6 +29,8 @@ type Props = {
   order: string
   sort: string
   categories: string[]
+  user?: number
+  action?: string
 }
 
 // ToDo: Refactor all search params to lower case
