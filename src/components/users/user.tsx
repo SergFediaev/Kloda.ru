@@ -19,10 +19,10 @@ export const User = ({
     id,
     username,
     email,
-    createdCards,
-    favoriteCards,
-    likedCards,
-    dislikedCards,
+    createdCardsCount,
+    favoriteCardsCount,
+    likedCardsCount,
+    dislikedCardsCount,
     registeredAt,
     lastLoginAt,
   },
@@ -60,10 +60,10 @@ export const User = ({
         </p>
       </div>
       <div>
-        <p>Created cards: {createdCards.length}</p>
-        <p>Favorite cards: {favoriteCards.length}</p>
-        <p>Liked cards: {likedCards.length}</p>
-        <p>Disliked cards: {dislikedCards.length}</p>
+        <p>Created cards: {createdCardsCount}</p>
+        <p>Favorite cards: {favoriteCardsCount}</p>
+        <p>Liked cards: {likedCardsCount}</p>
+        <p>Disliked cards: {dislikedCardsCount}</p>
       </div>
       {isOpen ? (
         <Link href={'/users'}>Close</Link>

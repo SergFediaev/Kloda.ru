@@ -20,5 +20,5 @@ export const UserProfile = ({ id }: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
-  return <User user={data[0]} isOpen />
+  return <User user={data} isOpen />
 }

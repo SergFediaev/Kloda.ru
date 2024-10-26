@@ -1,10 +1,11 @@
 import { getUser, getUsers } from '@/api/users/users.api'
+import type { UsersArgs } from '@/api/users/users.types'
 import { useQuery } from '@tanstack/react-query'
 
-export const useGetUsers = () =>
+export const useGetUsers = (args: UsersArgs) =>
   useQuery({
-    queryKey: ['users'],
-    queryFn: getUsers,
+    queryKey: ['users', ...Object.values(args)],
+    queryFn: () => getUsers(args),
   })
 
 export const useGetUser = (id: string) =>

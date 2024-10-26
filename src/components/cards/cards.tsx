@@ -11,7 +11,7 @@ import { useGetCards } from '@/hooks/useCards'
 import { useCardsMode } from '@/hooks/useCardsMode'
 import { useState } from 'react'
 
-const sorts = {
+const SORTS = {
   id: 'ID',
   title: 'Title',
   content: 'Content',
@@ -20,7 +20,7 @@ const sorts = {
   authorId: 'Author',
   createdAt: 'Created',
   updatedAt: 'Updated',
-}
+} as const
 
 type Props = {
   search: string
@@ -95,7 +95,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
         limit={limit}
         order={order}
         sort={sort}
-        sorts={sorts}
+        sorts={SORTS}
         totalItems={totalCards}
         totalPages={totalPages}
         itemsCount={cards.length}
