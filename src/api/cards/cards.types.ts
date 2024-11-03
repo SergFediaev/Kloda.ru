@@ -17,6 +17,9 @@ export type CardResponse = {
   authorId: string
   createdAt: string
   updatedAt: string
+  isFavorite: boolean
+  isLiked: boolean
+  isDisliked: boolean
 }
 
 export type CardsArgs = {
@@ -26,7 +29,7 @@ export type CardsArgs = {
   order: string
   sort: string
   categories: string[]
-  user?: number
+  userId?: number
   action?: string
 }
 

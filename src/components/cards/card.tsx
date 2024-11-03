@@ -2,7 +2,8 @@ import type { CardResponse } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
-import { useDislikeCard, useLikeCard } from '@/hooks/useCards'
+import { FillIcon } from '@/components/fillIcon'
+import { useDislikeCard, useFavoriteCard, useLikeCard } from '@/hooks/useCards'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
 import { cn } from '@/utils/mergeClasses'
@@ -15,6 +16,7 @@ import {
   Link as LinkIcon,
   Mail,
   Speech,
+  Star,
   ThumbsDown,
   ThumbsUp,
 } from 'lucide-react'
@@ -59,6 +61,13 @@ export const Card = ({
     error: dislikeError,
   } = useDislikeCard()
 
+  const {
+    mutate: favorite,
+    isSuccess: isFavoriteSuccess,
+    isError: isFavoriteError,
+    error: favoriteError,
+  } = useFavoriteCard()
+
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
   const [isShown, setIsShown] = useState(isStudyMode)
@@ -78,6 +87,9 @@ export const Card = ({
     authorId,
     createdAt,
     updatedAt,
+    isFavorite,
+    isLiked,
+    isDisliked,
   } = card
 
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
@@ -104,6 +116,8 @@ export const Card = ({
 
   const onDislike = () => dislike(id)
 
+  const onFavorite = () => favorite(id)
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isLikeError) {
@@ -120,6 +134,13 @@ export const Card = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
+    if (isFavoriteError) {
+      toast(favoriteError.message, { theme, type: 'error' })
+    }
+  }, [isFavoriteError, favoriteError])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
     if (isLikeSuccess) {
       toast('Card liked', { theme, type: 'success' })
     }
@@ -131,6 +152,13 @@ export const Card = ({
       toast('Card disliked', { theme, type: 'success' })
     }
   }, [isDislikeSuccess])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isFavoriteSuccess) {
+      toast('Card added to favorites', { theme, type: 'success' })
+    }
+  }, [isFavoriteSuccess])
 
   useEffect(() => setIsShown(isStudyMode), [isStudyMode])
 
@@ -161,18 +189,21 @@ export const Card = ({
             </Button>
             <Wrapper>
               <Button variant='text' title='Like' onClick={onLike}>
-                <ThumbsUp />
+                <FillIcon icon={ThumbsUp} isFilled={isLiked} />
               </Button>
               &nbsp;
               {likes}
             </Wrapper>
             <Wrapper>
               <Button variant='text' title='Dislike' onClick={onDislike}>
-                <ThumbsDown />
+                <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
               </Button>
               &nbsp;
               {dislikes}
             </Wrapper>
+            <Button variant='text' title='Favorite' onClick={onFavorite}>
+              <FillIcon icon={Star} isFilled={isFavorite} />
+            </Button>
             <Button
               variant='text'
               onClick={copyCardContent}

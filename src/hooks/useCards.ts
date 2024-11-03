@@ -1,6 +1,7 @@
 import {
   createCard,
   dislikeCard,
+  favoriteCard,
   getCard,
   getCards,
   likeCard,
@@ -40,6 +41,12 @@ export const useLikeCard = () =>
 export const useDislikeCard = () =>
   useMutation({
     mutationFn: dislikeCard,
+    onSuccess: (_, variables) => invalidateCards(variables),
+  })
+
+export const useFavoriteCard = () =>
+  useMutation({
+    mutationFn: favoriteCard,
     onSuccess: (_, variables) => invalidateCards(variables),
   })
 

@@ -7,23 +7,14 @@ import type {
 } from '@/api/auth/auth.types'
 import type { UserResponse } from '@/api/users/users.types'
 import { handleHttpError } from '@/utils/handleHttpError'
+import { setHeadersAuth } from '@/utils/setHeadersAuth'
 import ky, { HTTPError } from 'ky'
 
 const authApi = ky.create({
   prefixUrl: `${process.env.NEXT_PUBLIC_API_URL}v1/auth`,
   credentials: 'include',
   hooks: {
-    beforeRequest: [
-      ({ headers }) => {
-        const accessToken = sessionStorage.getItem('access_token')
-
-        if (!accessToken) {
-          return
-        }
-
-        headers.set('Authorization', `Bearer ${accessToken}`)
-      },
-    ],
+    beforeRequest: [({ headers }) => setHeadersAuth(headers)],
     beforeRetry: [() => refresh()],
   },
   retry: {
