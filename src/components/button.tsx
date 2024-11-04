@@ -8,6 +8,7 @@ type Props = {
   variant?: Variant
   isStretched?: boolean
   isLoading?: boolean
+  isBlocked?: boolean
 } & ComponentPropsWithoutRef<'button'>
 
 // ToDo: Refactor styles
@@ -17,6 +18,7 @@ export const Button = ({
   variant = 'primary',
   isStretched,
   isLoading,
+  isBlocked,
   ...restProps
 }: Props) => (
   <button
@@ -37,6 +39,7 @@ export const Button = ({
       isStretched && 'flex-grow',
       isLoading &&
         'cursor-progress bg-accent-dark-alternate dark:bg-accent-alternate',
+      isBlocked && 'cursor-not-allowed',
       className,
     )}
     {...restProps}

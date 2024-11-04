@@ -1,11 +1,8 @@
 import { Button } from '@/components/button'
+import type { CollapseMenuProps } from '@/components/header/menu/desktopMenu'
 import { ChevronUp } from 'lucide-react'
 
-type Props = {
-  collapseMenu: () => void
-}
-
-export const MenuButton = ({ collapseMenu }: Props) => (
+export const MenuButton = ({ collapseMenu }: CollapseMenuProps) => (
   <Button variant='text' onClick={collapseMenu} title='Collapse menu'>
     <ChevronUp />
   </Button>

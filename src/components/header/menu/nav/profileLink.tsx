@@ -1,18 +1,20 @@
+import type {
+  LoggedInProps,
+  UserIdProps,
+} from '@/components/header/menu/desktopMenu'
 import { CircleUser } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 import { usePathname } from 'next/navigation'
 
-type Props = {
-  isUserLoggedIn: boolean
-  loggedInUserId?: number
-}
-
-export const ProfileLink = ({ isUserLoggedIn, loggedInUserId }: Props) => {
-  if (!isUserLoggedIn || !loggedInUserId) {
+export const ProfileLink = ({
+  isLoggedIn,
+  userId,
+}: LoggedInProps & UserIdProps) => {
+  if (!isLoggedIn || !userId) {
     return null
   }
 
-  const userPage = `/user/${loggedInUserId}`
+  const userPage = `/user/${userId}`
 
   return usePathname() !== userPage ? (
     <Link href={userPage} title='Profile'>

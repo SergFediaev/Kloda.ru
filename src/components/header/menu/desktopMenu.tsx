@@ -13,11 +13,15 @@ import { UsersLink } from '@/components/header/menu/nav/usersLink'
 import { Search } from '@/components/header/menu/search/search'
 // ToDo: Refactor imports
 
-export type MenuProps = {
-  isUserLoggedIn: boolean
-  loggedInUserId?: number
+export type LoggedInProps = { isLoggedIn: boolean }
+
+export type UserIdProps = { userId?: number }
+
+export type CollapseMenuProps = {
   collapseMenu: () => void
 }
+
+export type MenuProps = LoggedInProps & UserIdProps & CollapseMenuProps
 
 export const DesktopMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
   <Wrapper as='div' hasGaps className='justify-between'>
@@ -27,11 +31,11 @@ export const DesktopMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
       <CategoriesSelect />
     </Wrapper>
     <Wrapper as='nav' hasGaps>
-      <LoginLink isUserLoggedIn={restProps.isUserLoggedIn} />
+      <LoginLink isLoggedIn={restProps.isLoggedIn} />
       <ProfileLink {...restProps} />
       <UsersLink />
       <CardsLink />
-      <CreateCardLink />
+      <CreateCardLink isLoggedIn={restProps.isLoggedIn} />
       <CardsModeButton />
       <ThemeButton />
       <SettingsLink />

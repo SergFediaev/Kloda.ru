@@ -1,15 +1,12 @@
+import type { LoggedInProps } from '@/components/header/menu/desktopMenu'
 import { LogIn } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 import { usePathname } from 'next/navigation'
 
 const LOGIN_PAGE = '/login'
 
-type Props = {
-  isUserLoggedIn: boolean
-}
-
-export const LoginLink = ({ isUserLoggedIn }: Props) =>
-  usePathname() !== LOGIN_PAGE && !isUserLoggedIn ? (
+export const LoginLink = ({ isLoggedIn }: LoggedInProps) =>
+  usePathname() !== LOGIN_PAGE && !isLoggedIn ? (
     <Link href={LOGIN_PAGE} title='Login'>
       <LogIn />
     </Link>

@@ -18,8 +18,8 @@ export const Header = () => {
   const { isMenuExpanded, expandMenu, collapseMenu } = useMenu(isDesktopWidth)
 
   const menuProps: MenuProps = {
-    isUserLoggedIn: isSuccess,
-    loggedInUserId: data?.id,
+    isLoggedIn: isSuccess,
+    userId: data?.id,
     collapseMenu,
   }
 

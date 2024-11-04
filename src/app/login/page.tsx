@@ -1,9 +1,9 @@
 import { Block } from '@/components/containers/block'
 import { Container } from '@/components/containers/container'
 import { LoginForm } from '@/components/forms/loginForm'
+import { RegisterLink } from '@/components/links/registerLink'
 import { ReturnToCards } from '@/components/returnToCards'
 import type { Metadata } from 'next'
-import { Link } from 'next-view-transitions'
 
 const title = 'Login'
 
@@ -21,9 +21,7 @@ export default function LoginPage() {
         className='max-w-md'
       >
         <LoginForm />
-        <Link href='/register' className='self-center'>
-          Register
-        </Link>
+        <RegisterLink />
         <ReturnToCards />
       </Block>
     </Container>

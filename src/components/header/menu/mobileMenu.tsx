@@ -16,11 +16,11 @@ import { Search } from '@/components/header/menu/search/search'
 export const MobileMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
   <Wrapper as='nav' hasGaps className='justify-evenly'>
     <Logo />
-    <LoginLink isUserLoggedIn={restProps.isUserLoggedIn} />
+    <LoginLink isLoggedIn={restProps.isLoggedIn} />
     <ProfileLink {...restProps} />
     <UsersLink />
     <CardsLink />
-    <CreateCardLink />
+    <CreateCardLink isLoggedIn={restProps.isLoggedIn} />
     <CardsModeButton />
     <ThemeButton />
     <SettingsLink />

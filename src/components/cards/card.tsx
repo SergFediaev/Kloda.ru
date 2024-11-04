@@ -2,7 +2,9 @@ import type { CardResponse } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
+import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import { FillIcon } from '@/components/fillIcon'
+import { useMe } from '@/hooks/useAuth'
 import { useDislikeCard, useFavoriteCard, useLikeCard } from '@/hooks/useCards'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
@@ -47,6 +49,8 @@ export const Card = ({
   className,
   ...restProps
 }: Props) => {
+  const { isSuccess } = useMe()
+
   const {
     mutate: like,
     isSuccess: isLikeSuccess,
@@ -71,6 +75,7 @@ export const Card = ({
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
   const [isShown, setIsShown] = useState(isStudyMode)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
   const expandIcon = isExpanded ? <ChevronUp /> : <ChevronDown />
@@ -112,11 +117,12 @@ export const Card = ({
       theme,
     )
 
-  const onLike = () => like(id)
+  const openDialog = () => setIsDialogOpen(true)
+  const closeDialog = () => setIsDialogOpen(false)
 
-  const onDislike = () => dislike(id)
-
-  const onFavorite = () => favorite(id)
+  const onLike = () => (isSuccess ? like(id) : openDialog())
+  const onDislike = () => (isSuccess ? dislike(id) : openDialog())
+  const onFavorite = () => (isSuccess ? favorite(id) : openDialog())
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
@@ -164,97 +170,115 @@ export const Card = ({
 
   return (
     <MagicMotion>
-      <Block
-        as='article'
-        heading={title}
-        isConstrained={isOpen}
-        className={cn(
-          isCardToSpeech &&
-            'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
-          className,
-        )}
-        {...restProps}
-      >
-        {isShown && (
-          <p className='whitespace-pre-wrap break-words'>{content}</p>
-        )}
-        <Wrapper as='div' hasGaps className='justify-between'>
-          <Wrapper hasGaps>
-            <Button
-              variant='text'
-              onClick={toggleIsExpanded}
-              title={expandTitle}
-            >
-              {expandIcon}
-            </Button>
-            <Wrapper>
-              <Button variant='text' title='Like' onClick={onLike}>
-                <FillIcon icon={ThumbsUp} isFilled={isLiked} />
-              </Button>
-              &nbsp;
-              {likes}
-            </Wrapper>
-            <Wrapper>
-              <Button variant='text' title='Dislike' onClick={onDislike}>
-                <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
-              </Button>
-              &nbsp;
-              {dislikes}
-            </Wrapper>
-            <Button variant='text' title='Favorite' onClick={onFavorite}>
-              <FillIcon icon={Star} isFilled={isFavorite} />
-            </Button>
-            <Button
-              variant='text'
-              onClick={copyCardContent}
-              title='Copy card content to clipboard'
-            >
-              <Copy />
-            </Button>
-            <Button
-              variant='text'
-              onClick={copyCardLink}
-              title='Copy card link to clipboard'
-            >
-              <LinkIcon />
-            </Button>
-            {setCardToSpeech && (
-              <Button variant='text' onClick={onCardToSpeech}>
-                <Speech className={cn(isCardPlaying && 'animate-pulse')} />
-              </Button>
-            )}
-            <Button variant='text' title={showTitle} onClick={toggleIsShown}>
-              {showIcon}
-            </Button>
-          </Wrapper>
-          {isOpen ? (
-            <Link href={'/'}>Close</Link>
-          ) : (
-            <Link href={`/card/${id}`}>Open</Link>
+      <>
+        <Block
+          as='article'
+          heading={title}
+          isConstrained={isOpen}
+          className={cn(
+            isCardToSpeech &&
+              'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
+            className,
           )}
-        </Wrapper>
-        {isExpanded && (
-          <aside>
-            <p>Categories: {categories.join(', ')}</p>
-            <Wrapper className='justify-between gap-x-4'>
+          {...restProps}
+        >
+          {isShown && (
+            <p className='whitespace-pre-wrap break-words'>{content}</p>
+          )}
+          <Wrapper as='div' hasGaps className='justify-between'>
+            <Wrapper hasGaps>
+              <Button
+                variant='text'
+                onClick={toggleIsExpanded}
+                title={expandTitle}
+              >
+                {expandIcon}
+              </Button>
               <Wrapper>
-                Author:&nbsp;<a href={`mailto:${authorId}`}>{authorId}</a>
+                <Button
+                  variant='text'
+                  title='Like'
+                  onClick={onLike}
+                  isBlocked={!isSuccess}
+                >
+                  <FillIcon icon={ThumbsUp} isFilled={isLiked} />
+                </Button>
                 &nbsp;
-                <Mail size={16} />
+                {likes}
               </Wrapper>
-              <span>Card ID: {id}</span>
+              <Wrapper>
+                <Button
+                  variant='text'
+                  title='Dislike'
+                  onClick={onDislike}
+                  isBlocked={!isSuccess}
+                >
+                  <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
+                </Button>
+                &nbsp;
+                {dislikes}
+              </Wrapper>
+              <Button
+                variant='text'
+                title='Favorite'
+                onClick={onFavorite}
+                isBlocked={!isSuccess}
+              >
+                <FillIcon icon={Star} isFilled={isFavorite} />
+              </Button>
+              <Button
+                variant='text'
+                onClick={copyCardContent}
+                title='Copy card content to clipboard'
+              >
+                <Copy />
+              </Button>
+              <Button
+                variant='text'
+                onClick={copyCardLink}
+                title='Copy card link to clipboard'
+              >
+                <LinkIcon />
+              </Button>
+              {setCardToSpeech && (
+                <Button variant='text' onClick={onCardToSpeech}>
+                  <Speech className={cn(isCardPlaying && 'animate-pulse')} />
+                </Button>
+              )}
+              <Button variant='text' title={showTitle} onClick={toggleIsShown}>
+                {showIcon}
+              </Button>
             </Wrapper>
-            <Wrapper className='justify-between gap-x-4'>
-              <span>
-                Created: <time>{dateToLocale(createdAt)}</time>
-              </span>
-              <span>
-                Updated: <time>{dateToLocale(updatedAt)}</time>
-              </span>
-            </Wrapper>
-          </aside>
-        )}
-      </Block>
+            {isOpen ? (
+              <Link href={'/'}>Close</Link>
+            ) : (
+              <Link href={`/card/${id}`}>Open</Link>
+            )}
+          </Wrapper>
+          {isExpanded && (
+            <aside>
+              <p>Categories: {categories.join(', ')}</p>
+              <Wrapper className='justify-between gap-x-4'>
+                <Wrapper>
+                  Author:&nbsp;<a href={`mailto:${authorId}`}>{authorId}</a>
+                  &nbsp;
+                  <Mail size={16} />
+                </Wrapper>
+                <span>Card ID: {id}</span>
+              </Wrapper>
+              <Wrapper className='justify-between gap-x-4'>
+                <span>
+                  Created: <time>{dateToLocale(createdAt)}</time>
+                </span>
+                <span>
+                  Updated: <time>{dateToLocale(updatedAt)}</time>
+                </span>
+              </Wrapper>
+            </aside>
+          )}
+        </Block>
+        <UnauthorizedDialog open={isDialogOpen} close={closeDialog} />
+      </>
     </MagicMotion>
   )
 }
