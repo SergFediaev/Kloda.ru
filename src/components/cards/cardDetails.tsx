@@ -19,7 +19,7 @@ export const CardDetails = ({ id }: Props) => {
   const { isStudyMode } = useCardsMode()
 
   if (isPending) {
-    return <Loader className='text-2xl'>Fetching card #{id}</Loader>
+    return <Loader>Fetching card #{id}</Loader>
   }
 
   if (isError) {

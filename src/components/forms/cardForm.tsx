@@ -12,40 +12,35 @@ import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-// ToDo: Refactor author ID & email, fix input type='number'
 const cardSchema = z.object({
   title: z.string(),
   content: z.string(),
   categories: z.string(),
-  author: z.number(),
-  email: z.union([z.literal(''), z.string().email()]),
+  username: z.string().optional(),
+  email: z.string().email().optional(),
 })
 
 type CardSchema = z.infer<typeof cardSchema>
 
-// ToDo: Mock data
-/*const defaultValues: CardSchema = {
-  title: 'New card title',
-  content:
-    'Very informative and interesting content of the new card.\n\nCreated in app by user.',
-  categories: 'JS, TS, Elysia, Next.js, Custom card',
-  author: 'Tester',
-  email: 'tester@gmail.com',
-}*/
-
-const defaultValues: CardSchema = {
-  title: '',
-  content: '',
-  categories: '',
-  author: 0,
-  email: '',
+type Props = {
+  username: string
+  email: string
+  authorId: number
 }
 
-export const CardForm = () => {
+export const CardForm = ({ username, email, authorId }: Props) => {
   const router = useTransitionRouter()
   const { data, mutate, isPending, error, isSuccess } = useCreateCard()
 
   const createText = isPending ? 'Creating' : 'Create'
+
+  const defaultValues: CardSchema = {
+    title: '',
+    content: '',
+    categories: '',
+    username,
+    email,
+  }
 
   const {
     control,
@@ -54,17 +49,17 @@ export const CardForm = () => {
     formState: { errors },
   } = useForm<CardSchema>({ defaultValues, resolver: zodResolver(cardSchema) })
 
-  const onSubmit = handleSubmit(({ categories, author, ...restData }) => {
-    const card: CardArgs = {
-      ...restData,
-      categories: categories.split(','),
-      likes: 0,
-      dislikes: 0,
-      authorId: author,
-    }
+  const onSubmit = handleSubmit(
+    ({ username, email, categories, ...restData }) => {
+      const card: CardArgs = {
+        ...restData,
+        categories: categories.split(','),
+        authorId,
+      }
 
-    mutate(card)
-  })
+      mutate(card)
+    },
+  )
 
   const onReset = () => reset(defaultValues)
 
@@ -99,12 +94,12 @@ export const CardForm = () => {
       />
       <FormInput
         control={control}
-        name={'author'}
+        name={'username'}
         label={'Author'}
         placeholder={'Username'}
-        error={errors.author?.message}
+        error={errors.username?.message}
         required
-        type='number'
+        disabled
       />
       <FormInput
         control={control}
@@ -113,6 +108,8 @@ export const CardForm = () => {
         type={'email'}
         placeholder={'example@mail.com'}
         error={errors.email?.message}
+        required
+        disabled
       />
       <ButtonsContainer>
         <Button isStretched isLoading={isPending}>

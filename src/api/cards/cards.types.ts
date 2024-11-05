@@ -2,8 +2,6 @@ export type CardArgs = {
   title: string
   content: string
   categories: string[]
-  likes: number
-  dislikes: number
   authorId: number
 }
 
@@ -12,6 +10,7 @@ export type CardResponse = {
   title: string
   content: string
   categories: string[]
+  favorites: number
   likes: number
   dislikes: number
   authorId: string

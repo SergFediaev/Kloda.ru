@@ -34,7 +34,7 @@ export const Users = (props: Props) => {
   const [columnsCount, setColumnsCount] = useState<ColumnsCount>('3') // ToDo: Users pagination
 
   if (isPending) {
-    return <Loader className='text-2xl'>Fetching users</Loader>
+    return <Loader>Fetching users</Loader>
   }
 
   if (isError) {

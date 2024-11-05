@@ -10,7 +10,7 @@ export const FillIcon = ({ icon: Component, isFilled }: Icon) => (
   <Component
     className={cn(
       isFilled &&
-        'fill-accent stroke-0 hover:fill-accent-variant dark:fill-accent-dark dark:hover:fill-accent-dark-variant',
+        'fill-accent hover:fill-accent-variant dark:fill-accent-dark dark:hover:fill-accent-dark-variant',
     )}
   />
 )

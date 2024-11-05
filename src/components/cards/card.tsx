@@ -90,6 +90,7 @@ export const Card = ({
     title,
     content,
     categories,
+    favorites,
     likes,
     dislikes,
     authorId,
@@ -232,14 +233,18 @@ export const Card = ({
                 &nbsp;
                 {dislikes}
               </Wrapper>
-              <Button
-                variant='text'
-                title='Favorite'
-                onClick={onFavorite}
-                isBlocked={!isSuccess}
-              >
-                <FillIcon icon={Star} isFilled={isFavorite} />
-              </Button>
+              <Wrapper>
+                <Button
+                  variant='text'
+                  title='Favorite'
+                  onClick={onFavorite}
+                  isBlocked={!isSuccess}
+                >
+                  <FillIcon icon={Star} isFilled={isFavorite} />
+                </Button>
+                &nbsp;
+                {favorites}
+              </Wrapper>
               <Button
                 variant='text'
                 onClick={copyCardContent}

@@ -48,7 +48,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   const { isStudyMode } = useCardsMode()
 
   if (isPending) {
-    return <Loader className='text-2xl'>Fetching cards</Loader>
+    return <Loader>Fetching cards</Loader>
   }
 
   if (isError) {

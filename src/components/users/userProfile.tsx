@@ -13,7 +13,7 @@ export const UserProfile = ({ id }: Props) => {
   const { isPending, isError, error, data } = useGetUser(id)
 
   if (isPending) {
-    return <Loader className='text-2xl'>Fetching user #{id}</Loader>
+    return <Loader>Fetching user #{id}</Loader>
   }
 
   if (isError) {
