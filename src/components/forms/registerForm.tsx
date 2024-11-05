@@ -57,9 +57,7 @@ export const RegisterForm = () => {
 
   const onReset = () => reset(defaultValues)
 
-  if (isSuccess) {
-    router.push(`/user/${data.userId}`)
-  }
+  if (isSuccess) router.push(`/user/${data.userId}`)
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>

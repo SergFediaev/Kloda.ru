@@ -38,3 +38,15 @@ export type CardsResponse = {
   totalCards: number
   totalPages: number
 }
+
+export type FavoriteResponse = {
+  isFavorite: boolean
+}
+
+export type LikeResponse = {
+  isLiked: boolean
+}
+
+export type DislikeResponse = {
+  isDisliked: boolean
+}

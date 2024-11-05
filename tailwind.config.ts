@@ -49,7 +49,7 @@ const config: Config = {
       },
       animation: {
         heartbeat: 'heartbeat .25s infinite alternate',
-        'marquee-left': 'marquee-left 20s infinite',
+        'marquee-left': 'marquee-left 50s infinite',
       },
       keyframes: {
         heartbeat: {

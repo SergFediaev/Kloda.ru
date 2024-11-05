@@ -53,6 +53,7 @@ export const Card = ({
 
   const {
     mutate: like,
+    data: likeData,
     isSuccess: isLikeSuccess,
     isError: isLikeError,
     error: likeError,
@@ -60,6 +61,7 @@ export const Card = ({
 
   const {
     mutate: dislike,
+    data: dislikeData,
     isSuccess: isDislikeSuccess,
     isError: isDislikeError,
     error: dislikeError,
@@ -67,6 +69,7 @@ export const Card = ({
 
   const {
     mutate: favorite,
+    data: favoriteData,
     isSuccess: isFavoriteSuccess,
     isError: isFavoriteError,
     error: favoriteError,
@@ -148,23 +151,34 @@ export const Card = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isLikeSuccess) {
-      toast('Card liked', { theme, type: 'success' })
+      toast(likeData.isLiked ? 'Card liked' : 'Like removed', {
+        theme,
+        type: 'success',
+      })
     }
-  }, [isLikeSuccess])
+  }, [isLikeSuccess, likeData])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isDislikeSuccess) {
-      toast('Card disliked', { theme, type: 'success' })
+      toast(dislikeData.isDisliked ? 'Card disliked' : 'Dislike removed', {
+        theme,
+        type: 'success',
+      })
     }
-  }, [isDislikeSuccess])
+  }, [isDislikeSuccess, dislikeData])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isFavoriteSuccess) {
-      toast('Card added to favorites', { theme, type: 'success' })
+      toast(
+        favoriteData.isFavorite
+          ? 'Card added to favorites'
+          : 'Card removed from favorites',
+        { theme, type: 'success' },
+      )
     }
-  }, [isFavoriteSuccess])
+  }, [isFavoriteSuccess, favoriteData])
 
   useEffect(() => setIsShown(isStudyMode), [isStudyMode])
 

@@ -4,6 +4,9 @@ import type {
   CardResponse,
   CardsArgs,
   CardsResponse,
+  DislikeResponse,
+  FavoriteResponse,
+  LikeResponse,
 } from '@/api/cards/cards.types'
 import { setHeadersAuth } from '@/utils/setHeadersAuth'
 import ky from 'ky'
@@ -30,10 +33,11 @@ export const getCard = (id: string) => cardsApi<CardResponse>(id).json()
 export const createCard = (json: CardArgs) =>
   cardsApi.post<CardResponse>('', { json }).json()
 
-export const likeCard = (id: number) => cardsApi.patch(`${id}/like`).json()
+export const likeCard = (id: number) =>
+  cardsApi.patch<LikeResponse>(`${id}/like`).json()
 
 export const dislikeCard = (id: number) =>
-  cardsApi.patch(`${id}/dislike`).json()
+  cardsApi.patch<DislikeResponse>(`${id}/dislike`).json()
 
 export const favoriteCard = (id: number) =>
-  cardsApi.patch(`${id}/favorite`).json()
+  cardsApi.patch<FavoriteResponse>(`${id}/favorite`).json()

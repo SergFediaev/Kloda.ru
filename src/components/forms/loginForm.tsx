@@ -18,7 +18,7 @@ type LoginSchema = z.infer<typeof loginSchema>
 
 export const LoginForm = () => {
   const router = useTransitionRouter()
-  const { data, mutate, isPending, error, isSuccess } = useLogin()
+  const { mutate, isPending, error, isSuccess } = useLogin()
 
   const loginText = isPending ? 'Logging in' : 'Login'
 
@@ -36,9 +36,7 @@ export const LoginForm = () => {
 
   const onSubmit = handleSubmit(data => mutate(data))
 
-  if (isSuccess) {
-    router.push(`/user/${data.userId}`)
-  }
+  if (isSuccess) router.push('/')
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>
