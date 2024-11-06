@@ -30,7 +30,7 @@ type Props = {
 
 export const CardForm = ({ username, email, authorId }: Props) => {
   const router = useTransitionRouter()
-  const { data, mutate, isPending, error, isSuccess } = useCreateCard()
+  const { data, mutate, isPending, error, isSuccess } = useCreateCard(authorId)
 
   const createText = isPending ? 'Creating' : 'Create'
 

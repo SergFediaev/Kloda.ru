@@ -49,7 +49,7 @@ export const Card = ({
   className,
   ...restProps
 }: Props) => {
-  const { isSuccess } = useMe()
+  const { data: meData, isSuccess: isMeSuccess } = useMe()
 
   const {
     mutate: like,
@@ -57,7 +57,7 @@ export const Card = ({
     isSuccess: isLikeSuccess,
     isError: isLikeError,
     error: likeError,
-  } = useLikeCard()
+  } = useLikeCard(meData?.id)
 
   const {
     mutate: dislike,
@@ -65,7 +65,7 @@ export const Card = ({
     isSuccess: isDislikeSuccess,
     isError: isDislikeError,
     error: dislikeError,
-  } = useDislikeCard()
+  } = useDislikeCard(meData?.id)
 
   const {
     mutate: favorite,
@@ -73,7 +73,7 @@ export const Card = ({
     isSuccess: isFavoriteSuccess,
     isError: isFavoriteError,
     error: favoriteError,
-  } = useFavoriteCard()
+  } = useFavoriteCard(meData?.id)
 
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
@@ -124,9 +124,9 @@ export const Card = ({
   const openDialog = () => setIsDialogOpen(true)
   const closeDialog = () => setIsDialogOpen(false)
 
-  const onLike = () => (isSuccess ? like(id) : openDialog())
-  const onDislike = () => (isSuccess ? dislike(id) : openDialog())
-  const onFavorite = () => (isSuccess ? favorite(id) : openDialog())
+  const onLike = () => (isMeSuccess ? like(id) : openDialog())
+  const onDislike = () => (isMeSuccess ? dislike(id) : openDialog())
+  const onFavorite = () => (isMeSuccess ? favorite(id) : openDialog())
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
@@ -214,7 +214,7 @@ export const Card = ({
                   variant='text'
                   title='Like'
                   onClick={onLike}
-                  isBlocked={!isSuccess}
+                  isBlocked={!isMeSuccess}
                 >
                   <FillIcon icon={ThumbsUp} isFilled={isLiked} />
                 </Button>
@@ -226,7 +226,7 @@ export const Card = ({
                   variant='text'
                   title='Dislike'
                   onClick={onDislike}
-                  isBlocked={!isSuccess}
+                  isBlocked={!isMeSuccess}
                 >
                   <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
                 </Button>
@@ -238,7 +238,7 @@ export const Card = ({
                   variant='text'
                   title='Favorite'
                   onClick={onFavorite}
-                  isBlocked={!isSuccess}
+                  isBlocked={!isMeSuccess}
                 >
                   <FillIcon icon={Star} isFilled={isFavorite} />
                 </Button>

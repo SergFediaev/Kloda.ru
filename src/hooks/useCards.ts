@@ -8,7 +8,7 @@ import {
 } from '@/api/cards/cards.api'
 import type { CardsArgs } from '@/api/cards/cards.types'
 import { getQueryClient } from '@/app/getQueryClient'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 export const useGetCards = (args: CardsArgs) =>
   useQuery({
@@ -22,36 +22,47 @@ export const useGetCard = (id: string) =>
     queryFn: () => getCard(id),
   })
 
-export const useCreateCard = () =>
+export const useCreateCard = (authorId: number) =>
   useMutation({
     mutationFn: createCard,
     onSuccess: () => {
       const queryClient = getQueryClient()
-      void queryClient.invalidateQueries({ queryKey: ['cards'] })
+      void invalidateCards(queryClient)
       void queryClient.invalidateQueries({ queryKey: ['categories'] })
+      invalidateUsers(queryClient, authorId)
     },
   })
 
-export const useLikeCard = () =>
+export const useLikeCard = (userId?: number) =>
   useMutation({
     mutationFn: likeCard,
-    onSuccess: (_, variables) => invalidateCards(variables),
+    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
-export const useDislikeCard = () =>
+export const useDislikeCard = (userId?: number) =>
   useMutation({
     mutationFn: dislikeCard,
-    onSuccess: (_, variables) => invalidateCards(variables),
+    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
-export const useFavoriteCard = () =>
+export const useFavoriteCard = (userId?: number) =>
   useMutation({
     mutationFn: favoriteCard,
-    onSuccess: (_, variables) => invalidateCards(variables),
+    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
-const invalidateCards = (id: number) => {
+const invalidateCards = (queryClient: QueryClient) =>
+  queryClient.invalidateQueries({ queryKey: ['cards'] })
+
+const invalidateUsers = (queryClient: QueryClient, userId: number) => {
+  void queryClient.invalidateQueries({ queryKey: ['users'] })
+  void queryClient.invalidateQueries({ queryKey: ['user', String(userId)] })
+}
+
+const invalidateCardsAndUsers = (cardId: number, userId?: number) => {
   const queryClient = getQueryClient()
-  void queryClient.invalidateQueries({ queryKey: ['cards'] })
-  void queryClient.invalidateQueries({ queryKey: ['card', String(id)] })
+  void invalidateCards(queryClient)
+  void queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+
+  if (userId) invalidateUsers(queryClient, userId)
 }
