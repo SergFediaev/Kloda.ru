@@ -39,7 +39,7 @@ type Props = {
   isStudyMode: boolean
 } & ComponentPropsWithoutRef<'article'>
 
-// ToDo: Uncategorized, author email, TypeError: Cannot read properties of undefined (reading 'id')
+// ToDo: Uncategorized
 export const Card = ({
   card,
   isOpen,
@@ -286,24 +286,24 @@ export const Card = ({
           {isExpanded && (
             <aside>
               <p>Categories: {categories.join(', ')}</p>
-              <Wrapper className='justify-between gap-x-4'>
-                <Wrapper>
-                  Author: &nbsp;
+              <Wrapper as='div' className='justify-between gap-x-4'>
+                <Wrapper as='p'>
+                  Author:&nbsp;
                   <Link href={`/user/${authorId}`} title='Open author profile'>
                     {authorUsername}
                   </Link>
                   &nbsp;
                   <User size={16} />
                 </Wrapper>
-                <span>Card ID: {id}</span>
+                <p>Card ID: {id}</p>
               </Wrapper>
-              <Wrapper className='justify-between gap-x-4'>
-                <span>
+              <Wrapper as='div' className='justify-between gap-x-4'>
+                <p>
                   Created: <time>{dateToLocale(createdAt)}</time>
-                </span>
-                <span>
+                </p>
+                <p>
                   Updated: <time>{dateToLocale(updatedAt)}</time>
-                </span>
+                </p>
               </Wrapper>
             </aside>
           )}

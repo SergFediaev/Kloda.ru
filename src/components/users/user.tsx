@@ -2,6 +2,7 @@ import type { UserResponse } from '@/api/users/users.types'
 import { Button } from '@/components/button'
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
+import { UserCardsCount } from '@/components/users/userCardsCount'
 import { useLogout, useMe } from '@/hooks/useAuth'
 import { dateToLocale } from '@/utils/dateToLocale'
 import { Mail } from 'lucide-react'
@@ -49,7 +50,7 @@ export const User = ({
       >
         <div>
           <p>User ID: {id}</p>
-          <Wrapper>
+          <Wrapper as='p'>
             Email:&nbsp;<a href={`mailto:${email}`}>{email}</a>
             &nbsp;
             <Mail size={16} />
@@ -62,10 +63,30 @@ export const User = ({
           </p>
         </div>
         <div>
-          <p>Created cards: {createdCardsCount}</p>
-          <p>Favorite cards: {favoriteCardsCount}</p>
-          <p>Liked cards: {likedCardsCount}</p>
-          <p>Disliked cards: {dislikedCardsCount}</p>
+          <UserCardsCount
+            cardsType='Created'
+            cardsCount={createdCardsCount}
+            userId={id}
+            action='created'
+          />
+          <UserCardsCount
+            cardsType='Favorite'
+            cardsCount={favoriteCardsCount}
+            userId={id}
+            action='favorite'
+          />
+          <UserCardsCount
+            cardsType='Liked'
+            cardsCount={likedCardsCount}
+            userId={id}
+            action='liked'
+          />
+          <UserCardsCount
+            cardsType='Disliked'
+            cardsCount={dislikedCardsCount}
+            userId={id}
+            action='disliked'
+          />
         </div>
         {isOpen ? (
           <Link href={'/users'}>Close</Link>

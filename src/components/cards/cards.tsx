@@ -29,7 +29,7 @@ type Props = {
   order: string
   sort: string
   categories: string[]
-  user?: number
+  userId?: number
   action?: string
 }
 

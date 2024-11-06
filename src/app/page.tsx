@@ -36,7 +36,7 @@ export default function CardsPage({ searchParams }: Props) {
               : [searchParams.categories]
             : []
         }
-        user={Number(searchParams?.userId) || undefined}
+        userId={Number(searchParams?.userId) || undefined}
         action={searchParams?.action}
       />
     </Container>
