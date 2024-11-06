@@ -13,7 +13,8 @@ export type CardResponse = {
   favorites: number
   likes: number
   dislikes: number
-  authorId: string
+  authorId: number
+  authorUsername: string
   createdAt: string
   updatedAt: string
   isFavorite: boolean

@@ -16,14 +16,15 @@ import {
   Eye,
   EyeOff,
   Link as LinkIcon,
-  Mail,
   Speech,
   Star,
   ThumbsDown,
   ThumbsUp,
+  Trash2,
+  User,
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { Link } from 'next-view-transitions'
+import Link from 'next/link'
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { MagicMotion } from 'react-magic-motion'
 import { toast } from 'react-toastify'
@@ -94,12 +95,15 @@ export const Card = ({
     likes,
     dislikes,
     authorId,
+    authorUsername,
     createdAt,
     updatedAt,
     isFavorite,
     isLiked,
     isDisliked,
   } = card
+
+  const isCardAuthor = authorId === meData?.id
 
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
 
@@ -267,6 +271,11 @@ export const Card = ({
               <Button variant='text' title={showTitle} onClick={toggleIsShown}>
                 {showIcon}
               </Button>
+              {isCardAuthor && (
+                <Button variant='text' title='Delete card' isDanger>
+                  <Trash2 />
+                </Button>
+              )}
             </Wrapper>
             {isOpen ? (
               <Link href={'/'}>Close</Link>
@@ -279,9 +288,12 @@ export const Card = ({
               <p>Categories: {categories.join(', ')}</p>
               <Wrapper className='justify-between gap-x-4'>
                 <Wrapper>
-                  Author:&nbsp;<a href={`mailto:${authorId}`}>{authorId}</a>
+                  Author: &nbsp;
+                  <Link href={`/user/${authorId}`} title='Open author profile'>
+                    {authorUsername}
+                  </Link>
                   &nbsp;
-                  <Mail size={16} />
+                  <User size={16} />
                 </Wrapper>
                 <span>Card ID: {id}</span>
               </Wrapper>

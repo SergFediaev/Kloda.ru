@@ -44,7 +44,12 @@ const config: Config = {
           },
         },
         danger: {
-          DEFAULT: colors.red['500'],
+          DEFAULT: colors.red['700'],
+          variant: colors.red['800'],
+          dark: {
+            DEFAULT: colors.red['500'],
+            variant: colors.red['600'],
+          },
         },
       },
       animation: {

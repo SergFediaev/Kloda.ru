@@ -9,6 +9,7 @@ type Props = {
   isStretched?: boolean
   isLoading?: boolean
   isBlocked?: boolean
+  isDanger?: boolean
 } & ComponentPropsWithoutRef<'button'>
 
 // ToDo: Refactor styles
@@ -19,6 +20,7 @@ export const Button = ({
   isStretched,
   isLoading,
   isBlocked,
+  isDanger,
   ...restProps
 }: Props) => (
   <button
@@ -40,6 +42,10 @@ export const Button = ({
       isLoading &&
         'cursor-progress bg-accent-dark-alternate dark:bg-accent-alternate',
       isBlocked && 'cursor-not-allowed',
+      isDanger && [
+        'text-danger hover:enabled:text-danger-variant',
+        'dark:text-danger-dark dark:hover:enabled:text-danger-dark-variant',
+      ],
       className,
     )}
     {...restProps}
