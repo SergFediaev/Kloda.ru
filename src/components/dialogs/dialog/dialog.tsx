@@ -53,12 +53,12 @@ export const Dialog = ({
         aria-label={label}
         ref={dialog}
         className={cn(
-          '-translate-y-1/2 fixed top-1/2 z-20 m-6 bg-transparent',
+          '-translate-y-1/2 fixed top-1/2 z-20 bg-transparent',
           className,
         )}
         {...restProps}
       >
-        <Block>
+        <Block className='m-6'>
           <Wrapper hasGaps className='flex-nowrap items-start justify-between'>
             <Heading as='h3'>{label}</Heading>
             <Button variant='text' onClick={onClose} title='Close'>
