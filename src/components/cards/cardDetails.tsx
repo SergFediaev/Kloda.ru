@@ -1,12 +1,13 @@
 'use client'
 
-import type { CardResponse } from '@/api/cards/cards.types'
+import type { CardModel } from '@/api/cards/cards.types'
 import { Card } from '@/components/cards/card'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCard } from '@/hooks/useCards'
 import { useCardsMode } from '@/hooks/useCardsMode'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 type Props = {
@@ -14,8 +15,9 @@ type Props = {
 }
 
 export const CardDetails = ({ id }: Props) => {
-  const { isPending, isError, error, data } = useGetCard(id)
-  const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
+  const categories = useSearchParams().getAll('categories')
+  const { isPending, isError, error, data } = useGetCard({ id, categories })
+  const [cardToSpeech, setCardToSpeech] = useState<CardModel>()
   const { isStudyMode } = useCardsMode()
 
   if (isPending) {
@@ -26,12 +28,14 @@ export const CardDetails = ({ id }: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
+  const { card } = data
+
   // ToDo: Refactor wrapper, optional card & cards to speech
   return (
     <div className='flex flex-col items-center'>
       <Card
-        id={String(data.id)}
-        card={data}
+        id={String(card.id)}
+        card={card}
         isExpanded
         isOpen
         setCardToSpeech={setCardToSpeech}
@@ -40,7 +44,7 @@ export const CardDetails = ({ id }: Props) => {
       />
       <aside className='sticky bottom-6 mt-6'>
         <TextToSpeech
-          cards={[data]}
+          cards={[card]}
           setCardToSpeech={setCardToSpeech}
           cardToSpeech={cardToSpeech}
         />

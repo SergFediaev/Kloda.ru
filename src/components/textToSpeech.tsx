@@ -1,4 +1,4 @@
-import type { CardResponse } from '@/api/cards/cards.types'
+import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
@@ -29,9 +29,9 @@ import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react'
 import { MagicMotion } from 'react-magic-motion'
 
 type Props = {
-  cards: CardResponse[]
-  cardToSpeech?: CardResponse
-  setCardToSpeech: (card?: CardResponse) => void
+  cards: CardModel[]
+  cardToSpeech?: CardModel
+  setCardToSpeech: (card?: CardModel) => void
   setIsCardPlaying?: (isPlaying: boolean) => void
   playlistName?: string
 }
@@ -52,10 +52,10 @@ const DEFAULT_RATE = 1
 const DEFAULT_PITCH = 1
 const DEFAULT_PLAY_MODE: PlayMode = 'once'
 
-const getCardText = ({ id, title, content }: CardResponse) =>
+const getCardText = ({ id, title, content }: CardModel) =>
   `Card #${id}\n${title}\n${content}`
 
-const getCardIndex = (cards: CardResponse[], cardId: number) =>
+const getCardIndex = (cards: CardModel[], cardId: number) =>
   cards.findIndex(({ id }) => id === cardId)
 
 export const TextToSpeech = ({
@@ -289,7 +289,7 @@ export const TextToSpeech = ({
     }
   }
 
-  const onChangeCard = (card: CardResponse) => {
+  const onChangeCard = (card: CardModel) => {
     speechSynth.cancel()
     setIsPlaying(true)
     setIsPaused(false)

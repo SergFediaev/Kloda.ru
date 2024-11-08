@@ -1,6 +1,6 @@
 'use client'
 
-import type { CardArgs } from '@/api/cards/cards.types'
+import type { CreateCardArgs } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Form } from '@/components/forms/form'
@@ -51,7 +51,7 @@ export const CardForm = ({ username, email, authorId }: Props) => {
 
   const onSubmit = handleSubmit(
     ({ username, email, categories, ...restData }) => {
-      const card: CardArgs = {
+      const card: CreateCardArgs = {
         ...restData,
         categories: categories.split(','),
         authorId,

@@ -1,12 +1,15 @@
 import { refresh } from '@/api/auth/auth.api'
 import type {
   CardArgs,
+  CardModel,
   CardResponse,
   CardsArgs,
   CardsResponse,
+  CreateCardArgs,
   DislikeResponse,
   FavoriteResponse,
   LikeResponse,
+  RandomCardArgs,
 } from '@/api/cards/cards.types'
 import { setHeadersAuth } from '@/utils/setHeadersAuth'
 import ky from 'ky'
@@ -28,10 +31,18 @@ export const getCards = (searchParams: CardsArgs) =>
     searchParams: queryString.stringify(searchParams),
   }).json()
 
-export const getCard = (id: string) => cardsApi<CardResponse>(id).json()
+export const getCard = ({ id, ...restCategories }: CardArgs) =>
+  cardsApi<CardResponse>(id, {
+    searchParams: queryString.stringify(restCategories),
+  }).json()
 
-export const createCard = (json: CardArgs) =>
-  cardsApi.post<CardResponse>('', { json }).json()
+export const getRandomCard = (searchParams: RandomCardArgs) =>
+  cardsApi<CardModel>('random', {
+    searchParams: queryString.stringify(searchParams),
+  }).json()
+
+export const createCard = (json: CreateCardArgs) =>
+  cardsApi.post<CardModel>('', { json }).json()
 
 export const likeCard = (id: number) =>
   cardsApi.patch<LikeResponse>(`${id}/like`).json()

@@ -1,4 +1,5 @@
 import { Wrapper } from '@/components/containers/wrapper'
+import { CardControl } from '@/components/header/menu/cardControl'
 import { MenuButton } from '@/components/header/menu/menuButton'
 import { CardsLink } from '@/components/header/menu/nav/cardsLInk'
 import { CardsModeButton } from '@/components/header/menu/nav/cardsModeButton'
@@ -28,6 +29,7 @@ export const DesktopMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
     <Logo />
     <Wrapper as='nav' hasGaps>
       <Search />
+      <CardControl />
       <CategoriesSelect />
     </Wrapper>
     <Wrapper as='nav' hasGaps>

@@ -1,12 +1,12 @@
 import { Button } from '@/components/button'
 import { useCardsMode } from '@/hooks/useCardsMode'
+import { usePaths } from '@/hooks/usePaths'
 import { Dumbbell, GraduationCap } from 'lucide-react'
-import { usePathname } from 'next/navigation'
 
 export const CardsModeButton = () => {
   const { isStudyMode, toggleStudyMode } = useCardsMode()
 
-  if (usePathname() !== '/') {
+  if (usePaths().isNotCardsPath) {
     return null
   }
 

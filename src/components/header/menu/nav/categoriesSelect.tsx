@@ -1,8 +1,9 @@
 import { useGetCategories } from '@/hooks/useCategories'
+import { usePaths } from '@/hooks/usePaths'
 import { useWidth } from '@/hooks/useWidth'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { Select, SelectItem } from '@nextui-org/select'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import type { ChangeEvent } from 'react'
 
 const CATEGORIES_PARAM = 'categories'
@@ -13,7 +14,7 @@ export const CategoriesSelect = () => {
   const { replace } = useRouter()
   const { isDesktopWidth } = useWidth()
 
-  if (usePathname() !== '/') {
+  if (usePaths().isNotCardsPath) {
     return null
   }
 

@@ -3,6 +3,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { VoiceSearch } from '@/components/header/menu/search/voiceSearch'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useGenerateId } from '@/hooks/useGenerateId'
+import { usePaths } from '@/hooks/usePaths'
 import { useVoice } from '@/hooks/useVoice'
 import { useWidth } from '@/hooks/useWidth'
 import { Search as SearchIcon, X } from 'lucide-react'
@@ -82,7 +83,7 @@ export const Search = () => {
     return () => removeEventListener('keydown', onKeyDown)
   }, [])
 
-  if (!(pathname === '/' || pathname === '/users')) {
+  if (usePaths().isNotSearchPath) {
     return null
   }
 

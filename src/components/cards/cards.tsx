@@ -1,6 +1,6 @@
 'use client'
 
-import type { CardResponse } from '@/api/cards/cards.types'
+import type { CardModel } from '@/api/cards/cards.types'
 import { Card } from '@/components/cards/card'
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
@@ -42,7 +42,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
     ...restProps,
   })
 
-  const [cardToSpeech, setCardToSpeech] = useState<CardResponse>()
+  const [cardToSpeech, setCardToSpeech] = useState<CardModel>()
   const [isCardPlaying, setIsCardPlaying] = useState(false)
   const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2')
   const { isStudyMode } = useCardsMode()

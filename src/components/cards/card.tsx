@@ -1,4 +1,4 @@
-import type { CardResponse } from '@/api/cards/cards.types'
+import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
@@ -30,11 +30,11 @@ import { MagicMotion } from 'react-magic-motion'
 import { toast } from 'react-toastify'
 
 type Props = {
-  card: CardResponse
+  card: CardModel
   isExpanded?: boolean
   isOpen?: boolean
   isCardToSpeech?: boolean
-  setCardToSpeech?: (card: CardResponse) => void
+  setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
   isStudyMode: boolean
 } & ComponentPropsWithoutRef<'article'>

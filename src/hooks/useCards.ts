@@ -4,9 +4,14 @@ import {
   favoriteCard,
   getCard,
   getCards,
+  getRandomCard,
   likeCard,
 } from '@/api/cards/cards.api'
-import type { CardsArgs } from '@/api/cards/cards.types'
+import type {
+  CardArgs,
+  CardsArgs,
+  RandomCardArgs,
+} from '@/api/cards/cards.types'
 import { getQueryClient } from '@/app/getQueryClient'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
@@ -16,10 +21,17 @@ export const useGetCards = (args: CardsArgs) =>
     queryFn: () => getCards(args),
   })
 
-export const useGetCard = (id: string) =>
+export const useGetCard = (args: CardArgs) =>
   useQuery({
-    queryKey: ['card', id],
-    queryFn: () => getCard(id),
+    queryKey: ['card', ...Object.values(args)],
+    queryFn: () => getCard(args),
+  })
+
+export const useGetRandomCard = (args: RandomCardArgs) =>
+  useQuery({
+    queryKey: ['randomCard', ...Object.values(args)],
+    queryFn: () => getRandomCard(args),
+    enabled: false,
   })
 
 export const useCreateCard = (authorId: number) =>

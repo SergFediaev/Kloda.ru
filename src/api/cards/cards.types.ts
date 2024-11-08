@@ -1,11 +1,4 @@
-export type CardArgs = {
-  title: string
-  content: string
-  categories: string[]
-  authorId: number
-}
-
-export type CardResponse = {
+export type CardModel = {
   id: number
   title: string
   content: string
@@ -22,6 +15,23 @@ export type CardResponse = {
   isDisliked: boolean
 }
 
+export type CardArgs = {
+  id: string
+  categories: string[]
+}
+
+export type RandomCardArgs = {
+  currentCardId: number
+  categories: string[]
+}
+
+export type CreateCardArgs = {
+  title: string
+  content: string
+  categories: string[]
+  authorId: number
+}
+
 export type CardsArgs = {
   search: string
   page: number
@@ -33,8 +43,16 @@ export type CardsArgs = {
   action?: string
 }
 
+export type CardResponse = {
+  card: CardModel
+  cardPosition: number
+  prevCardId: number
+  nextCardId: number
+  totalCards: number
+}
+
 export type CardsResponse = {
-  cards: CardResponse[]
+  cards: CardModel[]
   totalCards: number
   totalPages: number
 }
