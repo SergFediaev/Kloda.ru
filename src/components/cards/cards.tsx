@@ -15,6 +15,7 @@ const SORTS = {
   id: 'ID',
   title: 'Title',
   content: 'Content',
+  favorites: 'Favorites',
   likes: 'Likes',
   dislikes: 'Dislikes',
   authorId: 'Author',
