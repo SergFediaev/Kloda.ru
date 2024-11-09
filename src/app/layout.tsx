@@ -3,6 +3,7 @@ import './globals.css'
 import { Providers } from '@/app/providers'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
+import { Screensaver } from '@/components/screensaver'
 import { ViewTransitions } from 'next-view-transitions'
 import { Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
@@ -47,6 +48,7 @@ export default function RootLayout({
               <main className='flex flex-grow'>{children}</main>
               <Footer />
             </div>
+            <Screensaver />
           </Providers>
         </body>
       </html>

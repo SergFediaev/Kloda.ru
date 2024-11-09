@@ -5,6 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --offset-x: calc(100svw - 150px);
+  --offset-y: calc(100svh - 50px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +26,36 @@ body {
 @layer utilities {
   .paused {
     animation-play-state: paused;
+  }
+
+  @keyframes bounce-horizontal {
+    from {
+      transform: translateX(0);
+      filter: hue-rotate(0);
+    }
+    to {
+      transform: translateX(var(--offset-x));
+      filter: hue-rotate(360deg);
+    }
+  }
+
+  @keyframes bounce-vertical {
+    from {
+      transform: translateY(0);
+      filter: saturate(200%);
+    }
+    to {
+      transform: translateY(var(--offset-y));
+      filter: saturate(100%);
+    }
+  }
+
+  .bounce-horizontal {
+    animation: bounce-horizontal 4s linear infinite alternate;
+  }
+
+  .bounce-vertical {
+    animation: bounce-vertical 5s linear infinite alternate;
   }
 }
 
