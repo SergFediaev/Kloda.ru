@@ -1,15 +1,15 @@
 'use client'
 
+import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
 import { Input } from '@/components/forms/input'
 import { useScreensaver } from '@/hooks/useScreensaver'
-import { Checkbox } from '@nextui-org/checkbox'
 import type { ChangeEvent } from 'react'
 
 const MIN_SECONDS = 10
 const MAX_SECONDS = 600
 
-export const ScreensaverSetting = () => {
+export const ScreensaverSettings = () => {
   const { isEnabled, secondsToActivate, setIsEnabled, setSecondsToActivate } =
     useScreensaver()
 
@@ -24,15 +24,12 @@ export const ScreensaverSetting = () => {
 
   return (
     <Block heading='Screensaver' inColumns>
-      <Checkbox
-        color='warning'
-        size='lg'
+      <CheckBox
         isSelected={isEnabled}
         onValueChange={isSelected => setIsEnabled(isSelected)}
-        className='flex-row-reverse gap-6'
       >
-        Enabled
-      </Checkbox>
+        Enable screensaver
+      </CheckBox>
       <Input
         isHorizontal
         label={`Seconds to turn on (min ${MIN_SECONDS}, max ${MAX_SECONDS})`}

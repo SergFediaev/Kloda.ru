@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from '@/app/providers'
+import { Layout } from '@/components/containers/layout'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
 import { Screensaver } from '@/components/screensaver'
@@ -43,12 +44,12 @@ export default function RootLayout({
       <html lang='en' suppressHydrationWarning>
         <body className={`${inter.className} antialiased`}>
           <Providers>
-            <div className='flex min-h-svh flex-col bg-ground text-primary dark:bg-ground-dark dark:text-primary-dark'>
+            <Layout>
               <Header />
               <main className='flex flex-grow'>{children}</main>
               <Footer />
-            </div>
-            <Screensaver />
+              <Screensaver />
+            </Layout>
           </Providers>
         </body>
       </html>

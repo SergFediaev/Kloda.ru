@@ -11,7 +11,7 @@ type Uptime = {
   time: string
 }
 
-export const UptimeSetting = () => {
+export const UptimeSettings = () => {
   const [{ days, time }, setUptime] = useState<Uptime>({
     days: 0,
     time: '00:00:00.000',

@@ -1,7 +1,5 @@
-import { Columns } from '@/components/containers/columns'
 import { Container } from '@/components/containers/container'
-import { ScreensaverSetting } from '@/components/settings/screensaverSetting'
-import { UptimeSetting } from '@/components/settings/uptimeSetting'
+import { Settings } from '@/components/settings/settings'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -11,10 +9,7 @@ export const metadata: Metadata = {
 export default function SettingsPage() {
   return (
     <Container>
-      <Columns count={'2'}>
-        <ScreensaverSetting />
-        <UptimeSetting />
-      </Columns>
+      <Settings />
     </Container>
   )
 }
