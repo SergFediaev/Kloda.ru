@@ -4,11 +4,12 @@ import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 const DEFAULT_TYPE = 'div'
 
-type Props<T extends ElementType = typeof DEFAULT_TYPE> = {
+export type BlockProps<T extends ElementType = typeof DEFAULT_TYPE> = {
   as?: T
   heading?: ReactNode
   isHeadingCentered?: boolean
   isConstrained?: boolean
+  inColumns?: boolean
 } & ComponentPropsWithoutRef<T>
 
 export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
@@ -17,9 +18,10 @@ export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
   heading,
   isHeadingCentered,
   isConstrained,
+  inColumns,
   className,
   ...restProps
-}: Props<T>) => {
+}: BlockProps<T>) => {
   const Component = as ?? DEFAULT_TYPE
 
   return (
@@ -27,6 +29,7 @@ export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
       className={cn(
         'flex flex-col gap-8 rounded-3xl bg-surface p-6 shadow-lg dark:bg-surface-dark',
         isConstrained && 'w-full',
+        inColumns && 'break-inside-avoid',
         className,
       )}
       {...restProps}

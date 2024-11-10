@@ -9,17 +9,30 @@ import {
 export type InputProps = {
   label?: ReactNode
   error?: ReactNode
+  isHorizontal?: boolean
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, id, name, required, className, ...restProps }, ref) => {
+  (
+    { label, error, isHorizontal, id, name, required, className, ...restProps },
+    ref,
+  ) => {
     const inputId = useGenerateId(id, name)
 
     return (
-      <div className={cn('flex flex-col gap-1', className)}>
+      <div
+        className={cn(
+          'flex gap-1',
+          isHorizontal ? 'flex-wrap items-start justify-between' : 'flex-col',
+          className,
+        )}
+      >
         <label
           htmlFor={inputId}
-          className={cn(required && 'after:text-danger after:content-["*"]')}
+          className={cn(
+            required && 'after:text-danger after:content-["*"]',
+            isHorizontal && 'w-1/2',
+          )}
         >
           {label}
         </label>

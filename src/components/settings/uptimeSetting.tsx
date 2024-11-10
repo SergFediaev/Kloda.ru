@@ -11,7 +11,7 @@ type Uptime = {
   time: string
 }
 
-export const Settings = () => {
+export const UptimeSetting = () => {
   const [{ days, time }, setUptime] = useState<Uptime>({
     days: 0,
     time: '00:00:00.000',
@@ -35,7 +35,7 @@ export const Settings = () => {
   }, [])
 
   return (
-    <Block heading='Uptime'>
+    <Block heading='Uptime' inColumns>
       <div>
         <p>Kloda backend uptime:</p>
         <Wrapper as='p' hasGaps className='font-mono'>

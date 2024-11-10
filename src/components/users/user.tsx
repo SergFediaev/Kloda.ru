@@ -1,6 +1,6 @@
 import type { UserResponse } from '@/api/users/users.types'
 import { Button } from '@/components/button'
-import { Block } from '@/components/containers/block'
+import { Block, type BlockProps } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
 import { UserCardsCount } from '@/components/users/userCardsCount'
 import { useLogout, useMe } from '@/hooks/useAuth'
@@ -13,7 +13,8 @@ import { MagicMotion } from 'react-magic-motion'
 type Props = {
   user: UserResponse
   isOpen?: boolean
-} & ComponentPropsWithoutRef<'article'>
+} & ComponentPropsWithoutRef<'article'> &
+  Pick<BlockProps, 'inColumns'>
 
 // ToDo: TypeError: Cannot read properties of undefined (reading 'id')
 export const User = ({

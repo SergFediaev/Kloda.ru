@@ -46,7 +46,7 @@ export const Users = (props: Props) => {
   const usersElement = users.length ? (
     <Columns count={columnsCount}>
       {users.map(user => (
-        <User key={user.id} user={user} className='break-inside-avoid' />
+        <User key={user.id} user={user} inColumns />
       ))}
     </Columns>
   ) : (

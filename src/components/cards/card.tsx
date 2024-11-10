@@ -1,6 +1,6 @@
 import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
-import { Block } from '@/components/containers/block'
+import { Block, type BlockProps } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
 import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import { FillIcon } from '@/components/fillIcon'
@@ -37,7 +37,8 @@ type Props = {
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
   isStudyMode: boolean
-} & ComponentPropsWithoutRef<'article'>
+} & ComponentPropsWithoutRef<'article'> &
+  Pick<BlockProps, 'inColumns'>
 
 // ToDo: Uncategorized
 export const Card = ({

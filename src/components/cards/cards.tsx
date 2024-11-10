@@ -68,11 +68,11 @@ export const Cards = ({ categories, ...restProps }: Props) => {
             id={String(card.id)}
             key={card.id}
             card={card}
-            className='break-inside-avoid'
             isCardToSpeech={isCardToSpeech}
             setCardToSpeech={setCardToSpeech}
             isCardPlaying={isCardToSpeech && isCardPlaying}
             isStudyMode={isStudyMode}
+            inColumns
           />
         )
       })}

@@ -1,14 +1,22 @@
 'use client'
 
 import { Wrapper } from '@/components/containers/wrapper'
+import { useScreensaver } from '@/hooks/useScreensaver'
+import { secondsToMs } from '@/utils/secondsToMs'
 import { Spade } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export const Screensaver = () => {
+  const { isEnabled, secondsToActivate } = useScreensaver()
   const [isDisabled, setIsDisabled] = useState(true)
 
   useEffect(() => {
-    const startTimer = () => setTimeout(() => setIsDisabled(false), 30_000)
+    if (!isEnabled) {
+      return
+    }
+
+    const startTimer = () =>
+      setTimeout(() => setIsDisabled(false), secondsToMs(secondsToActivate))
 
     let timer = startTimer()
 
@@ -26,7 +34,7 @@ export const Screensaver = () => {
       removeEventListener('mousemove', onActivity)
       removeEventListener('click', onActivity)
     }
-  }, [])
+  }, [isEnabled, secondsToActivate])
 
   if (isDisabled) {
     return null
