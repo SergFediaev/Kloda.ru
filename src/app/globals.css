@@ -71,6 +71,11 @@ body {
   ::selection {
     @apply bg-accent-dark-alternate dark:bg-accent-alternate;
   }
+
+  q:before,
+  q:after {
+    @apply text-accent dark:text-accent-dark;
+  }
 }
 
 @layer components {

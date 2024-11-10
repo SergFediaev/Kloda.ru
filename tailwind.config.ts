@@ -54,6 +54,7 @@ const config: Config = {
       },
       animation: {
         heartbeat: 'heartbeat .25s infinite alternate',
+        'heartbeat-reverse': 'heartbeat .25s infinite alternate-reverse',
         'marquee-left': 'marquee-left 50s infinite',
       },
       keyframes: {
