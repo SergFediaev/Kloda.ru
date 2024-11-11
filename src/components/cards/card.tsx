@@ -2,6 +2,7 @@ import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Block, type BlockProps } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
+import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
 import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import { FillIcon } from '@/components/fillIcon'
 import { useMe } from '@/hooks/useAuth'
@@ -80,7 +81,8 @@ export const Card = ({
   const { theme } = useTheme()
   const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
   const [isShown, setIsShown] = useState(isStudyMode)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
 
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
   const expandIcon = isExpanded ? <ChevronUp /> : <ChevronDown />
@@ -126,12 +128,19 @@ export const Card = ({
       theme,
     )
 
-  const openDialog = () => setIsDialogOpen(true)
-  const closeDialog = () => setIsDialogOpen(false)
+  const openUnauthorized = () => setIsUnauthorizedOpen(true)
+  const closeUnauthorized = () => setIsUnauthorizedOpen(false)
 
-  const onLike = () => (isMeSuccess ? like(id) : openDialog())
-  const onDislike = () => (isMeSuccess ? dislike(id) : openDialog())
-  const onFavorite = () => (isMeSuccess ? favorite(id) : openDialog())
+  const openConfirmation = () => setIsConfirmationOpen(true)
+  const closeConfirmation = () => setIsConfirmationOpen(false)
+
+  const onLike = () => (isMeSuccess ? like(id) : openUnauthorized())
+  const onDislike = () => (isMeSuccess ? dislike(id) : openUnauthorized())
+  const onFavorite = () => (isMeSuccess ? favorite(id) : openUnauthorized())
+
+  const onDelete = () => {
+    closeConfirmation()
+  }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
@@ -273,7 +282,12 @@ export const Card = ({
                 {showIcon}
               </Button>
               {isCardAuthor && (
-                <Button variant='text' title='Delete card' isDanger>
+                <Button
+                  variant='text'
+                  title='Delete card'
+                  onClick={openConfirmation}
+                  isDanger
+                >
                   <Trash2 />
                 </Button>
               )}
@@ -309,7 +323,25 @@ export const Card = ({
             </aside>
           )}
         </Block>
-        <UnauthorizedDialog open={isDialogOpen} close={closeDialog} />
+        <UnauthorizedDialog
+          open={isUnauthorizedOpen}
+          close={closeUnauthorized}
+        />
+        <ConfirmationDialog
+          open={isConfirmationOpen}
+          close={closeConfirmation}
+          confirmationText={
+            <>
+              <p>Are you sure you want to permanently delete card #{id}?</p>
+              <p>You will not be able to restore card #{id} once deleted!</p>
+            </>
+          }
+          confirmationButton={
+            <Button onClick={onDelete} isStretched isDanger>
+              Delete
+            </Button>
+          }
+        />
       </>
     </MagicMotion>
   )

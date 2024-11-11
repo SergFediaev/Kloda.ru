@@ -26,14 +26,28 @@ export const Button = ({
   <button
     className={cn(
       'flex items-center justify-center',
-      variant === 'primary' && [
-        'rounded-3xl bg-accent-dark-variant px-4 py-2 hover:enabled:bg-accent-dark-alternate',
-        'dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
-      ],
-      variant === 'text' && [
-        'text-accent hover:enabled:text-accent-variant',
-        'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
-      ],
+      variant === 'primary' && ['rounded-3xl px-4 py-2'],
+      variant === 'primary' &&
+        !isDanger && [
+          'bg-accent-dark-variant hover:enabled:bg-accent-dark-alternate',
+          'dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
+        ],
+      variant === 'primary' &&
+        isDanger && [
+          'bg-danger hover:enabled:bg-danger-variant',
+          'dark:bg-danger-dark dark:hover:enabled:bg-danger-dark-variant',
+          'text-primary-dark dark:text-primary',
+        ],
+      variant === 'text' &&
+        !isDanger && [
+          'text-accent hover:enabled:text-accent-variant',
+          'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
+        ],
+      variant === 'text' &&
+        isDanger && [
+          'text-danger hover:enabled:text-danger-variant',
+          'dark:text-danger-dark dark:hover:enabled:text-danger-dark-variant',
+        ],
       variant === 'floating' &&
         'fixed right-0 z-10 rounded-bl-full bg-accent-dark-variant pt-2 pr-2 pb-5 pl-5 opacity-50 transition hover:opacity-100 dark:bg-accent-variant',
       variant === 'round' &&
@@ -42,10 +56,6 @@ export const Button = ({
       isLoading &&
         'cursor-progress bg-accent-dark-alternate dark:bg-accent-alternate',
       isBlocked && 'cursor-not-allowed',
-      isDanger && [
-        'text-danger hover:enabled:text-danger-variant',
-        'dark:text-danger-dark dark:hover:enabled:text-danger-dark-variant',
-      ],
       className,
     )}
     {...restProps}

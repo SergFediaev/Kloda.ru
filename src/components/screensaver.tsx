@@ -41,7 +41,7 @@ export const Screensaver = () => {
   }
 
   return (
-    <div className='fixed inset-0 z-20 bg-black bg-opacity-80 backdrop-blur-sm'>
+    <div className='fixed inset-0 z-30 bg-black bg-opacity-80 backdrop-blur-sm'>
       <aside className='absolute bottom-0 m-6 text-white opacity-50'>
         <p>Screensaver</p>
         <p>Any action will turn it off</p>
