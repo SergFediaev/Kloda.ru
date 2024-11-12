@@ -44,6 +44,8 @@ export const getRandomCard = (searchParams: RandomCardArgs) =>
 export const createCard = (json: CreateCardArgs) =>
   cardsApi.post<CardModel>('', { json }).json()
 
+export const deleteCard = (id: number) => cardsApi.delete(String(id)).json()
+
 export const likeCard = (id: number) =>
   cardsApi.patch<LikeResponse>(`${id}/like`).json()
 

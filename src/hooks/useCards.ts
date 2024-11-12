@@ -1,5 +1,6 @@
 import {
   createCard,
+  deleteCard,
   dislikeCard,
   favoriteCard,
   getCard,
@@ -40,9 +41,16 @@ export const useCreateCard = (authorId: number) =>
     onSuccess: () => {
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
-      void queryClient.invalidateQueries({ queryKey: ['categories'] })
+      void invalidateCategories(queryClient)
       invalidateUsers(queryClient, authorId)
     },
+  })
+
+export const useDeleteCard = (userId?: number) =>
+  useMutation({
+    mutationFn: deleteCard,
+    onSuccess: (_, variables) =>
+      invalidateCardsAndUsers(variables, userId, true),
   })
 
 export const useLikeCard = (userId?: number) =>
@@ -66,15 +74,24 @@ export const useFavoriteCard = (userId?: number) =>
 const invalidateCards = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['cards'] })
 
+const invalidateCategories = (queryClient: QueryClient) =>
+  queryClient.invalidateQueries({ queryKey: ['categories'] })
+
 const invalidateUsers = (queryClient: QueryClient, userId: number) => {
   void queryClient.invalidateQueries({ queryKey: ['users'] })
   void queryClient.invalidateQueries({ queryKey: ['user', String(userId)] })
 }
 
-const invalidateCardsAndUsers = (cardId: number, userId?: number) => {
+const invalidateCardsAndUsers = (
+  cardId: number,
+  userId?: number,
+  shouldInvalidateCategories?: boolean,
+) => {
   const queryClient = getQueryClient()
   void invalidateCards(queryClient)
   void queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
 
   if (userId) invalidateUsers(queryClient, userId)
+
+  if (shouldInvalidateCategories) void invalidateCategories(queryClient)
 }

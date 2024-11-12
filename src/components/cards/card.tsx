@@ -6,7 +6,12 @@ import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
 import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import { FillIcon } from '@/components/fillIcon'
 import { useMe } from '@/hooks/useAuth'
-import { useDislikeCard, useFavoriteCard, useLikeCard } from '@/hooks/useCards'
+import {
+  useDeleteCard,
+  useDislikeCard,
+  useFavoriteCard,
+  useLikeCard,
+} from '@/hooks/useCards'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { dateToLocale } from '@/utils/dateToLocale'
 import { cn } from '@/utils/mergeClasses'
@@ -53,6 +58,13 @@ export const Card = ({
   ...restProps
 }: Props) => {
   const { data: meData, isSuccess: isMeSuccess } = useMe()
+
+  const {
+    mutate: deleteCard,
+    isSuccess: isDeleteSuccess,
+    isError: isDeleteError,
+    error: deleteError,
+  } = useDeleteCard(meData?.id)
 
   const {
     mutate: like,
@@ -140,7 +152,15 @@ export const Card = ({
 
   const onDelete = () => {
     closeConfirmation()
+    deleteCard(id)
   }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isDeleteError) {
+      toast(deleteError.message, { theme, type: 'error' })
+    }
+  }, [isDeleteError, deleteError])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
@@ -162,6 +182,16 @@ export const Card = ({
       toast(favoriteError.message, { theme, type: 'error' })
     }
   }, [isFavoriteError, favoriteError])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isDeleteSuccess) {
+      toast('Card deleted', {
+        theme,
+        type: 'success',
+      })
+    }
+  }, [isDeleteSuccess])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
