@@ -1,5 +1,6 @@
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
+import { ExternalLink } from '@/components/links/externalLink'
 import { AnimatedIcon } from '@/components/settings/animatedIcon'
 import { DependenciesList } from '@/components/settings/dependenciesList'
 import { Flame, Heart } from 'lucide-react'
@@ -29,5 +30,18 @@ export const AppInfo = () => (
       &nbsp;in '24
     </Wrapper>
     <em>For learners by learner</em>
+    <p>
+      <ExternalLink href='https://rmd.fediaev.ru'>
+        Old version of Kloda
+      </ExternalLink>
+      <Wrapper>
+        <q>Backend</q>
+        &nbsp;is made on&nbsp;
+        <ExternalLink href='https://docs.google.com/spreadsheets/d/1MuswRL1w3DhhQ3xGl3ewrmhw7-5UDLePoaHmsAtNExk'>
+          Google Sheets
+        </ExternalLink>
+      </Wrapper>
+      Feel the difference!
+    </p>
   </Block>
 )
