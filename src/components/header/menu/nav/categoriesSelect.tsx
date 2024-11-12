@@ -1,18 +1,24 @@
 import { useGetCategories } from '@/hooks/useCategories'
 import { usePaths } from '@/hooks/usePaths'
-import { useWidth } from '@/hooks/useWidth'
+import { useThemes } from '@/hooks/useThemes'
 import { setFirstPage } from '@/utils/setFirstPage'
-import { Select, SelectItem } from '@nextui-org/select'
 import { useRouter, useSearchParams } from 'next/navigation'
-import type { ChangeEvent } from 'react'
+import Select from 'react-select'
+import colors from 'tailwindcss/colors'
 
 const CATEGORIES_PARAM = 'categories'
 
+type Options = readonly {
+  label: string
+  value: string
+}[]
+
+// ToDo: Refactor select theme custom colors
 export const CategoriesSelect = () => {
   const { data, isPending } = useGetCategories() // ToDo: Handle error
   const searchParams = useSearchParams()
   const { replace } = useRouter()
-  const { isDesktopWidth } = useWidth()
+  const { isDarkTheme } = useThemes()
 
   if (usePaths().isNotCardsPath) {
     return null
@@ -22,16 +28,24 @@ export const CategoriesSelect = () => {
   const hasNotCategories = data?.length === 0
   const selectedCategories = searchParams.getAll('categories')
 
-  const onChangeCategories = ({
-    target: { value },
-  }: ChangeEvent<HTMLSelectElement>) => {
-    const categories = value.split(',')
+  const options: Options = categories.map(
+    ({ name, displayName, cardsCount }) => ({
+      label: `${displayName} ${cardsCount}`,
+      value: name,
+    }),
+  )
+
+  const selectedOptions: Options = options.filter(({ value }) =>
+    selectedCategories.includes(value),
+  )
+
+  const onChangeCategories = (categories: Options) => {
     const params = new URLSearchParams(searchParams)
     params.delete(CATEGORIES_PARAM)
     setFirstPage(params)
 
-    for (const category of categories) {
-      params.append(CATEGORIES_PARAM, category)
+    for (const { value } of categories) {
+      params.append(CATEGORIES_PARAM, value)
     }
 
     replace(`?${params}`)
@@ -39,27 +53,29 @@ export const CategoriesSelect = () => {
 
   return (
     <Select
-      label='Categories'
-      selectedKeys={selectedCategories}
+      defaultValue={selectedOptions}
+      options={options}
       onChange={onChangeCategories}
-      className='items-center sm:w-auto sm:min-w-40 sm:max-w-56'
-      color='warning'
-      placeholder='All'
+      placeholder='All categories'
       isDisabled={hasNotCategories}
-      selectionMode='multiple'
       isLoading={isPending}
-      items={categories}
-      labelPlacement={isDesktopWidth ? 'outside-left' : 'inside'}
-    >
-      {({ name, displayName, cardsCount }) => (
-        <SelectItem
-          key={name}
-          value={name}
-          textValue={`${displayName} (${cardsCount})`}
-        >
-          {displayName}&nbsp;({cardsCount})
-        </SelectItem>
-      )}
-    </Select>
+      isMulti
+      isSearchable
+      isClearable
+      theme={theme => ({
+        ...theme,
+        colors: {
+          ...theme.colors,
+          neutral0: isDarkTheme ? colors.neutral['950'] : colors.neutral['50'], // Select BG
+          neutral10: isDarkTheme ? colors.orange['800'] : colors.orange['200'], // Selected option BG
+          neutral20: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Select border
+          neutral30: isDarkTheme ? colors.orange['300'] : colors.orange['700'], // Hover select border
+          neutral80: isDarkTheme ? colors.neutral['50'] : colors.neutral['950'], // Selected option text
+          primary: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Focus select outline
+          primary25: isDarkTheme ? colors.orange['800'] : colors.orange['200'], // Hover option BG
+          primary50: isDarkTheme ? colors.orange['700'] : colors.orange['300'], // Active option BG
+        },
+      })}
+    />
   )
 }
