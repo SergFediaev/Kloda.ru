@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@/components/errorMessage'
 import { useGetCategories } from '@/hooks/useCategories'
 import { usePaths } from '@/hooks/usePaths'
 import { useThemes } from '@/hooks/useThemes'
@@ -7,6 +8,7 @@ import Select from 'react-select'
 import colors from 'tailwindcss/colors'
 
 const CATEGORIES_PARAM = 'categories'
+const ALL_CATEGORIES = 'All categories'
 
 type Options = readonly {
   label: string
@@ -15,7 +17,7 @@ type Options = readonly {
 
 // ToDo: Refactor select theme custom colors
 export const CategoriesSelect = () => {
-  const { data, isPending } = useGetCategories() // ToDo: Handle error
+  const { data, isPending, isSuccess, isError, error } = useGetCategories()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   const { isDarkTheme } = useThemes()
@@ -28,9 +30,15 @@ export const CategoriesSelect = () => {
   const hasNotCategories = data?.length === 0
   const selectedCategories = searchParams.getAll('categories')
 
+  const placeholder = isPending
+    ? 'Loading categories'
+    : isSuccess
+      ? `${ALL_CATEGORIES} (${data.length})`
+      : ALL_CATEGORIES
+
   const options: Options = categories.map(
     ({ name, displayName, cardsCount }) => ({
-      label: `${displayName} ${cardsCount}`,
+      label: `${displayName} (${cardsCount})`,
       value: name,
     }),
   )
@@ -51,17 +59,22 @@ export const CategoriesSelect = () => {
     replace(`?${params}`)
   }
 
+  if (isError) {
+    return <ErrorMessage isError>{error.message}</ErrorMessage>
+  }
+
   return (
     <Select
-      defaultValue={selectedOptions}
+      value={selectedOptions}
       options={options}
       onChange={onChangeCategories}
-      placeholder='All categories'
+      placeholder={placeholder}
       isDisabled={hasNotCategories}
       isLoading={isPending}
       isMulti
       isSearchable
       isClearable
+      className='min-w-52'
       theme={theme => ({
         ...theme,
         colors: {
