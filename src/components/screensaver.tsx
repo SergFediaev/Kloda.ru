@@ -2,12 +2,12 @@
 
 import { Wrapper } from '@/components/containers/wrapper'
 import { useScreensaver } from '@/hooks/useScreensaver'
-import { secondsToMs } from '@/utils/secondsToMs'
+import { minutesToMs } from '@/utils/minutesToMs'
 import { Spade } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export const Screensaver = () => {
-  const { isEnabled, secondsToActivate } = useScreensaver()
+  const { isEnabled, minutesToActivate } = useScreensaver()
   const [isDisabled, setIsDisabled] = useState(true)
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const Screensaver = () => {
     }
 
     const startTimer = () =>
-      setTimeout(() => setIsDisabled(false), secondsToMs(secondsToActivate))
+      setTimeout(() => setIsDisabled(false), minutesToMs(minutesToActivate))
 
     let timer = startTimer()
 
@@ -27,14 +27,20 @@ export const Screensaver = () => {
     }
 
     addEventListener('mousemove', onActivity)
+    addEventListener('touchstart', onActivity)
+    addEventListener('scroll', onActivity)
     addEventListener('click', onActivity)
+    addEventListener('keydown', onActivity)
 
     return () => {
       clearTimeout(timer)
       removeEventListener('mousemove', onActivity)
+      removeEventListener('touchstart', onActivity)
+      removeEventListener('scroll', onActivity)
       removeEventListener('click', onActivity)
+      removeEventListener('keydown', onActivity)
     }
-  }, [isEnabled, secondsToActivate])
+  }, [isEnabled, minutesToActivate])
 
   if (isDisabled) {
     return null

@@ -6,20 +6,20 @@ import { Input } from '@/components/forms/input'
 import { useScreensaver } from '@/hooks/useScreensaver'
 import type { ChangeEvent } from 'react'
 
-const MIN_SECONDS = 10
-const MAX_SECONDS = 600
+const MIN_MINUTES = 1
+const MAX_MINUTES = 30
 
 export const ScreensaverSettings = () => {
-  const { isEnabled, secondsToActivate, setIsEnabled, setSecondsToActivate } =
+  const { isEnabled, minutesToActivate, setIsEnabled, setMinutesToActivate } =
     useScreensaver()
 
-  const onChangeSeconds = ({
+  const onChangeMinutes = ({
     currentTarget: { value },
   }: ChangeEvent<HTMLInputElement>) => {
-    const seconds = Number(value)
+    const minutes = Number(value)
 
-    if (seconds >= MIN_SECONDS && seconds <= MAX_SECONDS)
-      setSecondsToActivate(seconds)
+    if (minutes >= MIN_MINUTES && minutes <= MAX_MINUTES)
+      setMinutesToActivate(minutes)
   }
 
   return (
@@ -32,12 +32,12 @@ export const ScreensaverSettings = () => {
       </CheckBox>
       <Input
         isHorizontal
-        label={`Seconds to turn on (min ${MIN_SECONDS}, max ${MAX_SECONDS})`}
-        value={secondsToActivate}
+        label={`Minutes to turn on (min ${MIN_MINUTES}, max ${MAX_MINUTES})`}
+        value={minutesToActivate}
         type='number'
-        min={MIN_SECONDS}
-        max={MAX_SECONDS}
-        onChange={onChangeSeconds}
+        min={MIN_MINUTES}
+        max={MAX_MINUTES}
+        onChange={onChangeMinutes}
         disabled={!isEnabled}
       />
     </Block>

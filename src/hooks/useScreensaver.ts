@@ -2,15 +2,15 @@ import { create } from 'zustand'
 
 type Screensaver = {
   isEnabled: boolean
-  secondsToActivate: number
+  minutesToActivate: number
   setIsEnabled: (isEnabled: boolean) => void
-  setSecondsToActivate: (secondsToActivate: number) => void
+  setMinutesToActivate: (minutesToActivate: number) => void
 }
 
 export const useScreensaver = create<Screensaver>(set => ({
   isEnabled: true,
-  secondsToActivate: 30,
+  minutesToActivate: 5,
   setIsEnabled: (isEnabled: boolean) => set({ isEnabled }),
-  setSecondsToActivate: (secondsToActivate: number) =>
-    set({ secondsToActivate }),
+  setMinutesToActivate: (minutesToActivate: number) =>
+    set({ minutesToActivate }),
 }))
