@@ -60,7 +60,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
 
   const cardsElement = cards.length ? (
     <Columns count={columnsCount}>
-      {cards.map(card => {
+      {cards.map((card, index) => {
         const isCardToSpeech = card.id === cardToSpeech?.id
 
         return (
@@ -72,6 +72,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
             setCardToSpeech={setCardToSpeech}
             isCardPlaying={isCardToSpeech && isCardPlaying}
             isStudyMode={isStudyMode}
+            pagePosition={index + 1}
             inColumns
           />
         )

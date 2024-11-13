@@ -43,6 +43,7 @@ type Props = {
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
   isStudyMode: boolean
+  pagePosition?: number
 } & ComponentPropsWithoutRef<'article'> &
   Pick<BlockProps, 'inColumns'>
 
@@ -54,6 +55,7 @@ export const Card = ({
   setCardToSpeech,
   isCardPlaying,
   isStudyMode,
+  pagePosition,
   className,
   ...restProps
 }: Props) => {
@@ -350,6 +352,9 @@ export const Card = ({
                   Updated: <time>{dateToLocale(updatedAt)}</time>
                 </p>
               </Wrapper>
+              {pagePosition && (
+                <p>Card position on current page: #{pagePosition}</p>
+              )}
             </aside>
           )}
         </Block>
