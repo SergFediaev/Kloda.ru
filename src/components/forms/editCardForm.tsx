@@ -1,12 +1,13 @@
 'use client'
 
-import type { CreateCardArgs } from '@/api/cards/cards.types'
+import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Form } from '@/components/forms/form'
 import { FormInput } from '@/components/forms/formInput'
 import { FormTextArea } from '@/components/forms/formTextArea'
-import { useCreateCard } from '@/hooks/useCards'
+import { useEditCard } from '@/hooks/useCards'
+import { handleCategories } from '@/utils/handleCategories'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
@@ -16,52 +17,44 @@ const cardSchema = z.object({
   title: z.string(),
   content: z.string(),
   categories: z.string(),
-  username: z.string().optional(),
-  email: z.string().email().optional(),
 })
 
 type CardSchema = z.infer<typeof cardSchema>
 
 type Props = {
-  username: string
-  email: string
-  authorId: number
+  card: CardModel
 }
 
-export const CardForm = ({ username, email, authorId }: Props) => {
+// ToDo: Duplicated logic and inputs (create card form)
+export const EditCardForm = ({
+  card: { id, title, content, categories },
+}: Props) => {
   const router = useTransitionRouter()
-  const { data, mutate, isPending, error, isSuccess } = useCreateCard(authorId)
+  const { data, mutate, isPending, error, isSuccess } = useEditCard()
 
-  const createText = isPending ? 'Creating' : 'Create'
+  const saveText = isPending ? 'Saving' : 'Save'
 
   const defaultValues: CardSchema = {
-    title: '',
-    content: '',
-    categories: '',
-    username,
-    email,
+    title,
+    content,
+    categories: categories.join(', '),
   }
 
   const {
     control,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<CardSchema>({ defaultValues, resolver: zodResolver(cardSchema) })
 
-  const onSubmit = handleSubmit(
-    ({ username, email, categories, ...restData }) => {
-      const card: CreateCardArgs = {
-        ...restData,
-        categories: categories.split(','),
-        authorId,
-      }
-
-      mutate(card)
-    },
+  const onSubmit = handleSubmit(({ categories, ...restData }) =>
+    mutate({
+      id: String(id),
+      ...restData,
+      categories: handleCategories(categories),
+    }),
   )
 
-  const onReset = () => reset(defaultValues)
+  const onCancel = () => router.back()
 
   if (isSuccess) router.push(`/card/${data.id}`)
 
@@ -92,31 +85,12 @@ export const CardForm = ({ username, email, authorId }: Props) => {
         placeholder={'Comma-separated categories'}
         error={errors.categories?.message}
       />
-      <FormInput
-        control={control}
-        name={'username'}
-        label={'Author'}
-        placeholder={'Username'}
-        error={errors.username?.message}
-        required
-        disabled
-      />
-      <FormInput
-        control={control}
-        name={'email'}
-        label={'Email'}
-        type={'email'}
-        placeholder={'example@mail.com'}
-        error={errors.email?.message}
-        required
-        disabled
-      />
       <ButtonsContainer>
         <Button isStretched isLoading={isPending}>
-          {createText}
+          {saveText}
         </Button>
-        <Button type={'reset'} isStretched onClick={onReset}>
-          Reset
+        <Button type='button' isStretched isDanger onClick={onCancel}>
+          Cancel
         </Button>
       </ButtonsContainer>
     </Form>

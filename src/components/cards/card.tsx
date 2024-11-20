@@ -23,6 +23,7 @@ import {
   EyeOff,
   Link as LinkIcon,
   Speech,
+  SquarePen,
   Star,
   ThumbsDown,
   ThumbsUp,
@@ -314,14 +315,19 @@ export const Card = ({
                 {showIcon}
               </Button>
               {isCardAuthor && (
-                <Button
-                  variant='text'
-                  title='Delete card'
-                  onClick={openConfirmation}
-                  isDanger
-                >
-                  <Trash2 />
-                </Button>
+                <>
+                  <Link href={`/edit-card/${id}`} title='Edit card'>
+                    <SquarePen />
+                  </Link>
+                  <Button
+                    variant='text'
+                    title='Delete card'
+                    onClick={openConfirmation}
+                    isDanger
+                  >
+                    <Trash2 />
+                  </Button>
+                </>
               )}
             </Wrapper>
             {isOpen ? (

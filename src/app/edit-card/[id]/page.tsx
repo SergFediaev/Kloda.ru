@@ -1,4 +1,4 @@
-import { CardDetails } from '@/components/cards/cardDetails'
+import { EditCard } from '@/components/cards/editCard'
 import { Container } from '@/components/containers/container'
 import type { ParamsIdProps } from '@/types/paramsIdProps'
 import type { Metadata } from 'next'
@@ -6,13 +6,13 @@ import type { Metadata } from 'next'
 export const generateMetadata = ({
   params: { id },
 }: ParamsIdProps): Metadata => ({
-  title: `Card #${id}`,
+  title: `Edit card #${id}`,
 })
 
-export default function CardPage({ params: { id } }: ParamsIdProps) {
+export default function EditCardPage({ params: { id } }: ParamsIdProps) {
   return (
     <Container isCentered>
-      <CardDetails id={id} />
+      <EditCard heading={`Edit card #${id}`} id={id} />
     </Container>
   )
 }

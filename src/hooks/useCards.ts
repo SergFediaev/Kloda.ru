@@ -2,6 +2,7 @@ import {
   createCard,
   deleteCard,
   dislikeCard,
+  editCard,
   favoriteCard,
   getCard,
   getCards,
@@ -46,6 +47,17 @@ export const useCreateCard = (authorId: number) =>
     },
   })
 
+export const useEditCard = () =>
+  useMutation({
+    mutationFn: editCard,
+    onSuccess: ({ id }) => {
+      const queryClient = getQueryClient()
+      void invalidateCards(queryClient)
+      void invalidateCard(queryClient, id)
+      void invalidateCategories(queryClient)
+    },
+  })
+
 export const useDeleteCard = (userId?: number) =>
   useMutation({
     mutationFn: deleteCard,
@@ -74,6 +86,9 @@ export const useFavoriteCard = (userId?: number) =>
 const invalidateCards = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['cards'] })
 
+const invalidateCard = (queryClient: QueryClient, cardId: number) =>
+  queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+
 const invalidateCategories = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['categories'] })
 
@@ -89,7 +104,7 @@ const invalidateCardsAndUsers = (
 ) => {
   const queryClient = getQueryClient()
   void invalidateCards(queryClient)
-  void queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+  void invalidateCard(queryClient, cardId)
 
   if (userId) invalidateUsers(queryClient, userId)
 

@@ -7,6 +7,7 @@ import type {
   CardsResponse,
   CreateCardArgs,
   DislikeResponse,
+  EditCardArgs,
   FavoriteResponse,
   LikeResponse,
   RandomCardArgs,
@@ -43,6 +44,9 @@ export const getRandomCard = (searchParams: RandomCardArgs) =>
 
 export const createCard = (json: CreateCardArgs) =>
   cardsApi.post<CardModel>('', { json }).json()
+
+export const editCard = ({ id, ...json }: EditCardArgs) =>
+  cardsApi.patch<CardModel>(id, { json }).json()
 
 export const deleteCard = (id: number) => cardsApi.delete(String(id)).json()
 

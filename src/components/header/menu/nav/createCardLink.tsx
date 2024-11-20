@@ -1,7 +1,7 @@
 import { Button } from '@/components/button'
 import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import type { LoggedInProps } from '@/components/header/menu/desktopMenu'
-import { SquarePen } from 'lucide-react'
+import { FilePlus } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -18,7 +18,7 @@ export const CreateCardLink = ({ isLoggedIn }: LoggedInProps) => {
     return null
   }
 
-  const icon = <SquarePen />
+  const icon = <FilePlus />
   const openDialog = () => setIsDialogOpen(true)
   const closeDialog = () => setIsDialogOpen(false)
 

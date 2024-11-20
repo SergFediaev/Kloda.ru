@@ -17,7 +17,7 @@ export type CardModel = {
 
 export type CardArgs = {
   id: string
-  categories: string[]
+  categories?: string[]
 }
 
 export type RandomCardArgs = {
@@ -31,6 +31,10 @@ export type CreateCardArgs = {
   categories: string[]
   authorId: number
 }
+
+export type EditCardArgs = {
+  id: string
+} & Omit<CreateCardArgs, 'authorId'>
 
 export type CardsArgs = {
   search: string

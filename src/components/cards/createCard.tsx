@@ -2,7 +2,7 @@
 
 import { Block } from '@/components/containers/block'
 import { ErrorMessage } from '@/components/errorMessage'
-import { CardForm } from '@/components/forms/cardForm'
+import { CreateCardForm } from '@/components/forms/createCardForm'
 import { Loader } from '@/components/loader'
 import { ReturnToCards } from '@/components/returnToCards'
 import { useMe } from '@/hooks/useAuth'
@@ -22,13 +22,11 @@ export const CreateCard = (props: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
+  const { username, email, id } = data
+
   return (
     <Block isHeadingCentered isConstrained className='max-w-xl' {...props}>
-      <CardForm
-        username={data.username}
-        email={data.email}
-        authorId={data.id}
-      />
+      <CreateCardForm username={username} email={email} authorId={id} />
       <ReturnToCards />
     </Block>
   )
