@@ -10,11 +10,22 @@ export type InputProps = {
   label?: ReactNode
   error?: ReactNode
   isHorizontal?: boolean
+  hasBorder?: boolean
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { label, error, isHorizontal, id, name, required, className, ...restProps },
+    {
+      label,
+      error,
+      isHorizontal,
+      hasBorder,
+      id,
+      name,
+      required,
+      className,
+      ...restProps
+    },
     ref,
   ) => {
     const inputId = useGenerateId(id, name)
@@ -41,7 +52,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           name={name}
           required={required}
-          className='truncate rounded-xl px-4 py-2 shadow-inner'
+          className={cn(
+            'truncate rounded-xl px-4 py-2 shadow-inner',
+            hasBorder && 'border-2 border-accent dark:border-accent-dark',
+          )}
           {...restProps}
         />
         <p className='text-danger'>{error}</p>

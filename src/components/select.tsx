@@ -1,17 +1,23 @@
-import { useGenerateId } from '@/hooks/useGenerateId'
-import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { Select as NextUiSelect, type SelectProps } from '@nextui-org/select'
 
-type Props = {
-  label?: ReactNode
-} & ComponentPropsWithoutRef<'select'>
-
-export const Select = ({ label, id, name, ...restProps }: Props) => {
-  const selectId = useGenerateId(id, name)
-
-  return (
-    <label htmlFor={selectId} className='flex flex-col'>
-      {label}
-      <select id={selectId} name={name} {...restProps} />
-    </label>
-  )
-}
+export const Select = <T extends object>(props: SelectProps<T>) => (
+  <NextUiSelect
+    variant='bordered'
+    className='w-auto min-w-36'
+    classNames={{
+      trigger: 'border-accent dark:border-accent-dark',
+      selectorIcon: 'text-accent dark:text-accent-dark',
+    }}
+    listboxProps={{
+      itemClasses: {
+        base: 'data-[selected=true]:text-accent data-[selected=true]:dark:text-accent-dark',
+      },
+    }}
+    popoverProps={{
+      classNames: {
+        content: 'dark:text-white',
+      },
+    }}
+    {...props}
+  />
+)

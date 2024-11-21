@@ -75,6 +75,12 @@ export const CategoriesSelect = () => {
       isSearchable
       isClearable
       className='min-w-52'
+      styles={{
+        control: baseStyles => ({
+          ...baseStyles,
+          borderWidth: '2px',
+        }),
+      }}
       theme={theme => ({
         ...theme,
         colors: {
@@ -82,7 +88,6 @@ export const CategoriesSelect = () => {
           neutral0: isDarkTheme ? colors.neutral['950'] : colors.neutral['50'], // Select BG
           neutral10: isDarkTheme ? colors.orange['800'] : colors.orange['200'], // Selected option BG
           neutral20: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Select border
-          neutral30: isDarkTheme ? colors.orange['300'] : colors.orange['700'], // Hover select border
           neutral80: isDarkTheme ? colors.neutral['50'] : colors.neutral['950'], // Selected option text
           primary: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Focus select outline
           primary25: isDarkTheme ? colors.orange['800'] : colors.orange['200'], // Hover option BG

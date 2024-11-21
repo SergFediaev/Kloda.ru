@@ -1,9 +1,10 @@
 import { Button } from '@/components/button'
 import type { ColumnsCount } from '@/components/containers/columns'
 import { Input } from '@/components/forms/input'
+import { Select } from '@/components/select'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { Radio, RadioGroup } from '@nextui-org/radio'
-import { Select, SelectItem } from '@nextui-org/select'
+import { SelectItem } from '@nextui-org/select'
 import {
   ChevronFirst,
   ChevronLast,
@@ -166,6 +167,7 @@ export const Pagination = ({
         onChange={({ currentTarget: { value } }) => onChangePage(Number(value))}
         disabled={hasNotTotalPages}
         title='Ctrl + Page number'
+        hasBorder
       />
       <span className='text-center'>
         <p>{itemsName}</p>
@@ -177,8 +179,6 @@ export const Pagination = ({
         label={`${itemsName} per page`}
         selectedKeys={[String(limit)]}
         onChange={({ target: { value } }) => onChangeParams('limit', value)}
-        className='w-auto min-w-36'
-        color='warning'
         isDisabled={hasNotItems}
       >
         {QUANTITIES.map(quantity => (
@@ -195,8 +195,6 @@ export const Pagination = ({
         label='Order by'
         selectedKeys={[order]}
         onChange={({ target: { value } }) => onChangeParams('order', value)}
-        className='w-auto min-w-36'
-        color='warning'
         items={Object.entries(ORDERS)}
         isDisabled={hasNotItems}
       >
@@ -210,8 +208,6 @@ export const Pagination = ({
         label='Sort by'
         selectedKeys={[sort]}
         onChange={({ target: { value } }) => onChangeParams('sort', value)}
-        className='w-auto min-w-36'
-        color='warning'
         items={Object.entries(sorts)}
         isDisabled={hasNotItems}
       >

@@ -2,9 +2,10 @@ import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
+import { Select } from '@/components/select'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
-import { Select, SelectItem } from '@nextui-org/select'
+import { SelectItem } from '@nextui-org/select'
 import { Slider } from '@nextui-org/slider'
 import {
   ArrowRightToLine,
@@ -444,7 +445,6 @@ export const TextToSpeech = ({
                 label='Voice'
                 selectedKeys={[voice.name]}
                 onChange={onVoiceChange}
-                color='warning'
                 items={voices}
                 placeholder='Select voice'
                 description='Available voices on your device'
