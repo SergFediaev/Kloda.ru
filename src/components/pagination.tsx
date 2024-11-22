@@ -1,9 +1,10 @@
 import { Button } from '@/components/button'
 import type { ColumnsCount } from '@/components/containers/columns'
 import { Input } from '@/components/forms/input'
+import { Radio } from '@/components/radio'
 import { Select } from '@/components/select'
 import { setFirstPage } from '@/utils/setFirstPage'
-import { Radio, RadioGroup } from '@nextui-org/radio'
+import { RadioGroup } from '@nextui-org/radio'
 import { SelectItem } from '@nextui-org/select'
 import {
   ChevronFirst,
@@ -222,7 +223,6 @@ export const Pagination = ({
         orientation='horizontal'
         value={columnsCount}
         onValueChange={value => setColumnsCount(value as ColumnsCount)}
-        color='warning'
         className='text-center'
       >
         <Radio value='1' title='1'>
