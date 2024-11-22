@@ -10,7 +10,6 @@ import { dateToLocale } from '@/utils/dateToLocale'
 import { Mail } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 import { type ComponentPropsWithoutRef, useState } from 'react'
-import { MagicMotion } from 'react-magic-motion'
 
 type Props = {
   user: UserResponse
@@ -50,79 +49,77 @@ export const User = ({
   }
 
   return (
-    <MagicMotion>
-      <>
-        <Block
-          as='article'
-          heading={username}
-          isConstrained={isOpen}
-          className='max-w-2xl'
-          {...restProps}
-        >
-          <div>
-            <p>User ID: {id}</p>
-            <Wrapper as='p'>
-              Email:&nbsp;<a href={`mailto:${email}`}>{email}</a>
-              &nbsp;
-              <Mail size={16} />
-            </Wrapper>
-            <p>
-              Registered: <time>{dateToLocale(registeredAt)}</time>
-            </p>
-            <p>
-              Last login: <time>{dateToLocale(lastLoginAt)}</time>
-            </p>
-          </div>
-          <div>
-            <UserCardsCount
-              cardsType='Created'
-              cardsCount={createdCardsCount}
-              userId={id}
-              action='created'
-            />
-            <UserCardsCount
-              cardsType='Favorite'
-              cardsCount={favoriteCardsCount}
-              userId={id}
-              action='favorite'
-            />
-            <UserCardsCount
-              cardsType='Liked'
-              cardsCount={likedCardsCount}
-              userId={id}
-              action='liked'
-            />
-            <UserCardsCount
-              cardsType='Disliked'
-              cardsCount={dislikedCardsCount}
-              userId={id}
-              action='disliked'
-            />
-          </div>
-          <ButtonsContainer className='justify-between'>
-            {isOpen ? (
-              <Link href={'/users'}>Close</Link>
-            ) : (
-              <Link href={`/user/${id}`}>Open</Link>
-            )}
-            {isCurrentUser && (
-              <Button onClick={openConfirmation} className='self-end' isDanger>
-                {logoutText}
-              </Button>
-            )}
-          </ButtonsContainer>
-        </Block>
-        <ConfirmationDialog
-          open={isConfirmationOpen}
-          close={closeConfirmation}
-          confirmationText={<p>Are you sure you want to logout?</p>}
-          confirmationButton={
-            <Button onClick={onLogout} isStretched isDanger>
-              Logout
+    <>
+      <Block
+        as='article'
+        heading={username}
+        isConstrained={isOpen}
+        className='max-w-2xl'
+        {...restProps}
+      >
+        <div>
+          <p>User ID: {id}</p>
+          <Wrapper as='p'>
+            Email:&nbsp;<a href={`mailto:${email}`}>{email}</a>
+            &nbsp;
+            <Mail size={16} />
+          </Wrapper>
+          <p>
+            Registered: <time>{dateToLocale(registeredAt)}</time>
+          </p>
+          <p>
+            Last login: <time>{dateToLocale(lastLoginAt)}</time>
+          </p>
+        </div>
+        <div>
+          <UserCardsCount
+            cardsType='Created'
+            cardsCount={createdCardsCount}
+            userId={id}
+            action='created'
+          />
+          <UserCardsCount
+            cardsType='Favorite'
+            cardsCount={favoriteCardsCount}
+            userId={id}
+            action='favorite'
+          />
+          <UserCardsCount
+            cardsType='Liked'
+            cardsCount={likedCardsCount}
+            userId={id}
+            action='liked'
+          />
+          <UserCardsCount
+            cardsType='Disliked'
+            cardsCount={dislikedCardsCount}
+            userId={id}
+            action='disliked'
+          />
+        </div>
+        <ButtonsContainer className='justify-between'>
+          {isOpen ? (
+            <Link href={'/users'}>Close</Link>
+          ) : (
+            <Link href={`/user/${id}`}>Open</Link>
+          )}
+          {isCurrentUser && (
+            <Button onClick={openConfirmation} className='self-end' isDanger>
+              {logoutText}
             </Button>
-          }
-        />
-      </>
-    </MagicMotion>
+          )}
+        </ButtonsContainer>
+      </Block>
+      <ConfirmationDialog
+        open={isConfirmationOpen}
+        close={closeConfirmation}
+        confirmationText={<p>Are you sure you want to logout?</p>}
+        confirmationButton={
+          <Button onClick={onLogout} isStretched isDanger>
+            Logout
+          </Button>
+        }
+      />
+    </>
   )
 }

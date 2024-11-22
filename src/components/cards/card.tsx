@@ -33,7 +33,6 @@ import {
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
-import { MagicMotion } from 'react-magic-motion'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -231,159 +230,154 @@ export const Card = ({
   useEffect(() => setIsShown(isStudyMode), [isStudyMode])
 
   return (
-    <MagicMotion>
-      <>
-        <Block
-          as='article'
-          heading={title}
-          isConstrained={isOpen}
-          className={cn(
-            isCardToSpeech &&
-              'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
-            className,
-          )}
-          {...restProps}
-        >
-          {isShown && (
-            <p className='whitespace-pre-wrap break-words'>{content}</p>
-          )}
-          <Wrapper as='div' hasGaps className='justify-between'>
-            <Wrapper hasGaps>
+    <>
+      <Block
+        as='article'
+        heading={title}
+        isConstrained={isOpen}
+        className={cn(
+          isCardToSpeech &&
+            'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
+          className,
+        )}
+        {...restProps}
+      >
+        {isShown && (
+          <p className='whitespace-pre-wrap break-words'>{content}</p>
+        )}
+        <Wrapper as='div' hasGaps className='justify-between'>
+          <Wrapper hasGaps>
+            <Button
+              variant='text'
+              onClick={toggleIsExpanded}
+              title={expandTitle}
+            >
+              {expandIcon}
+            </Button>
+            <Wrapper>
               <Button
                 variant='text'
-                onClick={toggleIsExpanded}
-                title={expandTitle}
+                title='Like'
+                onClick={onLike}
+                isBlocked={!isMeSuccess}
               >
-                {expandIcon}
+                <FillIcon icon={ThumbsUp} isFilled={isLiked} />
               </Button>
-              <Wrapper>
-                <Button
-                  variant='text'
-                  title='Like'
-                  onClick={onLike}
-                  isBlocked={!isMeSuccess}
-                >
-                  <FillIcon icon={ThumbsUp} isFilled={isLiked} />
-                </Button>
-                &nbsp;
-                {likes}
-              </Wrapper>
-              <Wrapper>
-                <Button
-                  variant='text'
-                  title='Dislike'
-                  onClick={onDislike}
-                  isBlocked={!isMeSuccess}
-                >
-                  <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
-                </Button>
-                &nbsp;
-                {dislikes}
-              </Wrapper>
-              <Wrapper>
-                <Button
-                  variant='text'
-                  title='Favorite'
-                  onClick={onFavorite}
-                  isBlocked={!isMeSuccess}
-                >
-                  <FillIcon icon={Star} isFilled={isFavorite} />
-                </Button>
-                &nbsp;
-                {favorites}
-              </Wrapper>
-              <Button
-                variant='text'
-                onClick={copyCardContent}
-                title='Copy card content to clipboard'
-              >
-                <Copy />
-              </Button>
-              <Button
-                variant='text'
-                onClick={copyCardLink}
-                title='Copy card link to clipboard'
-              >
-                <LinkIcon />
-              </Button>
-              {setCardToSpeech && (
-                <Button variant='text' onClick={onCardToSpeech}>
-                  <Speech className={cn(isCardPlaying && 'animate-pulse')} />
-                </Button>
-              )}
-              <Button variant='text' title={showTitle} onClick={toggleIsShown}>
-                {showIcon}
-              </Button>
-              {isCardAuthor && (
-                <>
-                  <Link href={`/edit-card/${id}`} title='Edit card'>
-                    <SquarePen />
-                  </Link>
-                  <Button
-                    variant='text'
-                    title='Delete card'
-                    onClick={openConfirmation}
-                    isDanger
-                  >
-                    <Trash2 />
-                  </Button>
-                </>
-              )}
+              &nbsp;
+              {likes}
             </Wrapper>
-            {isOpen ? (
-              <Link href={'/'}>Close</Link>
-            ) : (
-              <Link href={`/card/${id}`}>Open</Link>
+            <Wrapper>
+              <Button
+                variant='text'
+                title='Dislike'
+                onClick={onDislike}
+                isBlocked={!isMeSuccess}
+              >
+                <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
+              </Button>
+              &nbsp;
+              {dislikes}
+            </Wrapper>
+            <Wrapper>
+              <Button
+                variant='text'
+                title='Favorite'
+                onClick={onFavorite}
+                isBlocked={!isMeSuccess}
+              >
+                <FillIcon icon={Star} isFilled={isFavorite} />
+              </Button>
+              &nbsp;
+              {favorites}
+            </Wrapper>
+            <Button
+              variant='text'
+              onClick={copyCardContent}
+              title='Copy card content to clipboard'
+            >
+              <Copy />
+            </Button>
+            <Button
+              variant='text'
+              onClick={copyCardLink}
+              title='Copy card link to clipboard'
+            >
+              <LinkIcon />
+            </Button>
+            {setCardToSpeech && (
+              <Button variant='text' onClick={onCardToSpeech}>
+                <Speech className={cn(isCardPlaying && 'animate-pulse')} />
+              </Button>
+            )}
+            <Button variant='text' title={showTitle} onClick={toggleIsShown}>
+              {showIcon}
+            </Button>
+            {isCardAuthor && (
+              <>
+                <Link href={`/edit-card/${id}`} title='Edit card'>
+                  <SquarePen />
+                </Link>
+                <Button
+                  variant='text'
+                  title='Delete card'
+                  onClick={openConfirmation}
+                  isDanger
+                >
+                  <Trash2 />
+                </Button>
+              </>
             )}
           </Wrapper>
-          {isExpanded && (
-            <aside>
-              <p>Categories: {categories.join(', ')}</p>
-              <Wrapper as='div' className='justify-between gap-x-4'>
-                <Wrapper as='p'>
-                  Author:&nbsp;
-                  <Link href={`/user/${authorId}`} title='Open author profile'>
-                    {authorUsername}
-                  </Link>
-                  &nbsp;
-                  <User size={16} />
-                </Wrapper>
-                <p>Card ID: {id}</p>
-              </Wrapper>
-              <Wrapper as='div' className='justify-between gap-x-4'>
-                <p>
-                  Created: <time>{dateToLocale(createdAt)}</time>
-                </p>
-                <p>
-                  Updated: <time>{dateToLocale(updatedAt)}</time>
-                </p>
-              </Wrapper>
-              {pagePosition && (
-                <p>Card position on current page: #{pagePosition}</p>
-              )}
-            </aside>
+          {isOpen ? (
+            <Link href={'/'}>Close</Link>
+          ) : (
+            <Link href={`/card/${id}`}>Open</Link>
           )}
-        </Block>
-        <UnauthorizedDialog
-          open={isUnauthorizedOpen}
-          close={closeUnauthorized}
-        />
-        <ConfirmationDialog
-          open={isConfirmationOpen}
-          close={closeConfirmation}
-          confirmationText={
-            <>
-              <p>Are you sure you want to permanently delete card #{id}?</p>
-              <p>You will not be able to restore card #{id} once deleted!</p>
-            </>
-          }
-          confirmationButton={
-            <Button onClick={onDelete} isStretched isDanger>
-              Delete
-            </Button>
-          }
-        />
-      </>
-    </MagicMotion>
+        </Wrapper>
+        {isExpanded && (
+          <aside>
+            <p>Categories: {categories.join(', ')}</p>
+            <Wrapper as='div' className='justify-between gap-x-4'>
+              <Wrapper as='p'>
+                Author:&nbsp;
+                <Link href={`/user/${authorId}`} title='Open author profile'>
+                  {authorUsername}
+                </Link>
+                &nbsp;
+                <User size={16} />
+              </Wrapper>
+              <p>Card ID: {id}</p>
+            </Wrapper>
+            <Wrapper as='div' className='justify-between gap-x-4'>
+              <p>
+                Created: <time>{dateToLocale(createdAt)}</time>
+              </p>
+              <p>
+                Updated: <time>{dateToLocale(updatedAt)}</time>
+              </p>
+            </Wrapper>
+            {pagePosition && (
+              <p>Card position on current page: #{pagePosition}</p>
+            )}
+          </aside>
+        )}
+      </Block>
+      <UnauthorizedDialog open={isUnauthorizedOpen} close={closeUnauthorized} />
+      <ConfirmationDialog
+        open={isConfirmationOpen}
+        close={closeConfirmation}
+        confirmationText={
+          <>
+            <p>Are you sure you want to permanently delete card #{id}?</p>
+            <p>You will not be able to restore card #{id} once deleted!</p>
+          </>
+        }
+        confirmationButton={
+          <Button onClick={onDelete} isStretched isDanger>
+            Delete
+          </Button>
+        }
+      />
+    </>
   )
 }

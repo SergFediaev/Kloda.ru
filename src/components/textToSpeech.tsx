@@ -27,7 +27,6 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react'
-import { MagicMotion } from 'react-magic-motion'
 
 type Props = {
   cards: CardModel[]
@@ -339,165 +338,163 @@ export const TextToSpeech = ({
 
   // ToDo: Refactor JSX
   return (
-    <MagicMotion>
-      <div className='sticky bottom-6 z-10 mx-auto mt-6 flex max-w-fit flex-wrap justify-center truncate rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
-        <div className='flex flex-col gap-4 p-6'>
-          <Heading as='h3' className='flex flex-wrap text-xl'>
-            Text to speech:&nbsp;
-            <Button
-              variant='text'
-              onClick={() => scrollToElement(String(cardToSpeech.id))}
-              title='Scroll to card'
-            >
-              Card #{cardToSpeech.id}
+    <div className='sticky bottom-6 z-10 mx-auto mt-6 flex max-w-fit flex-wrap justify-center truncate rounded-3xl border-2 border-accent bg-ground bg-opacity-70 shadow-inner backdrop-blur-xl dark:border-accent-dark dark:bg-ground-dark dark:bg-opacity-70'>
+      <div className='flex flex-col gap-4 p-6'>
+        <Heading as='h3' className='flex flex-wrap text-xl'>
+          Text to speech:&nbsp;
+          <Button
+            variant='text'
+            onClick={() => scrollToElement(String(cardToSpeech.id))}
+            title='Scroll to card'
+          >
+            Card #{cardToSpeech.id}
+          </Button>
+        </Heading>
+        <Wrapper className='gap-4'>
+          {hasCards && (
+            <Button variant='text' onClick={onPrev} title='Previous card'>
+              <CircleChevronLeft />
             </Button>
-          </Heading>
-          <Wrapper className='gap-4'>
-            {hasCards && (
-              <Button variant='text' onClick={onPrev} title='Previous card'>
-                <CircleChevronLeft />
-              </Button>
-            )}
-            <Button variant='text' onClick={onPlay} title='Play'>
-              <CirclePlay className={cn(isPlaying && 'animate-pulse')} />
-            </Button>
-            <Button variant='text' onClick={onPause} title='Pause'>
-              <CirclePause className={cn(isPaused && 'animate-pulse')} />
-            </Button>
-            <Button variant='text' onClick={onStop} title='Stop'>
-              <CircleStop />
-            </Button>
-            {hasCards && (
-              <Button variant='text' onClick={onNext} title='Next card'>
-                <CircleChevronRight />
-              </Button>
-            )}
-            {hasShuffleCards && (
-              <Button variant='text' onClick={onShuffle} title='Random card'>
-                <Dices />
-              </Button>
-            )}
-            <Button
-              variant='text'
-              title={playModeTitle}
-              onClick={onChangePlayMode}
-            >
-              {playModeIcon}
-            </Button>
-            {hasCards && (
-              <Button variant='text' onClick={onPlaylist} title={playlistTitle}>
-                <ListMusic />
-              </Button>
-            )}
-            <Button
-              variant='text'
-              onClick={onVisualization}
-              title={visualizationTitle}
-            >
-              <Disc3 className='hover:animate-spin' />
-            </Button>
-            <Button variant='text' onClick={onSettings} title={settingsTitle}>
-              <Settings2 />
-            </Button>
-            <Button
-              variant='text'
-              onClick={onResetSettings}
-              title='Reset settings'
-            >
-              <Undo2 />
-            </Button>
-            <Button variant='text' onClick={onClose} title='Close'>
-              <X />
-            </Button>
-          </Wrapper>
-          {isPlaylistExpanded && (
-            <div>
-              <Heading as='h4' className='text-lg'>
-                Playlist <q>{playlistName}</q>
-              </Heading>
-              <ul className='max-h-96 overflow-y-auto'>
-                {cards.map(card => (
-                  <li key={card.id}>
-                    {card.id === cardToSpeech.id ? (
-                      <Wrapper>
-                        <Play size={16} />
-                        &nbsp;
-                        {`#${card.id} ${card.title}`}
-                      </Wrapper>
-                    ) : (
-                      <Button
-                        variant='text'
-                        onClick={() => onChangeCard(card)}
-                        title='Play card'
-                      >{`#${card.id} ${card.title}`}</Button>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
           )}
-          {isSettingsExpanded && (
-            <>
-              <Heading as='h4' className='text-lg'>
-                Settings:
-              </Heading>
-              <Select
-                label='Voice'
-                selectedKeys={[voice.name]}
-                onChange={onVoiceChange}
-                items={voices}
-                placeholder='Select voice'
-                description='Available voices on your device'
-              >
-                {({ name }) => (
-                  <SelectItem key={name} value={name}>
-                    {name}
-                  </SelectItem>
-                )}
-              </Select>
-              <Wrapper className='gap-4'>
-                <RangeInput
-                  label='Volume'
-                  defaultValue={volume}
-                  onChangeEnd={volume => onSliderChange(volume, setVolume)}
-                  minValue={0}
-                  maxValue={1}
-                  step={0.01}
-                  formatOptions={{ style: 'percent' }}
-                />
-                <RangeInput
-                  label='Rate'
-                  defaultValue={rate}
-                  onChangeEnd={rate => onSliderChange(rate, setRate)}
-                  minValue={0.1}
-                  maxValue={10}
-                  step={0.1}
-                />
-                <RangeInput
-                  label='Pitch'
-                  defaultValue={pitch}
-                  onChangeEnd={pitch => onSliderChange(pitch, setPitch)}
-                  minValue={0}
-                  maxValue={2}
-                  step={0.1}
-                  showSteps
-                />
-              </Wrapper>
-            </>
+          <Button variant='text' onClick={onPlay} title='Play'>
+            <CirclePlay className={cn(isPlaying && 'animate-pulse')} />
+          </Button>
+          <Button variant='text' onClick={onPause} title='Pause'>
+            <CirclePause className={cn(isPaused && 'animate-pulse')} />
+          </Button>
+          <Button variant='text' onClick={onStop} title='Stop'>
+            <CircleStop />
+          </Button>
+          {hasCards && (
+            <Button variant='text' onClick={onNext} title='Next card'>
+              <CircleChevronRight />
+            </Button>
           )}
-        </div>
-        {isVisualizationExpanded && (
-          <div className='self-end'>
-            <Image
-              src='/gifs/visualization.gif'
-              alt='Visualization'
-              width='361'
-              height='455'
-              unoptimized
-            />
+          {hasShuffleCards && (
+            <Button variant='text' onClick={onShuffle} title='Random card'>
+              <Dices />
+            </Button>
+          )}
+          <Button
+            variant='text'
+            title={playModeTitle}
+            onClick={onChangePlayMode}
+          >
+            {playModeIcon}
+          </Button>
+          {hasCards && (
+            <Button variant='text' onClick={onPlaylist} title={playlistTitle}>
+              <ListMusic />
+            </Button>
+          )}
+          <Button
+            variant='text'
+            onClick={onVisualization}
+            title={visualizationTitle}
+          >
+            <Disc3 className='hover:animate-spin' />
+          </Button>
+          <Button variant='text' onClick={onSettings} title={settingsTitle}>
+            <Settings2 />
+          </Button>
+          <Button
+            variant='text'
+            onClick={onResetSettings}
+            title='Reset settings'
+          >
+            <Undo2 />
+          </Button>
+          <Button variant='text' onClick={onClose} title='Close'>
+            <X />
+          </Button>
+        </Wrapper>
+        {isPlaylistExpanded && (
+          <div>
+            <Heading as='h4' className='text-lg'>
+              Playlist <q>{playlistName}</q>
+            </Heading>
+            <ul className='max-h-96 overflow-y-auto'>
+              {cards.map(card => (
+                <li key={card.id}>
+                  {card.id === cardToSpeech.id ? (
+                    <Wrapper>
+                      <Play size={16} />
+                      &nbsp;
+                      {`#${card.id} ${card.title}`}
+                    </Wrapper>
+                  ) : (
+                    <Button
+                      variant='text'
+                      onClick={() => onChangeCard(card)}
+                      title='Play card'
+                    >{`#${card.id} ${card.title}`}</Button>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
+        {isSettingsExpanded && (
+          <>
+            <Heading as='h4' className='text-lg'>
+              Settings:
+            </Heading>
+            <Select
+              label='Voice'
+              selectedKeys={[voice.name]}
+              onChange={onVoiceChange}
+              items={voices}
+              placeholder='Select voice'
+              description='Available voices on your device'
+            >
+              {({ name }) => (
+                <SelectItem key={name} value={name}>
+                  {name}
+                </SelectItem>
+              )}
+            </Select>
+            <Wrapper className='gap-4'>
+              <RangeInput
+                label='Volume'
+                defaultValue={volume}
+                onChangeEnd={volume => onSliderChange(volume, setVolume)}
+                minValue={0}
+                maxValue={1}
+                step={0.01}
+                formatOptions={{ style: 'percent' }}
+              />
+              <RangeInput
+                label='Rate'
+                defaultValue={rate}
+                onChangeEnd={rate => onSliderChange(rate, setRate)}
+                minValue={0.1}
+                maxValue={10}
+                step={0.1}
+              />
+              <RangeInput
+                label='Pitch'
+                defaultValue={pitch}
+                onChangeEnd={pitch => onSliderChange(pitch, setPitch)}
+                minValue={0}
+                maxValue={2}
+                step={0.1}
+                showSteps
+              />
+            </Wrapper>
+          </>
+        )}
       </div>
-    </MagicMotion>
+      {isVisualizationExpanded && (
+        <div className='self-end'>
+          <Image
+            src='/gifs/visualization.gif'
+            alt='Visualization'
+            width='361'
+            height='455'
+            unoptimized
+          />
+        </div>
+      )}
+    </div>
   )
 }
