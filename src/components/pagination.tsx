@@ -4,17 +4,10 @@ import { Input } from '@/components/forms/input'
 import { Radio } from '@/components/radio'
 import { Select } from '@/components/select'
 import { setFirstPage } from '@/utils/setFirstPage'
+import { Pagination as NextUiPagination } from '@nextui-org/pagination'
 import { RadioGroup } from '@nextui-org/radio'
 import { SelectItem } from '@nextui-org/select'
-import {
-  ChevronFirst,
-  ChevronLast,
-  ChevronLeft,
-  ChevronRight,
-  Columns2,
-  Columns3,
-  Rows4,
-} from 'lucide-react'
+import { Columns2, Columns3, Rows4 } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
@@ -60,11 +53,9 @@ export const Pagination = ({
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
-  const isLastPage = page === totalPages
   const hasSearchParams = searchParams.toString() !== ''
   const hasNotItems = itemsCount < 2
-  const hasNotPages = page < 2
-  const hasNotTotalPages = totalPages < 2
+  const hasNotPages = totalPages < 2
 
   const onChangeParams = useCallback(
     (key: Key, value: string) => {
@@ -121,44 +112,19 @@ export const Pagination = ({
 
   return (
     <div className='mx-auto mb-6 flex w-fit flex-wrap items-center justify-around gap-4'>
-      <Button
-        variant='round'
-        onClick={() => onChangePage(1)}
-        disabled={hasNotPages}
-        title='Ctrl + Home'
-      >
-        <ChevronFirst />
-      </Button>
-      <Button
-        variant='round'
-        onClick={() => onChangePage(page - 1)}
-        disabled={hasNotPages}
-        title='Ctrl + Left arrow'
-      >
-        <ChevronLeft />
-      </Button>
-      <span className='text-center'>
-        <p>Pages</p>
-        <p>
-          {page} / {totalPages}
-        </p>
-      </span>
-      <Button
-        variant='round'
-        onClick={() => onChangePage(page + 1)}
-        disabled={isLastPage}
-        title='Ctrl + Right arrow'
-      >
-        <ChevronRight />
-      </Button>
-      <Button
-        variant='round'
-        onClick={() => onChangePage(totalPages)}
-        disabled={isLastPage}
-        title='Ctrl + End'
-      >
-        <ChevronLast />
-      </Button>
+      <NextUiPagination
+        page={page}
+        total={totalPages}
+        onChange={onChangePage}
+        isDisabled={hasNotPages}
+        classNames={{
+          cursor: 'dark:bg-accent bg-accent-dark text-black dark:text-white',
+        }}
+        showControls
+        loop
+        isCompact
+        showShadow
+      />
       <Input
         label='Go to page'
         value={page}
@@ -166,7 +132,7 @@ export const Pagination = ({
         min={1}
         max={totalPages}
         onChange={({ currentTarget: { value } }) => onChangePage(Number(value))}
-        disabled={hasNotTotalPages}
+        disabled={hasNotPages}
         title='Ctrl + Page number'
         hasBorder
       />

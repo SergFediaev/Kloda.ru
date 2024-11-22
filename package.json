@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/checkbox": "^2.1.5",
+    "@nextui-org/pagination": "^2.0.36",
     "@nextui-org/radio": "^2.1.5",
     "@nextui-org/select": "^2.2.7",
     "@nextui-org/slider": "^2.2.17",
