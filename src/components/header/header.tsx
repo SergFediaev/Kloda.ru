@@ -31,7 +31,7 @@ export const Header = () => {
 
   // ToDo: Refactor background styles to style
   return isMenuExpanded ? (
-    <header className='sticky top-0 z-20 bg-surface bg-opacity-70 shadow-md backdrop-blur-xl dark:bg-surface-dark dark:bg-opacity-70'>
+    <header className='sticky top-0 z-30 bg-surface bg-opacity-70 shadow-md backdrop-blur-xl dark:bg-surface-dark dark:bg-opacity-70'>
       <Container>{menu}</Container>
     </header>
   ) : (

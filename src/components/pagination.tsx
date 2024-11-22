@@ -1,8 +1,8 @@
 import { Button } from '@/components/button'
 import type { ColumnsCount } from '@/components/containers/columns'
-import { Input } from '@/components/forms/input'
 import { Radio } from '@/components/radio'
 import { Select } from '@/components/select'
+import { useWidth } from '@/hooks/useWidth'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { Pagination as NextUiPagination } from '@nextui-org/pagination'
 import { RadioGroup } from '@nextui-org/radio'
@@ -52,6 +52,7 @@ export const Pagination = ({
   const { replace } = useTransitionRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
+  const { isDesktopWidth } = useWidth()
 
   const hasSearchParams = searchParams.toString() !== ''
   const hasNotItems = itemsCount < 2
@@ -118,23 +119,13 @@ export const Pagination = ({
         onChange={onChangePage}
         isDisabled={hasNotPages}
         classNames={{
+          wrapper: 'flex-wrap',
           cursor: 'dark:bg-accent bg-accent-dark text-black dark:text-white',
         }}
         showControls
         loop
         isCompact
         showShadow
-      />
-      <Input
-        label='Go to page'
-        value={page}
-        type='number'
-        min={1}
-        max={totalPages}
-        onChange={({ currentTarget: { value } }) => onChangePage(Number(value))}
-        disabled={hasNotPages}
-        title='Ctrl + Page number'
-        hasBorder
       />
       <span className='text-center'>
         <p>{itemsName}</p>
@@ -184,23 +175,25 @@ export const Pagination = ({
           </SelectItem>
         )}
       </Select>
-      <RadioGroup
-        label='Columns'
-        orientation='horizontal'
-        value={columnsCount}
-        onValueChange={value => setColumnsCount(value as ColumnsCount)}
-        className='text-center'
-      >
-        <Radio value='1' title='1'>
-          <Rows4 />
-        </Radio>
-        <Radio value='2' title='2'>
-          <Columns2 />
-        </Radio>
-        <Radio value='3' title='3'>
-          <Columns3 />
-        </Radio>
-      </RadioGroup>
+      {isDesktopWidth && (
+        <RadioGroup
+          label='Columns'
+          orientation='horizontal'
+          value={columnsCount}
+          onValueChange={value => setColumnsCount(value as ColumnsCount)}
+          className='text-center'
+        >
+          <Radio value='1' title='1'>
+            <Rows4 />
+          </Radio>
+          <Radio value='2' title='2'>
+            <Columns2 />
+          </Radio>
+          <Radio value='3' title='3'>
+            <Columns3 />
+          </Radio>
+        </RadioGroup>
+      )}
       {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
     </div>
   )
