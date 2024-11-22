@@ -2,11 +2,11 @@ import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
+import { RangeInput } from '@/components/rangeInput'
 import { Select } from '@/components/select'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
 import { SelectItem } from '@nextui-org/select'
-import { Slider } from '@nextui-org/slider'
 import {
   ArrowRightToLine,
   CircleChevronLeft,
@@ -456,36 +456,30 @@ export const TextToSpeech = ({
                 )}
               </Select>
               <Wrapper className='gap-4'>
-                <Slider
+                <RangeInput
                   label='Volume'
                   defaultValue={volume}
                   onChangeEnd={volume => onSliderChange(volume, setVolume)}
                   minValue={0}
                   maxValue={1}
                   step={0.01}
-                  size='lg'
-                  color='warning'
                   formatOptions={{ style: 'percent' }}
                 />
-                <Slider
+                <RangeInput
                   label='Rate'
                   defaultValue={rate}
                   onChangeEnd={rate => onSliderChange(rate, setRate)}
                   minValue={0.1}
                   maxValue={10}
                   step={0.1}
-                  size='lg'
-                  color='warning'
                 />
-                <Slider
+                <RangeInput
                   label='Pitch'
                   defaultValue={pitch}
                   onChangeEnd={pitch => onSliderChange(pitch, setPitch)}
                   minValue={0}
                   maxValue={2}
                   step={0.1}
-                  size='lg'
-                  color='warning'
                   showSteps
                 />
               </Wrapper>

@@ -1,17 +1,13 @@
-import { useGenerateId } from '@/hooks/useGenerateId'
-import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { Slider, type SliderProps } from '@nextui-org/slider'
 
-type Props = {
-  label?: ReactNode
-} & ComponentPropsWithoutRef<'input'>
-
-export const RangeInput = ({ label, id, name, ...restProps }: Props) => {
-  const inputId = useGenerateId(id, name)
-
-  return (
-    <label htmlFor={inputId} className='flex flex-col'>
-      {label}
-      <input type='range' id={inputId} name={name} {...restProps} />
-    </label>
-  )
-}
+export const RangeInput = (props: SliderProps) => (
+  <Slider
+    size='lg'
+    classNames={{
+      track: 'border-s-accent dark:border-s-accent-dark',
+      filler: 'bg-accent dark:bg-accent-dark',
+      thumb: 'bg-accent dark:bg-accent-dark',
+    }}
+    {...props}
+  />
+)
