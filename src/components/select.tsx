@@ -15,7 +15,7 @@ export const Select = <T extends object>(props: SelectProps<T>) => (
     }}
     popoverProps={{
       classNames: {
-        content: 'dark:text-white',
+        content: 'text-black dark:text-white',
       },
     }}
     {...props}
