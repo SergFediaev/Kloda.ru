@@ -53,7 +53,7 @@ export const Dialog = ({
         aria-label={label}
         ref={dialog}
         className={cn(
-          '-translate-y-1/2 fixed top-1/2 z-20 bg-transparent',
+          '-translate-y-1/2 fixed top-1/2 z-30 bg-transparent',
           className,
         )}
         {...restProps}
