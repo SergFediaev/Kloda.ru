@@ -77,7 +77,7 @@ export const CategoriesSelect = () => {
       isMulti
       isSearchable
       isClearable
-      className={cn(isDesktopWidth && 'min-w-52')}
+      className={cn(isDesktopWidth ? 'min-w-52' : 'min-w-0')}
       styles={{
         control: baseStyles => ({
           ...baseStyles,
