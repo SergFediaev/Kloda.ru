@@ -2,6 +2,8 @@ import { ErrorMessage } from '@/components/errorMessage'
 import { useGetCategories } from '@/hooks/useCategories'
 import { usePaths } from '@/hooks/usePaths'
 import { useThemes } from '@/hooks/useThemes'
+import { useWidth } from '@/hooks/useWidth'
+import { cn } from '@/utils/mergeClasses'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Select from 'react-select'
@@ -21,6 +23,7 @@ export const CategoriesSelect = () => {
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   const { isDarkTheme } = useThemes()
+  const { isDesktopWidth } = useWidth()
 
   if (usePaths().isNotCardsPath) {
     return null
@@ -74,7 +77,7 @@ export const CategoriesSelect = () => {
       isMulti
       isSearchable
       isClearable
-      className='min-w-52'
+      className={cn(isDesktopWidth && 'min-w-52')}
       styles={{
         control: baseStyles => ({
           ...baseStyles,

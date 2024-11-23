@@ -10,6 +10,7 @@ type Props = {
   isLoading?: boolean
   isBlocked?: boolean
   isDanger?: boolean
+  isTextLeft?: boolean
 } & ComponentPropsWithoutRef<'button'>
 
 // ToDo: Refactor styles
@@ -21,6 +22,7 @@ export const Button = ({
   isLoading,
   isBlocked,
   isDanger,
+  isTextLeft,
   ...restProps
 }: Props) => (
   <button
@@ -56,6 +58,7 @@ export const Button = ({
       isLoading &&
         'cursor-progress bg-accent-dark-alternate dark:bg-accent-alternate',
       isBlocked && 'cursor-not-allowed',
+      isTextLeft && 'text-left',
       className,
     )}
     {...restProps}
