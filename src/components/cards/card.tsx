@@ -336,7 +336,10 @@ export const Card = ({
         </Wrapper>
         {isExpanded && (
           <aside>
-            <p>Categories: {categories.join(', ')}</p>
+            <p>
+              Categories:&nbsp;
+              {categories.length ? categories.join(', ') : 'Uncategorized'}
+            </p>
             <Wrapper as='div' className='justify-between gap-x-4'>
               <Wrapper as='p'>
                 Author:&nbsp;
