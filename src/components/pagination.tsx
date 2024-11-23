@@ -122,7 +122,7 @@ export const Pagination = ({
           wrapper: 'flex-wrap',
           cursor: 'dark:bg-accent bg-accent-dark text-black dark:text-white',
         }}
-        showControls
+        showControls={isDesktopWidth}
         loop
         isCompact
         showShadow
