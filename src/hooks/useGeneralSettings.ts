@@ -1,17 +1,49 @@
 import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
-type GeneralSettings = {
+type GeneralSettingsState = {
   isEasterEggEnabled: boolean
   isDebugModeEnabled: boolean
-  setIsEasterEggEnabled: (isEasterEggEnabled: boolean) => void
-  setIsDebugModeEnabled: (isDebugModeEnabled: boolean) => void
 }
 
-export const useGeneralSettings = create<GeneralSettings>(set => ({
+type GeneralSettingsActions = {
+  setIsEasterEggEnabled: (isEasterEggEnabled: boolean) => void
+  setIsDebugModeEnabled: (isDebugModeEnabled: boolean) => void
+  resetGeneralSettings: () => void
+}
+
+const initialGeneralSettings: GeneralSettingsState = {
   isEasterEggEnabled: true,
   isDebugModeEnabled: false,
-  setIsEasterEggEnabled: (isEasterEggEnabled: boolean) =>
-    set({ isEasterEggEnabled }),
-  setIsDebugModeEnabled: (isDebugModeEnabled: boolean) =>
-    set({ isDebugModeEnabled }),
-}))
+}
+
+export const useGeneralSettings = create<
+  GeneralSettingsState & GeneralSettingsActions
+>()(
+  devtools(
+    persist(
+      set => ({
+        ...initialGeneralSettings,
+        setIsEasterEggEnabled: (isEasterEggEnabled: boolean) =>
+          set(
+            { isEasterEggEnabled },
+            undefined,
+            'generalSettings/setIsEasterEggEnabled',
+          ),
+        setIsDebugModeEnabled: (isDebugModeEnabled: boolean) =>
+          set(
+            { isDebugModeEnabled },
+            undefined,
+            'generalSettings/setIsDebugModeEnabled',
+          ),
+        resetGeneralSettings: () =>
+          set(
+            initialGeneralSettings,
+            undefined,
+            'generalSettings/resetGeneralSettings',
+          ),
+      }),
+      { name: 'generalSettings' },
+    ),
+  ),
+)

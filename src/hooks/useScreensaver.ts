@@ -1,16 +1,39 @@
 import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
-type Screensaver = {
+type ScreensaverState = {
   isEnabled: boolean
   minutesToActivate: number
-  setIsEnabled: (isEnabled: boolean) => void
-  setMinutesToActivate: (minutesToActivate: number) => void
 }
 
-export const useScreensaver = create<Screensaver>(set => ({
+type ScreensaverActions = {
+  setIsEnabled: (isEnabled: boolean) => void
+  setMinutesToActivate: (minutesToActivate: number) => void
+  resetScreensaver: () => void
+}
+
+const initialScreensaver: ScreensaverState = {
   isEnabled: true,
   minutesToActivate: 5,
-  setIsEnabled: (isEnabled: boolean) => set({ isEnabled }),
-  setMinutesToActivate: (minutesToActivate: number) =>
-    set({ minutesToActivate }),
-}))
+}
+
+export const useScreensaver = create<ScreensaverState & ScreensaverActions>()(
+  devtools(
+    persist(
+      set => ({
+        ...initialScreensaver,
+        setIsEnabled: (isEnabled: boolean) =>
+          set({ isEnabled }, undefined, 'screensaver/setIsEnabled'),
+        setMinutesToActivate: (minutesToActivate: number) =>
+          set(
+            { minutesToActivate },
+            undefined,
+            'screensaver/setMinutesToActivate',
+          ),
+        resetScreensaver: () =>
+          set(initialScreensaver, undefined, 'screensaver/resetScreensaver'),
+      }),
+      { name: 'screensaver' },
+    ),
+  ),
+)

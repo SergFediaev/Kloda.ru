@@ -1,11 +1,30 @@
-import { create } from 'zustand/index'
+import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
-type DebugMode = {
+type DebugModeState = {
   isMarkupShown: boolean
-  setIsMarkupShown: (isMarkupShown: boolean) => void
 }
 
-export const useDebugMode = create<DebugMode>(set => ({
+type DebugModeActions = {
+  setIsMarkupShown: (isMarkupShown: boolean) => void
+  resetDebugMode: () => void
+}
+
+const initialDebugMode: DebugModeState = {
   isMarkupShown: false,
-  setIsMarkupShown: (isMarkupShown: boolean) => set({ isMarkupShown }),
-}))
+}
+
+export const useDebugMode = create<DebugModeState & DebugModeActions>()(
+  devtools(
+    persist(
+      set => ({
+        ...initialDebugMode,
+        setIsMarkupShown: (isMarkupShown: boolean) =>
+          set({ isMarkupShown }, undefined, 'debugMode/setIsMarkupShown'),
+        resetDebugMode: () =>
+          set(initialDebugMode, undefined, 'debugMode/resetDebugMode'),
+      }),
+      { name: 'debugMode' },
+    ),
+  ),
+)
