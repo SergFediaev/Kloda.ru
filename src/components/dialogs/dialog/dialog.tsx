@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { Block } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Overlay } from '@/components/dialogs/dialog/overlay'

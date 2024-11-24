@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Dialog, type DialogProps } from '@/components/dialogs/dialog/dialog'
 import type { ReactNode } from 'react'

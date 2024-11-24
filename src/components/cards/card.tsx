@@ -1,5 +1,6 @@
 import type { CardModel } from '@/api/cards/cards.types'
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
+import { ShareButton } from '@/components/buttons/shareButton'
 import { Block, type BlockProps } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
@@ -21,7 +22,6 @@ import {
   Copy,
   Eye,
   EyeOff,
-  Link as LinkIcon,
   Speech,
   SquarePen,
   Star,
@@ -132,13 +132,6 @@ export const Card = ({
     copyToClipboard(
       `${title}\n\n${content}`,
       'Card content copied to clipboard',
-      theme,
-    )
-
-  const copyCardLink = () =>
-    copyToClipboard(
-      `${window.location.origin}/card/${id}`,
-      'Card link copied to clipboard',
       theme,
     )
 
@@ -297,13 +290,13 @@ export const Card = ({
             >
               <Copy />
             </Button>
-            <Button
-              variant='text'
-              onClick={copyCardLink}
-              title='Copy card link to clipboard'
-            >
-              <LinkIcon />
-            </Button>
+            <ShareButton
+              url={`${window.location.origin}/card/${id}`}
+              shareTitle='Share card link'
+              copyTitle='Copy card link to clipboard'
+              notification='Card link copied to clipboard'
+              theme={theme}
+            />
             {setCardToSpeech && (
               <Button variant='text' onClick={onCardToSpeech}>
                 <Speech className={cn(isCardPlaying && 'animate-pulse')} />

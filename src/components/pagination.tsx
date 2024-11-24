@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import type { ColumnsCount } from '@/components/containers/columns'
 import { Radio } from '@/components/radio'
 import { Select } from '@/components/select'

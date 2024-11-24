@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { AudioLines, Mic } from 'lucide-react'
 
 type Props = {

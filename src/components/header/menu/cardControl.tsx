@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'

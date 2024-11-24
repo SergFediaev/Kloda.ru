@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { Block } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { useDebugMode } from '@/hooks/useDebugMode'

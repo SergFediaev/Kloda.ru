@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import type { LoggedInProps } from '@/components/header/menu/desktopMenu'
 import { FilePlus } from 'lucide-react'

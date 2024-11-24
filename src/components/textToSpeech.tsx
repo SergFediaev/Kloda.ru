@@ -1,5 +1,6 @@
 import type { CardModel } from '@/api/cards/cards.types'
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
+import { ShareButton } from '@/components/buttons/shareButton'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
 import { RangeInput } from '@/components/rangeInput'
@@ -26,6 +27,7 @@ import {
   Undo2,
   X,
 } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react'
 
@@ -89,6 +91,7 @@ export const TextToSpeech = ({
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>()
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const { theme } = useTheme()
 
   const hasCards = cards.length > 1
   const hasShuffleCards = cards.length > 2
@@ -419,9 +422,18 @@ export const TextToSpeech = ({
         </Wrapper>
         {isPlaylistExpanded && (
           <div>
-            <Heading as='h4' className='text-lg'>
-              Playlist <q>{playlistName}</q>
-            </Heading>
+            <Wrapper hasGaps>
+              <ShareButton
+                url={`${window.location.origin}/${window.location.search}`}
+                shareTitle='Share playlist link'
+                copyTitle='Copy playlist link to clipboard'
+                notification='Playlist link copied to clipboard'
+                theme={theme}
+              />
+              <Heading as='h4' className='text-lg'>
+                Playlist <q>{playlistName}</q>
+              </Heading>
+            </Wrapper>
             <ul className='max-h-96 overflow-y-auto'>
               {cards.map(card => (
                 <li key={card.id}>

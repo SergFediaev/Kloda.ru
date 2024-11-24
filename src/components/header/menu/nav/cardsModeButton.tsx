@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { useCardsMode } from '@/hooks/useCardsMode'
 import { usePaths } from '@/hooks/usePaths'
 import { Dumbbell, GraduationCap } from 'lucide-react'

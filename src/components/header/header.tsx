@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { Container } from '@/components/containers/container'
 import {
   DesktopMenu,

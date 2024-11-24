@@ -1,5 +1,5 @@
 import type { UserResponse } from '@/api/users/users.types'
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { Block, type BlockProps } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Wrapper } from '@/components/containers/wrapper'

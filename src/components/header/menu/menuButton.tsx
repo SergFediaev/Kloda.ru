@@ -1,4 +1,4 @@
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import type { CollapseMenuProps } from '@/components/header/menu/desktopMenu'
 import { ChevronUp } from 'lucide-react'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/button'
+import { Button } from '@/components/buttons/button'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Form } from '@/components/forms/form'
 import { FormInput } from '@/components/forms/formInput'
