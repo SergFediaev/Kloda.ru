@@ -4,6 +4,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
 import { RangeInput } from '@/components/rangeInput'
 import { Select } from '@/components/select'
+import { useTextToSpeech } from '@/hooks/useTextToSpeech'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
 import { SelectItem } from '@nextui-org/select'
@@ -36,7 +37,7 @@ type Props = {
   playlistName?: string
 }
 
-type PlayMode = 'once' | 'repeat' | 'playlist' | 'shuffle'
+export type PlayMode = 'once' | 'repeat' | 'playlist' | 'shuffle'
 
 let speechSynth: Nullable<SpeechSynthesis> = null
 let utterance: Nullable<SpeechSynthesisUtterance> = null
@@ -47,10 +48,6 @@ if (typeof window !== 'undefined' && window.speechSynthesis) {
 }
 
 const DEFAULT_VOICE = 0
-const DEFAULT_VOLUME = 0.5
-const DEFAULT_RATE = 1
-const DEFAULT_PITCH = 1
-const DEFAULT_PLAY_MODE: PlayMode = 'once'
 
 const getCardText = ({ id, title, content }: CardModel) =>
   `Card #${id}\n${title}\n${content}`
@@ -69,17 +66,29 @@ export const TextToSpeech = ({
     return null
   }
 
+  const {
+    voice,
+    volume,
+    rate,
+    pitch,
+    isPlaylistExpanded,
+    isVisualizationExpanded,
+    isSettingsExpanded,
+    playMode,
+    setVoice,
+    setVolume,
+    setRate,
+    setPitch,
+    setIsPlaylistExpanded,
+    setIsVisualizationExpanded,
+    setIsSettingsExpanded,
+    setPlayMode,
+    resetTextToSpeech,
+  } = useTextToSpeech()
+
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>()
-  const [voice, setVoice] = useState<SpeechSynthesisVoice>()
-  const [volume, setVolume] = useState(DEFAULT_VOLUME)
-  const [rate, setRate] = useState(DEFAULT_RATE)
-  const [pitch, setPitch] = useState(DEFAULT_PITCH)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
-  const [isPlaylistExpanded, setIsPlaylistExpanded] = useState(false)
-  const [isVisualizationExpanded, setIsVisualizationExpanded] = useState(false)
-  const [isSettingsExpanded, setIsSettingsExpanded] = useState(false)
-  const [playMode, setPlayMode] = useState<PlayMode>(DEFAULT_PLAY_MODE)
 
   const hasCards = cards.length > 1
   const hasShuffleCards = cards.length > 2
@@ -101,7 +110,10 @@ export const TextToSpeech = ({
 
       if (loadedVoices.length > 0) {
         setVoices(loadedVoices)
-        setVoice(loadedVoices[DEFAULT_VOICE])
+        setVoice(
+          loadedVoices.find(({ name }) => name === voice?.name) ??
+            loadedVoices[DEFAULT_VOICE],
+        )
       }
     }
 
@@ -111,7 +123,7 @@ export const TextToSpeech = ({
 
     return () =>
       speechSynthesis.removeEventListener('voiceschanged', loadVoices)
-  }, [])
+  }, [voice?.name, setVoice])
 
   useEffect(() => {
     if (!cardToSpeech || !voice) {
@@ -143,12 +155,18 @@ export const TextToSpeech = ({
     if (!hasCards) {
       if (isPlaylistExpanded) setIsPlaylistExpanded(false)
 
-      if (playMode === 'playlist' || playMode === 'shuffle')
-        setPlayMode(DEFAULT_PLAY_MODE)
+      if (playMode === 'playlist' || playMode === 'shuffle') setPlayMode('once')
     }
 
     if (!hasShuffleCards && playMode === 'shuffle') setPlayMode('playlist')
-  }, [hasCards, hasShuffleCards, isPlaylistExpanded, playMode])
+  }, [
+    hasCards,
+    hasShuffleCards,
+    isPlaylistExpanded,
+    playMode,
+    setIsPlaylistExpanded,
+    setPlayMode,
+  ])
 
   useEffect(() => setIsCardPlaying?.(isPlaying), [setIsCardPlaying, isPlaying])
 
@@ -301,16 +319,6 @@ export const TextToSpeech = ({
 
   const onPlaylist = () => setIsPlaylistExpanded(!isPlaylistExpanded)
 
-  const onResetSettings = () => {
-    setVoice(voices[DEFAULT_VOICE])
-    setVolume(DEFAULT_VOLUME)
-    setRate(DEFAULT_RATE)
-    setPitch(DEFAULT_PITCH)
-    setPlayMode(DEFAULT_PLAY_MODE)
-    setIsPlaylistExpanded(false)
-    setIsVisualizationExpanded(false)
-  }
-
   const onVisualization = () =>
     setIsVisualizationExpanded(!isVisualizationExpanded)
 
@@ -399,8 +407,9 @@ export const TextToSpeech = ({
           </Button>
           <Button
             variant='text'
-            onClick={onResetSettings}
+            onClick={resetTextToSpeech}
             title='Reset settings'
+            isDanger
           >
             <Undo2 />
           </Button>
