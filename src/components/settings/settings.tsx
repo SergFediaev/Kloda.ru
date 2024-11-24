@@ -4,6 +4,7 @@ import { Columns } from '@/components/containers/columns'
 import { AppInfo } from '@/components/settings/appInfo'
 import { DebugModeSettings } from '@/components/settings/debugModeSettings'
 import { GeneralSettings } from '@/components/settings/generalSettings'
+import { ResetSettings } from '@/components/settings/resetSettings'
 import { ScreensaverSettings } from '@/components/settings/screensaverSettings'
 import { UptimeSettings } from '@/components/settings/uptimeSettings'
 import { useGeneralSettings } from '@/hooks/useGeneralSettings'
@@ -13,6 +14,7 @@ export const Settings = () => (
     <GeneralSettings />
     {useGeneralSettings().isDebugModeEnabled && <DebugModeSettings />}
     <ScreensaverSettings />
+    <ResetSettings />
     <UptimeSettings />
     <AppInfo />
   </Columns>
