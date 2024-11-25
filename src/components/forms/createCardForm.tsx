@@ -7,8 +7,10 @@ import { FormInput } from '@/components/forms/formInput'
 import { FormTextArea } from '@/components/forms/formTextArea'
 import { useCreateCard } from '@/hooks/useCards'
 import { handleCategories } from '@/utils/handleCategories'
+import { getLocalItem, setLocalItem } from '@/utils/localStorage'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTransitionRouter } from 'next-view-transitions'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -21,6 +23,18 @@ const cardSchema = z.object({
 })
 
 type CardSchema = z.infer<typeof cardSchema>
+
+type CardContent = Omit<CardSchema, 'username' | 'email'>
+
+const cardContent: CardContent = {
+  title: '',
+  content: '',
+  categories: '',
+}
+
+const CARD_CONTENT = 'cardContent'
+
+const removeCardContent = () => localStorage.removeItem(CARD_CONTENT)
 
 type Props = {
   username: string
@@ -35,9 +49,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
   const createText = isPending ? 'Creating' : 'Create'
 
   const defaultValues: CardSchema = {
-    title: '',
-    content: '',
-    categories: '',
+    ...getLocalItem(CARD_CONTENT, cardContent),
     username,
     email,
   }
@@ -46,8 +58,17 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
     control,
     reset,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<CardSchema>({ defaultValues, resolver: zodResolver(cardSchema) })
+
+  useEffect(() => {
+    const subscription = watch(({ username, email, ...restValue }) =>
+      setLocalItem<Partial<CardContent>>(CARD_CONTENT, restValue),
+    )
+
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   const onSubmit = handleSubmit(
     ({ username, email, categories, ...restData }) =>
@@ -58,9 +79,15 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
       }),
   )
 
-  const onReset = () => reset(defaultValues)
+  const onReset = () => {
+    reset({ ...cardContent, email, username })
+    removeCardContent()
+  }
 
-  if (isSuccess) router.push(`/card/${data.id}`)
+  if (isSuccess) {
+    removeCardContent()
+    router.push(`/card/${data.id}`)
+  }
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>
