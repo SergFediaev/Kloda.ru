@@ -14,10 +14,16 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+const TITLE_MIN = 5
+const TITLE_MAX = 100
+const CONTENT_MIN = 10
+const CONTENT_MAX = 2_000
+const CATEGORIES_MAX = 100
+
 const cardSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  categories: z.string(),
+  title: z.string().min(TITLE_MIN).max(TITLE_MAX),
+  content: z.string().min(CONTENT_MIN).max(CONTENT_MAX),
+  categories: z.string().max(CATEGORIES_MAX),
   username: z.string().optional(),
   email: z.string().email().optional(),
 })
@@ -97,6 +103,9 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         label={'Title'}
         placeholder={'Card title'}
         error={errors.title?.message}
+        characterCount={watch('title').length}
+        minLength={TITLE_MIN}
+        maxLength={TITLE_MAX}
         required
         spellCheck
       />
@@ -106,6 +115,9 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         label={'Content'}
         placeholder={'Card content'}
         error={errors.content?.message}
+        characterCount={watch('content').length}
+        minLength={CONTENT_MIN}
+        maxLength={CONTENT_MAX}
         required
         spellCheck
       />
@@ -115,6 +127,8 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         label={'Categories'}
         placeholder={'Comma-separated categories'}
         error={errors.categories?.message}
+        characterCount={watch('categories').length}
+        maxLength={CATEGORIES_MAX}
       />
       <FormInput
         control={control}

@@ -1,3 +1,4 @@
+import { Subfield } from '@/components/forms/subfield'
 import { useGenerateId } from '@/hooks/useGenerateId'
 import { cn } from '@/utils/mergeClasses'
 import {
@@ -9,6 +10,7 @@ import {
 export type InputProps = {
   label?: ReactNode
   error?: ReactNode
+  characterCount?: number
   isHorizontal?: boolean
   hasBorder?: boolean
 } & ComponentPropsWithoutRef<'input'>
@@ -18,11 +20,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       label,
       error,
+      characterCount,
       isHorizontal,
       hasBorder,
       id,
       name,
       required,
+      maxLength,
       className,
       ...restProps
     },
@@ -52,13 +56,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           name={name}
           required={required}
+          maxLength={maxLength}
           className={cn(
             'truncate rounded-xl px-4 py-2 shadow-inner',
             hasBorder && 'border-2 border-accent dark:border-accent-dark',
           )}
           {...restProps}
         />
-        <p className='text-danger'>{error}</p>
+        <Subfield
+          error={error}
+          characterCount={characterCount}
+          maxLength={maxLength}
+        />
       </div>
     )
   },

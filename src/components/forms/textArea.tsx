@@ -1,3 +1,4 @@
+import { Subfield } from '@/components/forms/subfield'
 import { useGenerateId } from '@/hooks/useGenerateId'
 import { cn } from '@/utils/mergeClasses'
 import {
@@ -9,10 +10,24 @@ import {
 export type TextAreaProps = {
   label?: ReactNode
   error?: ReactNode
+  characterCount?: number
 } & ComponentPropsWithoutRef<'textarea'>
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ label, error, id, name, required, className, ...restProps }, ref) => {
+  (
+    {
+      label,
+      error,
+      characterCount,
+      id,
+      name,
+      required,
+      maxLength,
+      className,
+      ...restProps
+    },
+    ref,
+  ) => {
     const textAreaId = useGenerateId(id, name)
 
     return (
@@ -28,10 +43,15 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={textAreaId}
           name={name}
           required={required}
+          maxLength={maxLength}
           className='min-h-24 whitespace-pre-wrap rounded-xl px-4 py-2 shadow-inner'
           {...restProps}
         />
-        <p className='text-danger'>{error}</p>
+        <Subfield
+          error={error}
+          characterCount={characterCount}
+          maxLength={maxLength}
+        />
       </div>
     )
   },

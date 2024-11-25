@@ -10,13 +10,18 @@ import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-// ToDo: Passwords regex, min, max
+const USERNAME_MIN = 3
+const USERNAME_MAX = 32
+const PASSWORD_MIN = 6
+const PASSWORD_MAX = 64
+
+// ToDo: Passwords regex
 const registerSchema = z
   .object({
-    username: z.string(),
+    username: z.string().min(USERNAME_MIN).max(USERNAME_MAX),
     email: z.string().email(),
-    password: z.string(),
-    confirmPassword: z.string(),
+    password: z.string().min(PASSWORD_MIN).max(PASSWORD_MAX),
+    confirmPassword: z.string().min(PASSWORD_MIN).max(PASSWORD_MAX),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
@@ -47,6 +52,7 @@ export const RegisterForm = () => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<RegisterSchema>({
     defaultValues,
@@ -68,6 +74,9 @@ export const RegisterForm = () => {
         placeholder='Username'
         required
         error={errors.username?.message}
+        characterCount={watch('username').length}
+        minLength={USERNAME_MIN}
+        maxLength={USERNAME_MAX}
       />
       <FormInput
         control={control}
@@ -87,6 +96,9 @@ export const RegisterForm = () => {
         placeholder='Password'
         required
         error={errors.password?.message}
+        characterCount={watch('password').length}
+        minLength={PASSWORD_MIN}
+        maxLength={PASSWORD_MAX}
       />
       <FormInput
         control={control}
@@ -97,6 +109,9 @@ export const RegisterForm = () => {
         placeholder='Confirm password'
         required
         error={errors.confirmPassword?.message}
+        characterCount={watch('confirmPassword').length}
+        minLength={PASSWORD_MIN}
+        maxLength={PASSWORD_MAX}
       />
       <ButtonsContainer>
         <Button isStretched isLoading={isPending}>
