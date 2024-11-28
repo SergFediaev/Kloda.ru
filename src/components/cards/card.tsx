@@ -39,6 +39,7 @@ import { toast } from 'react-toastify'
 type Props = {
   card: CardModel
   isExpanded?: boolean
+  isMediaShown?: boolean
   isOpen?: boolean
   isCardToSpeech?: boolean
   setCardToSpeech?: (card: CardModel) => void
@@ -51,8 +52,9 @@ type Props = {
 // ToDo: Uncategorized
 export const Card = ({
   card,
+  isExpanded: isCardExpanded = true,
+  isMediaShown = true,
   isOpen,
-  isExpanded: isCardExpanded,
   isCardToSpeech,
   setCardToSpeech,
   isCardPlaying,
@@ -237,7 +239,9 @@ export const Card = ({
         )}
         {...restProps}
       >
-        {isShown && <CardContent content={content} />}
+        {isShown && (
+          <CardContent content={content} isMediaShown={isMediaShown} />
+        )}
         <Wrapper as='div' hasGaps className='justify-between'>
           <Wrapper hasGaps>
             <Button

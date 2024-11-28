@@ -1,6 +1,7 @@
 import { Button } from '@/components/buttons/button'
 import { Block } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
+import { useCardsSettings } from '@/hooks/useCardsSettings'
 import { useDebugMode } from '@/hooks/useDebugMode'
 import { useGeneralSettings } from '@/hooks/useGeneralSettings'
 import { useScreensaver } from '@/hooks/useScreensaver'
@@ -10,6 +11,7 @@ import { toast } from 'react-toastify'
 export const ResetSettings = () => {
   const { resetGeneralSettings } = useGeneralSettings()
   const { resetDebugMode } = useDebugMode()
+  const { resetCardsSettings } = useCardsSettings()
   const { resetScreensaver } = useScreensaver()
   const { theme } = useTheme()
 
@@ -26,6 +28,7 @@ export const ResetSettings = () => {
   const onReset = () => {
     resetGeneralSettings()
     resetDebugMode()
+    resetCardsSettings()
     resetScreensaver()
     toast('All settings are reset to defaults', { theme, type: 'info' })
   }

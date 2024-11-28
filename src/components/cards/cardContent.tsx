@@ -110,7 +110,13 @@ const renderElement = (element: ParsedElement, index: number) => {
       if (ref.current) ref.current.volume = DEFAULT_VOLUME
 
       return (
-        <audio key={key} src={element.url} ref={ref} controls>
+        <audio
+          key={key}
+          src={element.url}
+          ref={ref}
+          controls
+          className='w-full'
+        >
           <track kind='captions' />
         </audio>
       )
@@ -121,7 +127,13 @@ const renderElement = (element: ParsedElement, index: number) => {
       if (ref.current) ref.current.volume = DEFAULT_VOLUME
 
       return (
-        <video key={key} src={element.url} ref={ref} controls>
+        <video
+          key={key}
+          src={element.url}
+          ref={ref}
+          controls
+          className='w-full'
+        >
           <track kind='captions' />
         </video>
       )
@@ -134,6 +146,7 @@ const renderElement = (element: ParsedElement, index: number) => {
           title={`YouTube video #${index}`}
           referrerPolicy='strict-origin-when-cross-origin'
           allowFullScreen
+          className='aspect-video w-full'
         />
       )
     default:
@@ -143,10 +156,11 @@ const renderElement = (element: ParsedElement, index: number) => {
 
 type Props = {
   content: string
+  isMediaShown: boolean
 }
 
-export const CardContent = ({ content }: Props) => (
+export const CardContent = ({ content, isMediaShown }: Props) => (
   <p className='whitespace-pre-wrap break-words'>
-    {parseContent(content).map(renderElement)}
+    {isMediaShown ? parseContent(content).map(renderElement) : content}
   </p>
 )

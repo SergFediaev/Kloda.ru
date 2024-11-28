@@ -9,6 +9,7 @@ import { Pagination } from '@/components/pagination'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCards } from '@/hooks/useCards'
 import { useCardsMode } from '@/hooks/useCardsMode'
+import { useCardsSettings } from '@/hooks/useCardsSettings'
 import { useState } from 'react'
 
 const SORTS = {
@@ -47,6 +48,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   const [isCardPlaying, setIsCardPlaying] = useState(false)
   const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2')
   const { isStudyMode } = useCardsMode()
+  const { isCardAlwaysExpanded, isMediaAlwaysShown } = useCardsSettings()
 
   if (isPending) {
     return <Loader>Fetching cards</Loader>
@@ -68,6 +70,8 @@ export const Cards = ({ categories, ...restProps }: Props) => {
             id={String(card.id)}
             key={card.id}
             card={card}
+            isExpanded={isCardAlwaysExpanded}
+            isMediaShown={isMediaAlwaysShown}
             isCardToSpeech={isCardToSpeech}
             setCardToSpeech={setCardToSpeech}
             isCardPlaying={isCardToSpeech && isCardPlaying}

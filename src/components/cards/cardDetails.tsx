@@ -36,7 +36,6 @@ export const CardDetails = ({ id }: Props) => {
       <Card
         id={String(card.id)}
         card={card}
-        isExpanded
         isOpen
         setCardToSpeech={setCardToSpeech}
         isStudyMode={isStudyMode}
