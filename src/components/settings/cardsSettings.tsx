@@ -34,6 +34,7 @@ export const CardsSettings = () => {
         labelPlacement='outside-left'
         endContent={icon}
         description={description}
+        isHorizontal
       >
         {MODES.map(mode => (
           <SelectItem key={mode}>{mode}</SelectItem>

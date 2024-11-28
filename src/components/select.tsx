@@ -1,15 +1,27 @@
+import { useWidth } from '@/hooks/useWidth'
+import { cn } from '@/utils/mergeClasses'
 import { Select as NextUiSelect, type SelectProps } from '@nextui-org/select'
 
-// ToDo: Fix label text-medium
-export const Select = <T extends object>(props: SelectProps<T>) => (
+type Props<T extends object> = {
+  isHorizontal?: boolean
+} & SelectProps<T>
+
+export const Select = <T extends object>({
+  isHorizontal,
+  ...restProps
+}: Props<T>) => (
   <NextUiSelect
     disallowEmptySelection
+    size={useWidth().isDesktopWidth ? 'md' : 'sm'}
     variant='bordered'
     classNames={{
       base: 'w-auto min-w-36 flex-wrap gap-x-6',
       trigger: 'border-accent dark:border-accent-dark',
       selectorIcon: 'text-accent dark:text-accent-dark',
-      label: 'text-medium',
+      label: cn(
+        'text-primary dark:text-primary-dark',
+        isHorizontal && 'text-medium',
+      ),
       mainWrapper: 'w-auto flex-grow',
     }}
     listboxProps={{
@@ -22,6 +34,6 @@ export const Select = <T extends object>(props: SelectProps<T>) => (
         content: 'text-black dark:text-white',
       },
     }}
-    {...props}
+    {...restProps}
   />
 )

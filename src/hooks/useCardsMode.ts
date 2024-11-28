@@ -1,3 +1,4 @@
+import { useCardsSettings } from '@/hooks/useCardsSettings'
 import { create } from 'zustand'
 
 type CardsMode = {
@@ -6,6 +7,6 @@ type CardsMode = {
 }
 
 export const useCardsMode = create<CardsMode>(set => ({
-  isStudyMode: true,
+  isStudyMode: useCardsSettings.getState().isStudyModeDefault,
   toggleStudyMode: () => set(state => ({ isStudyMode: !state.isStudyMode })),
 }))
