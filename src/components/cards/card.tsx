@@ -1,6 +1,7 @@
 import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/buttons/button'
 import { ShareButton } from '@/components/buttons/shareButton'
+import { CardContent } from '@/components/cards/cardContent'
 import { Block, type BlockProps } from '@/components/containers/block'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
@@ -51,6 +52,7 @@ type Props = {
 export const Card = ({
   card,
   isOpen,
+  isExpanded: isCardExpanded,
   isCardToSpeech,
   setCardToSpeech,
   isCardPlaying,
@@ -93,7 +95,7 @@ export const Card = ({
   } = useFavoriteCard(meData?.id)
 
   const { theme } = useTheme()
-  const [isExpanded, setIsExpanded] = useState(restProps.isExpanded)
+  const [isExpanded, setIsExpanded] = useState(isCardExpanded)
   const [isShown, setIsShown] = useState(isStudyMode)
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -235,9 +237,7 @@ export const Card = ({
         )}
         {...restProps}
       >
-        {isShown && (
-          <p className='whitespace-pre-wrap break-words'>{content}</p>
-        )}
+        {isShown && <CardContent content={content} />}
         <Wrapper as='div' hasGaps className='justify-between'>
           <Wrapper hasGaps>
             <Button

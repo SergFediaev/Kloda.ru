@@ -27,8 +27,9 @@ export const Screensaver = () => {
     }
 
     addEventListener('mousemove', onActivity)
-    addEventListener('touchstart', onActivity)
-    addEventListener('scroll', onActivity)
+    addEventListener('touchstart', onActivity, { passive: true })
+    addEventListener('scroll', onActivity, { passive: true })
+    addEventListener('wheel', onActivity, { passive: true })
     addEventListener('click', onActivity)
     addEventListener('keydown', onActivity)
 
@@ -37,6 +38,7 @@ export const Screensaver = () => {
       removeEventListener('mousemove', onActivity)
       removeEventListener('touchstart', onActivity)
       removeEventListener('scroll', onActivity)
+      removeEventListener('wheel', onActivity)
       removeEventListener('click', onActivity)
       removeEventListener('keydown', onActivity)
     }
