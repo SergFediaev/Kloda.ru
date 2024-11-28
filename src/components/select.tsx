@@ -20,7 +20,7 @@ export const Select = <T extends object>({
       selectorIcon: 'text-accent dark:text-accent-dark',
       label: cn(
         'text-primary dark:text-primary-dark',
-        isHorizontal && 'text-medium',
+        isHorizontal && 'text-base',
       ),
       mainWrapper: 'w-auto flex-grow',
     }}
