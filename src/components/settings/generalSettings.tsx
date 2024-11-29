@@ -2,8 +2,8 @@
 
 import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
-import { useDebugMode } from '@/hooks/useDebugMode'
-import { useGeneralSettings } from '@/hooks/useGeneralSettings'
+import { debugModeStore } from '@/stores/debugModeStore'
+import { generalSettingsStore } from '@/stores/generalSettingsStore'
 
 export const GeneralSettings = () => {
   const {
@@ -11,9 +11,9 @@ export const GeneralSettings = () => {
     isDebugModeEnabled,
     setIsEasterEggEnabled,
     setIsDebugModeEnabled,
-  } = useGeneralSettings()
+  } = generalSettingsStore()
 
-  const { isMarkupShown, setIsMarkupShown } = useDebugMode()
+  const { isMarkupShown, setIsMarkupShown } = debugModeStore()
 
   const onChangeDebugMode = (isSelected: boolean) => {
     setIsDebugModeEnabled(isSelected)

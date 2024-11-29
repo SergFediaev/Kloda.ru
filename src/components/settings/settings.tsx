@@ -8,12 +8,12 @@ import { GeneralSettings } from '@/components/settings/generalSettings'
 import { ResetSettings } from '@/components/settings/resetSettings'
 import { ScreensaverSettings } from '@/components/settings/screensaverSettings'
 import { UptimeSettings } from '@/components/settings/uptimeSettings'
-import { useGeneralSettings } from '@/hooks/useGeneralSettings'
+import { generalSettingsStore } from '@/stores/generalSettingsStore'
 
 export const Settings = () => (
   <Columns count={'3'}>
     <GeneralSettings />
-    {useGeneralSettings().isDebugModeEnabled && <DebugModeSettings />}
+    {generalSettingsStore().isDebugModeEnabled && <DebugModeSettings />}
     <CardsSettings />
     <ScreensaverSettings />
     <ResetSettings />

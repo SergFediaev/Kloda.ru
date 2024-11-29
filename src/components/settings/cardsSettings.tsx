@@ -1,7 +1,7 @@
 import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
 import { Select } from '@/components/select'
-import { useCardsSettings } from '@/hooks/useCardsSettings'
+import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import { SelectItem } from '@nextui-org/select'
 import { Dumbbell, GraduationCap } from 'lucide-react'
 
@@ -15,7 +15,7 @@ export const CardsSettings = () => {
     setIsStudyModeDefault,
     setIsCardAlwaysExpanded,
     setIsMediaAlwaysShown,
-  } = useCardsSettings()
+  } = cardsSettingsStore()
 
   const mode = MODES[isStudyModeDefault ? 0 : 1]
   const icon = isStudyModeDefault ? <GraduationCap /> : <Dumbbell />

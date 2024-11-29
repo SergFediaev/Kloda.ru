@@ -17,7 +17,7 @@ const initialGeneralSettings: GeneralSettingsState = {
   isDebugModeEnabled: false,
 }
 
-export const useGeneralSettings = create<
+export const generalSettingsStore = create<
   GeneralSettingsState & GeneralSettingsActions
 >()(
   devtools(

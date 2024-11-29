@@ -17,7 +17,7 @@ const initialScreensaver: ScreensaverState = {
   minutesToActivate: 5,
 }
 
-export const useScreensaver = create<ScreensaverState & ScreensaverActions>()(
+export const screensaverStore = create<ScreensaverState & ScreensaverActions>()(
   devtools(
     persist(
       set => ({

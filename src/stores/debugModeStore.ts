@@ -14,7 +14,7 @@ const initialDebugMode: DebugModeState = {
   isMarkupShown: false,
 }
 
-export const useDebugMode = create<DebugModeState & DebugModeActions>()(
+export const debugModeStore = create<DebugModeState & DebugModeActions>()(
   devtools(
     persist(
       set => ({

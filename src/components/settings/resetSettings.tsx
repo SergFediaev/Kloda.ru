@@ -1,18 +1,18 @@
 import { Button } from '@/components/buttons/button'
 import { Block } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
-import { useCardsSettings } from '@/hooks/useCardsSettings'
-import { useDebugMode } from '@/hooks/useDebugMode'
-import { useGeneralSettings } from '@/hooks/useGeneralSettings'
-import { useScreensaver } from '@/hooks/useScreensaver'
+import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
+import { debugModeStore } from '@/stores/debugModeStore'
+import { generalSettingsStore } from '@/stores/generalSettingsStore'
+import { screensaverStore } from '@/stores/screensaverStore'
 import { useTheme } from 'next-themes'
 import { toast } from 'react-toastify'
 
 export const ResetSettings = () => {
-  const { resetGeneralSettings } = useGeneralSettings()
-  const { resetDebugMode } = useDebugMode()
-  const { resetCardsSettings } = useCardsSettings()
-  const { resetScreensaver } = useScreensaver()
+  const { resetGeneralSettings } = generalSettingsStore()
+  const { resetDebugMode } = debugModeStore()
+  const { resetCardsSettings } = cardsSettingsStore()
+  const { resetScreensaver } = screensaverStore()
   const { theme } = useTheme()
 
   const clearSessionStorage = () => {

@@ -1,13 +1,13 @@
 'use client'
 
 import { Wrapper } from '@/components/containers/wrapper'
-import { useScreensaver } from '@/hooks/useScreensaver'
+import { screensaverStore } from '@/stores/screensaverStore'
 import { minutesToMs } from '@/utils/minutesToMs'
 import { Spade } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export const Screensaver = () => {
-  const { isEnabled, minutesToActivate } = useScreensaver()
+  const { isEnabled, minutesToActivate } = screensaverStore()
   const [isDisabled, setIsDisabled] = useState(true)
 
   useEffect(() => {

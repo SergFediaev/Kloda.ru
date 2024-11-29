@@ -1,10 +1,10 @@
 import { Button } from '@/components/buttons/button'
-import { useCardsMode } from '@/hooks/useCardsMode'
 import { usePaths } from '@/hooks/usePaths'
+import { cardsModeStore } from '@/stores/cardsModeStore'
 import { Dumbbell, GraduationCap } from 'lucide-react'
 
 export const CardsModeButton = () => {
-  const { isStudyMode, toggleStudyMode } = useCardsMode()
+  const { isStudyMode, toggleStudyMode } = cardsModeStore()
 
   if (usePaths().isNotCardsPath) {
     return null

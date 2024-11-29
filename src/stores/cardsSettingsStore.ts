@@ -20,7 +20,7 @@ const initialCardsSettings: CardsSettingsState = {
   isMediaAlwaysShown: true,
 }
 
-export const useCardsSettings = create<
+export const cardsSettingsStore = create<
   CardsSettingsState & CardsSettingsActions
 >()(
   devtools(

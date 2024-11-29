@@ -1,9 +1,9 @@
 import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
-import { useDebugMode } from '@/hooks/useDebugMode'
+import { debugModeStore } from '@/stores/debugModeStore'
 
 export const DebugModeSettings = () => {
-  const { isMarkupShown, setIsMarkupShown } = useDebugMode()
+  const { isMarkupShown, setIsMarkupShown } = debugModeStore()
 
   return (
     <Block heading='Debug mode' inColumns>

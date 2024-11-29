@@ -8,8 +8,8 @@ import { Loader } from '@/components/loader'
 import { Pagination } from '@/components/pagination'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCards } from '@/hooks/useCards'
-import { useCardsMode } from '@/hooks/useCardsMode'
-import { useCardsSettings } from '@/hooks/useCardsSettings'
+import { cardsModeStore } from '@/stores/cardsModeStore'
+import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import { useState } from 'react'
 
 const SORTS = {
@@ -47,8 +47,8 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   const [cardToSpeech, setCardToSpeech] = useState<CardModel>()
   const [isCardPlaying, setIsCardPlaying] = useState(false)
   const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2')
-  const { isStudyMode } = useCardsMode()
-  const { isCardAlwaysExpanded, isMediaAlwaysShown } = useCardsSettings()
+  const { isStudyMode } = cardsModeStore()
+  const { isCardAlwaysExpanded, isMediaAlwaysShown } = cardsSettingsStore()
 
   if (isPending) {
     return <Loader>Fetching cards</Loader>

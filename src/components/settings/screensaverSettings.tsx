@@ -3,7 +3,7 @@
 import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
 import { Input } from '@/components/forms/input'
-import { useScreensaver } from '@/hooks/useScreensaver'
+import { screensaverStore } from '@/stores/screensaverStore'
 import type { ChangeEvent } from 'react'
 
 const MIN_MINUTES = 1
@@ -11,7 +11,7 @@ const MAX_MINUTES = 30
 
 export const ScreensaverSettings = () => {
   const { isEnabled, minutesToActivate, setIsEnabled, setMinutesToActivate } =
-    useScreensaver()
+    screensaverStore()
 
   const onChangeMinutes = ({
     currentTarget: { value },

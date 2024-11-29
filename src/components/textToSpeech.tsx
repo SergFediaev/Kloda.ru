@@ -5,7 +5,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
 import { RangeInput } from '@/components/rangeInput'
 import { Select } from '@/components/select'
-import { useTextToSpeech } from '@/hooks/useTextToSpeech'
+import { textToSpeechStore } from '@/stores/textToSpeechStore'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
 import { SelectItem } from '@nextui-org/select'
@@ -86,7 +86,7 @@ export const TextToSpeech = ({
     setIsSettingsExpanded,
     setPlayMode,
     resetTextToSpeech,
-  } = useTextToSpeech()
+  } = textToSpeechStore()
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>()
   const [isPlaying, setIsPlaying] = useState(false)

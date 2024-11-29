@@ -36,20 +36,20 @@ const initialTextToSpeech: TextToSpeechState = {
   playMode: 'once',
 }
 
-export const useTextToSpeech = create<TextToSpeechState & TextToSpeechActions>(
-  set => ({
-    ...initialTextToSpeech,
-    setVoice: (voice: SpeechSynthesisVoice) => set({ voice }),
-    setVolume: (volume: number) => set({ volume }),
-    setRate: (rate: number) => set({ rate }),
-    setPitch: (pitch: number) => set({ pitch }),
-    setIsPlaylistExpanded: (isPlaylistExpanded: boolean) =>
-      set({ isPlaylistExpanded }),
-    setIsVisualizationExpanded: (isVisualizationExpanded: boolean) =>
-      set({ isVisualizationExpanded }),
-    setIsSettingsExpanded: (isSettingsExpanded: boolean) =>
-      set({ isSettingsExpanded }),
-    setPlayMode: (playMode: PlayMode) => set({ playMode }),
-    resetTextToSpeech: () => set(initialTextToSpeech),
-  }),
-)
+export const textToSpeechStore = create<
+  TextToSpeechState & TextToSpeechActions
+>(set => ({
+  ...initialTextToSpeech,
+  setVoice: (voice: SpeechSynthesisVoice) => set({ voice }),
+  setVolume: (volume: number) => set({ volume }),
+  setRate: (rate: number) => set({ rate }),
+  setPitch: (pitch: number) => set({ pitch }),
+  setIsPlaylistExpanded: (isPlaylistExpanded: boolean) =>
+    set({ isPlaylistExpanded }),
+  setIsVisualizationExpanded: (isVisualizationExpanded: boolean) =>
+    set({ isVisualizationExpanded }),
+  setIsSettingsExpanded: (isSettingsExpanded: boolean) =>
+    set({ isSettingsExpanded }),
+  setPlayMode: (playMode: PlayMode) => set({ playMode }),
+  resetTextToSpeech: () => set(initialTextToSpeech),
+}))
