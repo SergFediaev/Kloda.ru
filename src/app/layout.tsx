@@ -4,6 +4,7 @@ import { Providers } from '@/app/providers'
 import { Layout } from '@/components/containers/layout'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
+import { LoaderBar } from '@/components/loaderBar'
 import { Screensaver } from '@/components/screensaver'
 import { ViewTransitions } from 'next-view-transitions'
 import { Inter } from 'next/font/google'
@@ -45,6 +46,7 @@ export default function RootLayout({
         <body className={`${inter.className} antialiased`}>
           <Providers>
             <Layout>
+              <LoaderBar />
               <Header />
               <main className='flex flex-grow'>{children}</main>
               <Footer />
