@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prod": "next build && next start",
     "dev": "next dev -p 5555",
     "build": "next build",
     "start": "next start",
@@ -10,6 +11,7 @@
     "format": "bunx biome format --write ./src"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/checkbox": "^2.1.5",
     "@nextui-org/pagination": "^2.0.36",

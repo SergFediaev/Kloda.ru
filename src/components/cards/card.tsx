@@ -326,7 +326,7 @@ export const Card = ({
             )}
           </Wrapper>
           {isOpen ? (
-            <Link href={'/'}>Close</Link>
+            <Link href='/'>Close</Link>
           ) : (
             <Link href={`/card/${id}`}>Open</Link>
           )}

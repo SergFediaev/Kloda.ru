@@ -1,16 +1,15 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from '@/app/providers'
+import { Body } from '@/components/containers/body'
+import { Html } from '@/components/containers/html'
 import { Layout } from '@/components/containers/layout'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
 import { LoaderBar } from '@/components/loaderBar'
 import { Screensaver } from '@/components/screensaver'
 import { ViewTransitions } from 'next-view-transitions'
-import { Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
-
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 // ToDo: description, SVG favicon
 export const metadata: Metadata = {
@@ -42,8 +41,8 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang='en' suppressHydrationWarning>
-        <body className={`${inter.className} antialiased`}>
+      <Html suppressHydrationWarning>
+        <Body>
           <Providers>
             <Layout>
               <LoaderBar />
@@ -53,8 +52,8 @@ export default function RootLayout({
               <Screensaver />
             </Layout>
           </Providers>
-        </body>
-      </html>
+        </Body>
+      </Html>
     </ViewTransitions>
   )
 }
