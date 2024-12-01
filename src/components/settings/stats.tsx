@@ -7,7 +7,7 @@ import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { Time } from '@/components/settings/time'
 import { useGetStats } from '@/hooks/useStats'
-import { CalendarDays, Clock } from 'lucide-react'
+import { CalendarDays, ChartNoAxesColumn, Clock } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type Uptime = {
@@ -72,7 +72,10 @@ export const Stats = () => {
         </Wrapper>
       </div>
       <div>
-        <p>Total backend stats</p>
+        <Wrapper as='p'>
+          <ChartNoAxesColumn size={16} />
+          &nbsp;Total backend stats
+        </Wrapper>
         <AccentText label='Users:'>{totalUsers}</AccentText>
         <AccentText label='Cards:'>{totalCards}</AccentText>
         <AccentText label='Card categories:'>{totalCategories}</AccentText>
