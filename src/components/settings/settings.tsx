@@ -7,7 +7,7 @@ import { DebugModeSettings } from '@/components/settings/debugModeSettings'
 import { GeneralSettings } from '@/components/settings/generalSettings'
 import { ResetSettings } from '@/components/settings/resetSettings'
 import { ScreensaverSettings } from '@/components/settings/screensaverSettings'
-import { UptimeSettings } from '@/components/settings/uptimeSettings'
+import { Stats } from '@/components/settings/stats'
 import { generalSettingsStore } from '@/stores/generalSettingsStore'
 
 export const Settings = () => (
@@ -17,7 +17,7 @@ export const Settings = () => (
     <CardsSettings />
     <ScreensaverSettings />
     <ResetSettings />
-    <UptimeSettings />
+    <Stats />
     <AppInfo />
   </Columns>
 )

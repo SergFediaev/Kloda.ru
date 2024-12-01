@@ -4,11 +4,11 @@ import { sendEmail } from '@/api/email.api'
 import { Button } from '@/components/buttons/button'
 import { Body } from '@/components/containers/body'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
-import { Capitalize } from '@/components/containers/capitalize'
 import { Container } from '@/components/containers/container'
 import { Html } from '@/components/containers/html'
 import { OrderedList } from '@/components/containers/orderedList'
 import { Summary } from '@/components/containers/summary'
+import { Text } from '@/components/containers/text'
 import { Heading } from '@/components/heading'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
@@ -86,7 +86,7 @@ export default function GlobalError({
         <Container isCentered>
           <main className='flex max-w-2xl flex-col gap-8'>
             <Heading as='h1' className='font-black text-3xl'>
-              <Capitalize>{name}</Capitalize> {version}
+              <Text isCapitalize>{name}</Text> {version}
             </Heading>
             <Heading>Something went wrong!</Heading>
             <Heading as='h3'>{error.message}</Heading>

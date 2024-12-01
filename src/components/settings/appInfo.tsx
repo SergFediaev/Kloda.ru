@@ -1,5 +1,5 @@
 import { Block } from '@/components/containers/block'
-import { Capitalize } from '@/components/containers/capitalize'
+import { Text } from '@/components/containers/text'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ExternalLink } from '@/components/links/externalLink'
 import { AnimatedIcon } from '@/components/settings/animatedIcon'
@@ -12,10 +12,10 @@ const { dependencies, devDependencies, name, version } = packageJson
 export const AppInfo = () => (
   <Block heading='App info' inColumns>
     <p>
-      <Capitalize>{name}</Capitalize> version:&nbsp;
-      <span className='font-mono text-accent dark:text-accent-dark'>
+      <Text isCapitalize>{name}</Text> version:&nbsp;
+      <Text isAccent isMono>
         {version}
-      </span>
+      </Text>
     </p>
     <DependenciesList summary='Dependencies' dependencies={dependencies} />
     <DependenciesList

@@ -1,4 +1,4 @@
-import { cn } from '@/utils/mergeClasses'
+import { Text } from '@/components/containers/text'
 import type { ReactNode } from 'react'
 
 type Props = {
@@ -9,15 +9,15 @@ type Props = {
 
 export const Subfield = ({ error, characterCount, maxLength }: Props) =>
   error ? (
-    <p className='text-danger'>{error}</p>
+    <Text as='p' isDanger>
+      {error}
+    </Text>
   ) : (
     !!characterCount &&
     maxLength && (
-      <p className='self-end'>
-        <span className={cn(characterCount >= maxLength && 'text-danger')}>
-          {characterCount}
-        </span>
-        /{maxLength}
-      </p>
+      <Text as='p' isRightAligned>
+        <Text isDanger={characterCount >= maxLength}>{characterCount}</Text>/
+        {maxLength}
+      </Text>
     )
   )

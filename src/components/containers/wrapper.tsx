@@ -6,11 +6,13 @@ const DEFAULT_TYPE = 'span'
 type Props<T extends ElementType = typeof DEFAULT_TYPE> = {
   as?: T
   hasGaps?: boolean
+  isMono?: boolean
 } & ComponentPropsWithoutRef<T>
 
 export const Wrapper = <T extends ElementType = typeof DEFAULT_TYPE>({
   as,
   hasGaps,
+  isMono,
   className,
   ...restProps
 }: Props<T>) => {
@@ -21,6 +23,7 @@ export const Wrapper = <T extends ElementType = typeof DEFAULT_TYPE>({
       className={cn(
         'flex flex-wrap items-center',
         hasGaps && 'gap-4',
+        isMono && 'font-mono',
         className,
       )}
       {...restProps}

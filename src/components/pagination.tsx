@@ -1,5 +1,6 @@
 import { Button } from '@/components/buttons/button'
 import type { ColumnsCount } from '@/components/containers/columns'
+import { Text } from '@/components/containers/text'
 import { Radio } from '@/components/radio'
 import { Select } from '@/components/select'
 import { useWidth } from '@/hooks/useWidth'
@@ -127,12 +128,12 @@ export const Pagination = ({
         isCompact
         showShadow
       />
-      <span className='text-center'>
+      <Text isCentered>
         <p>{itemsName}</p>
         <p>
           {itemsCount} / {totalItems}
         </p>
-      </span>
+      </Text>
       <Select
         label={`${itemsName} per page`}
         selectedKeys={[String(limit)]}

@@ -1,5 +1,6 @@
 import { OrderedList } from '@/components/containers/orderedList'
 import { Summary } from '@/components/containers/summary'
+import { Text } from '@/components/containers/text'
 import type { ReactNode } from 'react'
 
 type Props = {
@@ -14,9 +15,7 @@ export const DependenciesList = ({ summary, dependencies }: Props) => (
       {Object.entries(dependencies).map(([dependency, version], index) => (
         <li key={`${index}-${dependency}-${version}`}>
           {dependency}&nbsp;
-          <span className='text-accent dark:text-accent-dark'>
-            {version.replace('^', '')}
-          </span>
+          <Text isAccent>{version.replace('^', '')}</Text>
         </li>
       ))}
     </OrderedList>

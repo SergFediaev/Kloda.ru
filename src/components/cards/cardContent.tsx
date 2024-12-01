@@ -1,3 +1,4 @@
+import { Text } from '@/components/containers/text'
 import type { Nullable } from '@/types/nullable'
 import { useRef } from 'react'
 
@@ -160,7 +161,7 @@ type Props = {
 }
 
 export const CardContent = ({ content, isMediaShown }: Props) => (
-  <p className='whitespace-pre-wrap break-words'>
+  <Text as='p' isUnformatted>
     {isMediaShown ? parseContent(content).map(renderElement) : content}
-  </p>
+  </Text>
 )
