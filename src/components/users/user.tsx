@@ -55,12 +55,10 @@ export const User = ({
   const isCurrentUser = isMeSuccess && id === meData.id
   const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
   const hasNotCreatedCards = createdCardsCount === 0
-
+  const exportCardsTitle = hasNotCreatedCards ? 'No created cards' : undefined
   const exportCardsText = isExportFetching
     ? 'Exporting cards to CSV'
     : 'Export all created cards'
-
-  const exportCardsTitle = hasNotCreatedCards ? 'No created cards' : undefined
 
   const openConfirmation = () => setIsConfirmationOpen(true)
   const closeConfirmation = () => setIsConfirmationOpen(false)
@@ -76,6 +74,7 @@ export const User = ({
 
       if (isError) {
         toast(error.message, { theme, type: 'error' })
+
         return
       }
 
