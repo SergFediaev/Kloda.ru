@@ -6,10 +6,13 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
 import { UserCardsCount } from '@/components/users/userCardsCount'
 import { useLogout, useMe } from '@/hooks/useAuth'
-import { dateToLocale } from '@/utils/dateToLocale'
-import { Mail } from 'lucide-react'
+import { useExportCards } from '@/hooks/useCards'
+import { getLocalDate } from '@/utils/getLocalDate'
+import { Download, Mail } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { Link } from 'next-view-transitions'
-import { type ComponentPropsWithoutRef, useState } from 'react'
+import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 type Props = {
   user: UserResponse
@@ -17,7 +20,7 @@ type Props = {
 } & ComponentPropsWithoutRef<'article'> &
   Pick<BlockProps, 'inColumns'>
 
-// ToDo: TypeError: Cannot read properties of undefined (reading 'id')
+// ToDo: useExport hook, TypeError: Cannot read properties of undefined (reading 'id')
 export const User = ({
   user: {
     id,
@@ -33,20 +36,71 @@ export const User = ({
   isOpen,
   ...restProps
 }: Props) => {
-  const { isSuccess, data } = useMe()
-  const { mutate, isPending } = useLogout()
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+  const { isSuccess: isMeSuccess, data: meData } = useMe()
+  const { mutate: logout, isPending: isLogoutPending } = useLogout()
+  const {
+    refetch: exportCards,
+    isSuccess: isExportSuccess,
+    data: exportData,
+    isFetching: isExportFetching,
+  } = useExportCards()
 
-  const isCurrentUser = isSuccess && id === data.id
-  const logoutText = isPending ? 'Logging out' : 'Logout'
+  const { theme } = useTheme()
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+  const [fileLink, setFileLink] = useState<string>()
+  const [fileName, setFileName] = useState<string>()
+
+  const userProfileLink = isOpen ? '/users' : `/user/${id}`
+  const userProfileText = isOpen ? 'Close user profile' : 'Open user profile'
+  const isCurrentUser = isMeSuccess && id === meData.id
+  const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
+  const hasNotCreatedCards = createdCardsCount === 0
+
+  const exportCardsText = isExportFetching
+    ? 'Exporting cards to CSV'
+    : 'Export all created cards'
+
+  const exportCardsTitle = hasNotCreatedCards ? 'No created cards' : undefined
 
   const openConfirmation = () => setIsConfirmationOpen(true)
   const closeConfirmation = () => setIsConfirmationOpen(false)
 
   const onLogout = () => {
     closeConfirmation()
-    mutate()
+    logout()
   }
+
+  const onExport = async () => {
+    try {
+      const { isSuccess, isError, error } = await exportCards()
+
+      if (isError) {
+        toast(error.message, { theme, type: 'error' })
+        return
+      }
+
+      if (isSuccess)
+        toast('All created cards exported', {
+          theme,
+          type: 'success',
+        })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fileLink) URL.revokeObjectURL(fileLink)
+    }
+  }, [fileLink])
+
+  useEffect(() => {
+    if (isExportSuccess) {
+      setFileLink(URL.createObjectURL(exportData))
+      setFileName(`Kloda - ${username} created cards (${getLocalDate()}).csv`)
+    }
+  }, [isExportSuccess, exportData, username])
 
   return (
     <>
@@ -65,10 +119,10 @@ export const User = ({
             <Mail size={16} />
           </Wrapper>
           <p>
-            Registered: <time>{dateToLocale(registeredAt)}</time>
+            Registered: <time>{getLocalDate(registeredAt)}</time>
           </p>
           <p>
-            Last login: <time>{dateToLocale(lastLoginAt)}</time>
+            Last login: <time>{getLocalDate(lastLoginAt)}</time>
           </p>
         </div>
         <div>
@@ -97,14 +151,35 @@ export const User = ({
             action='disliked'
           />
         </div>
-        <ButtonsContainer className='justify-between'>
-          {isOpen ? (
-            <Link href={'/users'}>Close</Link>
+        {isCurrentUser &&
+          (isExportSuccess ? (
+            <div>
+              <p>Download exported cards:</p>
+              <Wrapper as='p'>
+                <a href={fileLink} download={fileName}>
+                  {fileName}
+                </a>
+                &nbsp;
+                <Download size={16} />
+              </Wrapper>
+            </div>
           ) : (
-            <Link href={`/user/${id}`}>Open</Link>
-          )}
+            <Button
+              onClick={onExport}
+              title={exportCardsTitle}
+              disabled={hasNotCreatedCards}
+              isLoading={isExportFetching}
+              className='self-start'
+            >
+              {exportCardsText}
+            </Button>
+          ))}
+        <ButtonsContainer className='justify-between'>
+          <Button as={Link} href={userProfileLink}>
+            {userProfileText}
+          </Button>
           {isCurrentUser && (
-            <Button onClick={openConfirmation} className='self-end' isDanger>
+            <Button onClick={openConfirmation} isDanger>
               {logoutText}
             </Button>
           )}

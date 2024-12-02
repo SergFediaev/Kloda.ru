@@ -58,3 +58,5 @@ export const dislikeCard = (id: number) =>
 
 export const favoriteCard = (id: number) =>
   cardsApi.patch<FavoriteResponse>(`${id}/favorite`).json()
+
+export const exportCards = () => cardsApi('export').blob()

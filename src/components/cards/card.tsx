@@ -15,7 +15,7 @@ import {
   useLikeCard,
 } from '@/hooks/useCards'
 import { copyToClipboard } from '@/utils/copyToClipboard'
-import { dateToLocale } from '@/utils/dateToLocale'
+import { getLocalDate } from '@/utils/getLocalDate'
 import { cn } from '@/utils/mergeClasses'
 import {
   ChevronDown,
@@ -124,6 +124,8 @@ export const Card = ({
     isDisliked,
   } = card
 
+  const cardDetailsLink = isOpen ? '/' : `/card/${id}`
+  const cardDetailsText = isOpen ? 'Close card details' : 'Open card details'
   const isCardAuthor = authorId === meData?.id
 
   const toggleIsExpanded = () => setIsExpanded(!isExpanded)
@@ -156,72 +158,60 @@ export const Card = ({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isDeleteError) {
-      toast(deleteError.message, { theme, type: 'error' })
-    }
+    if (isDeleteError) toast(deleteError.message, { theme, type: 'error' })
   }, [isDeleteError, deleteError])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isLikeError) {
-      toast(likeError.message, { theme, type: 'error' })
-    }
+    if (isLikeError) toast(likeError.message, { theme, type: 'error' })
   }, [isLikeError, likeError])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isDislikeError) {
-      toast(dislikeError.message, { theme, type: 'error' })
-    }
+    if (isDislikeError) toast(dislikeError.message, { theme, type: 'error' })
   }, [isDislikeError, dislikeError])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isFavoriteError) {
-      toast(favoriteError.message, { theme, type: 'error' })
-    }
+    if (isFavoriteError) toast(favoriteError.message, { theme, type: 'error' })
   }, [isFavoriteError, favoriteError])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isDeleteSuccess) {
+    if (isDeleteSuccess)
       toast('Card deleted', {
         theme,
         type: 'success',
       })
-    }
   }, [isDeleteSuccess])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isLikeSuccess) {
+    if (isLikeSuccess)
       toast(likeData.isLiked ? 'Card liked' : 'Like removed', {
         theme,
         type: 'success',
       })
-    }
   }, [isLikeSuccess, likeData])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isDislikeSuccess) {
+    if (isDislikeSuccess)
       toast(dislikeData.isDisliked ? 'Card disliked' : 'Dislike removed', {
         theme,
         type: 'success',
       })
-    }
   }, [isDislikeSuccess, dislikeData])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isFavoriteSuccess) {
+    if (isFavoriteSuccess)
       toast(
         favoriteData.isFavorite
           ? 'Card added to favorites'
           : 'Card removed from favorites',
         { theme, type: 'success' },
       )
-    }
   }, [isFavoriteSuccess, favoriteData])
 
   useEffect(() => setIsShown(isStudyMode), [isStudyMode])
@@ -325,11 +315,9 @@ export const Card = ({
               </>
             )}
           </Wrapper>
-          {isOpen ? (
-            <Link href='/'>Close</Link>
-          ) : (
-            <Link href={`/card/${id}`}>Open</Link>
-          )}
+          <Button as={Link} href={cardDetailsLink}>
+            {cardDetailsText}
+          </Button>
         </Wrapper>
         {isExpanded && (
           <aside>
@@ -350,10 +338,10 @@ export const Card = ({
             </Wrapper>
             <Wrapper as='div' className='justify-between gap-x-4'>
               <p>
-                Created: <time>{dateToLocale(createdAt)}</time>
+                Created: <time>{getLocalDate(createdAt)}</time>
               </p>
               <p>
-                Updated: <time>{dateToLocale(updatedAt)}</time>
+                Updated: <time>{getLocalDate(updatedAt)}</time>
               </p>
             </Wrapper>
             {pagePosition && (

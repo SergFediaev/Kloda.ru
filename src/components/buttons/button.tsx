@@ -21,6 +21,7 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
   as,
   children,
   className,
+  disabled,
   variant = 'primary',
   isStretched,
   isLoading,
@@ -43,7 +44,8 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
             'dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
             'text-primary no-underline dark:text-primary-dark',
             'hover:text-primary hover:dark:text-primary-dark',
-            'hover:bg-accent-dark-alternate hover:dark:bg-accent-alternate',
+            !disabled &&
+              'hover:bg-accent-dark-alternate hover:dark:bg-accent-alternate',
           ],
         variant === 'primary' &&
           isDanger && [
@@ -76,6 +78,7 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
         isTextLeft && 'text-left',
         className,
       )}
+      disabled={disabled}
       {...restProps}
     >
       {children}

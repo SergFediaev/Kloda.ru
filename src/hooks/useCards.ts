@@ -3,6 +3,7 @@ import {
   deleteCard,
   dislikeCard,
   editCard,
+  exportCards,
   favoriteCard,
   getCard,
   getCards,
@@ -81,6 +82,13 @@ export const useFavoriteCard = (userId?: number) =>
   useMutation({
     mutationFn: favoriteCard,
     onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+  })
+
+export const useExportCards = () =>
+  useQuery({
+    queryKey: ['exportCards'],
+    queryFn: exportCards,
+    enabled: false,
   })
 
 const invalidateCards = (queryClient: QueryClient) =>
