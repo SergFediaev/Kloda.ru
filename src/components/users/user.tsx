@@ -1,11 +1,13 @@
 import type { UserResponse } from '@/api/users/users.types'
 import { Button } from '@/components/buttons/button'
+import { Captcha } from '@/components/captcha'
 import { Block, type BlockProps } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
 import { UserCardsCount } from '@/components/users/userCardsCount'
 import { useLogout, useMe } from '@/hooks/useAuth'
+import { useCaptcha } from '@/hooks/useCaptcha'
 import { useExportCards } from '@/hooks/useCards'
 import { getLocalDate } from '@/utils/getLocalDate'
 import { Download, Mail } from 'lucide-react'
@@ -46,6 +48,8 @@ export const User = ({
   } = useExportCards()
 
   const { theme } = useTheme()
+  const { isCaptchaShown, captchaToken, setIsCaptchaShown, onCaptcha } =
+    useCaptcha()
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [fileLink, setFileLink] = useState<string>()
   const [fileName, setFileName] = useState<string>()
@@ -69,6 +73,17 @@ export const User = ({
   }
 
   const onExport = async () => {
+    if (!isCaptchaShown) setIsCaptchaShown(true)
+
+    if (!captchaToken) {
+      toast('Pass captcha to export cards', {
+        theme,
+        type: 'info',
+      })
+
+      return
+    }
+
     try {
       const { isSuccess, isError, error } = await exportCards()
 
@@ -78,11 +93,14 @@ export const User = ({
         return
       }
 
-      if (isSuccess)
+      if (isSuccess) {
+        setIsCaptchaShown(false)
+
         toast('All created cards exported', {
           theme,
           type: 'success',
         })
+      }
     } catch (error) {
       console.error(error)
     }
@@ -163,15 +181,18 @@ export const User = ({
               </Wrapper>
             </div>
           ) : (
-            <Button
-              onClick={onExport}
-              title={exportCardsTitle}
-              disabled={hasNotCreatedCards}
-              isLoading={isExportFetching}
-              className='self-start'
-            >
-              {exportCardsText}
-            </Button>
+            <>
+              <Button
+                onClick={onExport}
+                title={exportCardsTitle}
+                disabled={hasNotCreatedCards}
+                isLoading={isExportFetching}
+                className='self-start'
+              >
+                {exportCardsText}
+              </Button>
+              {isCaptchaShown && <Captcha onChange={onCaptcha} />}
+            </>
           ))}
         <ButtonsContainer className='justify-between'>
           <Button as={Link} href={userProfileLink}>
