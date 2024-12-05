@@ -1,6 +1,7 @@
 import { login, logout, me, register } from '@/api/auth/auth.api'
 import type { RegisterArgs, RegisterResponse } from '@/api/auth/auth.types'
 import { getQueryClient } from '@/app/getQueryClient'
+import { invalidateCards } from '@/hooks/useCards'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 export const useRegister = () =>
@@ -13,8 +14,11 @@ export const useRegister = () =>
 export const useLogin = () =>
   useMutation({
     mutationFn: login,
-    onSuccess: ({ accessToken }) =>
-      sessionStorage.setItem('access_token', accessToken),
+    onSuccess: ({ accessToken }) => {
+      sessionStorage.setItem('access_token', accessToken)
+
+      void invalidateCards(getQueryClient())
+    },
   })
 
 export const useLogout = () =>
@@ -22,7 +26,10 @@ export const useLogout = () =>
     mutationFn: logout,
     onSuccess: () => {
       sessionStorage.removeItem('access_token')
-      void getQueryClient().invalidateQueries({ queryKey: ['me'] })
+
+      const queryClient = getQueryClient()
+      void queryClient.invalidateQueries({ queryKey: ['me'] })
+      void invalidateCards(getQueryClient())
     },
   })
 

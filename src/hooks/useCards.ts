@@ -91,7 +91,7 @@ export const useExportCards = () =>
     enabled: false,
   })
 
-const invalidateCards = (queryClient: QueryClient) =>
+export const invalidateCards = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['cards'] })
 
 const invalidateCard = (queryClient: QueryClient, cardId: number) =>
