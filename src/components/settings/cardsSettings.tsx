@@ -24,7 +24,7 @@ export const CardsSettings = () => {
     : 'Card content hidden'
 
   return (
-    <Block heading='Cards settings' inColumns>
+    <Block heading='Cards' inColumns>
       <Select
         label='Default cards mode'
         selectedKeys={[mode]}

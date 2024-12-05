@@ -6,7 +6,7 @@ const SETTINGS_PAGE = '/settings'
 
 export const SettingsLink = () =>
   usePathname() !== SETTINGS_PAGE ? (
-    <Link href={SETTINGS_PAGE} title='Open settings'>
+    <Link href={SETTINGS_PAGE} title='Settings'>
       <Settings className='hover:animate-spin' />
     </Link>
   ) : null

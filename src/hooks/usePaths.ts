@@ -10,5 +10,6 @@ export const usePaths = () => {
     isNotCardsPath: !(isCardsPath || isCardPath),
     isNotCardPath: !isCardPath,
     isNotSearchPath: !(isCardsPath || pathname === '/users'),
+    isSettingsPath: pathname === '/settings',
   }
 }

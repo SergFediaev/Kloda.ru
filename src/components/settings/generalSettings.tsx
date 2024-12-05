@@ -22,7 +22,7 @@ export const GeneralSettings = () => {
   }
 
   return (
-    <Block heading='General settings' inColumns>
+    <Block heading='General' inColumns>
       <CheckBox
         isSelected={isEasterEggEnabled}
         onValueChange={isSelected => setIsEasterEggEnabled(isSelected)}
