@@ -1,5 +1,5 @@
+import { usePackage } from '@/hooks/usePackage'
 import emailjs from '@emailjs/browser'
-import packageJson from '../../package.json'
 
 const publicKey = process.env.NEXT_PUBLIC_EMAIL_API_KEY
 const serviceId = process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID
@@ -17,7 +17,7 @@ emailjs.init({
   publicKey,
   blockHeadless: true,
   limitRate: {
-    id: packageJson.name,
+    id: usePackage().name,
     throttle: 60_000,
   },
 })

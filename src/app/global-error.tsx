@@ -10,11 +10,9 @@ import { OrderedList } from '@/components/containers/orderedList'
 import { Summary } from '@/components/containers/summary'
 import { Text } from '@/components/containers/text'
 import { Heading } from '@/components/heading'
+import { usePackage } from '@/hooks/usePackage'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
-import packageJson from '../../package.json'
-
-const { name, version } = packageJson
 
 export default function GlobalError({
   error,
@@ -28,6 +26,7 @@ export default function GlobalError({
   const [isErrorReporting, setIsErrorReporting] = useState(false)
   const [isErrorReported, setIsErrorReported] = useState(false)
   const [reportErrorResponse, setReportErrorResponse] = useState<string>()
+  const { name, version } = usePackage()
 
   const autoReloadText = isAutoReloadCanceled
     ? 'Auto page reload canceled'
