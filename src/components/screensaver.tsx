@@ -5,40 +5,60 @@ import {
   addActivityListeners,
   removeActivityListeners,
 } from '@/hooks/useActivity'
+import { screensaverStartStore } from '@/stores/screensaverStartStore'
 import { screensaverStore } from '@/stores/screensaverStore'
 import { minutesToMs } from '@/utils/minutesToMs'
 import { Spade } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+const INITIAL_RUNS_SECONDS = 0
+
 export const Screensaver = () => {
   const { isEnabled, minutesToActivate } = screensaverStore()
+  const { isScreensaverStarted, setIsScreensaverStarted } =
+    screensaverStartStore()
   const [isDisabled, setIsDisabled] = useState(true)
+  const [runsSeconds, setRunsSeconds] = useState(INITIAL_RUNS_SECONDS)
+
+  const isScreensaverDisabled = isDisabled && !isScreensaverStarted
 
   useEffect(() => {
     if (!isEnabled) {
       return
     }
 
-    const startTimer = () =>
+    const startTimeout = () =>
       setTimeout(() => setIsDisabled(false), minutesToMs(minutesToActivate))
 
-    let timer = startTimer()
+    let timeout = startTimeout()
 
     const onActivity = () => {
-      clearTimeout(timer)
+      clearTimeout(timeout)
       setIsDisabled(true)
-      timer = startTimer()
+      setIsScreensaverStarted(false)
+      setRunsSeconds(INITIAL_RUNS_SECONDS)
+      timeout = startTimeout()
     }
 
     addActivityListeners(onActivity)
 
     return () => {
-      clearTimeout(timer)
+      clearTimeout(timeout)
       removeActivityListeners(onActivity)
     }
-  }, [isEnabled, minutesToActivate])
+  }, [isEnabled, minutesToActivate, setIsScreensaverStarted])
 
-  if (isDisabled) {
+  useEffect(() => {
+    if (isScreensaverDisabled) {
+      return
+    }
+
+    const interval = setInterval(() => setRunsSeconds(runsSeconds + 1), 1_000)
+
+    return () => clearInterval(interval)
+  }, [isScreensaverDisabled, runsSeconds])
+
+  if (isScreensaverDisabled) {
     return null
   }
 
@@ -46,6 +66,7 @@ export const Screensaver = () => {
     <div className='fixed inset-0 z-40 bg-black bg-opacity-80 backdrop-blur-sm'>
       <aside className='absolute bottom-0 m-6 text-white opacity-50'>
         <p>Screensaver</p>
+        <p>Runs seconds: {runsSeconds}</p>
         <p>Any action will turn it off</p>
         <p>You can disable it in settings</p>
       </aside>
