@@ -2,16 +2,33 @@ import { Button } from '@/components/buttons/button'
 import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
+import { Text } from '@/components/containers/text'
+import { useActivity } from '@/hooks/useActivity'
 import { debugModeStore } from '@/stores/debugModeStore'
 import { nanoid } from 'nanoid'
 import { Link } from 'next-view-transitions'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+const INITIAL_INACTIVITY_SECONDS = 0
 
 export const DebugModeSettings = () => {
   const { isMarkupShown, setIsMarkupShown } = debugModeStore()
   const [isDebugError, setIsDebugError] = useState(false)
+  const [inactivitySeconds, setInactivitySeconds] = useState(
+    INITIAL_INACTIVITY_SECONDS,
+  )
+  useActivity(() => setInactivitySeconds(INITIAL_INACTIVITY_SECONDS))
 
   const onDebugError = () => setIsDebugError(true)
+
+  useEffect(() => {
+    const timer = setInterval(
+      () => setInactivitySeconds(inactivitySeconds + 1),
+      1_000,
+    )
+
+    return () => clearInterval(timer)
+  }, [inactivitySeconds])
 
   if (isDebugError) {
     throw Error(`Debug error #${nanoid()}`)
@@ -25,6 +42,9 @@ export const DebugModeSettings = () => {
       >
         Show markup
       </CheckBox>
+      <p>
+        Inactivity seconds: <Text isAccent>{inactivitySeconds}</Text>
+      </p>
       <ButtonsContainer>
         <Button isStretched as={Link} href='/not-found'>
           Open 404 page

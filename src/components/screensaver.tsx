@@ -1,6 +1,10 @@
 'use client'
 
 import { Wrapper } from '@/components/containers/wrapper'
+import {
+  addActivityListeners,
+  removeActivityListeners,
+} from '@/hooks/useActivity'
 import { screensaverStore } from '@/stores/screensaverStore'
 import { minutesToMs } from '@/utils/minutesToMs'
 import { Spade } from 'lucide-react'
@@ -26,21 +30,11 @@ export const Screensaver = () => {
       timer = startTimer()
     }
 
-    addEventListener('mousemove', onActivity)
-    addEventListener('touchstart', onActivity, { passive: true })
-    addEventListener('scroll', onActivity, { passive: true })
-    addEventListener('wheel', onActivity, { passive: true })
-    addEventListener('click', onActivity)
-    addEventListener('keydown', onActivity)
+    addActivityListeners(onActivity)
 
     return () => {
       clearTimeout(timer)
-      removeEventListener('mousemove', onActivity)
-      removeEventListener('touchstart', onActivity)
-      removeEventListener('scroll', onActivity)
-      removeEventListener('wheel', onActivity)
-      removeEventListener('click', onActivity)
-      removeEventListener('keydown', onActivity)
+      removeActivityListeners(onActivity)
     }
   }, [isEnabled, minutesToActivate])
 
