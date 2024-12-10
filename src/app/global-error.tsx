@@ -92,7 +92,11 @@ export default function GlobalError({
             {error.stack && (
               <details>
                 <Summary>Error stack trace</Summary>
-                <OrderedList className='text-wrap-anywhere'>
+                <OrderedList
+                  isMarkersAccent={false}
+                  isMono
+                  className='text-wrap-anywhere'
+                >
                   {error.stack.split('\n').map((stack, index) => (
                     <li key={`${index}-${stack}`}>{stack}</li>
                   ))}

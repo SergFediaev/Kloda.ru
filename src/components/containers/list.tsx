@@ -4,25 +4,21 @@ import type { ComponentPropsWithoutRef } from 'react'
 type Props = {
   hasIndent?: boolean
   hasGaps?: boolean
-  isMarkersAccent?: boolean
-  isMono?: boolean
-} & ComponentPropsWithoutRef<'ol'>
+  hasDisc?: boolean
+} & ComponentPropsWithoutRef<'ul'>
 
-export const OrderedList = ({
+export const List = ({
   hasIndent,
   hasGaps,
-  isMarkersAccent = true,
-  isMono,
+  hasDisc,
   className,
   ...restProps
 }: Props) => (
-  <ol
+  <ul
     className={cn(
-      'list-decimal',
       hasIndent && 'ml-6',
       hasGaps && 'flex flex-col gap-6',
-      isMarkersAccent && 'marker:text-accent dark:marker:text-accent-dark',
-      isMono && 'font-mono',
+      hasDisc && 'list-disc',
       className,
     )}
     {...restProps}

@@ -13,7 +13,7 @@ export const Logo = () => {
   const logoIcon = isOnline ? (
     <Spade className='hover:animate-heartbeat' />
   ) : (
-    <Unplug className='text-danger' />
+    <Unplug className='text-danger dark:text-danger-dark' />
   )
 
   // ToDo: Custom wrap style
