@@ -52,8 +52,8 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
         variant === 'primary' &&
           isDanger && [
             'bg-danger hover:enabled:bg-danger-variant',
-            'dark:bg-danger-dark dark:hover:enabled:bg-danger-dark-variant',
-            'text-primary-dark dark:text-primary',
+            'dark:bg-danger dark:hover:enabled:bg-danger-dark-variant',
+            'text-primary-dark dark:text-primary-dark',
           ],
         variant === 'text' &&
           !isDanger && [
