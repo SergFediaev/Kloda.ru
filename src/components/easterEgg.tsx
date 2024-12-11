@@ -13,7 +13,8 @@ export const EasterEgg = () =>
   generalSettingsStore().isEasterEggEnabled ? (
     <div className='overflow-hidden'>
       <div
-        className={`hover:paused flex animate-marquee-left items-end justify-end leading-none antialiased ${noto.className}`}
+        title='Easter egg can be disabled in settings'
+        className={`${noto.className} hover:paused flex animate-marquee-left items-end justify-end leading-none`}
       >
         <span className='transition hover:scale-x-[-1]'>🐈</span>🦔
         <span className='text-xs leading-inherit'>🦔🦔🦔🐤🐤🐤🐤🐤</span>
