@@ -4,6 +4,7 @@ import { Button } from '@/components/buttons/button'
 import { Form } from '@/components/forms/form'
 import { FormInput } from '@/components/forms/formInput'
 import { useLogin } from '@/hooks/useAuth'
+import { usePaths } from '@/hooks/usePaths'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
@@ -19,6 +20,7 @@ type LoginSchema = z.infer<typeof loginSchema>
 export const LoginForm = () => {
   const router = useTransitionRouter()
   const { mutate, isPending, error, isSuccess } = useLogin()
+  const { cardsPath } = usePaths()
 
   const loginText = isPending ? 'Logging in' : 'Login'
 
@@ -36,7 +38,7 @@ export const LoginForm = () => {
 
   const onSubmit = handleSubmit(data => mutate(data))
 
-  if (isSuccess) router.push('/')
+  if (isSuccess) router.push(cardsPath)
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>

@@ -1,12 +1,21 @@
+import { Button } from '@/components/buttons/button'
+import { usePaths } from '@/hooks/usePaths'
+import { cn } from '@/utils/mergeClasses'
 import { Settings } from 'lucide-react'
 import { Link } from 'next-view-transitions'
-import { usePathname } from 'next/navigation'
 
-const SETTINGS_PAGE = '/settings'
+export const SettingsLink = () => {
+  const { settingsPath, isSettingsPath } = usePaths()
 
-export const SettingsLink = () =>
-  usePathname() !== SETTINGS_PAGE ? (
-    <Link href={SETTINGS_PAGE} title='Settings'>
-      <Settings className='hover:animate-spin' />
-    </Link>
-  ) : null
+  return (
+    <Button
+      as={Link}
+      variant='text'
+      href={settingsPath}
+      title='Settings'
+      isDisabled={isSettingsPath}
+    >
+      <Settings className={cn(!isSettingsPath && 'hover:animate-spin')} />
+    </Button>
+  )
+}

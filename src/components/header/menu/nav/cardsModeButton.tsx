@@ -6,7 +6,7 @@ import { Dumbbell, GraduationCap } from 'lucide-react'
 export const CardsModeButton = () => {
   const { isStudyMode, toggleStudyMode } = cardsModeStore()
 
-  if (usePaths().isNotCardsPath) {
+  if (usePaths().isNotCardablePath) {
     return null
   }
 

@@ -25,7 +25,7 @@ export const CategoriesSelect = () => {
   const { isDarkTheme } = useThemes()
   const { isDesktopWidth } = useWidth()
 
-  if (usePaths().isNotCardsPath) {
+  if (usePaths().isNotCardablePath) {
     return null
   }
 

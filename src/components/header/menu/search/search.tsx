@@ -7,7 +7,7 @@ import { usePaths } from '@/hooks/usePaths'
 import { useVoice } from '@/hooks/useVoice'
 import { useWidth } from '@/hooks/useWidth'
 import { Search as SearchIcon, X } from 'lucide-react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
   type ChangeEvent,
   useCallback,
@@ -19,7 +19,7 @@ import {
 const SEARCH_PARAM = 'search'
 
 export const Search = () => {
-  const pathname = usePathname()
+  const { pathname, isCardsPath } = usePaths()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   const searchId = useGenerateId()
@@ -30,7 +30,7 @@ export const Search = () => {
   const searchRef = useRef<HTMLInputElement>(null)
   const { isDesktopWidth } = useWidth()
 
-  const searchPlaceholder = `Search ${pathname === '/' ? 'cards' : 'users'}${isDesktopWidth ? ' (Ctrl + K)' : ''}`
+  const searchPlaceholder = `Search ${isCardsPath ? 'cards' : 'users'}${isDesktopWidth ? ' (Ctrl + K)' : ''}`
 
   const onSearch = ({
     currentTarget: { value },

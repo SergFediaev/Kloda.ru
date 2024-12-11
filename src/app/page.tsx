@@ -5,6 +5,7 @@ import { OrderedList } from '@/components/containers/orderedList'
 import { Heading } from '@/components/heading'
 import { Link } from 'next-view-transitions'
 
+// ToDo: Refactor manual link to usePaths.
 export default function HomePage() {
   return (
     <Container isCentered>
@@ -59,15 +60,16 @@ export default function HomePage() {
                 Or you can give TTS a supporting role by starting from a single
                 card view-mode and collapsing the player.
               </li>
+              <li>
+                Make Kloda TTS your fun study buddy or wiser mentor by
+                customizing the accent, voice, pitch, and speed of your
+                text-to-speech player.
+              </li>
             </List>
-            <p>
-              Make Kloda TTS your fun study buddy or wiser mentor by customizing
-              the accent, voice, pitch, and speed of your text-to-speech player.
-            </p>
           </li>
           <li>
             <Heading as='h3' isSemiBold>
-              Learn and Practice Modes:
+              Learn and Practice Modes
             </Heading>
             <List hasIndent hasDisc>
               <li>
@@ -110,7 +112,7 @@ export default function HomePage() {
           </li>
           <li>
             <Heading as='h3' isSemiBold>
-              Dynamic Categories:
+              Dynamic Categories
             </Heading>
             <List hasIndent hasDisc>
               <li>
@@ -215,7 +217,7 @@ export default function HomePage() {
               </li>
               <li>
                 Full-on <Link href='/manual'>user manual</Link> is readily
-                available and linked in the footer.
+                available.
               </li>
             </List>
           </li>

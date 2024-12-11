@@ -1,4 +1,5 @@
 import { Wrapper } from '@/components/containers/wrapper'
+import { usePaths } from '@/hooks/usePaths'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
 
@@ -15,13 +16,15 @@ export const UserCardsCount = ({
   userId,
   action,
 }: Props) => {
+  const pathname = usePaths().cardsPath
+
   const element =
     cardsCount === 0 ? (
       cardsCount
     ) : (
       <Wrapper
         as={Link}
-        href={{ pathname: '/', query: { userId, action } }}
+        href={{ pathname, query: { userId, action } }}
         title={`Search ${cardsType.toLowerCase()} cards`}
         className='border-accent border-b no-underline hover:border-accent-variant dark:border-accent-dark dark:hover:border-accent-dark-variant'
       >

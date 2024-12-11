@@ -1,3 +1,4 @@
+import { Button } from '@/components/buttons/button'
 import type {
   LoggedInProps,
   UserIdProps,
@@ -10,15 +11,24 @@ export const ProfileLink = ({
   isLoggedIn,
   userId,
 }: LoggedInProps & UserIdProps) => {
+  const pathname = usePathname()
+
   if (!isLoggedIn || !userId) {
     return null
   }
 
   const userPage = `/user/${userId}`
+  const isUserPage = pathname === userPage
 
-  return usePathname() !== userPage ? (
-    <Link href={userPage} title='Profile'>
+  return (
+    <Button
+      as={Link}
+      variant='text'
+      href={userPage}
+      title='Profile'
+      isDisabled={isUserPage}
+    >
       <CircleUser />
-    </Link>
-  ) : null
+    </Button>
+  )
 }

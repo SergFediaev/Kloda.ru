@@ -14,6 +14,7 @@ type Props<T extends ElementType = typeof DEFAULT_TYPE> = {
   isBlocked?: boolean
   isDanger?: boolean
   isTextLeft?: boolean
+  isDisabled?: boolean
 } & ComponentPropsWithoutRef<T>
 
 // ToDo: Refactor styles
@@ -28,6 +29,7 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
   isBlocked,
   isDanger,
   isTextLeft,
+  isDisabled,
   ...restProps
 }: Props<T>) => {
   const Component = as ?? DEFAULT_TYPE
@@ -76,9 +78,11 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
           'bg-accent-dark-alternate dark:bg-accent-alternate',
         isBlocked && 'cursor-not-allowed',
         isTextLeft && 'text-left',
+        isDisabled &&
+          'cursor-auto opacity-50 hover:text-accent dark:hover:text-accent-dark',
         className,
       )}
-      disabled={disabled}
+      disabled={disabled || isDisabled}
       {...restProps}
     >
       {children}

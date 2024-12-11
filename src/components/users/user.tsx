@@ -57,6 +57,7 @@ export const User = ({
   const userProfileLink = isOpen ? '/users' : `/user/${id}`
   const userProfileText = isOpen ? 'Close user profile' : 'Open user profile'
   const isCurrentUser = isMeSuccess && id === meData.id
+  const isCurrentUserOpen = isCurrentUser && isOpen
   const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
   const hasNotCreatedCards = createdCardsCount === 0
   const exportCardsTitle = hasNotCreatedCards ? 'No created cards' : undefined
@@ -168,7 +169,7 @@ export const User = ({
             action='disliked'
           />
         </div>
-        {isCurrentUser &&
+        {isCurrentUserOpen &&
           (isExportSuccess ? (
             <div>
               <p>Download exported cards:</p>
@@ -198,7 +199,7 @@ export const User = ({
           <Button as={Link} href={userProfileLink}>
             {userProfileText}
           </Button>
-          {isCurrentUser && (
+          {isCurrentUserOpen && (
             <Button onClick={openConfirmation} isDanger>
               {logoutText}
             </Button>

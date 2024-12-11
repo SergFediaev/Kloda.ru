@@ -14,6 +14,7 @@ import {
   useFavoriteCard,
   useLikeCard,
 } from '@/hooks/useCards'
+import { usePaths } from '@/hooks/usePaths'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { getLocalDate } from '@/utils/getLocalDate'
 import { cn } from '@/utils/mergeClasses'
@@ -101,6 +102,7 @@ export const Card = ({
   const [isShown, setIsShown] = useState(isStudyMode)
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+  const { cardsPath } = usePaths()
 
   const expandTitle = isExpanded ? 'Collapse' : 'Expand'
   const expandIcon = isExpanded ? <ChevronUp /> : <ChevronDown />
@@ -124,7 +126,7 @@ export const Card = ({
     isDisliked,
   } = card
 
-  const cardDetailsLink = isOpen ? '/' : `/card/${id}`
+  const cardDetailsLink = isOpen ? cardsPath : `/card/${id}`
   const cardDetailsText = isOpen ? 'Close card details' : 'Open card details'
   const isCardAuthor = authorId === meData?.id
 

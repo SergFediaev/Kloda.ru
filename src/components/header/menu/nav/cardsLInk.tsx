@@ -1,12 +1,20 @@
+import { Button } from '@/components/buttons/button'
+import { usePaths } from '@/hooks/usePaths'
 import { LayoutDashboard } from 'lucide-react'
 import { Link } from 'next-view-transitions'
-import { usePathname } from 'next/navigation'
 
-const CARDS_PAGE = '/cards'
+export const CardsLink = () => {
+  const { cardsPath, isCardsPath } = usePaths()
 
-export const CardsLink = () =>
-  usePathname() !== CARDS_PAGE ? (
-    <Link href={CARDS_PAGE} title='Cards'>
+  return (
+    <Button
+      as={Link}
+      variant='text'
+      href={cardsPath}
+      title='Cards'
+      isDisabled={isCardsPath}
+    >
       <LayoutDashboard />
-    </Link>
-  ) : null
+    </Button>
+  )
+}

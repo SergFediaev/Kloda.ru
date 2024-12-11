@@ -35,7 +35,7 @@ export const AppInfo = () => {
         </ExternalLink>
         <Wrapper>
           <q>Backend</q>
-          &nbsp;is made on&nbsp;
+          &nbsp;was made on&nbsp;
           <ExternalLink href='https://docs.google.com/spreadsheets/d/1MuswRL1w3DhhQ3xGl3ewrmhw7-5UDLePoaHmsAtNExk'>
             Google Sheets
           </ExternalLink>

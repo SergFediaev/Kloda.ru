@@ -1,12 +1,20 @@
+import { Button } from '@/components/buttons/button'
+import { usePaths } from '@/hooks/usePaths'
 import { Users } from 'lucide-react'
 import { Link } from 'next-view-transitions'
-import { usePathname } from 'next/navigation'
 
-const USERS_PAGE = '/users'
+export const UsersLink = () => {
+  const { usersPath, isUsersPath } = usePaths()
 
-export const UsersLink = () =>
-  usePathname() !== USERS_PAGE ? (
-    <Link href={USERS_PAGE} title='Users'>
+  return (
+    <Button
+      as={Link}
+      variant='text'
+      href={usersPath}
+      title='Users'
+      isDisabled={isUsersPath}
+    >
       <Users />
-    </Link>
-  ) : null
+    </Button>
+  )
+}

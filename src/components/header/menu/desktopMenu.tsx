@@ -3,7 +3,6 @@ import { MenuButton } from '@/components/header/menu/menuButton'
 import { CardsLink } from '@/components/header/menu/nav/cardsLInk'
 import { CardsModeButton } from '@/components/header/menu/nav/cardsModeButton'
 import { CreateCardLink } from '@/components/header/menu/nav/createCardLink'
-import { HomeLink } from '@/components/header/menu/nav/homeLink'
 import { LoginLink } from '@/components/header/menu/nav/loginLink'
 import { Logo } from '@/components/header/menu/nav/logo'
 import { ProfileLink } from '@/components/header/menu/nav/profileLink'
@@ -28,13 +27,12 @@ export const DesktopMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
     <Logo />
     <Toolbar />
     <Wrapper as='nav' hasGaps>
-      <HomeLink />
+      <CardsModeButton />
+      <CreateCardLink isLoggedIn={restProps.isLoggedIn} />
+      <CardsLink />
+      <UsersLink />
       <LoginLink isLoggedIn={restProps.isLoggedIn} />
       <ProfileLink {...restProps} />
-      <UsersLink />
-      <CardsLink />
-      <CreateCardLink isLoggedIn={restProps.isLoggedIn} />
-      <CardsModeButton />
       <ThemeButton />
       <SettingsLink />
       <MenuButton collapseMenu={collapseMenu} />
