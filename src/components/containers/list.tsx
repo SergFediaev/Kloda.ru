@@ -17,7 +17,7 @@ export const List = ({
   <ul
     className={cn(
       hasIndent && 'ml-6',
-      hasGaps && 'flex flex-col gap-6',
+      hasGaps && 'flex flex-col gap-6 sm:gap-3',
       hasDisc && 'list-disc',
       className,
     )}
