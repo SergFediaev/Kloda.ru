@@ -91,17 +91,22 @@ export const useExportCards = () =>
     enabled: false,
   })
 
+// noinspection Annotator
 export const invalidateCards = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['cards'] })
 
+// noinspection Annotator
 const invalidateCard = (queryClient: QueryClient, cardId: number) =>
   queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
 
+// noinspection Annotator
 const invalidateCategories = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['categories'] })
 
 const invalidateUsers = (queryClient: QueryClient, userId: number) => {
+  // noinspection Annotator
   void queryClient.invalidateQueries({ queryKey: ['users'] })
+  // noinspection Annotator
   void queryClient.invalidateQueries({ queryKey: ['user', String(userId)] })
 }
 

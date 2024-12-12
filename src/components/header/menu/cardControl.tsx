@@ -11,6 +11,10 @@ import { useParams, useSearchParams } from 'next/navigation'
 import queryString from 'query-string'
 
 export const CardControl = () => {
+  if (usePaths().isNotCardPath) {
+    return null
+  }
+
   const router = useTransitionRouter()
   const { id } = useParams<{ id: string }>()
   const categories = useSearchParams().getAll('categories')
@@ -21,10 +25,6 @@ export const CardControl = () => {
     currentCardId: Number(id),
     categories,
   })
-
-  if (usePaths().isNotCardPath) {
-    return null
-  }
 
   if (isPending) {
     return <Loader>Fetching card #{id}</Loader>
