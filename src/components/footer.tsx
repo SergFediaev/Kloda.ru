@@ -19,7 +19,7 @@ export const Footer = () => {
       <footer className='bg-surface shadow-inner dark:bg-surface-dark'>
         <Container>
           <Wrapper as='div' className='justify-between' hasGaps>
-            <List hasGaps>
+            <List hasGaps isMarkersAccent={false}>
               <li>
                 <Link href={homePath}>About Kloda</Link>
               </li>
@@ -30,7 +30,7 @@ export const Footer = () => {
                 <Link href={mapPath}>Sitemap</Link>
               </li>
             </List>
-            <List hasGaps className='sm:items-center'>
+            <List hasGaps isMarkersAccent={false} className='sm:items-center'>
               <Wrapper as='li'>
                 <Copyright size={16} />
                 &nbsp;
@@ -50,7 +50,7 @@ export const Footer = () => {
                 <em>For learners by learner</em>
               </li>
             </List>
-            <List hasGaps className='sm:items-end'>
+            <List hasGaps isMarkersAccent={false} className='sm:items-end'>
               <li>
                 <ExternalLink href='https://github.com/SergFediaev/kloda'>
                   Kloda GitHub
