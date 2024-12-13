@@ -74,7 +74,7 @@ export const RegisterForm = () => {
         placeholder='Username'
         required
         error={errors.username?.message}
-        characterCount={watch('username').length}
+        characterCount={watch('username')?.length}
         minLength={USERNAME_MIN}
         maxLength={USERNAME_MAX}
         disabled={isPending}
@@ -98,7 +98,7 @@ export const RegisterForm = () => {
         placeholder='Password'
         required
         error={errors.password?.message}
-        characterCount={watch('password').length}
+        characterCount={watch('password')?.length}
         minLength={PASSWORD_MIN}
         maxLength={PASSWORD_MAX}
         disabled={isPending}
@@ -112,7 +112,7 @@ export const RegisterForm = () => {
         placeholder='Confirm password'
         required
         error={errors.confirmPassword?.message}
-        characterCount={watch('confirmPassword').length}
+        characterCount={watch('confirmPassword')?.length}
         minLength={PASSWORD_MIN}
         maxLength={PASSWORD_MAX}
         disabled={isPending}

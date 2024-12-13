@@ -103,7 +103,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         label='Title'
         placeholder='Card title'
         error={errors.title?.message}
-        characterCount={watch('title').length}
+        characterCount={watch('title')?.length}
         minLength={TITLE_MIN}
         maxLength={TITLE_MAX}
         required
@@ -116,7 +116,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         label='Content'
         placeholder='Card content'
         error={errors.content?.message}
-        characterCount={watch('content').length}
+        characterCount={watch('content')?.length}
         minLength={CONTENT_MIN}
         maxLength={CONTENT_MAX}
         required
@@ -129,7 +129,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         label='Categories'
         placeholder='Comma-separated categories'
         error={errors.categories?.message}
-        characterCount={watch('categories').length}
+        characterCount={watch('categories')?.length}
         maxLength={CATEGORIES_MAX}
         disabled={isPending}
       />
