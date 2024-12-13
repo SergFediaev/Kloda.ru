@@ -1,3 +1,4 @@
+import { Details } from '@/components/containers/details'
 import { OrderedList } from '@/components/containers/orderedList'
 import { Summary } from '@/components/containers/summary'
 import { Text } from '@/components/containers/text'
@@ -9,7 +10,7 @@ type Props = {
 }
 
 export const DependenciesList = ({ summary, dependencies }: Props) => (
-  <details className='marker:text-accent dark:marker:text-accent-dark'>
+  <Details>
     <Summary>{summary}</Summary>
     <OrderedList hasIndent isMono>
       {Object.entries(dependencies).map(([dependency, version], index) => (
@@ -19,5 +20,5 @@ export const DependenciesList = ({ summary, dependencies }: Props) => (
         </li>
       ))}
     </OrderedList>
-  </details>
+  </Details>
 )

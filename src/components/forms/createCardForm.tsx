@@ -99,9 +99,9 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
     <Form onSubmit={onSubmit} error={error?.message}>
       <FormInput
         control={control}
-        name={'title'}
-        label={'Title'}
-        placeholder={'Card title'}
+        name='title'
+        label='Title'
+        placeholder='Card title'
         error={errors.title?.message}
         characterCount={watch('title').length}
         minLength={TITLE_MIN}
@@ -111,9 +111,9 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
       />
       <FormTextArea
         control={control}
-        name={'content'}
-        label={'Content'}
-        placeholder={'Card content'}
+        name='content'
+        label='Content'
+        placeholder='Card content'
         error={errors.content?.message}
         characterCount={watch('content').length}
         minLength={CONTENT_MIN}
@@ -123,28 +123,28 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
       />
       <FormInput
         control={control}
-        name={'categories'}
-        label={'Categories'}
-        placeholder={'Comma-separated categories'}
+        name='categories'
+        label='Categories'
+        placeholder='Comma-separated categories'
         error={errors.categories?.message}
         characterCount={watch('categories').length}
         maxLength={CATEGORIES_MAX}
       />
       <FormInput
         control={control}
-        name={'username'}
-        label={'Author'}
-        placeholder={'Username'}
+        name='username'
+        label='Author'
+        placeholder='Username'
         error={errors.username?.message}
         required
         disabled
       />
       <FormInput
         control={control}
-        name={'email'}
-        label={'Email'}
-        type={'email'}
-        placeholder={'example@mail.com'}
+        name='email'
+        label='Email'
+        type='email'
+        placeholder='example@mail.com'
         error={errors.email?.message}
         required
         disabled
@@ -153,7 +153,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         <Button isStretched isLoading={isPending}>
           {createText}
         </Button>
-        <Button type={'reset'} isStretched isDanger onClick={onReset}>
+        <Button type='reset' isStretched isDanger onClick={onReset}>
           Reset
         </Button>
       </ButtonsContainer>

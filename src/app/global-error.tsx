@@ -5,6 +5,7 @@ import { Button } from '@/components/buttons/button'
 import { Body } from '@/components/containers/body'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Container } from '@/components/containers/container'
+import { Details } from '@/components/containers/details'
 import { Html } from '@/components/containers/html'
 import { OrderedList } from '@/components/containers/orderedList'
 import { Summary } from '@/components/containers/summary'
@@ -90,7 +91,7 @@ export default function GlobalError({
             <Heading>Something went wrong!</Heading>
             <Heading as='h3'>{error.message}</Heading>
             {error.stack && (
-              <details>
+              <Details isMarkerAccent={false}>
                 <Summary>Error stack trace</Summary>
                 <OrderedList
                   isMarkersAccent={false}
@@ -101,7 +102,7 @@ export default function GlobalError({
                     <li key={`${index}-${stack}`}>{stack}</li>
                   ))}
                 </OrderedList>
-              </details>
+              </Details>
             )}
             <p>{autoReloadText}</p>
             {reportErrorResponse && <p>{reportErrorResponse}</p>}

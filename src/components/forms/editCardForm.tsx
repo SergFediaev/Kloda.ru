@@ -62,27 +62,27 @@ export const EditCardForm = ({
     <Form onSubmit={onSubmit} error={error?.message}>
       <FormInput
         control={control}
-        name={'title'}
-        label={'Title'}
-        placeholder={'Card title'}
+        name='title'
+        label='Title'
+        placeholder='Card title'
         error={errors.title?.message}
         required
         spellCheck
       />
       <FormTextArea
         control={control}
-        name={'content'}
-        label={'Content'}
-        placeholder={'Card content'}
+        name='content'
+        label='Content'
+        placeholder='Card content'
         error={errors.content?.message}
         required
         spellCheck
       />
       <FormInput
         control={control}
-        name={'categories'}
-        label={'Categories'}
-        placeholder={'Comma-separated categories'}
+        name='categories'
+        label='Categories'
+        placeholder='Comma-separated categories'
         error={errors.categories?.message}
       />
       <ButtonsContainer>

@@ -8,6 +8,7 @@ import {
   getCard,
   getCards,
   getRandomCard,
+  importCards,
   likeCard,
 } from '@/api/cards/cards.api'
 import type {
@@ -82,6 +83,18 @@ export const useFavoriteCard = (userId?: number) =>
   useMutation({
     mutationFn: favoriteCard,
     onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+  })
+
+// ToDo: Refactor invalidating, duplicated with create card, also invalidate only one user
+export const useImportCards = (userId: number) =>
+  useMutation({
+    mutationFn: importCards,
+    onSuccess: () => {
+      const queryClient = getQueryClient()
+      void invalidateCards(queryClient)
+      void invalidateCategories(queryClient)
+      invalidateUsers(queryClient, userId)
+    },
   })
 
 export const useExportCards = () =>

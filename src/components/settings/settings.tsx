@@ -11,7 +11,7 @@ import { Stats } from '@/components/settings/stats'
 import { generalSettingsStore } from '@/stores/generalSettingsStore'
 
 export const Settings = () => (
-  <Columns count={'3'}>
+  <Columns count='3'>
     <GeneralSettings />
     {generalSettingsStore().isDebugModeEnabled && <DebugModeSettings />}
     <CardsSettings />

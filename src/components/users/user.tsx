@@ -3,18 +3,45 @@ import { Button } from '@/components/buttons/button'
 import { Captcha } from '@/components/captcha'
 import { Block, type BlockProps } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
+import { Details } from '@/components/containers/details'
+import { List } from '@/components/containers/list'
+import { Summary } from '@/components/containers/summary'
+import { Text } from '@/components/containers/text'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
+import { FormCheckBox } from '@/components/forms/formCheckBox'
+import { FormInput } from '@/components/forms/formInput'
+import { ExternalLink } from '@/components/links/externalLink'
 import { UserCardsCount } from '@/components/users/userCardsCount'
 import { useLogout, useMe } from '@/hooks/useAuth'
 import { useCaptcha } from '@/hooks/useCaptcha'
-import { useExportCards } from '@/hooks/useCards'
+import { useExportCards, useImportCards } from '@/hooks/useCards'
 import { getLocalDate } from '@/utils/getLocalDate'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Download, Mail } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Link } from 'next-view-transitions'
-import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import {
+  type ComponentPropsWithoutRef,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { z } from 'zod'
+import { Form } from '../forms/form'
+
+const SHEET_MIN_LENGTH = 1
+
+const importSchema = z.object({
+  spreadsheetId: z.string().min(SHEET_MIN_LENGTH),
+  sheetName: z.string().min(SHEET_MIN_LENGTH),
+  skipFirstRow: z.boolean(),
+  skipFirstColumn: z.boolean(),
+})
+
+type ImportSchema = z.infer<typeof importSchema>
 
 type Props = {
   user: UserResponse
@@ -22,7 +49,7 @@ type Props = {
 } & ComponentPropsWithoutRef<'article'> &
   Pick<BlockProps, 'inColumns'>
 
-// ToDo: useExport hook, TypeError: Cannot read properties of undefined (reading 'id')
+// ToDo: Import/export custom hooks
 export const User = ({
   user: {
     id,
@@ -40,12 +67,36 @@ export const User = ({
 }: Props) => {
   const { isSuccess: isMeSuccess, data: meData } = useMe()
   const { mutate: logout, isPending: isLogoutPending } = useLogout()
+
+  const {
+    mutate: importCards,
+    isSuccess: isImportSuccess,
+    data: importData,
+    isPending: isImportPending,
+    error: importError,
+  } = useImportCards(id)
+
   const {
     refetch: exportCards,
     isSuccess: isExportSuccess,
     data: exportData,
     isFetching: isExportFetching,
   } = useExportCards()
+
+  const {
+    control,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ImportSchema>({
+    defaultValues: {
+      spreadsheetId: '',
+      sheetName: '',
+      skipFirstRow: false,
+      skipFirstColumn: false,
+    },
+    resolver: zodResolver(importSchema),
+  })
 
   const { theme } = useTheme()
   const { isCaptchaShown, captchaToken, setIsCaptchaShown, onCaptcha } =
@@ -61,17 +112,21 @@ export const User = ({
   const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
   const hasNotCreatedCards = createdCardsCount === 0
   const exportCardsTitle = hasNotCreatedCards ? 'No created cards' : undefined
+  const importCardsText = isImportPending ? 'Importing' : 'Import'
   const exportCardsText = isExportFetching
     ? 'Exporting cards to CSV'
     : 'Export all created cards'
 
   const openConfirmation = () => setIsConfirmationOpen(true)
   const closeConfirmation = () => setIsConfirmationOpen(false)
+  const onReset = useCallback(() => reset(), [reset])
 
   const onLogout = () => {
     closeConfirmation()
     logout()
   }
+
+  const onSubmit = handleSubmit(data => importCards(data))
 
   const onExport = async () => {
     if (!isCaptchaShown) setIsCaptchaShown(true)
@@ -113,6 +168,18 @@ export const User = ({
     }
   }, [fileLink])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isImportSuccess) {
+      onReset()
+
+      toast(`Imported ${importData.importedCardsCount} cards`, {
+        theme,
+        type: 'success',
+      })
+    }
+  }, [isImportSuccess, importData, onReset])
+
   useEffect(() => {
     if (isExportSuccess) {
       setFileLink(URL.createObjectURL(exportData))
@@ -126,7 +193,7 @@ export const User = ({
         as='article'
         heading={username}
         isConstrained={isOpen}
-        className='max-w-2xl'
+        className='max-w-xl'
         {...restProps}
       >
         <div>
@@ -169,38 +236,144 @@ export const User = ({
             action='disliked'
           />
         </div>
-        {isCurrentUserOpen &&
-          (isExportSuccess ? (
-            <div>
-              <p>Download exported cards:</p>
-              <Wrapper as='p'>
-                <a href={fileLink} download={fileName}>
-                  {fileName}
-                </a>
-                &nbsp;
-                <Download size={16} />
-              </Wrapper>
-            </div>
-          ) : (
-            <>
-              <Button
-                onClick={onExport}
-                title={exportCardsTitle}
-                disabled={hasNotCreatedCards}
-                isLoading={isExportFetching}
-                className='self-start'
+        {isCurrentUserOpen && (
+          <>
+            {isExportSuccess ? (
+              <div>
+                <p>Download exported cards:</p>
+                <Wrapper as='p'>
+                  <a href={fileLink} download={fileName}>
+                    {fileName}
+                  </a>
+                  &nbsp;
+                  <Download size={16} />
+                </Wrapper>
+              </div>
+            ) : (
+              <>
+                <Button
+                  onClick={onExport}
+                  title={exportCardsTitle}
+                  disabled={hasNotCreatedCards}
+                  isLoading={isExportFetching}
+                  className='self-start'
+                >
+                  {exportCardsText}
+                </Button>
+                {isCaptchaShown && <Captcha onChange={onCaptcha} />}
+              </>
+            )}
+            <Form
+              heading='Import cards from Google Sheets:'
+              onSubmit={onSubmit}
+              error={importError?.message}
+              className='mb-10'
+            >
+              <Details>
+                <Summary>Instructions</Summary>
+                <List hasIndent hasDisc>
+                  <li>
+                    <Wrapper>
+                      Share spreadsheet:&nbsp;<Text isAccent>File</Text>
+                      &nbsp;&gt;&nbsp;
+                      <Text isAccent>Share</Text>&nbsp;&gt;&nbsp;
+                      <Text isAccent>Share with others</Text>&nbsp;&gt;&nbsp;
+                      <Text isAccent>General access</Text>&nbsp;&gt;&nbsp;
+                      <Text isAccent>Anyone with the link</Text>.
+                    </Wrapper>
+                  </li>
+                  <li>Each row in sheet is imported as a separate card.</li>
+                  <li>
+                    Sheet should have 3 columns for importing cards: title,
+                    content, comma separated categories.
+                  </li>
+                  <li>
+                    <Wrapper>
+                      <ExternalLink href='https://docs.google.com/spreadsheets/d/13ZGk6-TwWIrnI12EZf0d0-Yi1CMyMiyHuvZUWuxRdPA'>
+                        Example of the correct spreadsheet format
+                      </ExternalLink>
+                      &nbsp;(read-only spreadsheet).
+                    </Wrapper>
+                  </li>
+                  <li>Up to 50 cards can be imported at a time</li>
+                  <li>
+                    Spreadsheet ID can be copied from the spreadsheet link,
+                    example:&nbsp;
+                    <span className='text-wrap-anywhere'>
+                      https://docs.google.com/spreadsheets/d/
+                      <Text isAccent>
+                        13ZGk6-TwWIrnI12EZf0d0-Yi1CMyMiyHuvZUWuxRdPA
+                      </Text>
+                    </span>
+                    &nbsp;— is a spreadsheet ID.
+                  </li>
+                  <li>
+                    Sheet name is exactly the name of the sheet, not the name of
+                    the spreadsheet, don't get confused!
+                  </li>
+                </List>
+              </Details>
+              <FormInput
+                control={control}
+                name='spreadsheetId'
+                label='Spreadsheet ID'
+                placeholder='Example: 13ZGk6-TwWIrnI12EZf0d0-Yi1CMyMiyHuvZUWuxRdPA'
+                error={errors.spreadsheetId?.message}
+                minLength={SHEET_MIN_LENGTH}
+                required
+                disabled={isImportPending}
+              />
+              <FormInput
+                control={control}
+                name='sheetName'
+                label='Sheet name'
+                placeholder='Example: Sheet1'
+                error={errors.sheetName?.message}
+                minLength={SHEET_MIN_LENGTH}
+                required
+                disabled={isImportPending}
+              />
+              <FormCheckBox
+                control={control}
+                name='skipFirstRow'
+                disabled={isImportPending}
               >
-                {exportCardsText}
-              </Button>
-              {isCaptchaShown && <Captcha onChange={onCaptcha} />}
-            </>
-          ))}
+                Skip first row in sheet
+              </FormCheckBox>
+              <FormCheckBox
+                control={control}
+                name='skipFirstColumn'
+                disabled={isImportPending}
+              >
+                Skip first column in sheet
+              </FormCheckBox>
+              <ButtonsContainer>
+                <Button isLoading={isImportPending} isStretched>
+                  {importCardsText}
+                </Button>
+                <Button
+                  type='reset'
+                  onClick={onReset}
+                  isStretched
+                  isDanger
+                  disabled={isImportPending}
+                >
+                  Reset
+                </Button>
+              </ButtonsContainer>
+            </Form>
+          </>
+        )}
         <ButtonsContainer className='justify-between'>
           <Button as={Link} href={userProfileLink}>
             {userProfileText}
           </Button>
           {isCurrentUserOpen && (
-            <Button onClick={openConfirmation} isDanger>
+            <Button
+              onClick={openConfirmation}
+              isDanger
+              disabled={isImportPending}
+            >
               {logoutText}
             </Button>
           )}

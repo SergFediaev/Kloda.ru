@@ -72,3 +72,14 @@ export type LikeResponse = {
 export type DislikeResponse = {
   isDisliked: boolean
 }
+
+export type ImportCardsArgs = {
+  spreadsheetId: string
+  sheetName: string
+  skipFirstRow: boolean
+  skipFirstColumn: boolean
+}
+
+export type ImportCardsResponse = {
+  importedCardsCount: number
+}

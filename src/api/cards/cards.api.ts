@@ -9,6 +9,8 @@ import type {
   DislikeResponse,
   EditCardArgs,
   FavoriteResponse,
+  ImportCardsArgs,
+  ImportCardsResponse,
   LikeResponse,
   RandomCardArgs,
 } from '@/api/cards/cards.types'
@@ -58,5 +60,8 @@ export const dislikeCard = (id: number) =>
 
 export const favoriteCard = (id: number) =>
   cardsApi.patch<FavoriteResponse>(`${id}/favorite`).json()
+
+export const importCards = (json: ImportCardsArgs) =>
+  cardsApi.post<ImportCardsResponse>('import', { json }).json()
 
 export const exportCards = () => cardsApi('export').blob()

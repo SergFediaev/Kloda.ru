@@ -117,7 +117,7 @@ export const RegisterForm = () => {
         <Button isStretched isLoading={isPending}>
           {registerText}
         </Button>
-        <Button type={'reset'} isStretched onClick={onReset}>
+        <Button type='reset' isStretched onClick={onReset}>
           Reset
         </Button>
       </ButtonsContainer>
