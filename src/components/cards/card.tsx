@@ -68,6 +68,7 @@ export const Card = ({
 
   const {
     mutate: deleteCard,
+    isPending: isDeletePending,
     isSuccess: isDeleteSuccess,
     isError: isDeleteError,
     error: deleteError,
@@ -75,24 +76,27 @@ export const Card = ({
 
   const {
     mutate: like,
-    data: likeData,
+    isPending: isLikePending,
     isSuccess: isLikeSuccess,
+    data: likeData,
     isError: isLikeError,
     error: likeError,
   } = useLikeCard(meData?.id)
 
   const {
     mutate: dislike,
-    data: dislikeData,
+    isPending: isDislikePending,
     isSuccess: isDislikeSuccess,
+    data: dislikeData,
     isError: isDislikeError,
     error: dislikeError,
   } = useDislikeCard(meData?.id)
 
   const {
     mutate: favorite,
-    data: favoriteData,
+    isPending: isFavoritePending,
     isSuccess: isFavoriteSuccess,
+    data: favoriteData,
     isError: isFavoriteError,
     error: favoriteError,
   } = useFavoriteCard(meData?.id)
@@ -108,6 +112,8 @@ export const Card = ({
   const expandIcon = isExpanded ? <ChevronUp /> : <ChevronDown />
   const showTitle = isShown ? 'Hide content' : 'Show content'
   const showIcon = isShown ? <EyeOff /> : <Eye />
+  const isPending =
+    isDeletePending || isLikePending || isDislikePending || isFavoritePending
 
   const {
     id,
@@ -249,8 +255,14 @@ export const Card = ({
                 title='Like'
                 onClick={onLike}
                 isBlocked={!isMeSuccess}
+                disabled={isPending}
+                isLoading={isLikePending}
               >
-                <FillIcon icon={ThumbsUp} isFilled={isLiked} />
+                <FillIcon
+                  icon={ThumbsUp}
+                  isFilled={isLiked}
+                  isDisabled={isPending}
+                />
               </Button>
               &nbsp;
               {likes}
@@ -261,8 +273,14 @@ export const Card = ({
                 title='Dislike'
                 onClick={onDislike}
                 isBlocked={!isMeSuccess}
+                disabled={isPending}
+                isLoading={isDislikePending}
               >
-                <FillIcon icon={ThumbsDown} isFilled={isDisliked} />
+                <FillIcon
+                  icon={ThumbsDown}
+                  isFilled={isDisliked}
+                  isDisabled={isPending}
+                />
               </Button>
               &nbsp;
               {dislikes}
@@ -273,8 +291,14 @@ export const Card = ({
                 title='Favorite'
                 onClick={onFavorite}
                 isBlocked={!isMeSuccess}
+                disabled={isPending}
+                isLoading={isFavoritePending}
               >
-                <FillIcon icon={Star} isFilled={isFavorite} />
+                <FillIcon
+                  icon={Star}
+                  isFilled={isFavorite}
+                  isDisabled={isPending}
+                />
               </Button>
               &nbsp;
               {favorites}
@@ -311,6 +335,8 @@ export const Card = ({
                   title='Delete card'
                   onClick={openConfirmation}
                   isDanger
+                  disabled={isPending}
+                  isLoading={isDeletePending}
                 >
                   <Trash2 />
                 </Button>

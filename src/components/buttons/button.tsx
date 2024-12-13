@@ -74,6 +74,7 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
         isStretched && 'flex-grow',
         isLoading && 'cursor-progress',
         isLoading &&
+          variant !== 'text' &&
           variant !== 'outline' &&
           'bg-accent-dark-alternate dark:bg-accent-alternate',
         isBlocked && 'cursor-not-allowed',
