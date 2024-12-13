@@ -50,6 +50,7 @@ export const LoginForm = () => {
         placeholder='example@mail.com'
         required
         error={errors.email?.message}
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -60,8 +61,11 @@ export const LoginForm = () => {
         placeholder='Password'
         required
         error={errors.password?.message}
+        disabled={isPending}
       />
-      <Button isLoading={isPending}>{loginText}</Button>
+      <Button isLoading={isPending} disabled={isPending}>
+        {loginText}
+      </Button>
     </Form>
   )
 }

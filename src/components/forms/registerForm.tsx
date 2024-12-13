@@ -77,6 +77,7 @@ export const RegisterForm = () => {
         characterCount={watch('username').length}
         minLength={USERNAME_MIN}
         maxLength={USERNAME_MAX}
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -86,6 +87,7 @@ export const RegisterForm = () => {
         placeholder='example@mail.com'
         required
         error={errors.email?.message}
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -99,6 +101,7 @@ export const RegisterForm = () => {
         characterCount={watch('password').length}
         minLength={PASSWORD_MIN}
         maxLength={PASSWORD_MAX}
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -112,9 +115,10 @@ export const RegisterForm = () => {
         characterCount={watch('confirmPassword').length}
         minLength={PASSWORD_MIN}
         maxLength={PASSWORD_MAX}
+        disabled={isPending}
       />
       <ButtonsContainer>
-        <Button isStretched isLoading={isPending}>
+        <Button isStretched isLoading={isPending} disabled={isPending}>
           {registerText}
         </Button>
         <Button

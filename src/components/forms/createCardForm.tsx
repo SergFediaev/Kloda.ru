@@ -108,6 +108,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         maxLength={TITLE_MAX}
         required
         spellCheck
+        disabled={isPending}
       />
       <FormTextArea
         control={control}
@@ -120,6 +121,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         maxLength={CONTENT_MAX}
         required
         spellCheck
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -129,6 +131,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         error={errors.categories?.message}
         characterCount={watch('categories').length}
         maxLength={CATEGORIES_MAX}
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -150,7 +153,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         disabled
       />
       <ButtonsContainer>
-        <Button isStretched isLoading={isPending}>
+        <Button isStretched isLoading={isPending} disabled={isPending}>
           {createText}
         </Button>
         <Button

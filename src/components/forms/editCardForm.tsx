@@ -68,6 +68,7 @@ export const EditCardForm = ({
         error={errors.title?.message}
         required
         spellCheck
+        disabled={isPending}
       />
       <FormTextArea
         control={control}
@@ -77,6 +78,7 @@ export const EditCardForm = ({
         error={errors.content?.message}
         required
         spellCheck
+        disabled={isPending}
       />
       <FormInput
         control={control}
@@ -84,12 +86,19 @@ export const EditCardForm = ({
         label='Categories'
         placeholder='Comma-separated categories'
         error={errors.categories?.message}
+        disabled={isPending}
       />
       <ButtonsContainer>
-        <Button isStretched isLoading={isPending}>
+        <Button isStretched isLoading={isPending} disabled={isPending}>
           {saveText}
         </Button>
-        <Button type='button' isStretched isDanger onClick={onCancel}>
+        <Button
+          type='button'
+          isStretched
+          isDanger
+          onClick={onCancel}
+          disabled={isPending}
+        >
           Cancel
         </Button>
       </ButtonsContainer>
