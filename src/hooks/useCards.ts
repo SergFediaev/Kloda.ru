@@ -1,6 +1,7 @@
 import {
   createCard,
   deleteCard,
+  deleteCards,
   dislikeCard,
   editCard,
   exportCards,
@@ -57,6 +58,17 @@ export const useEditCard = () =>
       void invalidateCards(queryClient)
       void invalidateCard(queryClient, id)
       void invalidateCategories(queryClient)
+    },
+  })
+
+export const useDeleteCards = (userId: number) =>
+  useMutation({
+    mutationFn: deleteCards,
+    onSuccess: () => {
+      const queryClient = getQueryClient()
+      void invalidateCards(queryClient)
+      void invalidateCategories(queryClient)
+      invalidateUsers(queryClient, userId)
     },
   })
 

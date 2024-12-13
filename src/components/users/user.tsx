@@ -15,7 +15,11 @@ import { ExternalLink } from '@/components/links/externalLink'
 import { UserCardsCount } from '@/components/users/userCardsCount'
 import { useLogout, useMe } from '@/hooks/useAuth'
 import { useCaptcha } from '@/hooks/useCaptcha'
-import { useExportCards, useImportCards } from '@/hooks/useCards'
+import {
+  useDeleteCards,
+  useExportCards,
+  useImportCards,
+} from '@/hooks/useCards'
 import { getLocalDate } from '@/utils/getLocalDate'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Download, Mail } from 'lucide-react'
@@ -69,6 +73,15 @@ export const User = ({
   const { mutate: logout, isPending: isLogoutPending } = useLogout()
 
   const {
+    mutate: deleteCards,
+    isSuccess: isDeleteSuccess,
+    data: deleteData,
+    isPending: isDeletePending,
+    isError: isDeleteError,
+    error: deleteError,
+  } = useDeleteCards(id)
+
+  const {
     mutate: importCards,
     isSuccess: isImportSuccess,
     data: importData,
@@ -87,7 +100,7 @@ export const User = ({
     control,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<ImportSchema>({
     defaultValues: {
       spreadsheetId: '',
@@ -101,7 +114,8 @@ export const User = ({
   const { theme } = useTheme()
   const { isCaptchaShown, captchaToken, setIsCaptchaShown, onCaptcha } =
     useCaptcha()
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [fileLink, setFileLink] = useState<string>()
   const [fileName, setFileName] = useState<string>()
 
@@ -111,19 +125,30 @@ export const User = ({
   const isCurrentUserOpen = isCurrentUser && isOpen
   const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
   const hasNotCreatedCards = createdCardsCount === 0
-  const exportCardsTitle = hasNotCreatedCards ? 'No created cards' : undefined
+  const cardsActionTitle = hasNotCreatedCards ? 'No created cards' : undefined
+  const isPending = isDeletePending || isImportPending || isExportFetching
+  const deleteCardsText = isDeletePending
+    ? 'Deleting all created cards'
+    : 'Delete all created cards'
   const importCardsText = isImportPending ? 'Importing' : 'Import'
   const exportCardsText = isExportFetching
     ? 'Exporting cards to CSV'
     : 'Export all created cards'
 
-  const openConfirmation = () => setIsConfirmationOpen(true)
-  const closeConfirmation = () => setIsConfirmationOpen(false)
+  const openLogout = () => setIsLogoutOpen(true)
+  const closeLogout = () => setIsLogoutOpen(false)
+  const openDelete = () => setIsDeleteOpen(true)
+  const closeDelete = () => setIsDeleteOpen(false)
   const onReset = useCallback(() => reset(), [reset])
 
   const onLogout = () => {
-    closeConfirmation()
+    closeLogout()
     logout()
+  }
+
+  const onDelete = () => {
+    closeDelete()
+    deleteCards()
   }
 
   const onSubmit = handleSubmit(data => importCards(data))
@@ -187,6 +212,20 @@ export const User = ({
     }
   }, [isExportSuccess, exportData, username])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isDeleteSuccess)
+      toast(`Deleted ${deleteData.deletedCardsCount} cards`, {
+        theme,
+        type: 'success',
+      })
+  }, [isDeleteSuccess, deleteData])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
+    if (isDeleteError) toast(deleteError.message, { theme, type: 'error' })
+  }, [isDeleteError, deleteError])
+
   return (
     <>
       <Block
@@ -238,6 +277,16 @@ export const User = ({
         </div>
         {isCurrentUserOpen && (
           <>
+            <Button
+              onClick={openDelete}
+              isLoading={isDeletePending}
+              disabled={hasNotCreatedCards || isPending}
+              title={cardsActionTitle}
+              isDanger
+              className='self-start'
+            >
+              {deleteCardsText}
+            </Button>
             {isExportSuccess ? (
               <div>
                 <p>Download exported cards:</p>
@@ -253,8 +302,8 @@ export const User = ({
               <>
                 <Button
                   onClick={onExport}
-                  title={exportCardsTitle}
-                  disabled={hasNotCreatedCards}
+                  title={cardsActionTitle}
+                  disabled={hasNotCreatedCards || isPending}
                   isLoading={isExportFetching}
                   className='self-start'
                 >
@@ -321,7 +370,7 @@ export const User = ({
                 error={errors.spreadsheetId?.message}
                 minLength={SHEET_MIN_LENGTH}
                 required
-                disabled={isImportPending}
+                disabled={isPending}
               />
               <FormInput
                 control={control}
@@ -331,24 +380,28 @@ export const User = ({
                 error={errors.sheetName?.message}
                 minLength={SHEET_MIN_LENGTH}
                 required
-                disabled={isImportPending}
+                disabled={isPending}
               />
               <FormCheckBox
                 control={control}
                 name='skipFirstRow'
-                disabled={isImportPending}
+                isDisabled={isPending}
               >
                 Skip first row in sheet
               </FormCheckBox>
               <FormCheckBox
                 control={control}
                 name='skipFirstColumn'
-                disabled={isImportPending}
+                isDisabled={isPending}
               >
                 Skip first column in sheet
               </FormCheckBox>
               <ButtonsContainer>
-                <Button isLoading={isImportPending} isStretched>
+                <Button
+                  isLoading={isImportPending}
+                  isStretched
+                  disabled={isPending}
+                >
                   {importCardsText}
                 </Button>
                 <Button
@@ -356,7 +409,7 @@ export const User = ({
                   onClick={onReset}
                   isStretched
                   isDanger
-                  disabled={isImportPending}
+                  disabled={isPending || !isDirty}
                 >
                   Reset
                 </Button>
@@ -370,9 +423,10 @@ export const User = ({
           </Button>
           {isCurrentUserOpen && (
             <Button
-              onClick={openConfirmation}
+              onClick={openLogout}
+              isLoading={isLogoutPending}
               isDanger
-              disabled={isImportPending}
+              disabled={isPending}
             >
               {logoutText}
             </Button>
@@ -380,12 +434,29 @@ export const User = ({
         </ButtonsContainer>
       </Block>
       <ConfirmationDialog
-        open={isConfirmationOpen}
-        close={closeConfirmation}
+        open={isLogoutOpen}
+        close={closeLogout}
         confirmationText={<p>Are you sure you want to logout?</p>}
         confirmationButton={
           <Button onClick={onLogout} isStretched isDanger>
             Logout
+          </Button>
+        }
+      />
+      <ConfirmationDialog
+        open={isDeleteOpen}
+        close={closeDelete}
+        confirmationText={
+          <>
+            <p>
+              Are you sure you want to permanently delete all created cards?
+            </p>
+            <p>You will not be able to restore cards once deleted!</p>
+          </>
+        }
+        confirmationButton={
+          <Button onClick={onDelete} isStretched isDanger>
+            Delete all created cards
           </Button>
         }
       />

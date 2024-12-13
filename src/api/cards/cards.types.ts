@@ -83,3 +83,7 @@ export type ImportCardsArgs = {
 export type ImportCardsResponse = {
   importedCardsCount: number
 }
+
+export type DeleteCardsResponse = {
+  deletedCardsCount: number
+}

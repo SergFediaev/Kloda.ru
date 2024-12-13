@@ -6,6 +6,7 @@ import type {
   CardsArgs,
   CardsResponse,
   CreateCardArgs,
+  DeleteCardsResponse,
   DislikeResponse,
   EditCardArgs,
   FavoriteResponse,
@@ -49,6 +50,8 @@ export const createCard = (json: CreateCardArgs) =>
 
 export const editCard = ({ id, ...json }: EditCardArgs) =>
   cardsApi.patch<CardModel>(id, { json }).json()
+
+export const deleteCards = () => cardsApi.delete<DeleteCardsResponse>('').json()
 
 export const deleteCard = (id: number) => cardsApi.delete(String(id)).json()
 

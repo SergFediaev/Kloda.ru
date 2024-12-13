@@ -53,7 +53,7 @@ export const RegisterForm = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<RegisterSchema>({
     defaultValues,
     resolver: zodResolver(registerSchema),
@@ -117,7 +117,12 @@ export const RegisterForm = () => {
         <Button isStretched isLoading={isPending}>
           {registerText}
         </Button>
-        <Button type='reset' isStretched onClick={onReset}>
+        <Button
+          type='reset'
+          isStretched
+          onClick={onReset}
+          disabled={isPending || !isDirty}
+        >
           Reset
         </Button>
       </ButtonsContainer>

@@ -65,7 +65,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
     reset,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CardSchema>({ defaultValues, resolver: zodResolver(cardSchema) })
 
   useEffect(() => {
@@ -153,7 +153,13 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
         <Button isStretched isLoading={isPending}>
           {createText}
         </Button>
-        <Button type='reset' isStretched isDanger onClick={onReset}>
+        <Button
+          type='reset'
+          isStretched
+          isDanger
+          onClick={onReset}
+          disabled={isPending || !isDirty}
+        >
           Reset
         </Button>
       </ButtonsContainer>
