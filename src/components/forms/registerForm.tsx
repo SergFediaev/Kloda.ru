@@ -126,6 +126,7 @@ export const RegisterForm = () => {
           isStretched
           onClick={onReset}
           disabled={isPending || !isDirty}
+          isDanger
         >
           Reset
         </Button>

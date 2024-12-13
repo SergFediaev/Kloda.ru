@@ -65,8 +65,13 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
     reset,
     handleSubmit,
     watch,
-    formState: { errors, isDirty },
+    formState: {
+      errors,
+      dirtyFields: { title, content, categories },
+    },
   } = useForm<CardSchema>({ defaultValues, resolver: zodResolver(cardSchema) })
+
+  const isDirtyFields = title || content || categories
 
   useEffect(() => {
     const subscription = watch(({ username, email, ...restValue }) =>
@@ -161,7 +166,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
           isStretched
           isDanger
           onClick={onReset}
-          disabled={isPending || !isDirty}
+          disabled={isPending || !isDirtyFields}
         >
           Reset
         </Button>
