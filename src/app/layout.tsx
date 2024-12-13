@@ -8,8 +8,9 @@ import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
 import { LoaderBar } from '@/components/loaderBar'
 import { Screensaver } from '@/components/screensaver'
+import { YandexMetrica } from '@/components/yandexMetrica'
 import { ViewTransitions } from 'next-view-transitions'
-import type { ReactNode } from 'react'
+import { type ReactNode, Suspense } from 'react'
 
 // ToDo: description, SVG favicon
 export const metadata: Metadata = {
@@ -43,6 +44,9 @@ export default function RootLayout({
     <ViewTransitions>
       <Html suppressHydrationWarning>
         <Body>
+          <Suspense>
+            <YandexMetrica />
+          </Suspense>
           <Providers>
             <Layout>
               <LoaderBar />
