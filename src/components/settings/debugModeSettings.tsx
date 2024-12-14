@@ -4,6 +4,7 @@ import { Block } from '@/components/containers/block'
 import { ButtonsContainer } from '@/components/containers/buttonsContainer'
 import { Text } from '@/components/containers/text'
 import { useActivity } from '@/hooks/useActivity'
+import { usePaths } from '@/hooks/usePaths'
 import { debugModeStore } from '@/stores/debugModeStore'
 import { nanoid } from 'nanoid'
 import { Link } from 'next-view-transitions'
@@ -12,6 +13,7 @@ import { useEffect, useState } from 'react'
 const INITIAL_INACTIVITY_SECONDS = 0
 
 export const DebugModeSettings = () => {
+  const { notFoundPath } = usePaths()
   const { isMarkupShown, setIsMarkupShown } = debugModeStore()
   const [isDebugError, setIsDebugError] = useState(false)
   const [inactivitySeconds, setInactivitySeconds] = useState(
@@ -46,7 +48,7 @@ export const DebugModeSettings = () => {
         Inactivity seconds: <Text isAccent>{inactivitySeconds}</Text>
       </p>
       <ButtonsContainer>
-        <Button isStretched as={Link} href='/not-found'>
+        <Button isStretched as={Link} href={notFoundPath}>
           Open 404 page
         </Button>
         <Button isStretched onClick={onDebugError} isDanger>

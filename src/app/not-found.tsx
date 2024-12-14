@@ -1,6 +1,7 @@
 import { Block } from '@/components/containers/block'
 import { Container } from '@/components/containers/container'
-import { ReturnToCards } from '@/components/returnToCards'
+import { NotFound } from '@/components/notFound'
+import { Sitemap } from '@/components/sitemap'
 import type { Metadata } from 'next'
 
 const title = 'Not found'
@@ -9,13 +10,14 @@ export const metadata: Metadata = {
   title,
 }
 
-// ToDo: Fix background gif
 export default function NotFoundPage() {
   return (
-    <div className='flex flex-grow bg-[url(/gifs/not_found.gif)] bg-contain bg-right-top bg-no-repeat'>
+    <div className='relative flex flex-grow justify-center sm:justify-end'>
+      <div className='absolute top-0 h-full max-h-[700px] w-full max-w-[500px] bg-[url(/gifs/not_found.gif)] bg-contain bg-top bg-no-repeat sm:bg-right-top' />
       <Container isCentered>
-        <Block heading={title}>
-          <ReturnToCards />
+        <Block heading={title} className='z-0'>
+          <NotFound />
+          <Sitemap />
         </Block>
       </Container>
     </div>

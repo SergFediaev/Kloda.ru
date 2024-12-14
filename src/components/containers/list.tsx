@@ -2,6 +2,7 @@ import { cn } from '@/utils/mergeClasses'
 import type { ComponentPropsWithoutRef } from 'react'
 
 type Props = {
+  isListInside?: boolean
   hasIndent?: boolean
   hasGaps?: boolean
   isMarkersAccent?: boolean
@@ -9,6 +10,7 @@ type Props = {
 } & ComponentPropsWithoutRef<'ul'>
 
 export const List = ({
+  isListInside,
   hasIndent,
   hasGaps,
   isMarkersAccent = true,
@@ -18,6 +20,7 @@ export const List = ({
 }: Props) => (
   <ul
     className={cn(
+      isListInside && 'list-inside',
       hasIndent && 'ml-6',
       hasGaps && 'flex flex-col gap-6 sm:gap-3',
       isMarkersAccent && 'marker:text-accent dark:marker:text-accent-dark',

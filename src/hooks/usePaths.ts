@@ -1,11 +1,13 @@
 import { usePathname } from 'next/navigation'
 
 const homePath = '/'
+const mapPath = '/map'
 const cardsPath = '/cards'
 const createCardPath = '/create-card'
 const usersPath = '/users'
 const loginPath = '/login'
 const settingsPath = '/settings'
+const notFoundPath = '/not-found'
 
 export const usePaths = () => {
   const pathname = usePathname()
@@ -16,14 +18,17 @@ export const usePaths = () => {
   return {
     pathname,
     homePath,
-    manualPath: 'manual',
-    mapPath: 'map',
+    manualPath: '/manual',
+    mapPath,
     cardsPath,
     createCardPath,
     usersPath,
     loginPath,
+    registerPath: '/register',
     settingsPath,
+    notFoundPath,
     isHomePath: pathname === homePath,
+    isMapPath: pathname === mapPath,
     isCardsPath,
     isCreateCardPath: pathname === createCardPath,
     isUsersPath: pathname === usersPath,
@@ -33,5 +38,6 @@ export const usePaths = () => {
     isNotCardsPath: !isCardsPath,
     isNotCardPath: !isCardPath,
     isNotSearchPath: !(isCardsPath || pathname === usersPath),
+    isNotFoundPath: pathname === notFoundPath,
   }
 }

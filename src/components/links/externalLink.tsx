@@ -1,11 +1,25 @@
 import { Wrapper } from '@/components/containers/wrapper'
+import { cn } from '@/utils/mergeClasses'
 import { ExternalLink as Icon } from 'lucide-react'
 import type { ComponentPropsWithoutRef } from 'react'
 
-export const ExternalLink = (props: ComponentPropsWithoutRef<'a'>) => (
-  <Wrapper>
-    <a target='_blank' rel='noopener noreferrer' {...props} />
-    &nbsp;
-    <Icon size={16} />
-  </Wrapper>
-)
+type Props = {
+  isIconLeft?: boolean
+} & ComponentPropsWithoutRef<'a'>
+
+export const ExternalLink = ({ isIconLeft, ...restProps }: Props) => {
+  const icon = <Icon size={16} className={cn(isIconLeft && 'mr-4')} />
+
+  return (
+    <Wrapper>
+      {isIconLeft && icon}
+      <a target='_blank' rel='noopener noreferrer' {...restProps} />
+      {!isIconLeft && (
+        <>
+          &nbsp;
+          {icon}
+        </>
+      )}
+    </Wrapper>
+  )
+}

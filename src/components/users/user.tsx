@@ -20,6 +20,7 @@ import {
   useExportCards,
   useImportCards,
 } from '@/hooks/useCards'
+import { usePaths } from '@/hooks/usePaths'
 import { getLocalDate } from '@/utils/getLocalDate'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Download, Mail } from 'lucide-react'
@@ -111,6 +112,7 @@ export const User = ({
     resolver: zodResolver(importSchema),
   })
 
+  const { usersPath } = usePaths()
   const { theme } = useTheme()
   const { isCaptchaShown, captchaToken, setIsCaptchaShown, onCaptcha } =
     useCaptcha()
@@ -119,7 +121,7 @@ export const User = ({
   const [fileLink, setFileLink] = useState<string>()
   const [fileName, setFileName] = useState<string>()
 
-  const userProfileLink = isOpen ? '/users' : `/user/${id}`
+  const userProfileLink = isOpen ? usersPath : `/user/${id}`
   const userProfileText = isOpen ? 'Close user profile' : 'Open user profile'
   const isCurrentUser = isMeSuccess && id === meData.id
   const isCurrentUserOpen = isCurrentUser && isOpen
