@@ -9,6 +9,7 @@ import { Header } from '@/components/header/header'
 import { LoaderBar } from '@/components/loaderBar'
 import { Screensaver } from '@/components/screensaver'
 import { YandexMetrica } from '@/components/yandexMetrica'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { ViewTransitions } from 'next-view-transitions'
 import { type ReactNode, Suspense } from 'react'
 
@@ -44,6 +45,7 @@ export default function RootLayout({
     <ViewTransitions>
       <Html suppressHydrationWarning>
         <Body>
+          <GoogleAnalytics gaId='G-Y7FT8GCWLH' />
           <Suspense>
             <YandexMetrica />
           </Suspense>
