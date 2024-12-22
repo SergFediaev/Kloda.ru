@@ -1,5 +1,5 @@
 import { Wrapper } from '@/components/containers/wrapper'
-import { CardControl } from '@/components/header/menu/cardControl'
+import { CardControlWrapper } from '@/components/header/menu/cardControlWrapper'
 import { CategoriesSelect } from '@/components/header/menu/nav/categoriesSelect'
 import { Search } from '@/components/header/menu/search/search'
 import { Heading } from '@/components/heading'
@@ -11,7 +11,7 @@ export const Toolbar = () =>
   ) : (
     <Wrapper as='nav' hasGaps>
       <Search />
-      <CardControl />
+      <CardControlWrapper />
       <CategoriesSelect />
     </Wrapper>
   )

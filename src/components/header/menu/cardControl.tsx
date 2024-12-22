@@ -3,7 +3,6 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { useGetCard, useGetRandomCard } from '@/hooks/useCards'
-import { usePaths } from '@/hooks/usePaths'
 import { CircleChevronLeft, CircleChevronRight, Dices } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import Link from 'next/link'
@@ -11,10 +10,6 @@ import { useParams, useSearchParams } from 'next/navigation'
 import queryString from 'query-string'
 
 export const CardControl = () => {
-  if (usePaths().isNotCardPath) {
-    return null
-  }
-
   const router = useTransitionRouter()
   const { id } = useParams<{ id: string }>()
   const categories = useSearchParams().getAll('categories')
