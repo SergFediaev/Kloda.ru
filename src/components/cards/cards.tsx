@@ -12,15 +12,15 @@ import { cardsModeStore } from '@/stores/cardsModeStore'
 import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import { useState } from 'react'
 
-const SORTS = {
-  id: 'ID',
-  title: 'Title',
-  content: 'Content',
-  favorites: 'Favorites',
-  likes: 'Likes',
-  dislikes: 'Dislikes',
+const SORTS_CARDS = {
   authorId: 'Author',
+  content: 'Content',
   createdAt: 'Created',
+  dislikes: 'Dislikes',
+  favorites: 'Favorites',
+  id: 'ID',
+  likes: 'Likes',
+  title: 'Title',
   updatedAt: 'Updated',
 } as const
 
@@ -101,7 +101,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
         limit={limit}
         order={order}
         sort={sort}
-        sorts={SORTS}
+        sorts={SORTS_CARDS}
         totalItems={totalCards}
         totalPages={totalPages}
         itemsCount={cards.length}
