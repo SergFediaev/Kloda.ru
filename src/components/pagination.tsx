@@ -19,7 +19,7 @@ const ORDERS = {
 } as const
 
 // ToDo: string[]
-const QUANTITIES = [5, 10, 15, 20, 25, 30, 50, 70, 100] as const
+const QUANTITIES = [5, 10, 20, 50, 100] as const
 
 type Key = 'page' | 'limit' | 'order' | 'sort'
 
