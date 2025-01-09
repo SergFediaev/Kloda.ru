@@ -5,16 +5,18 @@ import { Dumbbell, GraduationCap } from 'lucide-react'
 
 export const CardsModeButton = () => {
   const { isStudyMode, toggleStudyMode } = cardsModeStore()
-
-  if (usePaths().isNotCardablePath) {
-    return null
-  }
+  const { isCardsPath } = usePaths()
 
   const modeIcon = isStudyMode ? <Dumbbell /> : <GraduationCap />
   const modeTitle = isStudyMode ? 'Enable practice mode' : 'Enable study mode'
 
   return (
-    <Button variant='text' title={modeTitle} onClick={toggleStudyMode}>
+    <Button
+      isDisabled={!isCardsPath}
+      variant='text'
+      title={modeTitle}
+      onClick={toggleStudyMode}
+    >
       {modeIcon}
     </Button>
   )
