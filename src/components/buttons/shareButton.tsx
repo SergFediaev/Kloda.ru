@@ -20,16 +20,16 @@ export const ShareButton = ({
   ...restProps
 }: Props) => {
   const isShareable = !!navigator.share
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   const title = isShareable ? shareTitle : copyTitle
   const icon = isShareable ? <Share2 /> : <LinkIcon />
 
   const shareFallback = () => copyToClipboard(url, notification, theme)
 
   const share = async () => {
-    if (!isShareable || (isShareable && !isMobile)) {
+    if (!isShareable) {
       return await shareFallback()
     }
+
     try {
       await navigator.share({
         url,
@@ -37,6 +37,7 @@ export const ShareButton = ({
       })
     } catch (error) {
       console.error(error)
+
       await shareFallback()
     }
   }
