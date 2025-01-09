@@ -5,6 +5,7 @@ import { useThemes } from '@/hooks/useThemes'
 import { useWidth } from '@/hooks/useWidth'
 import { cn } from '@/utils/mergeClasses'
 import { setFirstPage } from '@/utils/setFirstPage'
+import { sortCategories } from '@/utils/sortCategories'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Select from 'react-select'
 import colors from 'tailwindcss/colors'
@@ -30,6 +31,7 @@ export const CategoriesSelect = () => {
   }
 
   const categories = data ?? []
+  const categoriesSorted = sortCategories(categories)
   const hasNotCategories = data?.length === 0
   const selectedCategories = searchParams.getAll('categories')
 
@@ -39,7 +41,7 @@ export const CategoriesSelect = () => {
       ? `${ALL_CATEGORIES} (${data.length})`
       : ALL_CATEGORIES
 
-  const options: Options = categories.map(
+  const options: Options = categoriesSorted.map(
     ({ name, displayName, cardsCount }) => ({
       label: `${displayName} (${cardsCount})`,
       value: name,

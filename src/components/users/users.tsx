@@ -8,16 +8,16 @@ import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
 import { useState } from 'react'
 
-const SORTS = {
-  id: 'ID',
-  username: 'Username',
-  email: 'Email',
+const SORTS_USERS = {
   createdCardsCount: 'Created cards',
-  favoriteCardsCount: 'Favorite cards',
-  likedCardsCount: 'Liked cards',
   dislikedCardsCount: 'Disliked cards',
-  registeredAt: 'Registered',
+  email: 'Email',
+  favoriteCardsCount: 'Favorite cards',
+  id: 'ID',
   lastLoginAt: 'Last login',
+  likedCardsCount: 'Liked cards',
+  registeredAt: 'Registered',
+  username: 'Username',
 } as const
 
 type Props = {
@@ -63,7 +63,7 @@ export const Users = (props: Props) => {
         limit={limit}
         order={order}
         sort={sort}
-        sorts={SORTS}
+        sorts={SORTS_USERS}
         totalItems={totalUsers}
         totalPages={totalPages}
         itemsCount={users.length}
