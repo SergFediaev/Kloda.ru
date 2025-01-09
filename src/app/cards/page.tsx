@@ -19,7 +19,7 @@ type Props = {
   }
 }
 
-export default async function CardsPage({ searchParams }: Props) {
+export default function CardsPage({ searchParams }: Props) {
   return (
     <Container>
       <Cards
