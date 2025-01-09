@@ -20,7 +20,8 @@ type Props = {
 }
 
 // ToDo: README.md
-export default function CardsPage({ searchParams }: Props) {
+export default async function CardsPage({ searchParams }: Props) {
+  await new Promise(resolve => setTimeout(resolve, 3000))
   return (
     <Container>
       <Cards
