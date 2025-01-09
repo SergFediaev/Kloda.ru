@@ -24,19 +24,20 @@ export const ShareButton = ({
   const title = isShareable ? shareTitle : copyTitle
   const icon = isShareable ? <Share2 /> : <LinkIcon />
 
+  const shareFallback = () => copyToClipboard(url, notification, theme)
+
   const share = async () => {
-    if (isShareable && isMobile) {
-      try {
-        await navigator.share({
-          url,
-          title: url,
-        })
-      } catch (error) {
-        console.log('Failed to share', error)
-        await copyToClipboard(url, notification, theme)
-      }
-    } else {
-      await copyToClipboard(url, notification, theme)
+    if (!isShareable || (isShareable && !isMobile)) {
+      return await shareFallback()
+    }
+    try {
+      await navigator.share({
+        url,
+        title: url,
+      })
+    } catch (error) {
+      console.error(error)
+      await shareFallback()
     }
   }
 
