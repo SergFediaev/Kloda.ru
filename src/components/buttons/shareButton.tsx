@@ -23,9 +23,9 @@ export const ShareButton = ({
   const title = isShareable ? shareTitle : copyTitle
   const icon = isShareable ? <Share2 /> : <LinkIcon />
 
-  const shareFallback = () => copyToClipboard(url, notification, theme)
-
   const share = async () => {
+    const shareFallback = () => copyToClipboard(url, notification, theme)
+
     if (!isShareable) {
       return await shareFallback()
     }
