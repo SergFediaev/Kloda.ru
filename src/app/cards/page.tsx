@@ -19,10 +19,7 @@ type Props = {
   }
 }
 
-// ToDo: README.md
 export default async function CardsPage({ searchParams }: Props) {
-  await new Promise(resolve => setTimeout(resolve, 3000))
-  throw new Error()
   return (
     <Container>
       <Cards
