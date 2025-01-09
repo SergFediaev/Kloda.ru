@@ -20,16 +20,25 @@ export const ShareButton = ({
   ...restProps
 }: Props) => {
   const isShareable = !!navigator.share
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   const title = isShareable ? shareTitle : copyTitle
   const icon = isShareable ? <Share2 /> : <LinkIcon />
 
-  const share = () =>
-    isShareable
-      ? navigator.share({
+  const share = async () => {
+    if (isShareable && isMobile) {
+      try {
+        await navigator.share({
           url,
           title: url,
         })
-      : copyToClipboard(url, notification, theme)
+      } catch (error) {
+        console.log('Failed to share', error)
+        await copyToClipboard(url, notification, theme)
+      }
+    } else {
+      await copyToClipboard(url, notification, theme)
+    }
+  }
 
   return (
     <Button variant='text' onClick={share} title={title} {...restProps}>
