@@ -23,13 +23,24 @@ export const ShareButton = ({
   const title = isShareable ? shareTitle : copyTitle
   const icon = isShareable ? <Share2 /> : <LinkIcon />
 
-  const share = () =>
-    isShareable
-      ? navigator.share({
-          url,
-          title: url,
-        })
-      : copyToClipboard(url, notification, theme)
+  const share = async () => {
+    const shareFallback = () => copyToClipboard(url, notification, theme)
+
+    if (!isShareable) {
+      return await shareFallback()
+    }
+
+    try {
+      await navigator.share({
+        url,
+        title: url,
+      })
+    } catch (error) {
+      console.error(error)
+
+      await shareFallback()
+    }
+  }
 
   return (
     <Button variant='text' onClick={share} title={title} {...restProps}>
