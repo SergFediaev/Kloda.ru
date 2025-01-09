@@ -19,7 +19,6 @@ type Props = {
   }
 }
 
-// ToDo: README.md
 export default function CardsPage({ searchParams }: Props) {
   return (
     <Container>
