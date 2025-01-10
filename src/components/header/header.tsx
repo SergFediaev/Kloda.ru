@@ -7,6 +7,7 @@ import {
   type MenuProps,
 } from '@/components/header/menu/desktopMenu'
 import { MobileMenu } from '@/components/header/menu/mobileMenu'
+import { MovingAlert } from '@/components/header/movingAlert'
 import { useMe } from '@/hooks/useAuth'
 import { useMenu } from '@/hooks/useMenu'
 import { useWidth } from '@/hooks/useWidth'
@@ -30,13 +31,18 @@ export const Header = () => {
   )
 
   // ToDo: Refactor background styles to style
-  return isMenuExpanded ? (
-    <header className='sticky top-0 z-30 flex min-h-[90px] items-center bg-surface bg-opacity-70 shadow-md backdrop-blur-xl dark:bg-surface-dark dark:bg-opacity-70'>
-      <Container>{menu}</Container>
-    </header>
-  ) : (
-    <Button variant='floating' onClick={expandMenu} title='Expand menu'>
-      <Menu />
-    </Button>
+  return (
+    <>
+      <MovingAlert />
+      {isMenuExpanded ? (
+        <header className='sticky top-0 z-30 flex min-h-[90px] items-center bg-surface bg-opacity-70 shadow-md backdrop-blur-xl dark:bg-surface-dark dark:bg-opacity-70'>
+          <Container>{menu}</Container>
+        </header>
+      ) : (
+        <Button variant='floating' onClick={expandMenu} title='Expand menu'>
+          <Menu />
+        </Button>
+      )}
+    </>
   )
 }
