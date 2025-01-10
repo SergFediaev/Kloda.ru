@@ -511,7 +511,7 @@ export const TextToSpeech = ({
           <Image
             src='/gifs/visualization.gif'
             alt='Visualization'
-            title="I'm not an anime fan, but they say projects work better with it :D"
+            title='Not an anime fan, but they say projects work better with it :D'
             width='361'
             height='455'
             unoptimized

@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "prod": "next build && next start",
-    "dev": "next dev -p 5555",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "bunx biome lint --write --unsafe ./src",
-    "format": "bunx biome format --write ./src"
+    "format": "bunx biome format --write ./src",
+    "biome": "bunx biome check --write ./src"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

@@ -58,6 +58,7 @@
 - Индикатор загрузки: [Holy Loader](https://github.com/tomcru/holy-loader).
 - Плавные переходы между страницами: [View Transitions API](https://github.com/shuding/next-view-transitions).
 - Всплывающие уведомления: [React-Toastify](https://github.com/fkhadra/react-toastify).
+- Минификация ресурсов.
 
 ## 🗝️ Основные возможности
 
