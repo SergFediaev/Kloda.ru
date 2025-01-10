@@ -3,12 +3,25 @@ import { Container } from '@/components/containers/container'
 import { List } from '@/components/containers/list'
 import { OrderedList } from '@/components/containers/orderedList'
 import { Heading } from '@/components/heading'
+import { CoreFeatures } from '@/components/landing/coreFeatures'
+import { Introduction } from '@/components/landing/introduction'
+import { Statement } from '@/components/landing/statement'
 import { Link } from 'next-view-transitions'
 
-// ToDo: Refactor manual link to usePaths.
 export default function HomePage() {
   return (
+    <div className='w-full'>
+      <Introduction />
+      <CoreFeatures />
+      <Statement />
+    </div>
+  )
+}
+
+const Slides = () => {
+  return (
     <Container isCentered>
+      (
       <Block
         heading='Kloda: Your Ultimate Flashcard Learning Tool'
         className='max-w-2xl'
@@ -223,6 +236,7 @@ export default function HomePage() {
           </li>
         </OrderedList>
       </Block>
+      )
     </Container>
   )
 }
