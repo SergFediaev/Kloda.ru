@@ -8,16 +8,13 @@ import { Introduction } from '@/components/landing/introduction'
 import { Statement } from '@/components/landing/statement'
 import { Link } from 'next-view-transitions'
 
-// ToDo: Refactor manual link to usePaths.
 export default function HomePage() {
   return (
-    <>
-      <div className='flex h-dvh min-h-full w-full flex-col items-center'>
-        <Introduction />
-        <CoreFeatures />
-        <Statement />
-      </div>
-    </>
+    <div className='w-full'>
+      <Introduction />
+      <CoreFeatures />
+      <Statement />
+    </div>
   )
 }
 

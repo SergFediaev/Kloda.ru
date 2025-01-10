@@ -1,27 +1,23 @@
 import { Button } from '@/components/buttons/button'
-import { Text } from '@/components/containers/text'
-import { Heading } from '@/components/heading'
+import { Container } from '@/components/containers/container'
+import { Section } from '@/components/landing/section'
 import { Link } from 'next-view-transitions'
-import * as React from 'react'
 
 export const Introduction = () => {
   return (
-    <section className='flex min-h-1/3 w-full flex-col items-center justify-center gap-7 bg-accent-variant p-24 align-middle text-white shadow-md backdrop-blur-2xl selection:bg-black'>
-      <Heading as='h1' className='font-black text-6xl'>
-        <Text isCapitalize>Kloda</Text>
-      </Heading>
-      <div className='text-4xl text-white'>
-        A powerful tool to help you study smarter
-      </div>
-      <Button
-        className='border-3 text-2xl'
-        type={'button'}
-        variant='outline'
-        as={Link}
-        href='/cards'
-      >
-        Get started
-      </Button>
-    </section>
+    <Section className='bg-accent-variant text-4xl text-primary-dark selection:bg-black'>
+      <Container className='flex flex-col items-center gap-5'>
+        <h1 className='font-extrabold text-6xl'>Kloda</h1>
+        <p className='text-center'>A powerful tool to help you study smarter</p>
+        <Button
+          className='border-3 text-base uppercase transition-opacity hover:opacity-80'
+          variant='outline'
+          as={Link}
+          href='/cards'
+        >
+          Get started
+        </Button>
+      </Container>
+    </Section>
   )
 }
