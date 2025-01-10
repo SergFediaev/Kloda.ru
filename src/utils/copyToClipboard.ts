@@ -10,5 +10,6 @@ export const copyToClipboard = async (
     toast(notification, { theme, type: 'info' })
   } catch (error) {
     console.error(error)
+    toast('Failed to share', { theme, type: 'error' })
   }
 }

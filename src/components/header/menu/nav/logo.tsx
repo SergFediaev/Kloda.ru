@@ -13,14 +13,14 @@ export const Logo = () => {
   const element = isHomePath ? TITLE : <Link href={homePath}>{TITLE}</Link>
   const logoTitle = `Network status: ${isOnline ? 'online' : 'offline'}`
   const logoIcon = isOnline ? (
-    <Spade className='hover:animate-heartbeat' />
+    <Spade className='hover:animate-heartbeat' strokeWidth={3} />
   ) : (
     <Unplug className='text-danger dark:text-danger-dark' />
   )
 
   // ToDo: Custom wrap style
   return (
-    <Heading as='h1' className='flex flex-wrap items-center'>
+    <Heading as='h1' className='flex flex-wrap items-center font-semibold'>
       {element}
       &nbsp;
       <span title={logoTitle}>{logoIcon}</span>
