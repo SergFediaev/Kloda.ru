@@ -3,7 +3,7 @@ import { Heading } from '@/components/heading'
 import { Link } from 'next-view-transitions'
 import React, { type ComponentPropsWithoutRef } from 'react'
 
-export const Castomization = () => {
+export const CustomizationSlide = () => {
   return (
     <div>
       <Heading as='h3' isSemiBold>

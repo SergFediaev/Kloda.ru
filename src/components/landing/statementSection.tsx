@@ -2,7 +2,7 @@ import { Container } from '@/components/containers/container'
 import { Section } from '@/components/landing/section'
 import { Summary } from '@/components/landing/summary'
 
-export const Statement = () => {
+export const StatementSection = () => {
   return (
     <Section className='dark:selection:bg-white'>
       <Container className='gap-5'>

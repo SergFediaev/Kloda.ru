@@ -1,8 +1,8 @@
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
-import React, { type ComponentPropsWithoutRef } from 'react'
+import React from 'react'
 
-export const Modes = () => {
+export const CategoriesSlide = () => {
   return (
     <div>
       <Heading as='h3' isSemiBold>

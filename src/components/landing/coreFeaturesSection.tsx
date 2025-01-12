@@ -4,7 +4,7 @@ import { Section } from '@/components/landing/section'
 import { Subheading } from '@/components/landing/subheading'
 import { Bike, HeartHandshake, Rocket, Trophy } from 'lucide-react'
 
-export const CoreFeatures = () => {
+export const CoreFeaturesSection = () => {
   return (
     <Section className='bg-surface dark:bg-surface-dark'>
       <Container className='flex flex-wrap justify-around gap-10'>
@@ -39,7 +39,7 @@ export const CoreFeatures = () => {
           </Subheading>
           <p>
             Keep yourself accountable by sharing your progress and achievements.
-            Invite study-budies via links to cards and curated collections.
+            Invite study-buddies via links to cards and curated collections.
             Like, dislike, and favorite flashcards to tailor your study lists.
           </p>
           <div />
@@ -53,7 +53,7 @@ export const CoreFeatures = () => {
             Learn by listening while exercising, commuting, walking, or doing
             household chores—making Kloda the perfect companion for a busy
             lifestyle. Engage your other senses and enhance memory retention
-            awith audio.
+            with audio.
           </p>
         </Aside>
       </Container>

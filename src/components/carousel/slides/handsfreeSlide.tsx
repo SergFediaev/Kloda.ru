@@ -2,7 +2,7 @@ import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
 import React from 'react'
 
-export const Handsfree = () => {
+export const HandsfreeSlide = () => {
   return (
     <div>
       <Heading as='h3' isSemiBold>

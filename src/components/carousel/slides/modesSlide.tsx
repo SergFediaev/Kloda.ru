@@ -2,7 +2,7 @@ import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
 import React, { type ComponentPropsWithoutRef } from 'react'
 
-export const Modes = () => {
+export const ModesSlide = () => {
   return (
     <div>
       <Heading as='h3' isSemiBold>

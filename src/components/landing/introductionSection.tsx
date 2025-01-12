@@ -3,7 +3,7 @@ import { Container } from '@/components/containers/container'
 import { Section } from '@/components/landing/section'
 import { Link } from 'next-view-transitions'
 
-export const Introduction = () => {
+export const IntroductionSection = () => {
   return (
     <Section className='bg-accent-variant text-4xl text-primary-dark selection:bg-black'>
       <Container className='flex flex-col items-center gap-5'>
