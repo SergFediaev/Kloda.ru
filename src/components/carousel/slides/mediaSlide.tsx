@@ -1,14 +1,15 @@
+import { Container } from '@/components/containers/container'
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
-import React, { type ComponentPropsWithoutRef } from 'react'
+import React from 'react'
 
 export const MediaSlide = () => {
   return (
-    <div>
-      <Heading as='h3' isSemiBold>
+    <Container className='flex flex-col gap-5 p-x-20 text-large text-stone-700 dark:text-stone-400'>
+      <Heading as='h3' isSemiBold className='font-bold text-2xl'>
         Smart Link Handling
       </Heading>
-      <List hasIndent hasDisc>
+      <List hasIndent hasDisc className='flex flex-col gap-5'>
         <li>
           Regular links are automatically converted into numbered clickable
           labels [link #1], [link #2], making them easy to identify, use and
@@ -23,6 +24,6 @@ export const MediaSlide = () => {
           you find them distracting at any time.
         </li>
       </List>
-    </div>
+    </Container>
   )
 }

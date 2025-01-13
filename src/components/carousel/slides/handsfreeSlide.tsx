@@ -1,52 +1,35 @@
+import { Container } from '@/components/containers/container'
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
 import React from 'react'
 
 export const HandsfreeSlide = () => {
   return (
-    <div>
-      <Heading as='h3' isSemiBold>
-        Text-to-Speech with Dynamic Playlists
+    <Container className='flex flex-col gap-5 p-x-20 text-large text-stone-700 dark:text-stone-400'>
+      <Heading as='h3' isSemiBold className='font-bold text-2xl'>
+        Hands-Free
       </Heading>
-      <p>
-        Learn by listening while exercising, commuting, walking, or doing
-        household chores—making Kloda the perfect companion for a busy
-        lifestyle.
-      </p>
-      <List hasIndent hasDisc>
+      <List hasIndent hasDisc className='flex flex-col gap-5'>
         <li>
-          <strong className='font-medium'>Text-to-Speech (TTS)</strong>
-          &nbsp;feature is a game-changer. It is developed, fully tested and
-          built-in for any user who prefers learning by ear.
+          Our <strong className='font-medium'>signature</strong> feature is a
+          game-changer. It is designed for everyone who wants to boost their
+          memory retention through audio cues.
         </li>
         <li>
-          Engage your other senses and enhance memory retention as all
-          flashcards are easily transformed into audio, enabling you to study
-          hands-free, anytime, anywhere.
+          Engage your other senses as all flashcards are easily transformed into
+          audio, enabling you to study hands-free, anytime, anywhere.
         </li>
         <li>
-          Search field is also tuned to built-in voice recognition, a useful
-          feature if you are studying on the go. Search results go automatically
-          to a dynamically labeled playlist.
+          The <strong className='font-medium'>Hands-Free</strong> player keeps
+          every active audio clearly outlined and linked to related flashcards
+          if you decide to check-up graphics alongside audio.
         </li>
         <li>
-          Playlists are generated on-the-fly based on the current set of cards,
-          including applied filters and sorting options, or even current search
-          results! Just choose a card, start the player and expand the list.
-        </li>
-        <li>
-          TTS player keeps every active audio clearly outlined and linked to
-          related flashcards if you decide to check-up graphics alongside audio.
-        </li>
-        <li>
-          Or you can give TTS a supporting role by starting from a single card
-          view-mode and collapsing the player.
-        </li>
-        <li>
-          Make Kloda TTS your fun study buddy or wiser mentor by customizing the
-          accent, voice, pitch, and speed of your text-to-speech player.
+          Make Kloda your fun study buddy or wiser mentor by customizing the
+          accent, voice, pitch, and speed of your{' '}
+          <strong className='font-medium'>Hands-Free</strong> player.
         </li>
       </List>
-    </div>
+    </Container>
   )
 }

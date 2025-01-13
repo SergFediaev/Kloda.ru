@@ -1,0 +1,7 @@
+export * from './categoriesSlide'
+export * from './playlistsSlide'
+export * from './customizationSlide'
+export * from './mediaSlide'
+export * from './managementSlide'
+export * from './handsfreeSlide'
+export * from './modesSlide'

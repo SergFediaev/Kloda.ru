@@ -1,5 +1,5 @@
 import { Container } from '@/components/containers/container'
-import { Section } from '@/components/landing/section'
+
 import React from 'react'
 
 export const Summary = () => {

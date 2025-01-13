@@ -11,19 +11,18 @@ export const CoreFeaturesSection = () => {
         <Aside>
           <Subheading>
             <Trophy absoluteStrokeWidth size={72} strokeWidth={6} />
-            <h3 className='font-bold text-3xl'>Efficient</h3>
+            <h2 className='font-bold text-3xl'>Efficient</h2>
           </Subheading>
           <p>
             Maximize the versatility of study methods and media support. Benefit
             from the experience of others or craft your own path to success.
-            Utilize custom audio playlists, study timer, randomizer and quiz
-            wheel.
+            Utilize custom audio playlists, randomizer, study-timer and quizz.
           </p>
         </Aside>
         <Aside>
           <Subheading>
             <Rocket absoluteStrokeWidth size={72} strokeWidth={6} />
-            <h3 className='font-bold text-3xl'>Interactive</h3>
+            <h2 className='font-bold text-3xl'>Interactive</h2>
           </Subheading>
           <p>
             Flexible randomizer will keep you alert and engaged. Full content or
@@ -35,7 +34,7 @@ export const CoreFeaturesSection = () => {
         <Aside>
           <Subheading>
             <HeartHandshake size={72} />
-            <h3 className='font-bold text-3xl'>Social</h3>
+            <h2 className='font-bold text-3xl'>Social</h2>
           </Subheading>
           <p>
             Keep yourself accountable by sharing your progress and achievements.
@@ -47,7 +46,7 @@ export const CoreFeaturesSection = () => {
         <Aside>
           <Subheading>
             <Bike absoluteStrokeWidth size={72} strokeWidth={6} />
-            <h3 className='font-bold text-3xl'>Hands-free</h3>
+            <h2 className='font-bold text-3xl'>Hands-free</h2>
           </Subheading>
           <p>
             Learn by listening while exercising, commuting, walking, or doing
