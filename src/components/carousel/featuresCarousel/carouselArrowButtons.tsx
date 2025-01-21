@@ -1,4 +1,3 @@
-import { cn } from '@/utils/mergeClasses'
 import type { EmblaCarouselType } from 'embla-carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type React from 'react'
@@ -57,9 +56,7 @@ export const usePrevNextButtons = (
 
 type PropType = ComponentPropsWithRef<'button'>
 
-export const PrevButton: React.FC<PropType> = props => {
-  const { children, ...restProps } = props
-
+export const PrevButton = ({ children, ...restProps }: PropType) => {
   return (
     <button
       className='touch-action: manipulation disabled: z-10 m-0 inline-flex h-12 w-12 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white transition-opacity dark:bg-[hsl(24,100%,50%)]'
@@ -72,9 +69,7 @@ export const PrevButton: React.FC<PropType> = props => {
   )
 }
 
-export const NextButton: React.FC<PropType> = props => {
-  const { children, ...restProps } = props
-
+export const NextButton = ({ children, ...restProps }: PropType) => {
   return (
     <button
       className='touch-action: manipulation z-10 m-0 inline-flex h-12 w-12 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white'

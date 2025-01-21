@@ -1,7 +1,7 @@
 import { cn } from '@/utils/mergeClasses'
 import type { ComponentPropsWithoutRef } from 'react'
 
-export const Slide = ({
+export const FeaturesSlide = ({
   className,
   children,
   ...restProps

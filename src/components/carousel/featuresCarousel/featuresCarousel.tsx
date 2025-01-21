@@ -4,12 +4,12 @@ import {
   NextButton,
   PrevButton,
   usePrevNextButtons,
-} from '@/components/carousel/carouselArrowButtons'
+} from '@/components/carousel/featuresCarousel/carouselArrowButtons'
 import {
   DotButton,
   useDotButton,
-} from '@/components/carousel/carouselDotButton'
-import { Slide } from '@/components/carousel/slide'
+} from '@/components/carousel/featuresCarousel/carouselDotButton'
+
 import {
   CategoriesSlide,
   CustomizationSlide,
@@ -18,21 +18,21 @@ import {
   MediaSlide,
   ModesSlide,
   PlaylistsSlide,
-} from '@/components/carousel/slides'
+} from '@/components/carousel/featuresCarousel/featureSlides'
+import { FeaturesSlide } from '@/components/carousel/featuresCarousel/featuresSlide'
 import { cn } from '@/utils/mergeClasses'
 import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel'
-import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import type React from 'react'
 import { useCallback } from 'react'
 
 type PropType = {
-  slides: number[]
+  slides?: number[]
   options?: EmblaOptionsType
 }
 
-const Carousel = ({ slides, options }: PropType) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
+const FeaturesCarousel = ({ options }: PropType) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(options /*[Autoplay()]*/)
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
     const autoplay = emblaApi?.plugins()?.autoplay
@@ -62,53 +62,56 @@ const Carousel = ({ slides, options }: PropType) => {
     <section>
       <div ref={emblaRef} className='overflow-hidden '>
         <div className='flex touch-pan-y touch-pinch-zoom items-center'>
-          <Slide>
+          <FeaturesSlide>
             <HandsfreeSlide />
-          </Slide>
-          <Slide>
+          </FeaturesSlide>
+          <FeaturesSlide>
             <PlaylistsSlide />
-          </Slide>
-          <Slide>
+          </FeaturesSlide>
+          <FeaturesSlide>
             <ModesSlide />
-          </Slide>
-          <Slide>
+          </FeaturesSlide>
+          <FeaturesSlide>
             <CategoriesSlide />
-          </Slide>
-          <Slide>
+          </FeaturesSlide>
+          <FeaturesSlide>
             <MediaSlide />
-          </Slide>
-          <Slide>
+          </FeaturesSlide>
+          <FeaturesSlide>
             <ManagementSlide />
-          </Slide>
-          <Slide>
+          </FeaturesSlide>
+          <FeaturesSlide>
             <CustomizationSlide />
-          </Slide>
+          </FeaturesSlide>
         </div>
       </div>
 
-      <div className='grid grid-cols-[auto_1fr]'>
-        {/*        <div className='flex gap-5'>
+      <div className='grid grid-cols-[auto_1fr] px-20'>
+        <div className='flex gap-5'>
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        </div>*/}
+        </div>
 
         <div className='-mr-0.5 flex flex-wrap items-center justify-end gap-x-2.5'>
-          {scrollSnaps.map((_, index) => (
-            <DotButton
-              key={index}
-              onClick={() => onDotButtonClick(index)}
-              className={cn(
-                'h-5 w-5 rounded-full border-4 border-accent transition-opacity disabled:opacity-50',
-                index === selectedIndex
-                  ? 'scale-125 border-0 bg-accent transition-all duration-200 dark:bg-[hsl(24,100%,50%)]'
-                  : '',
-              )}
-            />
-          ))}
+          {scrollSnaps.map((_, index) => {
+            const dotIndex = index
+            return (
+              <DotButton
+                key={dotIndex}
+                onClick={() => onDotButtonClick(dotIndex)}
+                className={cn(
+                  'h-5 w-5 rounded-full border-4 border-accent transition-opacity disabled:opacity-50',
+                  dotIndex === selectedIndex
+                    ? 'scale-125 border-0 bg-accent transition-all duration-200 dark:bg-[hsl(24,100%,50%)]'
+                    : '',
+                )}
+              />
+            )
+          })}
         </div>
       </div>
     </section>
   )
 }
 
-export default Carousel
+export default FeaturesCarousel

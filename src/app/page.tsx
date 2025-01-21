@@ -1,7 +1,8 @@
-import { CarouselSection } from '@/components/landing/carouselSection'
-import { CoreFeaturesSection } from '@/components/landing/coreFeaturesSection'
-import { IntroductionSection } from '@/components/landing/introductionSection'
-import { StatementSection } from '@/components/landing/statementSection'
+import { CoreFeaturesSection } from '@/components/landing/sections/coreFeaturesSection'
+import { FeaturesSection } from '@/components/landing/sections/featuresSection'
+import { IntroductionSection } from '@/components/landing/sections/introductionSection'
+import { StatementSection } from '@/components/landing/sections/statementSection'
+import { TechSection } from '@/components/landing/sections/teckSection'
 
 export default function HomePage() {
   return (
@@ -9,7 +10,8 @@ export default function HomePage() {
       <IntroductionSection />
       <CoreFeaturesSection />
       <StatementSection />
-      <CarouselSection />
+      <FeaturesSection />
+      {/*  <TechSection />*/}
     </div>
   )
 }

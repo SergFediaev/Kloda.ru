@@ -22,6 +22,10 @@ export const PlaylistsSlide = () => {
           never been so seamless!
         </li>
         <li>
+          All cards are titled and automatically numbered which proves
+          especially useful when following along playlist position.
+        </li>
+        <li>
           Share your progress by sharing your playlists. Invitation to
           collaboration has never been easier. More users mean more cards and
           even better playlists.

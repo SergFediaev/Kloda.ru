@@ -18,15 +18,7 @@ export const CustomizationSlide = () => {
           Navigation experience is outstanding with featured category
           multi-select, pagination and multiple sort options.
         </li>
-        <li>
-          Detailed view lets you zoom-in on a flashcard and easily move between
-          the previous and the next — or roll the dice with the built-in
-          randomizer.
-        </li>
-        <li>
-          All cards are titled and automatically numbered which proves
-          especially useful when following along playlist position.
-        </li>
+
         <li>
           Critical actions, such as deleting items, are highlighted by color and
           trigger confirmation dialogs to provide safe delete options and

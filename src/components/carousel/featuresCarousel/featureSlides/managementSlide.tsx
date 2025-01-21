@@ -10,6 +10,11 @@ export const ManagementSlide = () => {
         Flashcards Management
       </Heading>
       <List hasIndent hasDisc className='flex flex-col gap-5'>
+        <li>
+          Detailed view lets you zoom-in on a flashcard and easily move between
+          the previous and the next — or roll the dice with the built-in
+          randomizer.
+        </li>
         <li>Create, edit, and delete flashcards as a registered user.</li>
         <li>
           Choose to focus on your personalized content or explore flashcards
