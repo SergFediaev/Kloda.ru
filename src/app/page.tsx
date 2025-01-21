@@ -11,7 +11,7 @@ export default function HomePage() {
       <CoreFeaturesSection />
       <StatementSection />
       <FeaturesSection />
-      {/*  <TechSection />*/}
+      <TechSection />
     </div>
   )
 }
