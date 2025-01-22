@@ -1,5 +1,5 @@
 import { Container } from '@/components/containers/container'
-import { Aside } from '@/components/landing/aside'
+import { Article } from '@/components/landing/article'
 import { Section } from '@/components/landing/section'
 import { Subheading } from '@/components/landing/subheading'
 import { Bike, HeartHandshake, Rocket, Trophy } from 'lucide-react'
@@ -8,7 +8,7 @@ export const CoreFeaturesSection = () => {
   return (
     <Section className='bg-surface dark:bg-surface-dark'>
       <Container className='flex flex-wrap justify-around gap-10'>
-        <Aside>
+        <Article>
           <Subheading>
             <Trophy absoluteStrokeWidth size={72} strokeWidth={6} />
             <h2 className='font-bold text-3xl'>Efficient</h2>
@@ -18,8 +18,8 @@ export const CoreFeaturesSection = () => {
             from the experience of others or craft your own path to success.
             Utilize custom audio playlists, randomizer, study-timer and quizz.
           </p>
-        </Aside>
-        <Aside>
+        </Article>
+        <Article>
           <Subheading>
             <Rocket absoluteStrokeWidth size={72} strokeWidth={6} />
             <h2 className='font-bold text-3xl'>Interactive</h2>
@@ -30,8 +30,8 @@ export const CoreFeaturesSection = () => {
             players with a single paste. Include charts, tables, or code
             snippets.
           </p>
-        </Aside>
-        <Aside>
+        </Article>
+        <Article>
           <Subheading>
             <HeartHandshake size={72} />
             <h2 className='font-bold text-3xl'>Social</h2>
@@ -42,8 +42,8 @@ export const CoreFeaturesSection = () => {
             Like, dislike, and favorite flashcards to tailor your study lists.
           </p>
           <div />
-        </Aside>
-        <Aside>
+        </Article>
+        <Article>
           <Subheading>
             <Bike absoluteStrokeWidth size={72} strokeWidth={6} />
             <h2 className='font-bold text-3xl'>Hands-free</h2>
@@ -54,7 +54,7 @@ export const CoreFeaturesSection = () => {
             lifestyle. Engage your other senses and enhance memory retention
             with audio.
           </p>
-        </Aside>
+        </Article>
       </Container>
     </Section>
   )
