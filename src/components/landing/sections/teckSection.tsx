@@ -10,7 +10,10 @@ const OPTIONS: EmblaOptionsType = {
 
 export function TechSection() {
   return (
-    <Section className='bg-surface text-surface-dark dark:bg-surface-dark dark:text-surface'>
+    <Section
+      className='bg-surface text-surface-dark dark:bg-surface-dark dark:text-surface'
+      title='Our trusted tech stack for this app'
+    >
       <TechCarousel options={OPTIONS} />
     </Section>
   )
