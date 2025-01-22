@@ -60,6 +60,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             'truncate rounded-xl px-4 py-2 shadow-inner',
             hasBorder && 'border-2 border-accent dark:border-accent-dark',
+            restProps.type === 'number' && 'text-right',
           )}
           {...restProps}
         />
