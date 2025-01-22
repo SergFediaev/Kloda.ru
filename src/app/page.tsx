@@ -5,7 +5,7 @@ import { OrderedList } from '@/components/containers/orderedList'
 import { Heading } from '@/components/heading'
 import { CoreFeatures } from '@/components/landing/coreFeatures'
 import { Introduction } from '@/components/landing/introduction'
-import { Statement } from '@/components/landing/statement'
+import { StatementSection } from '@/components/landing/statementSection'
 import { Link } from 'next-view-transitions'
 
 export default function HomePage() {
@@ -13,7 +13,7 @@ export default function HomePage() {
     <div className='w-full'>
       <Introduction />
       <CoreFeatures />
-      <Statement />
+      <StatementSection />
     </div>
   )
 }
