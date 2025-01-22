@@ -1,3 +1,4 @@
+import { FeaturesContainer } from '@/components/carousel/featuresCarousel/featuresContainer'
 import { Container } from '@/components/containers/container'
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
@@ -5,7 +6,7 @@ import React from 'react'
 
 export const HandsfreeSlide = () => {
   return (
-    <Container className='flex flex-col gap-5 p-x-20 text-large text-stone-700 dark:text-stone-400'>
+    <FeaturesContainer>
       <Heading as='h3' isSemiBold className='font-bold text-2xl'>
         Hands-Free
       </Heading>
@@ -30,6 +31,6 @@ export const HandsfreeSlide = () => {
           <strong className='font-medium'>Hands-Free</strong> player.
         </li>
       </List>
-    </Container>
+    </FeaturesContainer>
   )
 }

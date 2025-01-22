@@ -59,11 +59,11 @@ type PropType = ComponentPropsWithRef<'button'>
 export const PrevButton = ({ children, ...restProps }: PropType) => {
   return (
     <button
-      className='touch-action: manipulation disabled: z-10 m-0 inline-flex h-12 w-12 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white transition-opacity dark:bg-[hsl(24,100%,50%)]'
+      className='touch-action: manipulation disabled: z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white transition-opacity dark:bg-[hsl(24,100%,50%)]'
       type='button'
       {...restProps}
     >
-      <ChevronLeft strokeWidth={2} height={48} width={36} />
+      <ChevronLeft strokeWidth={2} height={48} width={36} className='pr-1' />
       {children}
     </button>
   )
@@ -72,11 +72,11 @@ export const PrevButton = ({ children, ...restProps }: PropType) => {
 export const NextButton = ({ children, ...restProps }: PropType) => {
   return (
     <button
-      className='touch-action: manipulation z-10 m-0 inline-flex h-12 w-12 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white'
+      className='touch-action: manipulation z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white'
       type='button'
       {...restProps}
     >
-      <ChevronRight strokeWidth={2} height={48} width={36} />
+      <ChevronRight strokeWidth={2} height={48} width={36} className='pl-1' />
       {children}
     </button>
   )
