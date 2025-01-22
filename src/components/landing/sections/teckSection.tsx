@@ -3,7 +3,10 @@ import { Section } from '@/components/landing/section'
 import type { EmblaOptionsType } from 'embla-carousel'
 import React from 'react'
 
-const OPTIONS: EmblaOptionsType = { loop: true, align: 'start' }
+const OPTIONS: EmblaOptionsType = {
+  loop: true,
+  align: 'start',
+}
 
 export function TechSection() {
   return (

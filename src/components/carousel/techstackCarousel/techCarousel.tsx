@@ -34,7 +34,9 @@ type PropType = {
 }
 
 const TechCarousel = ({ options }: PropType) => {
-  const [emblaRef] = useEmblaCarousel(options, [Autoplay()])
+  const [emblaRef] = useEmblaCarousel(options, [
+    Autoplay({ delay: 2500, stopOnInteraction: false }),
+  ])
 
   return (
     <div ref={emblaRef} className='overflow-hidden'>
