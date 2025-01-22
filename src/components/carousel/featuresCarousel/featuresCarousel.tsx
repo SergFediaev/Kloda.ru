@@ -100,10 +100,10 @@ const FeaturesCarousel = ({ options }: PropType) => {
                 key={dotIndex}
                 onClick={() => onDotButtonClick(dotIndex)}
                 className={cn(
-                  'h-5 w-5 flex-none rounded-full border-4 border-accent transition-opacity disabled:opacity-50',
+                  'h-5 w-5 flex-none rounded-full border-4 border-accent hover:border-accent-neon hover:bg-accent-neon hover:text-accent',
                   dotIndex === selectedIndex
-                    ? 'scale-125 border-0 bg-accent transition-all duration-200 dark:bg-[hsl(24,100%,50%)]'
-                    : '',
+                    ? 'scale-125 border-0 bg-accent transition-all duration-200 dark:bg-accent'
+                    : 'hover:scale-75',
                 )}
               />
             )

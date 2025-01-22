@@ -59,7 +59,7 @@ type PropType = ComponentPropsWithRef<'button'>
 export const PrevButton = ({ children, ...restProps }: PropType) => {
   return (
     <button
-      className='touch-action: manipulation disabled: z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white transition-opacity dark:bg-[hsl(24,100%,50%)]'
+      className='touch-action: manipulation disabled: z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white hover:bg-accent-neon'
       type='button'
       {...restProps}
     >
@@ -72,7 +72,7 @@ export const PrevButton = ({ children, ...restProps }: PropType) => {
 export const NextButton = ({ children, ...restProps }: PropType) => {
   return (
     <button
-      className='touch-action: manipulation z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white'
+      className='touch-action: manipulation z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent text-white hover:bg-accent-neon'
       type='button'
       {...restProps}
     >
