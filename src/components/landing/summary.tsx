@@ -1,7 +1,5 @@
 import { Container } from '@/components/containers/container'
 
-import React from 'react'
-
 export const Summary = () => {
   return (
     <Container>
