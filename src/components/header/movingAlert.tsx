@@ -11,7 +11,7 @@ export const MovingAlert = () => {
 
   return (
     <div className='bg-accent p-2 text-center text-white'>
-      Kloda has moved to{' '}
+      Kloda has moved to
       <a
         href='https://kloda.ru'
         className='border-amber-200 border-b-2 font-semibold text-amber-200 hover:text-amber-200'

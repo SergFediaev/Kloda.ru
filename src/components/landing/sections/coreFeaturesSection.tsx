@@ -1,29 +1,28 @@
 import { Container } from '@/components/containers/container'
-import { Aside } from '@/components/landing/aside'
+import { Article } from '@/components/landing/article'
 import { Section } from '@/components/landing/section'
 import { Subheading } from '@/components/landing/subheading'
 import { Bike, HeartHandshake, Rocket, Trophy } from 'lucide-react'
 
-export const CoreFeatures = () => {
+export const CoreFeaturesSection = () => {
   return (
     <Section className='bg-surface dark:bg-surface-dark'>
       <Container className='flex flex-wrap justify-around gap-10'>
-        <Aside>
+        <Article>
           <Subheading>
             <Trophy absoluteStrokeWidth size={72} strokeWidth={6} />
-            <h3 className='font-bold text-3xl'>Efficient</h3>
+            <h2 className='font-bold text-3xl'>Efficient</h2>
           </Subheading>
           <p>
             Maximize the versatility of study methods and media support. Benefit
             from the experience of others or craft your own path to success.
-            Utilize custom audio playlists, study timer, randomizer and quiz
-            wheel.
+            Utilize custom audio playlists, randomizer, study-timer and quizz.
           </p>
-        </Aside>
-        <Aside>
+        </Article>
+        <Article>
           <Subheading>
             <Rocket absoluteStrokeWidth size={72} strokeWidth={6} />
-            <h3 className='font-bold text-3xl'>Interactive</h3>
+            <h2 className='font-bold text-3xl'>Interactive</h2>
           </Subheading>
           <p>
             Flexible randomizer will keep you alert and engaged. Full content or
@@ -31,31 +30,31 @@ export const CoreFeatures = () => {
             players with a single paste. Include charts, tables, or code
             snippets.
           </p>
-        </Aside>
-        <Aside>
+        </Article>
+        <Article>
           <Subheading>
             <HeartHandshake size={72} />
-            <h3 className='font-bold text-3xl'>Social</h3>
+            <h2 className='font-bold text-3xl'>Social</h2>
           </Subheading>
           <p>
             Keep yourself accountable by sharing your progress and achievements.
-            Invite study-budies via links to cards and curated collections.
+            Invite study-buddies via links to cards and curated collections.
             Like, dislike, and favorite flashcards to tailor your study lists.
           </p>
           <div />
-        </Aside>
-        <Aside>
+        </Article>
+        <Article>
           <Subheading>
             <Bike absoluteStrokeWidth size={72} strokeWidth={6} />
-            <h3 className='font-bold text-3xl'>Hands-free</h3>
+            <h2 className='font-bold text-3xl'>Hands-free</h2>
           </Subheading>
           <p>
             Learn by listening while exercising, commuting, walking, or doing
             household chores—making Kloda the perfect companion for a busy
             lifestyle. Engage your other senses and enhance memory retention
-            awith audio.
+            with audio.
           </p>
-        </Aside>
+        </Article>
       </Container>
     </Section>
   )
