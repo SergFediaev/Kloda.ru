@@ -1,5 +1,6 @@
 'use client'
 
+import { usePaths } from '@/hooks/usePaths'
 import { generalSettingsStore } from '@/stores/generalSettingsStore'
 import { Noto_Color_Emoji } from 'next/font/google'
 
@@ -9,8 +10,16 @@ const noto = Noto_Color_Emoji({
   weight: '400',
 })
 
-export const EasterEgg = () =>
-  generalSettingsStore().isEasterEggEnabled ? (
+export const EasterEgg = () => {
+  const { isHomePath } = usePaths()
+  const { isEasterEggEnabled } = generalSettingsStore()
+  const showEasterEgg = !isHomePath && isEasterEggEnabled
+
+  if (!showEasterEgg) {
+    return null
+  }
+
+  return (
     <div className='overflow-hidden'>
       <div
         title='Easter egg can be disabled in settings'
@@ -20,4 +29,5 @@ export const EasterEgg = () =>
         <span className='text-xs leading-inherit'>🦔🦔🦔🐤🐤🐤🐤🐤</span>
       </div>
     </div>
-  ) : null
+  )
+}

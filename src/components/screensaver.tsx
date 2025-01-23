@@ -5,6 +5,7 @@ import {
   addActivityListeners,
   removeActivityListeners,
 } from '@/hooks/useActivity'
+import { usePaths } from '@/hooks/usePaths'
 import { screensaverStartStore } from '@/stores/screensaverStartStore'
 import { screensaverStore } from '@/stores/screensaverStore'
 import { minutesToMs } from '@/utils/minutesToMs'
@@ -19,8 +20,10 @@ export const Screensaver = () => {
     screensaverStartStore()
   const [isDisabled, setIsDisabled] = useState(true)
   const [runsSeconds, setRunsSeconds] = useState(INITIAL_RUNS_SECONDS)
+  const { isHomePath } = usePaths()
 
-  const isScreensaverDisabled = isDisabled && !isScreensaverStarted
+  const isScreensaverDisabled =
+    isHomePath || (isDisabled && !isScreensaverStarted)
 
   useEffect(() => {
     if (!isEnabled) {
