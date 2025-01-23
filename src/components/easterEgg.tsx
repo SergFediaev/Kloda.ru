@@ -12,9 +12,14 @@ const noto = Noto_Color_Emoji({
 
 export const EasterEgg = () => {
   const { isHomePath } = usePaths()
-  const showEasterEgg = !isHomePath && generalSettingsStore().isEasterEggEnabled
+  const { isEasterEggEnabled } = generalSettingsStore()
+  const showEasterEgg = !isHomePath && isEasterEggEnabled
 
-  return showEasterEgg ? (
+  if (!showEasterEgg) {
+    return null
+  }
+
+  return (
     <div className='overflow-hidden'>
       <div
         title='Easter egg can be disabled in settings'
@@ -24,5 +29,5 @@ export const EasterEgg = () => {
         <span className='text-xs leading-inherit'>🦔🦔🦔🐤🐤🐤🐤🐤</span>
       </div>
     </div>
-  ) : null
+  )
 }

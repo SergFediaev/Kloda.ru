@@ -10,7 +10,7 @@ export const IntroductionSection = () => {
         <h1 className='font-extrabold text-6xl'>Kloda</h1>
         <p className='text-center'>A powerful tool to help you study smarter</p>
         <Button
-          className='border-3 text-base uppercase hover:bg-accent-neon active:bg-accent-neon'
+          className='border-3 text-base uppercase transition hover:bg-accent-neon active:bg-accent-neon'
           variant='outline'
           as={Link}
           href='/cards'
