@@ -35,7 +35,7 @@ const config: Config = {
         },
         accent: {
           DEFAULT: colors.orange['600'],
-          neon: 'hsl(24,100%,50%)',
+          neon: 'hsl(24, 100%, 50%)',
           variant: colors.orange['700'],
           alternate: colors.orange['800'],
           dark: {
