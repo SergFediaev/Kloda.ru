@@ -1,7 +1,6 @@
 'use client'
 
 import type { EmblaCarouselType } from 'embla-carousel'
-import type React from 'react'
 import {
   type ComponentPropsWithRef,
   useCallback,
@@ -24,9 +23,15 @@ export const useDotButton = (
 
   const onDotButtonClick = useCallback(
     (index: number) => {
-      if (!emblaApi) return
+      if (!emblaApi) {
+        return
+      }
+
       emblaApi.scrollTo(index)
-      if (onButtonClick) onButtonClick(emblaApi)
+
+      if (onButtonClick) {
+        onButtonClick(emblaApi)
+      }
     },
     [emblaApi, onButtonClick],
   )
@@ -40,7 +45,9 @@ export const useDotButton = (
   }, [])
 
   useEffect(() => {
-    if (!emblaApi) return
+    if (!emblaApi) {
+      return
+    }
 
     onInit(emblaApi)
     onSelect(emblaApi)
@@ -54,9 +61,9 @@ export const useDotButton = (
   }
 }
 
-type PropType = ComponentPropsWithRef<'button'>
+type Props = ComponentPropsWithRef<'button'>
 
-export const DotButton = ({ children, ...restProps }: PropType) => {
+export const DotButton = ({ children, ...restProps }: Props) => {
   return (
     <button type='button' {...restProps}>
       {children}

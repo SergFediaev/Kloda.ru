@@ -1,62 +1,41 @@
 'use client'
 
 import {
-  NextButton,
-  PrevButton,
-  usePrevNextButtons,
-} from '@/components/carousel/featuresCarousel/carouselArrowButtons'
-import {
-  DotButton,
-  useDotButton,
-} from '@/components/carousel/featuresCarousel/carouselDotButton'
-
-import {
   CategoriesSlide,
   CustomizationSlide,
+  DotButton,
+  FeaturesSlide,
   HandsfreeSlide,
   ManagementSlide,
   MediaSlide,
   ModesSlide,
+  NextButton,
   PlaylistsSlide,
-} from '@/components/carousel/featuresCarousel/featureSlides'
-import { FeaturesSlide } from '@/components/carousel/featuresCarousel/featuresSlide'
-import { cn } from '@/utils/mergeClasses'
-import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel'
-import useEmblaCarousel from 'embla-carousel-react'
-import type React from 'react'
-import { useCallback } from 'react'
+  PrevButton,
+  useDotButton,
+  usePrevNextButtons,
+} from '@/components/carousel'
 
-type PropType = {
-  slides?: number[]
+import { cn } from '@/utils/mergeClasses'
+import type { EmblaOptionsType } from 'embla-carousel'
+import useEmblaCarousel from 'embla-carousel-react'
+
+type Props = {
   options?: EmblaOptionsType
 }
 
-const FeaturesCarousel = ({ options }: PropType) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options /*[Autoplay()]*/)
+export const FeaturesCarousel = ({ options }: Props) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(options)
 
-  const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
-    const autoplay = emblaApi?.plugins()?.autoplay
-    if (!autoplay) return
-
-    const resetOrStop =
-      autoplay.options.stopOnInteraction === false
-        ? autoplay.reset
-        : autoplay.stop
-
-    resetOrStop()
-  }, [])
-
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
-    emblaApi,
-    onNavButtonClick,
-  )
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi)
 
   const {
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
     onNextButtonClick,
-  } = usePrevNextButtons(emblaApi, onNavButtonClick)
+  } = usePrevNextButtons(emblaApi)
 
   return (
     <section>
@@ -86,7 +65,7 @@ const FeaturesCarousel = ({ options }: PropType) => {
         </div>
       </div>
 
-      <div className='grid grid-cols-1 gap-3 px-20 pt-5 md:grid-cols-[auto_1fr]'>
+      <div className='flex flex-wrap justify-evenly gap-5 py-5'>
         <div className='flex justify-center gap-5 md:justify-start'>
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
@@ -95,14 +74,15 @@ const FeaturesCarousel = ({ options }: PropType) => {
         <div className='-mr-0.5 flex flex-wrap items-center justify-center gap-x-2.5 md:justify-end'>
           {scrollSnaps.map((_, index) => {
             const dotIndex = index
+
             return (
               <DotButton
                 key={dotIndex}
                 onClick={() => onDotButtonClick(dotIndex)}
                 className={cn(
-                  'h-5 w-5 flex-none rounded-full border-4 border-accent hover:border-accent-neon hover:bg-accent-neon hover:text-accent',
+                  'h-5 w-5 flex-none rounded-full border-4 border-accent transition-all duration-200 hover:border-accent-neon hover:bg-accent-neon hover:text-accent',
                   dotIndex === selectedIndex
-                    ? 'scale-125 border-0 bg-accent transition-all duration-200 dark:bg-accent'
+                    ? 'scale-125 border-0 bg-accent dark:bg-accent'
                     : 'hover:scale-75',
                 )}
               />
@@ -113,5 +93,3 @@ const FeaturesCarousel = ({ options }: PropType) => {
     </section>
   )
 }
-
-export default FeaturesCarousel

@@ -1,15 +1,12 @@
 'use client'
 
-import { TechsSlide } from '@/components/carousel/techstackCarousel/techsSlide'
+import { TechCarouselContainer, TechsSlide } from '@/components/carousel'
 import type { EmblaOptionsType } from 'embla-carousel'
-import Autoplay from 'embla-carousel-autoplay'
+import AutoScroll from 'embla-carousel-auto-scroll'
 import useEmblaCarousel from 'embla-carousel-react'
-
-import TechCarouselContainer from '@/components/carousel/techstackCarousel/techCarouselContainer'
 import Link from 'next/link'
-import type React from 'react'
 
-const techLinks: { name: string; url: string }[] = [
+const TECH_LINKS: readonly { name: string; url: string }[] = [
   { name: 'Bun', url: 'https://bun.sh' },
   { name: 'EmailJS', url: 'https://www.emailjs.com/' },
   { name: 'Embla Carousel', url: 'https://www.embla-carousel.com/' },
@@ -27,29 +24,34 @@ const techLinks: { name: string; url: string }[] = [
   { name: 'TypeScript', url: 'https://www.typescriptlang.org/' },
   { name: 'Zod', url: 'https://zod.dev/' },
   { name: 'Zustand', url: 'https://zustand-demo.pmnd.rs/' },
-]
+] as const
 
-type PropType = {
+type Props = {
   options?: EmblaOptionsType
 }
 
-const TechCarousel = ({ options }: PropType) => {
+export const TechCarousel = ({ options }: Props) => {
   const [emblaRef] = useEmblaCarousel(options, [
-    Autoplay({ delay: 2500, stopOnInteraction: false }),
+    AutoScroll({
+      speed: 0.5,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: true,
+    }),
   ])
 
   return (
     <div ref={emblaRef} className='overflow-hidden'>
       <TechCarouselContainer>
-        {techLinks.map(link => (
-          <TechsSlide key={link.name}>
+        {TECH_LINKS.map(({ name, url }, index) => (
+          <TechsSlide key={`${index}-${name}`}>
             <Link
-              href={link.url}
+              href={url}
               target='_blank'
               rel='noopener noreferrer'
-              className='text-inherit no-underline hover:text-inherit'
+              className='text-foreground no-underline opacity-50 hover:text-foreground hover:underline hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
             >
-              {link.name}
+              {name}
             </Link>
           </TechsSlide>
         ))}
@@ -57,5 +59,3 @@ const TechCarousel = ({ options }: PropType) => {
     </div>
   )
 }
-
-export default TechCarousel

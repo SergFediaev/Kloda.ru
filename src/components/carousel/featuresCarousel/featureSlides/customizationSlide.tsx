@@ -1,4 +1,4 @@
-import { FeaturesContainer } from '@/components/carousel/featuresCarousel/featuresContainer'
+import { FeaturesContainer } from '@/components/carousel'
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
 import { Link } from 'next-view-transitions'
