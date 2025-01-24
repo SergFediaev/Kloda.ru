@@ -1,7 +1,6 @@
 import { FeaturesContainer } from '@/components/carousel/featuresCarousel/featuresContainer'
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
-import React from 'react'
 
 export const MediaSlide = () => {
   return (
