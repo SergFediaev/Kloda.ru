@@ -15,7 +15,6 @@ import {
   useDotButton,
   usePrevNextButtons,
 } from '@/components/carousel'
-
 import { cn } from '@/utils/mergeClasses'
 import type { EmblaOptionsType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
