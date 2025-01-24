@@ -48,7 +48,12 @@ export const DebugModeSettings = () => {
         Inactivity seconds: <Text isAccent>{inactivitySeconds}</Text>
       </p>
       <ButtonsContainer>
-        <Button isStretched as={Link} href={notFoundPath}>
+        <Button
+          isStretched
+          as={Link}
+          href={notFoundPath}
+          className='text-primary-dark hover:text-primary-dark'
+        >
           Open 404 page
         </Button>
         <Button isStretched onClick={onDebugError} isDanger>

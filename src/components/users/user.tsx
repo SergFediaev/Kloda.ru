@@ -420,7 +420,11 @@ export const User = ({
           </>
         )}
         <ButtonsContainer className='justify-between'>
-          <Button as={Link} href={userProfileLink}>
+          <Button
+            as={Link}
+            href={userProfileLink}
+            className='text-primary-dark hover:text-primary-dark'
+          >
             {userProfileText}
           </Button>
           {isCurrentUserOpen && (
