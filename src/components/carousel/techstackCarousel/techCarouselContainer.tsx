@@ -3,20 +3,22 @@
 import { cn } from '@/utils/mergeClasses'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 
-type PropType = {
+type Props = {
   className?: string
   children: ReactNode
 } & ComponentPropsWithoutRef<'div'>
 
-const TechCarouselContainer = ({ className, children, ...rest }: PropType) => {
+export const TechCarouselContainer = ({
+  className,
+  children,
+  ...restProps
+}: Props) => {
   return (
     <div
       className={cn('flex touch-pan-y touch-pinch-zoom ', className)}
-      {...rest}
+      {...restProps}
     >
       {children}
     </div>
   )
 }
-
-export default TechCarouselContainer

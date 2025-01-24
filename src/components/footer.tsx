@@ -16,7 +16,7 @@ export const Footer = () => {
   return (
     <>
       <EasterEgg />
-      <footer className='bg-surface shadow-inner dark:bg-surface-dark'>
+      <footer className='bg-surface dark:bg-surface-dark'>
         <Container>
           <Wrapper as='div' className='justify-between' hasGaps>
             <List hasGaps isMarkersAccent={false}>

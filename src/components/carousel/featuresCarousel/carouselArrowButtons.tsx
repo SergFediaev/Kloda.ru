@@ -1,6 +1,7 @@
+'use client'
+
 import type { EmblaCarouselType } from 'embla-carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import type React from 'react'
 import {
   type ComponentPropsWithRef,
   useCallback,
@@ -23,15 +24,27 @@ export const usePrevNextButtons = (
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
 
   const onPrevButtonClick = useCallback(() => {
-    if (!emblaApi) return
+    if (!emblaApi) {
+      return
+    }
+
     emblaApi.scrollPrev()
-    if (onButtonClick) onButtonClick(emblaApi)
+
+    if (onButtonClick) {
+      onButtonClick(emblaApi)
+    }
   }, [emblaApi, onButtonClick])
 
   const onNextButtonClick = useCallback(() => {
-    if (!emblaApi) return
+    if (!emblaApi) {
+      return
+    }
+
     emblaApi.scrollNext()
-    if (onButtonClick) onButtonClick(emblaApi)
+
+    if (onButtonClick) {
+      onButtonClick(emblaApi)
+    }
   }, [emblaApi, onButtonClick])
 
   const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
@@ -40,9 +53,12 @@ export const usePrevNextButtons = (
   }, [])
 
   useEffect(() => {
-    if (!emblaApi) return
+    if (!emblaApi) {
+      return
+    }
 
     onSelect(emblaApi)
+
     emblaApi.on('reInit', onSelect).on('select', onSelect)
   }, [emblaApi, onSelect])
 
@@ -54,9 +70,9 @@ export const usePrevNextButtons = (
   }
 }
 
-type PropType = ComponentPropsWithRef<'button'>
+type Props = ComponentPropsWithRef<'button'>
 
-export const PrevButton = ({ children, ...restProps }: PropType) => {
+export const PrevButton = ({ children, ...restProps }: Props) => {
   return (
     <button
       className='touch-action: manipulation disabled: z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent p-0 text-white hover:bg-accent-neon'
@@ -69,7 +85,7 @@ export const PrevButton = ({ children, ...restProps }: PropType) => {
   )
 }
 
-export const NextButton = ({ children, ...restProps }: PropType) => {
+export const NextButton = ({ children, ...restProps }: Props) => {
   return (
     <button
       className='touch-action: manipulation z-10 m-0 inline-flex h-12 w-12 flex-none cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-accent text-white hover:bg-accent-neon'
