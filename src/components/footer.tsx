@@ -7,8 +7,11 @@ import { EasterEgg } from '@/components/easterEgg'
 import { ExternalLink } from '@/components/links/externalLink'
 import { AnimatedIcon } from '@/components/settings/animatedIcon'
 import { usePaths } from '@/hooks/usePaths'
+import { cn } from '@/utils/mergeClasses'
 import { Copyright, Flame, Heart, Mail } from 'lucide-react'
-import { Link } from 'next-view-transitions'
+import Link from 'next/link'
+//import { Link } from 'next-view-transitions'
+import type { ComponentPropsWithoutRef } from 'react'
 
 export const Footer = () => {
   const { homePath, manualPath, mapPath } = usePaths()
@@ -21,13 +24,13 @@ export const Footer = () => {
           <Wrapper as='div' className='justify-between' hasGaps>
             <List hasGaps isMarkersAccent={false}>
               <li>
-                <Link href={homePath}>About Kloda</Link>
+                <FooterLink href={homePath}>About Kloda</FooterLink>
               </li>
               <li>
-                <Link href={manualPath}>User manual</Link>
+                <FooterLink href={manualPath}>User manual</FooterLink>
               </li>
               <li>
-                <Link href={mapPath}>Sitemap</Link>
+                <FooterLink href={mapPath}>Sitemap</FooterLink>
               </li>
             </List>
             <List hasGaps isMarkersAccent={false} className='sm:items-center'>
@@ -71,5 +74,30 @@ export const Footer = () => {
         </Container>
       </footer>
     </>
+  )
+}
+
+type FooterLinkProps = {
+  href: string
+  className?: string
+} & ComponentPropsWithoutRef<'a'>
+
+const FooterLink = ({
+  href,
+  className,
+  children,
+  ...restProps
+}: FooterLinkProps) => {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        'text-inherit text-opacity-50 decoration-accent-neon transition hover:text-accent-neon',
+        className,
+      )}
+      {...restProps}
+    >
+      {children}
+    </Link>
   )
 }
