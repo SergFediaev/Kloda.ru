@@ -73,7 +73,7 @@ body {
   }
 
   ::selection {
-    @apply bg-accent-dark-alternate dark:bg-accent-alternate;
+    @apply bg-accent-dark-variant transition dark:bg-accent-alternate;
   }
 
   q:before,
