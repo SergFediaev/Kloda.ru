@@ -85,6 +85,14 @@ export const CategoriesSelect = () => {
           ...baseStyles,
           borderWidth: '2px',
         }),
+        option: (baseStyles, { isFocused }) => ({
+          ...baseStyles,
+          color: isFocused ? colors.neutral['50'] : baseStyles.color, // Color of text on Option in focus (during hover)
+        }),
+        multiValueRemove: baseStyles => ({
+          ...baseStyles,
+          color: colors.neutral['50'], // Color of canceling X in selected Options in multi-select
+        }),
       }}
       theme={theme => ({
         ...theme,
@@ -93,7 +101,7 @@ export const CategoriesSelect = () => {
           neutral0: isDarkTheme ? colors.neutral['950'] : colors.neutral['50'], // Select BG
           neutral10: isDarkTheme ? colors.orange['800'] : colors.orange['400'], // Selected option BG
           neutral20: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Select border
-          neutral80: isDarkTheme ? colors.neutral['50'] : colors.neutral['950'], // Selected option text
+          neutral80: isDarkTheme ? colors.neutral['50'] : colors.neutral['50'], // Selected option text
           primary: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Focus select outline
           primary25: isDarkTheme ? colors.orange['800'] : colors.orange['400'], // Hover option BG
           primary50: isDarkTheme ? colors.orange['700'] : colors.orange['300'], // Active option BG
