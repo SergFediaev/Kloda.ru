@@ -13,7 +13,10 @@ export const Logo = () => {
   const element = isHomePath ? (
     TITLE
   ) : (
-    <Link href={homePath} className='text-accent hover:text-accent-neon'>
+    <Link
+      href={homePath}
+      className='text-accent hover:text-accent-neon dark:text-accent-neon dark:hover:text-accent'
+    >
       {TITLE}
     </Link>
   )
