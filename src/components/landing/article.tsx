@@ -7,7 +7,10 @@ export const Article = ({
 }: ComponentPropsWithoutRef<'article'>) => {
   return (
     <article
-      className={cn('flex max-w-64 flex-col gap-5', className)}
+      className={cn(
+        'flex max-w-64 flex-col gap-5 text-primary dark:text-primary-dark',
+        className,
+      )}
       {...restProps}
     />
   )

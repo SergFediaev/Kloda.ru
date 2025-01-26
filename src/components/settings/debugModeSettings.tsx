@@ -52,7 +52,7 @@ export const DebugModeSettings = () => {
           isStretched
           as={Link}
           href={notFoundPath}
-          className='text-primary-dark hover:text-primary-dark'
+          className='bg-accent hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
         >
           Open 404 page
         </Button>

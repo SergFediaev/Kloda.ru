@@ -346,7 +346,7 @@ export const Card = ({
           <Button
             as={Link}
             href={cardDetailsLink}
-            className='text-primary-dark hover:text-primary-dark'
+            className='bg-accent hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
           >
             {cardDetailsText}
           </Button>

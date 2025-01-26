@@ -5,13 +5,10 @@ import { List } from '@/components/containers/list'
 import { Wrapper } from '@/components/containers/wrapper'
 import { EasterEgg } from '@/components/easterEgg'
 import { ExternalLink } from '@/components/links/externalLink'
+import { InternalLink } from '@/components/links/internalLink'
 import { AnimatedIcon } from '@/components/settings/animatedIcon'
 import { usePaths } from '@/hooks/usePaths'
-import { cn } from '@/utils/mergeClasses'
 import { Copyright, Flame, Heart, Mail } from 'lucide-react'
-import Link from 'next/link'
-//import { Link } from 'next-view-transitions'
-import type { ComponentPropsWithoutRef } from 'react'
 
 export const Footer = () => {
   const { homePath, manualPath, mapPath } = usePaths()
@@ -19,18 +16,18 @@ export const Footer = () => {
   return (
     <>
       <EasterEgg />
-      <footer className='bg-surface dark:bg-surface-dark'>
+      <footer className='bg-surface text-primary dark:bg-surface-dark dark:text-primary-dark'>
         <Container>
           <Wrapper as='div' className='justify-between' hasGaps>
             <List hasGaps isMarkersAccent={false}>
               <li>
-                <FooterLink href={homePath}>About Kloda</FooterLink>
+                <InternalLink href={homePath}>About Kloda</InternalLink>
               </li>
               <li>
-                <FooterLink href={manualPath}>User manual</FooterLink>
+                <InternalLink href={manualPath}>User manual</InternalLink>
               </li>
               <li>
-                <FooterLink href={mapPath}>Sitemap</FooterLink>
+                <InternalLink href={mapPath}>Sitemap</InternalLink>
               </li>
             </List>
             <List hasGaps isMarkersAccent={false} className='sm:items-center'>
@@ -74,30 +71,5 @@ export const Footer = () => {
         </Container>
       </footer>
     </>
-  )
-}
-
-type FooterLinkProps = {
-  href: string
-  className?: string
-} & ComponentPropsWithoutRef<'a'>
-
-const FooterLink = ({
-  href,
-  className,
-  children,
-  ...restProps
-}: FooterLinkProps) => {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        'text-inherit text-opacity-50 decoration-accent-neon transition hover:text-accent-neon',
-        className,
-      )}
-      {...restProps}
-    >
-      {children}
-    </Link>
   )
 }

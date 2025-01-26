@@ -26,7 +26,7 @@ export const UserCardsCount = ({
         as={Link}
         href={{ pathname, query: { userId, action } }}
         title={`Search ${cardsType.toLowerCase()} cards`}
-        className='border-accent border-b no-underline hover:border-accent-variant dark:border-accent-dark dark:hover:border-accent-dark-variant'
+        className='border-accent border-b no-underline hover:border-accent-dark dark:border-accent-dark dark:hover:border-accent'
       >
         {cardsCount}
         &nbsp;

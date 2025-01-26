@@ -37,33 +37,33 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
   return (
     <Component
       className={cn(
-        'flex items-center justify-center transition-all',
+        'flex items-center justify-center transition',
         (variant === 'primary' || variant === 'outline') &&
           'rounded-3xl px-4 py-2',
         variant === 'primary' && [
-          'bg-accent hover:enabled:bg-accent-neon',
+          'bg-accent hover:enabled:bg-accent-dark',
+          'dark:bg-accent-dark dark:hover:enabled:bg-accent',
           'text-primary-dark no-underline',
-          'hover:ring-2 hover:ring-accent',
         ],
         variant === 'primary' &&
           isDanger && [
-            'bg-danger hover:enabled:bg-danger-dark-variant',
-            'hover:ring-2 hover:enabled:ring-danger',
+            'bg-danger hover:enabled:bg-danger-dark',
+            'dark:bg-danger-dark dark:hover:enabled:bg-danger',
             'text-primary-dark',
           ],
         variant === 'text' && [
-          'text-accent hover:enabled:text-accent-variant',
-          'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
+          'text-accent hover:enabled:text-accent-dark',
+          'dark:text-accent-dark dark:hover:enabled:text-accent',
         ],
         variant === 'text' &&
           isDanger && [
-            'text-danger hover:enabled:text-danger-variant',
-            'dark:text-danger-dark dark:hover:enabled:text-danger-dark-variant',
+            'text-danger hover:enabled:text-danger-dark',
+            'dark:text-danger-dark dark:hover:enabled:text-danger',
           ],
         variant === 'floating' &&
-          'fixed right-0 z-30 rounded-full bg-accent p-4 text-primary-dark hover:bg-accent-neon dark:bg-accent-variant',
+          'fixed right-0 z-30 m-6 rounded-full bg-accent p-4 text-primary-dark transition hover:bg-accent-dark dark:bg-accent-dark dark:hover:bg-accent',
         variant === 'round' &&
-          'h-8 w-8 rounded-full bg-accent font-bold hover:enabled:bg-accent-neon dark:bg-accent-variant',
+          'h-8 w-8 rounded-full bg-accent font-bold hover:enabled:bg-accent-dark dark:bg-accent-dark dark:hover:bg-accent',
         variant === 'outline' &&
           'border-2 text-white no-underline hover:text-white',
         isStretched && 'flex-grow',
@@ -71,7 +71,7 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
         isLoading &&
           variant !== 'text' &&
           variant !== 'outline' &&
-          'bg-accent dark:bg-accent-variant',
+          'bg-accent dark:bg-accent-dark',
         isBlocked && 'cursor-not-allowed',
         isTextLeft && 'text-left',
         isDisabled &&

@@ -16,40 +16,36 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         ground: {
-          DEFAULT: colors.neutral['50'],
+          DEFAULT: 'white',
           dark: {
-            DEFAULT: colors.neutral['950'],
+            DEFAULT: colors.stone['950'],
           },
         },
         surface: {
-          DEFAULT: colors.neutral['200'],
+          DEFAULT: colors.stone['200'],
+          light: colors.stone['100'],
           dark: {
-            DEFAULT: colors.neutral['800'],
+            DEFAULT: colors.stone['800'],
           },
         },
         primary: {
-          DEFAULT: colors.neutral['950'],
+          DEFAULT: colors.stone['900'],
+          intense: colors.stone['950'],
           dark: {
-            DEFAULT: colors.neutral['50'],
+            DEFAULT: colors.stone['100'],
+            intense: colors.stone['50'],
           },
         },
         accent: {
-          DEFAULT: colors.orange['600'],
-          neon: 'hsl(24, 100%, 50%)',
-          variant: colors.orange['700'],
-          alternate: colors.orange['800'],
+          DEFAULT: '#f15b00',
           dark: {
-            DEFAULT: colors.orange['400'],
-            variant: colors.orange['300'],
-            alternate: colors.orange['200'],
+            DEFAULT: '#ff8800',
           },
         },
         danger: {
-          DEFAULT: colors.red['700'],
-          variant: colors.red['800'],
+          DEFAULT: colors.red['600'],
           dark: {
             DEFAULT: colors.red['500'],
-            variant: colors.red['600'],
           },
         },
       },

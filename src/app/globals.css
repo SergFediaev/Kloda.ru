@@ -65,7 +65,7 @@ body {
 
 @layer base {
   a {
-    @apply break-all underline underline-offset-4 text-accent hover:text-accent-variant dark:text-accent-dark dark:hover:text-accent-dark-variant;
+    @apply break-all underline underline-offset-4 text-inherit decoration-accent transition hover:text-accent dark:text-inherit dark:decoration-accent-dark dark:hover:text-accent-dark;
   }
 
   :disabled {
@@ -73,7 +73,7 @@ body {
   }
 
   ::selection {
-    @apply bg-accent-dark-variant transition dark:bg-accent-alternate;
+    @apply bg-accent text-white dark:bg-accent-dark;
   }
 
   q:before,

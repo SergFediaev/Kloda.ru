@@ -5,12 +5,12 @@ import { Link } from 'next-view-transitions'
 
 export const IntroductionSection = () => {
   return (
-    <Section className='bg-accent-variant text-4xl text-primary-dark selection:bg-black'>
+    <Section className='bg-accent text-4xl text-primary-dark selection:bg-black dark:bg-accent'>
       <Container className='flex flex-col items-center gap-5'>
         <h1 className='font-extrabold text-6xl'>Kloda</h1>
         <p className='text-center'>A powerful tool to help you study smarter</p>
         <Button
-          className='mt-3 border-3 text-base uppercase transition hover:bg-accent-neon active:bg-accent-neon'
+          className='mt-3 bg-white font-bold text-accent text-base uppercase transition hover:bg-opacity-90 hover:text-accent'
           variant='outline'
           as={Link}
           href='/cards'

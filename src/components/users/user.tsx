@@ -423,7 +423,7 @@ export const User = ({
           <Button
             as={Link}
             href={userProfileLink}
-            className='text-primary-dark hover:text-primary-dark'
+            className='bg-accent text-primary-dark hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
           >
             {userProfileText}
           </Button>
