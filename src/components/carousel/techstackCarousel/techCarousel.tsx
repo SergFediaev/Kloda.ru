@@ -43,18 +43,13 @@ export const TechCarousel = ({ options }: Props) => {
   ])
 
   const { isDarkTheme } = useThemes()
-  const tooltipVariant = isDarkTheme ? 'dark' : 'light' // use either Variant or Style
   const tooltipStyle = isDarkTheme
     ? { backgroundColor: 'white', color: 'black' }
-    : { backgroundColor: '#a8a29e', color: 'white' } // use either Variant or Style
+    : { backgroundColor: '#44403c', color: 'white' }
 
   return (
     <div ref={emblaRef} className='overflow-hidden'>
-      <Tooltip
-        id='tech-stack-tooltip'
-        variant={tooltipVariant}
-        style={tooltipStyle}
-      />
+      <Tooltip id='tech-stack-tooltip' style={tooltipStyle} />
       <TechCarouselContainer
         data-tooltip-id='tech-stack-tooltip'
         data-tooltip-content='Our trusted tech stack for this app'
@@ -66,7 +61,7 @@ export const TechCarousel = ({ options }: Props) => {
               href={url}
               target='_blank'
               rel='noopener noreferrer'
-              className='text-foreground no-underline transition hover:text-foreground hover:underline hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
+              className='text-foreground no-underline transition-opacity hover:text-foreground hover:underline hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
             >
               {name}
             </Link>
