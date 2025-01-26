@@ -1,10 +1,12 @@
 'use client'
 
 import { TechCarouselContainer, TechsSlide } from '@/components/carousel'
+import { useThemes } from '@/hooks/useThemes'
 import type { EmblaOptionsType } from 'embla-carousel'
 import AutoScroll from 'embla-carousel-auto-scroll'
 import useEmblaCarousel from 'embla-carousel-react'
 import Link from 'next/link'
+import { Tooltip } from 'react-tooltip'
 
 const TECH_LINKS: readonly { name: string; url: string }[] = [
   { name: 'Bun', url: 'https://bun.sh' },
@@ -40,16 +42,26 @@ export const TechCarousel = ({ options }: Props) => {
     }),
   ])
 
+  const { isDarkTheme } = useThemes()
+  const tooltipStyle = isDarkTheme
+    ? { backgroundColor: 'white', color: 'black' }
+    : { backgroundColor: '#44403c', color: 'white' }
+
   return (
     <div ref={emblaRef} className='overflow-hidden'>
-      <TechCarouselContainer>
+      <Tooltip id='tech-stack-tooltip' style={tooltipStyle} />
+      <TechCarouselContainer
+        data-tooltip-id='tech-stack-tooltip'
+        data-tooltip-content='Our trusted tech stack for this app'
+        data-tooltip-place='top'
+      >
         {TECH_LINKS.map(({ name, url }, index) => (
           <TechsSlide key={`${index}-${name}`}>
             <Link
               href={url}
               target='_blank'
               rel='noopener noreferrer'
-              className='text-foreground no-underline opacity-50 hover:text-foreground hover:underline hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
+              className='text-foreground no-underline transition hover:text-foreground hover:underline hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
             >
               {name}
             </Link>
