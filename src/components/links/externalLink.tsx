@@ -21,7 +21,7 @@ export const ExternalLink = ({
         target='_blank'
         rel='noopener noreferrer'
         className={cn(
-          'text-inherit decoration-accent transition hover:text-accent dark:text-inherit dark:decoration-accent-dark dark:hover:text-accent-dark',
+          'decoration-accent transition hover:text-accent dark:decoration-accent-dark dark:hover:text-accent-dark',
           className,
         )}
         {...restProps}
