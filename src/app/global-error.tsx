@@ -82,7 +82,7 @@ export default function GlobalError({
 
   return (
     <Html>
-      <Body className='flex min-h-svh flex-grow flex-col bg-accent-variant text-white selection:bg-black'>
+      <Body className='flex min-h-svh flex-grow flex-col bg-accent text-white selection:bg-black dark:bg-accent-dark'>
         <Container isCentered>
           <main className='flex max-w-2xl flex-col gap-8'>
             <Heading as='h1' className='font-black text-3xl'>
