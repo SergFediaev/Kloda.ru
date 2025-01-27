@@ -12,6 +12,8 @@ import colors from 'tailwindcss/colors'
 
 const CATEGORIES_PARAM = 'categories'
 const ALL_CATEGORIES = 'All categories'
+const COLOR_ACCENT = '#f15b00'
+const COLOR_ACCENT_DARK = '#ff8800'
 
 type Options = readonly {
   label: string
@@ -85,18 +87,26 @@ export const CategoriesSelect = () => {
           ...baseStyles,
           borderWidth: '2px',
         }),
+        option: (baseStyles, { isFocused }) => ({
+          ...baseStyles,
+          color: isFocused ? colors.stone['50'] : baseStyles.color, // Color of text on Option in focus (during hover)
+        }),
+        multiValueRemove: baseStyles => ({
+          ...baseStyles,
+          color: colors.stone['50'], // Color of cancelling X in selected Options in multi-select
+        }),
       }}
       theme={theme => ({
         ...theme,
         colors: {
           ...theme.colors,
-          neutral0: isDarkTheme ? colors.neutral['950'] : colors.neutral['50'], // Select BG
-          neutral10: isDarkTheme ? colors.orange['800'] : colors.orange['200'], // Selected option BG
-          neutral20: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Select border
-          neutral80: isDarkTheme ? colors.neutral['50'] : colors.neutral['950'], // Selected option text
-          primary: isDarkTheme ? colors.orange['400'] : colors.orange['600'], // Focus select outline
-          primary25: isDarkTheme ? colors.orange['800'] : colors.orange['200'], // Hover option BG
-          primary50: isDarkTheme ? colors.orange['700'] : colors.orange['300'], // Active option BG
+          neutral0: isDarkTheme ? colors.stone['950'] : colors.stone['50'], // Select BG
+          neutral10: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Selected option BG
+          neutral20: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Select border
+          neutral80: isDarkTheme ? colors.stone['50'] : colors.stone['50'], // Selected option text
+          primary: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Focus select outline
+          primary25: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Hover option BG
+          primary50: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Active option BG
         },
       })}
     />

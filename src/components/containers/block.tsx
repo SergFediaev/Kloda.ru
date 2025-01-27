@@ -27,7 +27,7 @@ export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
   return (
     <Component
       className={cn(
-        'flex flex-col gap-8 rounded-3xl bg-surface p-6 shadow-lg dark:bg-surface-dark',
+        'flex flex-col gap-8 rounded-3xl bg-surface-light p-6 text-primary shadow-inner dark:bg-surface-dark dark:text-primary-dark',
         isConstrained && 'w-full',
         inColumns && 'break-inside-avoid',
         className,

@@ -79,9 +79,9 @@ export const FeaturesCarousel = ({ options }: Props) => {
                 key={dotIndex}
                 onClick={() => onDotButtonClick(dotIndex)}
                 className={cn(
-                  'h-5 w-5 flex-none rounded-full border-4 border-accent transition-all duration-200 hover:border-accent-neon hover:bg-accent-neon hover:text-accent',
+                  'h-5 w-5 flex-none rounded-full border-4 border-accent transition hover:border-accent-dark dark:border-accent-dark dark:hover:border-accent',
                   dotIndex === selectedIndex
-                    ? 'scale-125 border-0 bg-accent dark:bg-accent'
+                    ? 'scale-125 bg-accent hover:bg-accent-dark dark:border-accent-dark dark:bg-accent-dark dark:hover:bg-accent'
                     : 'hover:scale-75',
                 )}
               />

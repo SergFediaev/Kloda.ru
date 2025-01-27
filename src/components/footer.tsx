@@ -5,10 +5,10 @@ import { List } from '@/components/containers/list'
 import { Wrapper } from '@/components/containers/wrapper'
 import { EasterEgg } from '@/components/easterEgg'
 import { ExternalLink } from '@/components/links/externalLink'
+import { InternalLink } from '@/components/links/internalLink'
 import { AnimatedIcon } from '@/components/settings/animatedIcon'
 import { usePaths } from '@/hooks/usePaths'
 import { Copyright, Flame, Heart, Mail } from 'lucide-react'
-import { Link } from 'next-view-transitions'
 
 export const Footer = () => {
   const { homePath, manualPath, mapPath } = usePaths()
@@ -16,18 +16,18 @@ export const Footer = () => {
   return (
     <>
       <EasterEgg />
-      <footer className='bg-surface dark:bg-surface-dark'>
+      <footer className='bg-surface text-primary dark:bg-surface-dark dark:text-primary-dark'>
         <Container>
           <Wrapper as='div' className='justify-between' hasGaps>
             <List hasGaps isMarkersAccent={false}>
               <li>
-                <Link href={homePath}>About Kloda</Link>
+                <InternalLink href={homePath}>About Kloda</InternalLink>
               </li>
               <li>
-                <Link href={manualPath}>User manual</Link>
+                <InternalLink href={manualPath}>User manual</InternalLink>
               </li>
               <li>
-                <Link href={mapPath}>Sitemap</Link>
+                <InternalLink href={mapPath}>Sitemap</InternalLink>
               </li>
             </List>
             <List hasGaps isMarkersAccent={false} className='sm:items-center'>

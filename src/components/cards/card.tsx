@@ -343,7 +343,11 @@ export const Card = ({
               </>
             )}
           </Wrapper>
-          <Button as={Link} href={cardDetailsLink}>
+          <Button
+            as={Link}
+            href={cardDetailsLink}
+            className='bg-accent hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
+          >
             {cardDetailsText}
           </Button>
         </Wrapper>

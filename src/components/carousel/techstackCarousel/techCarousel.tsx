@@ -49,7 +49,7 @@ export const TechCarousel = ({ options }: Props) => {
               href={url}
               target='_blank'
               rel='noopener noreferrer'
-              className='text-foreground no-underline opacity-50 hover:text-foreground hover:underline hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
+              className='text-foreground no-underline opacity-40 transition-opacity hover:text-foreground hover:underline hover:decoration-inherit hover:opacity-80 dark:text-inherit dark:hover:text-inherit'
             >
               {name}
             </Link>
