@@ -65,7 +65,7 @@ body {
 
 @layer base {
   a {
-    @apply break-all underline underline-offset-4 text-inherit decoration-accent transition hover:text-accent dark:text-inherit dark:decoration-accent-dark dark:hover:text-accent-dark;
+    @apply break-all underline underline-offset-4 decoration-accent transition hover:text-accent dark:decoration-accent-dark dark:hover:text-accent-dark;
   }
 
   :disabled {
