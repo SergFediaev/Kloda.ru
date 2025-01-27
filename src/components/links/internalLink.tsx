@@ -11,7 +11,7 @@ export const InternalLink = ({ href, className, ...restProps }: Props) => {
     <Link
       href={href}
       className={cn(
-        'text-inherit decoration-accent transition hover:text-accent dark:text-inherit dark:decoration-accent-dark dark:hover:text-accent-dark',
+        'decoration-accent transition hover:text-accent dark:decoration-accent-dark dark:hover:text-accent-dark',
         className,
       )}
       {...restProps}
