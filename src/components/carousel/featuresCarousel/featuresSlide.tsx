@@ -10,7 +10,7 @@ export const FeaturesSlide = ({
     <div
       className={cn(
         'w-full min-w-0 flex-none transform-gpu',
-        'flex flex-col items-center gap-5 text-large text-stone-700 dark:text-stone-400',
+        'flex flex-col items-center gap-5 text-large',
         className,
       )}
       {...restProps}

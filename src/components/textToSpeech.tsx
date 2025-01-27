@@ -413,6 +413,7 @@ export const TextToSpeech = ({
             onClick={resetTextToSpeech}
             title='Reset settings'
             isDanger
+            className='text-danger hover:text-danger-dark dark:text-danger-dark dark:hover:text-danger'
           >
             <Undo2 />
           </Button>

@@ -37,38 +37,33 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
   return (
     <Component
       className={cn(
-        'flex items-center justify-center',
+        'flex items-center justify-center transition',
         (variant === 'primary' || variant === 'outline') &&
           'rounded-3xl px-4 py-2',
-        variant === 'primary' &&
-          !isDanger && [
-            'bg-accent-dark-variant hover:enabled:bg-accent-dark-alternate',
-            'dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
-            'text-primary no-underline dark:text-primary-dark',
-            'hover:text-primary hover:dark:text-primary-dark',
-            !disabled &&
-              'hover:bg-accent-dark-alternate hover:dark:bg-accent-alternate',
-          ],
+        variant === 'primary' && [
+          'bg-accent hover:enabled:bg-accent-dark',
+          'dark:bg-accent-dark dark:hover:enabled:bg-accent',
+          'text-primary-dark no-underline',
+        ],
         variant === 'primary' &&
           isDanger && [
-            'bg-danger hover:enabled:bg-danger-variant',
-            'dark:bg-danger dark:hover:enabled:bg-danger-dark-variant',
-            'text-primary-dark dark:text-primary-dark',
+            'bg-danger hover:enabled:bg-danger-dark',
+            'dark:bg-danger-dark dark:hover:enabled:bg-danger',
+            'text-primary-dark',
           ],
-        variant === 'text' &&
-          !isDanger && [
-            'text-accent hover:enabled:text-accent-variant',
-            'dark:text-accent-dark dark:hover:enabled:text-accent-dark-variant',
-          ],
+        variant === 'text' && [
+          'text-accent hover:enabled:text-accent-dark',
+          'dark:text-accent-dark dark:hover:enabled:text-accent',
+        ],
         variant === 'text' &&
           isDanger && [
-            'text-danger hover:enabled:text-danger-variant',
-            'dark:text-danger-dark dark:hover:enabled:text-danger-dark-variant',
+            'text-danger hover:enabled:text-danger-dark',
+            'dark:text-danger-dark dark:hover:enabled:text-danger',
           ],
         variant === 'floating' &&
-          'fixed right-0 z-30 rounded-bl-full bg-accent-dark-variant pt-2 pr-2 pb-5 pl-5 opacity-50 transition hover:opacity-100 dark:bg-accent-variant',
+          'fixed right-0 z-30 m-6 rounded-full bg-accent p-4 text-primary-dark transition hover:bg-accent-dark dark:bg-accent-dark dark:hover:bg-accent',
         variant === 'round' &&
-          'h-8 w-8 rounded-full bg-accent-dark-variant font-bold hover:enabled:bg-accent-dark-alternate dark:bg-accent-variant dark:hover:enabled:bg-accent-alternate',
+          'h-8 w-8 rounded-full bg-accent font-bold hover:enabled:bg-accent-dark dark:bg-accent-dark dark:hover:bg-accent',
         variant === 'outline' &&
           'border-2 text-white no-underline hover:text-white',
         isStretched && 'flex-grow',
@@ -76,7 +71,7 @@ export const Button = <T extends ElementType = typeof DEFAULT_TYPE>({
         isLoading &&
           variant !== 'text' &&
           variant !== 'outline' &&
-          'bg-accent-dark-alternate dark:bg-accent-alternate',
+          'bg-accent dark:bg-accent-dark',
         isBlocked && 'cursor-not-allowed',
         isTextLeft && 'text-left',
         isDisabled &&

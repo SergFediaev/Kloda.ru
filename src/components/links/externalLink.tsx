@@ -7,13 +7,25 @@ type Props = {
   isIconLeft?: boolean
 } & ComponentPropsWithoutRef<'a'>
 
-export const ExternalLink = ({ isIconLeft, ...restProps }: Props) => {
+export const ExternalLink = ({
+  isIconLeft,
+  className,
+  ...restProps
+}: Props) => {
   const icon = <Icon size={16} className={cn(isIconLeft && 'mr-4')} />
 
   return (
     <Wrapper>
       {isIconLeft && icon}
-      <a target='_blank' rel='noopener noreferrer' {...restProps} />
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        className={cn(
+          'decoration-accent transition hover:text-accent dark:decoration-accent-dark dark:hover:text-accent-dark',
+          className,
+        )}
+        {...restProps}
+      />
       {!isIconLeft && (
         <>
           &nbsp;

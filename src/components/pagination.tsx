@@ -121,7 +121,7 @@ export const Pagination = ({
         isDisabled={hasNotPages}
         classNames={{
           wrapper: 'flex-wrap',
-          cursor: 'dark:bg-accent bg-accent-dark text-black dark:text-white',
+          cursor: 'bg-accent dark:bg-accent-dark text-white',
         }}
         showControls={isDesktopWidth}
         loop

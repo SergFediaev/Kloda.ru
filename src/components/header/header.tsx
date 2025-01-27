@@ -40,7 +40,7 @@ export const Header = () => {
         </header>
       ) : (
         <Button variant='floating' onClick={expandMenu} title='Expand menu'>
-          <Menu />
+          <Menu size={32} />
         </Button>
       )}
     </>

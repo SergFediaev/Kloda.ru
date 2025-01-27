@@ -3,8 +3,8 @@
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
 import { ExternalLink } from '@/components/links/externalLink'
+import { InternalLink } from '@/components/links/internalLink'
 import { usePaths } from '@/hooks/usePaths'
-import { Link } from 'next-view-transitions'
 
 export const Sitemap = () => {
   const {
@@ -22,41 +22,41 @@ export const Sitemap = () => {
   } = usePaths()
 
   return (
-    <div className='flex flex-wrap justify-between gap-x-32 gap-y-10'>
+    <div className='flex flex-wrap justify-between gap-x-32 gap-y-10 bg-surface-light dark:bg-surface-dark'>
       <List hasGaps isListInside hasDisc isMarkersAccent={false}>
         <Heading as='h3'>Internal links</Heading>
         <li>
-          <Link href={homePath}>About Kloda</Link>
+          <InternalLink href={homePath}>About Kloda</InternalLink>
         </li>
         <li>
-          <Link href={manualPath}>User manual</Link>
+          <InternalLink href={manualPath}>User manual</InternalLink>
         </li>
         {!isMapPath && (
           <li>
-            <Link href={mapPath}>Sitemap</Link>
+            <InternalLink href={mapPath}>Sitemap</InternalLink>
           </li>
         )}
         <li>
-          <Link href={createCardPath}>Create card form</Link>
+          <InternalLink href={createCardPath}>Create card form</InternalLink>
         </li>
         <li>
-          <Link href={cardsPath}>Cards dashboard</Link>
+          <InternalLink href={cardsPath}>Cards dashboard</InternalLink>
         </li>
         <li>
-          <Link href={usersPath}>Users dashboard</Link>
+          <InternalLink href={usersPath}>Users dashboard</InternalLink>
         </li>
         <li>
-          <Link href={loginPath}>Login form</Link>
+          <InternalLink href={loginPath}>Login form</InternalLink>
         </li>
         <li>
-          <Link href={registerPath}>Register form</Link>
+          <InternalLink href={registerPath}>Register form</InternalLink>
         </li>
         <li>
-          <Link href={settingsPath}>App settings</Link>
+          <InternalLink href={settingsPath}>App settings</InternalLink>
         </li>
         {isMapPath && (
           <li>
-            <Link href={notFoundPath}>Page 404</Link>
+            <InternalLink href={notFoundPath}>Page 404</InternalLink>
           </li>
         )}
       </List>
