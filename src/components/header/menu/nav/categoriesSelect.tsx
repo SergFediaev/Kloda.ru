@@ -70,6 +70,7 @@ export const CategoriesSelect = () => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
+  // noinspection JSUnusedGlobalSymbols
   return (
     <Select
       value={selectedOptions}
