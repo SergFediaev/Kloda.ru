@@ -2,7 +2,7 @@
 
 import { TechCarousel } from '@/components/carousel/techstackCarousel/techCarousel'
 import { Section } from '@/components/landing/section'
-import { Tooltip } from '@/components/tooltip/tooltip'
+import { Tooltip } from '@/components/tooltip'
 import type { EmblaOptionsType } from 'embla-carousel'
 
 const OPTIONS: EmblaOptionsType = {
