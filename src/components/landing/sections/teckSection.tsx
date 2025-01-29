@@ -16,7 +16,7 @@ export const TechSection = () => {
       <Tooltip
         anchorId='tech-anchor'
         content='Our trusted tech stack!'
-        float={true}
+        float
         offset={30}
       >
         <TechCarousel options={OPTIONS} />
