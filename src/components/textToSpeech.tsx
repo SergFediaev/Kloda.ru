@@ -9,6 +9,7 @@ import { textToSpeechStore } from '@/stores/textToSpeechStore'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
 import { SelectItem } from '@nextui-org/select'
+import { franc } from 'franc-min'
 import {
   ArrowRightToLine,
   CircleChevronLeft,
@@ -50,9 +51,16 @@ if (typeof window !== 'undefined' && window.speechSynthesis) {
 }
 
 const DEFAULT_VOICE = 0
+const DEFAULT_LANG = 'en-US'
+const LANG_MAP: Record<string, string> = {
+  rus: 'ru-RU',
+  eng: 'en-US',
+  fra: 'fr-FR',
+  spa: 'es-ES',
+  deu: 'de-DE',
+} as const
 
-const getCardText = ({ id, title, content }: CardModel) =>
-  `Card #${id}\n${title}\n${content}`
+const getCardText = ({ title, content }: CardModel) => `${title}\n${content}`
 
 const getCardIndex = (cards: CardModel[], cardId: number) =>
   cards.findIndex(({ id }) => id === cardId)
@@ -107,26 +115,34 @@ export const TextToSpeech = ({
 
   useEffect(() => speechSynth.cancel(), [])
 
+  const detectedLang = cardToSpeech
+    ? franc(getCardText(cardToSpeech))
+    : DEFAULT_LANG
+
+  const textLang = LANG_MAP[detectedLang] || 'en-US'
+
   useEffect(() => {
     const loadVoices = () => {
       const loadedVoices = speechSynthesis.getVoices()
 
-      if (loadedVoices.length > 0) {
-        setVoices(loadedVoices)
-        setVoice(
-          loadedVoices.find(({ name }) => name === voice?.name) ??
-            loadedVoices[DEFAULT_VOICE],
-        )
+      if (loadedVoices.length === 0) {
+        return
       }
+
+      setVoices(loadedVoices)
+
+      const selectedVoice =
+        loadedVoices?.find(({ lang }) => textLang === lang) ??
+        loadedVoices[DEFAULT_VOICE]
+      setVoice(selectedVoice)
     }
 
-    loadVoices()
-
     speechSynthesis.addEventListener('voiceschanged', loadVoices)
+    loadVoices()
 
     return () =>
       speechSynthesis.removeEventListener('voiceschanged', loadVoices)
-  }, [voice?.name, setVoice])
+  }, [textLang, setVoice])
 
   useEffect(() => {
     if (!cardToSpeech || !voice) {
