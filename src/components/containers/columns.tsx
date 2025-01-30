@@ -4,7 +4,7 @@ import type { ComponentPropsWithoutRef } from 'react'
 export type ColumnsCount = '1' | '2' | '3'
 
 type Props = {
-  count?: ColumnsCount
+  count: ColumnsCount
 } & ComponentPropsWithoutRef<'div'>
 
 export const Columns = ({ className, count, ...restProps }: Props) => (

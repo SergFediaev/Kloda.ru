@@ -1,9 +1,9 @@
 'use client'
 
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
+import { Pagination } from '@/components/displayOptions/pagination'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
-import { Pagination } from '@/components/pagination'
 import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
 import { useState } from 'react'

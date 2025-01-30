@@ -1,14 +1,12 @@
 import { Button } from '@/components/buttons/button'
 import type { ColumnsCount } from '@/components/containers/columns'
 import { Text } from '@/components/containers/text'
-import { Radio } from '@/components/radio'
+import { ColumnsRadio } from '@/components/displayOptions/columnsRadio'
 import { Select } from '@/components/select'
 import { useWidth } from '@/hooks/useWidth'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { Pagination as NextUiPagination } from '@nextui-org/pagination'
-import { RadioGroup } from '@nextui-org/radio'
 import { SelectItem } from '@nextui-org/select'
-import { Columns2, Columns3, Rows4 } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
@@ -56,8 +54,8 @@ export const Pagination = ({
   const { isDesktopWidth } = useWidth()
 
   const hasSearchParams = searchParams.toString() !== ''
-  const hasNotItems = itemsCount < 2
-  const hasNotPages = totalPages < 2
+  const lowNumberItems = itemsCount < 2
+  const lowNumberPages = totalPages < 2
 
   const onChangeParams = useCallback(
     (key: Key, value: string) => {
@@ -118,7 +116,7 @@ export const Pagination = ({
         page={page}
         total={totalPages}
         onChange={onChangePage}
-        isDisabled={hasNotPages}
+        isDisabled={lowNumberPages}
         classNames={{
           wrapper: 'flex-wrap',
           cursor: 'bg-accent dark:bg-accent-dark text-white',
@@ -138,7 +136,7 @@ export const Pagination = ({
         label={`${itemsName} per page`}
         selectedKeys={[String(limit)]}
         onChange={({ target: { value } }) => onChangeParams('limit', value)}
-        isDisabled={hasNotItems}
+        isDisabled={lowNumberItems}
       >
         {QUANTITIES.map(quantity => (
           <SelectItem
@@ -155,7 +153,7 @@ export const Pagination = ({
         selectedKeys={[order]}
         onChange={({ target: { value } }) => onChangeParams('order', value)}
         items={Object.entries(ORDERS)}
-        isDisabled={hasNotItems}
+        isDisabled={lowNumberItems}
       >
         {([value, label]) => (
           <SelectItem key={value} value={value}>
@@ -168,7 +166,7 @@ export const Pagination = ({
         selectedKeys={[sort]}
         onChange={({ target: { value } }) => onChangeParams('sort', value)}
         items={Object.entries(sorts)}
-        isDisabled={hasNotItems}
+        isDisabled={lowNumberItems}
       >
         {([value, label]) => (
           <SelectItem key={value} value={value}>
@@ -177,23 +175,10 @@ export const Pagination = ({
         )}
       </Select>
       {isDesktopWidth && (
-        <RadioGroup
-          label='Columns'
-          orientation='horizontal'
-          value={columnsCount}
-          onValueChange={value => setColumnsCount(value as ColumnsCount)}
-          className='text-center'
-        >
-          <Radio value='1' title='1'>
-            <Rows4 />
-          </Radio>
-          <Radio value='2' title='2'>
-            <Columns2 />
-          </Radio>
-          <Radio value='3' title='3'>
-            <Columns3 />
-          </Radio>
-        </RadioGroup>
+        <ColumnsRadio
+          columnsCount={columnsCount}
+          setColumnsCount={setColumnsCount}
+        />
       )}
       {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
     </div>
