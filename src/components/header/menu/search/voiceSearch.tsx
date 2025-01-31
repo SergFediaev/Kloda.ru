@@ -1,17 +1,22 @@
+'use client'
 import { Button } from '@/components/buttons/button'
+import { useVoice } from '@/hooks/useVoice'
 import { AudioLines, Mic } from 'lucide-react'
+import { useEffect } from 'react'
 
 type Props = {
-  isVoiceSupported: boolean
-  onListen: () => void
-  isListening: boolean
+  setSearch: (search: string) => void
 }
 
-export const VoiceSearch = ({
-  isVoiceSupported,
-  onListen,
-  isListening,
-}: Props) => {
+export const VoiceSearch = ({ setSearch }: Props) => {
+  const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
+
+  useEffect(() => {
+    if (transcript) {
+      setSearch(transcript)
+    }
+  }, [setSearch, transcript])
+
   const voiceSearchTitle = isVoiceSupported
     ? isListening
       ? 'Stop voice search'
