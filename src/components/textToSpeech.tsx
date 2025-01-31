@@ -119,13 +119,13 @@ export const TextToSpeech = ({
     ? franc(getCardText(cardToSpeech))
     : DEFAULT_LANG
 
-  const textLang = LANG_MAP[detectedLang] || 'en-US'
+  const textLang = LANG_MAP[detectedLang] || DEFAULT_LANG
 
   useEffect(() => {
     const loadVoices = () => {
       const loadedVoices = speechSynthesis.getVoices()
 
-      if (loadedVoices.length === 0) {
+      if (!loadedVoices.length) {
         return
       }
 
