@@ -6,12 +6,15 @@ import { usePaths } from '@/hooks/usePaths'
 
 export const SingleCardOptions = () => {
   const { isCardPath } = usePaths()
+
+  if (!isCardPath) {
+    return null
+  }
+
   return (
-    isCardPath && (
-      <div className='m-5 flex justify-start gap-10'>
-        <CardControl />
-        <CategoriesSelect />
-      </div>
-    )
+    <div className='m-5 flex justify-start gap-10'>
+      <CardControl />
+      <CategoriesSelect />
+    </div>
   )
 }
