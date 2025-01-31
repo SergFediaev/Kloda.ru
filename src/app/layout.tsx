@@ -8,6 +8,7 @@ import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
 import { LoaderBar } from '@/components/loaderBar'
 import { Screensaver } from '@/components/screensaver'
+import { ThumbButtons } from '@/components/thumbButtons/thumbButtons'
 import { YandexMetrica } from '@/components/yandexMetrica'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { ViewTransitions } from 'next-view-transitions'
@@ -55,6 +56,7 @@ export default function RootLayout({
               <LoaderBar />
               <Header />
               <main className='flex flex-grow'>{children}</main>
+              <ThumbButtons />
               <Footer />
               <Screensaver />
             </Layout>

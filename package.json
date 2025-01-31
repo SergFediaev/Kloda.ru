@@ -27,6 +27,7 @@
     "embla-carousel-auto-scroll": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^11.11.7",
+    "franc-min": "^6.2.0",
     "holy-loader": "^2.3.11",
     "ky": "^1.7.2",
     "lucide-react": "^0.445.0",
@@ -40,6 +41,7 @@
     "react-hook-form": "^7.53.0",
     "react-select": "^5.8.3",
     "react-toastify": "^10.0.5",
+    "react-tooltip": "^5.28.0",
     "tailwind-merge": "^2.5.2",
     "zod": "^3.23.8",
     "zustand": "^5.0.0"
