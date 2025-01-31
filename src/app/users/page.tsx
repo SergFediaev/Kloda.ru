@@ -16,16 +16,18 @@ type Props = {
   }
 }
 
+const DEFAULT_PARAMS = {
+  search: '',
+  page: '1',
+  limit: '10',
+  order: 'desc',
+  sort: 'registeredAt',
+} as const
+
 export default function UsersPage({ searchParams }: Props) {
   return (
     <Container>
-      <Users
-        search={searchParams?.search ?? ''}
-        page={Number(searchParams?.page) || 1}
-        limit={Number(searchParams?.limit) || 10}
-        order={searchParams?.order ?? 'desc'}
-        sort={searchParams?.sort ?? 'registeredAt'}
-      />
+      <Users {...DEFAULT_PARAMS} {...searchParams} />
     </Container>
   )
 }
