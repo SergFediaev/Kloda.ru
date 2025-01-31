@@ -12,7 +12,7 @@ export const Columns = ({ className, count, ...restProps }: Props) => (
     className={cn(
       'gap-x-6 space-y-6',
       count === '2' && 'columns-lg',
-      count === '3' && 'columns-md',
+      count === '3' && 'columns-xs',
       className,
     )}
     {...restProps}
