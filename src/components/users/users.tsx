@@ -66,7 +66,7 @@ export const Users = (props: Props) => {
 
   return (
     <>
-      <div className='flex gap-3'>
+      <div className='flex items-center justify-start gap-3'>
         <Pagination
           itemsName='Users'
           {...props}

@@ -54,7 +54,7 @@ export const Pagination = ({ page, totalPages, onChangeParams }: Props) => {
   }, [page, totalPages, onChangePage])
 
   return (
-    <div className='mx-auto mb-6 flex w-fit flex-wrap items-center justify-around gap-4'>
+    <div className='mx-auto flex w-fit flex-wrap gap-4 self-end'>
       <NextUiPagination
         page={Number(page)}
         total={totalPages}
