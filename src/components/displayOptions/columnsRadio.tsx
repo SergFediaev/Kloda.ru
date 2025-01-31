@@ -1,5 +1,6 @@
 import type { ColumnsCount } from '@/components/containers/columns'
 import { Radio } from '@/components/radio'
+import { useWidth } from '@/hooks/useWidth'
 import { RadioGroup } from '@nextui-org/radio'
 import { Columns2, Columns3, Rows4 } from 'lucide-react'
 
@@ -9,6 +10,12 @@ type Props = {
 }
 
 export const ColumnsRadio = ({ columnsCount, setColumnsCount }: Props) => {
+  const { isDesktopWidth } = useWidth()
+
+  if (!isDesktopWidth) {
+    return null
+  }
+
   return (
     <RadioGroup
       label='Columns'
