@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/components/buttons/button'
+import { usePaths } from '@/hooks/usePaths'
 import { useVoice } from '@/hooks/useVoice'
 import { AudioLines, Mic } from 'lucide-react'
 import { useEffect } from 'react'
@@ -9,6 +10,7 @@ type Props = {
 }
 
 export const VoiceSearch = ({ setSearch }: Props) => {
+  const { isUsersPath } = usePaths()
   const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export const VoiceSearch = ({ setSearch }: Props) => {
       title={voiceSearchTitle}
       disabled={!isVoiceSupported}
     >
-      {voiceSearchIcon}
+      {!isUsersPath && voiceSearchIcon}
     </Button>
   )
 }
