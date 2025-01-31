@@ -1,37 +1,52 @@
 'use client'
 
+import { Button } from '@/components/buttons/button'
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
-import { Pagination } from '@/components/displayOptions/pagination'
+import {
+  ColumnsRadio,
+  ItemsPerPage,
+  type Key,
+  Pagination,
+  SelectorsGroup,
+} from '@/components/displayOptions'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
-import { useState } from 'react'
-
-const SORTS_USERS = {
-  createdCardsCount: 'Created cards',
-  dislikedCardsCount: 'Disliked cards',
-  email: 'Email',
-  favoriteCardsCount: 'Favorite cards',
-  id: 'ID',
-  lastLoginAt: 'Last login',
-  likedCardsCount: 'Liked cards',
-  registeredAt: 'Registered',
-  username: 'Username',
-} as const
+import { setFirstPage } from '@/utils/setFirstPage'
+import { useTransitionRouter } from 'next-view-transitions'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useCallback, useState } from 'react'
 
 type Props = {
   search: string
-  page: number
-  limit: number
+  page: string
+  limit: string
   order: string
   sort: string
 }
 
 // ToDo: Refactor columns style, error message size, break-inside-avoid if not open
+
 export const Users = (props: Props) => {
   const { isPending, isError, data, error } = useGetUsers(props)
-  const [columnsCount, setColumnsCount] = useState<ColumnsCount>('3') // ToDo: Users pagination
+  const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2') // ToDo: Users pagination
+  const pathname = usePathname()
+  const { replace } = useTransitionRouter()
+  const searchParams = useSearchParams()
+  const hasSearchParams = searchParams.toString() !== ''
+
+  const onChangeParams = useCallback(
+    (key: Key, value: string) => {
+      const params = new URLSearchParams(searchParams)
+
+      if (key === 'limit') setFirstPage(params)
+
+      params.set(key, value)
+      replace(`?${params}`)
+    },
+    [searchParams, replace],
+  )
 
   if (isPending) {
     return <Loader>Fetching users</Loader>
@@ -43,34 +58,43 @@ export const Users = (props: Props) => {
 
   const { users, totalUsers, totalPages } = data
 
-  const usersElement = users.length ? (
-    <Columns count={columnsCount}>
-      {users.map(user => (
-        <User key={user.id} user={user} inColumns />
-      ))}
-    </Columns>
-  ) : (
-    <ErrorMessage>Users not found 🙈</ErrorMessage>
-  )
+  const onReset = () => replace(pathname)
 
-  const { page, limit, order, sort } = props
+  if (!users.length) {
+    return <ErrorMessage>Users not found 🙈</ErrorMessage>
+  }
 
   return (
     <>
-      <Pagination
-        itemsName='Users'
-        page={page}
-        limit={limit}
-        order={order}
-        sort={sort}
-        sorts={SORTS_USERS}
-        totalItems={totalUsers}
-        totalPages={totalPages}
-        itemsCount={users.length}
-        columnsCount={columnsCount}
-        setColumnsCount={setColumnsCount}
-      />
-      {usersElement}
+      <div className='flex gap-3'>
+        <Pagination
+          itemsName='Users'
+          {...props}
+          totalPages={totalPages}
+          onChangeParams={onChangeParams}
+        />
+        <ItemsPerPage
+          itemsName='Users'
+          totalItems={totalUsers}
+          currentItems={users.length}
+        />
+        <SelectorsGroup
+          itemsName='Users'
+          {...props}
+          onChangeParams={onChangeParams}
+          itemsCount={users.length}
+        />
+        <ColumnsRadio
+          columnsCount={columnsCount}
+          setColumnsCount={setColumnsCount}
+        />
+        {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
+      </div>
+      <Columns count={columnsCount}>
+        {users.map(user => (
+          <User key={user.id} user={user} inColumns />
+        ))}
+      </Columns>
     </>
   )
 }
