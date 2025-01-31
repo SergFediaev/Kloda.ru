@@ -17,11 +17,7 @@ export const ScrollToTop = ({
   const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = useCallback(() => {
-    if (window.scrollY > 300) {
-      setIsVisible(true)
-    } else {
-      setIsVisible(false)
-    }
+    setIsVisible(window.scrollY > 300)
   }, [])
 
   const scrollToTop = () => {
