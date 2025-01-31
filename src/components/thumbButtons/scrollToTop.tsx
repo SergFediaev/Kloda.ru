@@ -17,7 +17,7 @@ export const ScrollToTop = ({
   const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = useCallback(() => {
-    if (window.pageYOffset > 300) {
+    if (window.scrollY > 300) {
       setIsVisible(true)
     } else {
       setIsVisible(false)
@@ -36,17 +36,19 @@ export const ScrollToTop = ({
     return () => window.removeEventListener('scroll', toggleVisibility)
   }, [toggleVisibility])
 
+  if (!isVisible) {
+    return null
+  }
+
   return (
-    isVisible && (
-      <Button
-        onClick={scrollToTop}
-        variant='floating'
-        title='Top'
-        className={cn('sticky bottom-4 self-end', className)}
-        {...restProps}
-      >
-        <ArrowUp size={32} />
-      </Button>
-    )
+    <Button
+      onClick={scrollToTop}
+      variant='floating'
+      title='Top'
+      className={cn('sticky bottom-4 self-end', className)}
+      {...restProps}
+    >
+      <ArrowUp size={32} />
+    </Button>
   )
 }

@@ -7,12 +7,12 @@ import { ScrollToTop } from '@/components/thumbButtons/scrollToTop'
 
 export default function HomePage() {
   return (
-    <div className='relative w-full'>
+    <div className='flex w-full flex-col'>
       <PresentationSection />
       <CoreFeaturesSection />
       <StatementSection />
       <FeaturesSection />
-      <ScrollToTop className='left-[99%]' />
+      <ScrollToTop />
       <TechSection />
     </div>
   )
