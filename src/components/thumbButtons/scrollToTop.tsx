@@ -29,6 +29,7 @@ export const ScrollToTop = ({
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility)
+
     return () => window.removeEventListener('scroll', toggleVisibility)
   }, [toggleVisibility])
 
@@ -40,7 +41,6 @@ export const ScrollToTop = ({
     <Button
       onClick={scrollToTop}
       variant='floating'
-      title='Top'
       className={cn('sticky bottom-4 self-end', className)}
       {...restProps}
     >
