@@ -12,8 +12,8 @@ export type UserResponse = {
 
 export type UsersArgs = {
   search: string
-  page: number
-  limit: number
+  page: string
+  limit: string
   order: string
   sort: string
 }
