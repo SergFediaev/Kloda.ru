@@ -5,5 +5,10 @@ import { usePaths } from '@/hooks/usePaths'
 
 export const ThumbButtons = () => {
   const { isHomePath } = usePaths()
-  return !isHomePath && <ScrollToTop />
+
+  if (isHomePath) {
+    return null
+  }
+
+  return <ScrollToTop />
 }
