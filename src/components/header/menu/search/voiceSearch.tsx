@@ -1,6 +1,6 @@
 'use client'
+
 import { Button } from '@/components/buttons/button'
-import { usePaths } from '@/hooks/usePaths'
 import { useVoice } from '@/hooks/useVoice'
 import { AudioLines, Mic } from 'lucide-react'
 import { useEffect } from 'react'
@@ -10,7 +10,6 @@ type Props = {
 }
 
 export const VoiceSearch = ({ setSearch }: Props) => {
-  const { isUsersPath } = usePaths()
   const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
 
   useEffect(() => {
@@ -25,12 +24,6 @@ export const VoiceSearch = ({ setSearch }: Props) => {
       : 'Start voice search'
     : 'Your browser does not support voice search'
 
-  const voiceSearchIcon = isListening ? (
-    <AudioLines className='animate-pulse' />
-  ) : (
-    <Mic />
-  )
-
   return (
     <Button
       variant='text'
@@ -38,7 +31,7 @@ export const VoiceSearch = ({ setSearch }: Props) => {
       title={voiceSearchTitle}
       disabled={!isVoiceSupported}
     >
-      {!isUsersPath && voiceSearchIcon}
+      {isListening ? <AudioLines className='animate-pulse' /> : <Mic />}
     </Button>
   )
 }

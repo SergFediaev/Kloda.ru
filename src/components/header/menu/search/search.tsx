@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/components/buttons/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { VoiceSearch } from '@/components/header/menu/search/voiceSearch'
