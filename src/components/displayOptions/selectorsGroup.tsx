@@ -23,7 +23,7 @@ const SORTS_USERS = {
 
 type Props = {
   itemsName: string
-  itemsCount: number
+  currentItems: number
   sort: string
   order: string
   limit: string
@@ -32,27 +32,24 @@ type Props = {
 
 export const SelectorsGroup = ({
   itemsName,
-  itemsCount,
+  currentItems,
   sort,
   order,
   limit,
   onChangeParams,
 }: Props) => {
-  const lowNumberItems = itemsCount < 2
+  const lowNumberItems = currentItems < 2
+
   return (
     <div className='m-3 flex gap-2'>
       <Select
         label={`${itemsName} per page`}
-        selectedKeys={[String(limit)]}
+        selectedKeys={[limit]}
         onChange={({ target: { value } }) => onChangeParams('limit', value)}
         isDisabled={lowNumberItems}
       >
         {QUANTITIES.map(quantity => (
-          <SelectItem
-            key={quantity}
-            value={quantity}
-            textValue={String(quantity)}
-          >
+          <SelectItem key={quantity} value={quantity} textValue={quantity}>
             {quantity}
           </SelectItem>
         ))}

@@ -5,7 +5,6 @@ import { useCallback, useEffect } from 'react'
 export type Key = 'page' | 'limit' | 'order' | 'sort'
 
 type Props = {
-  itemsName?: string
   page: string
   totalPages: number
   onChangeParams: (key: Key, value: string) => void
