@@ -18,6 +18,17 @@ export const USERS_DEFAULT_PARAMS: Readonly<UsersSearchParams> = {
   sort: 'registeredAt',
 } as const
 
+export const CARDS_DEFAULT_PARAMS: CardsSearchParams = {
+  search: '',
+  page: '1',
+  limit: '10',
+  order: 'desc',
+  sort: 'createdAt',
+  categories: [],
+  userId: '',
+  action: '',
+}
+
 export type UsersSearchParams = {
   search: string
   page: string
@@ -26,17 +37,30 @@ export type UsersSearchParams = {
   sort: string
 }
 
+export type CardsSearchParams = {
+  search: string
+  page: string
+  limit: string
+  order: string
+  sort: string
+  categories: string[]
+  userId: string
+  action: string
+}
+
 type Props = {
   totalPages: number
-  totalUsers: number
-  numberOfCurrentItems: number
+  totalUsers?: number
+  totalCards?: number
+  currentItems: number
   radioGroup: JSX.Element
 }
 
-export const UsersPageControls = ({
+export const PageControls = ({
   totalPages,
   totalUsers,
-  numberOfCurrentItems,
+  totalCards,
+  currentItems,
   radioGroup,
 }: Props) => {
   const { pathname, isUsersPath, isCardsPath } = usePaths()
@@ -46,7 +70,7 @@ export const UsersPageControls = ({
   const searchParams = useSearchParams()
 
   const currentParams = {
-    ...USERS_DEFAULT_PARAMS,
+    ...(isUsersPath ? USERS_DEFAULT_PARAMS : CARDS_DEFAULT_PARAMS),
     ...Object.fromEntries(searchParams.entries()),
   }
 
@@ -79,14 +103,14 @@ export const UsersPageControls = ({
       />
       <ItemsPerPage
         itemsName={itemsName}
-        totalItems={totalUsers}
-        currentItems={numberOfCurrentItems}
+        totalItems={isUsersPath ? totalUsers : totalCards}
+        currentItems={currentItems}
       />
       <SelectorsGroup
         itemsName={isUsersPath ? 'Users' : 'Cards'}
         {...restParams}
         onChangeParams={onChangeParams}
-        currentItems={numberOfCurrentItems}
+        currentItems={currentItems}
       />
       {radioGroup}
       {hasSearchParams && <Button onClick={onReset}>Reset</Button>}

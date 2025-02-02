@@ -2,8 +2,8 @@ import type { Key } from '@/components/displayOptions/pagination'
 import { Select } from '@/components/displayOptions/select'
 import { SelectItem } from '@nextui-org/select'
 
-// ToDo: string[]
 const QUANTITIES = ['5', '10', '20', '50', '100'] as const
+
 const ORDERS = {
   asc: 'Ascending',
   desc: 'Descending',
@@ -19,6 +19,18 @@ const SORTS_USERS = {
   likedCardsCount: 'Liked cards',
   registeredAt: 'Registered',
   username: 'Username',
+} as const
+
+const SORTS_CARDS = {
+  authorId: 'Author',
+  content: 'Content',
+  createdAt: 'Created',
+  dislikes: 'Dislikes',
+  favorites: 'Favorites',
+  id: 'ID',
+  likes: 'Likes',
+  title: 'Title',
+  updatedAt: 'Updated',
 } as const
 
 type Props = {
@@ -71,7 +83,9 @@ export const SelectorsGroup = ({
         label='Sort by'
         selectedKeys={[sort]}
         onChange={({ target: { value } }) => onChangeParams('sort', value)}
-        items={Object.entries(SORTS_USERS)}
+        items={Object.entries(
+          itemsName === 'Users' ? SORTS_USERS : SORTS_CARDS,
+        )}
         isDisabled={lowNumberItems}
       >
         {([value, label]) => (
