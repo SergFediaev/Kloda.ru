@@ -3,7 +3,7 @@ import { Text } from '@/components/containers/text'
 type Props = {
   itemsName: string
   currentItems: number
-  totalItems: number
+  totalItems?: number
 }
 
 export const ItemsPerPage = ({

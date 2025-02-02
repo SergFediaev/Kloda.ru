@@ -2,7 +2,7 @@
 
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ColumnsRadio } from '@/components/displayOptions'
-import { UsersPageControls } from '@/components/displayOptions/usersPageControls'
+import { PageControls } from '@/components/displayOptions/pageControls'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { User } from '@/components/users/user'
@@ -43,11 +43,12 @@ export const Users = (props: Props) => {
       setColumnsCount={setColumnsCount}
     />
   )
+
   return (
     <>
-      <UsersPageControls
+      <PageControls
         {...restData}
-        numberOfCurrentItems={users.length}
+        currentItems={users.length}
         radioGroup={radioGroup}
       />
       <Columns count={columnsCount}>
