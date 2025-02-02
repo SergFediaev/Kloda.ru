@@ -15,6 +15,8 @@ import {
   useLikeCard,
 } from '@/hooks/useCards'
 import { usePaths } from '@/hooks/usePaths'
+import { cardsModeStore } from '@/stores/cardsModeStore'
+import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import { copyToClipboard } from '@/utils/copyToClipboard'
 import { getLocalDate } from '@/utils/getLocalDate'
 import { cn } from '@/utils/mergeClasses'
@@ -39,13 +41,10 @@ import { toast } from 'react-toastify'
 
 type Props = {
   card: CardModel
-  isExpanded?: boolean
-  isMediaShown?: boolean
   isOpen?: boolean
-  isCardToSpeech?: boolean
+  cardToSpeechId?: string
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
-  isStudyMode: boolean
   pagePosition?: number
 } & ComponentPropsWithoutRef<'article'> &
   Pick<BlockProps, 'inColumns'>
@@ -53,18 +52,18 @@ type Props = {
 // ToDo: Uncategorized
 export const Card = ({
   card,
-  isExpanded: isCardExpanded = true,
-  isMediaShown = true,
   isOpen,
-  isCardToSpeech,
+  cardToSpeechId,
   setCardToSpeech,
   isCardPlaying,
-  isStudyMode,
   pagePosition,
   className,
   ...restProps
 }: Props) => {
   const { data: meData, isSuccess: isMeSuccess } = useMe()
+  const { isCardAlwaysExpanded, isMediaAlwaysShown } = cardsSettingsStore()
+  const { isStudyMode } = cardsModeStore()
+  const isCardToSpeech = card.id === cardToSpeechId
 
   const {
     mutate: deleteCard,
@@ -102,7 +101,9 @@ export const Card = ({
   } = useFavoriteCard(meData?.id)
 
   const { theme } = useTheme()
-  const [isExpanded, setIsExpanded] = useState(isCardExpanded)
+  const [isExpanded, setIsExpanded] = useState(
+    isCardAlwaysExpanded ? isCardAlwaysExpanded : false,
+  )
   const [isShown, setIsShown] = useState(isStudyMode)
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -238,7 +239,10 @@ export const Card = ({
         {...restProps}
       >
         {isShown && (
-          <CardContent content={content} isMediaShown={isMediaShown} />
+          <CardContent
+            content={content}
+            isMediaShown={isMediaAlwaysShown ? isMediaAlwaysShown : true}
+          />
         )}
         <Wrapper as='div' hasGaps className='justify-between'>
           <Wrapper hasGaps>
