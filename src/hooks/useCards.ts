@@ -39,7 +39,7 @@ export const useGetRandomCard = (args: RandomCardArgs) =>
     enabled: false,
   })
 
-export const useCreateCard = (authorId: number) =>
+export const useCreateCard = (authorId: string) =>
   useMutation({
     mutationFn: createCard,
     onSuccess: () => {
@@ -61,7 +61,7 @@ export const useEditCard = () =>
     },
   })
 
-export const useDeleteCards = (userId: number) =>
+export const useDeleteCards = (userId: string) =>
   useMutation({
     mutationFn: deleteCards,
     onSuccess: () => {
@@ -72,33 +72,36 @@ export const useDeleteCards = (userId: number) =>
     },
   })
 
-export const useDeleteCard = (userId?: number) =>
+export const useDeleteCard = (userId?: string) =>
   useMutation({
     mutationFn: deleteCard,
     onSuccess: (_, variables) =>
-      invalidateCardsAndUsers(variables, userId, true),
+      invalidateCardsAndUsers(String(variables), userId, true),
   })
 
-export const useLikeCard = (userId?: number) =>
+export const useLikeCard = (userId?: string) =>
   useMutation({
     mutationFn: likeCard,
-    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+    onSuccess: (_, variables) =>
+      invalidateCardsAndUsers(String(variables), userId),
   })
 
-export const useDislikeCard = (userId?: number) =>
+export const useDislikeCard = (userId?: string) =>
   useMutation({
     mutationFn: dislikeCard,
-    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+    onSuccess: (_, variables) =>
+      invalidateCardsAndUsers(String(variables), userId),
   })
 
-export const useFavoriteCard = (userId?: number) =>
+export const useFavoriteCard = (userId?: string) =>
   useMutation({
     mutationFn: favoriteCard,
-    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+    onSuccess: (_, variables) =>
+      invalidateCardsAndUsers(String(variables), userId),
   })
 
 // ToDo: Refactor invalidating, duplicated with create card, also invalidate only one user
-export const useImportCards = (userId: number) =>
+export const useImportCards = (userId: string) =>
   useMutation({
     mutationFn: importCards,
     onSuccess: () => {
@@ -121,23 +124,23 @@ export const invalidateCards = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['cards'] })
 
 // noinspection Annotator
-const invalidateCard = (queryClient: QueryClient, cardId: number) =>
-  queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+const invalidateCard = (queryClient: QueryClient, cardId: string) =>
+  queryClient.invalidateQueries({ queryKey: ['card', cardId] })
 
 // noinspection Annotator
 const invalidateCategories = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['categories'] })
 
-const invalidateUsers = (queryClient: QueryClient, userId: number) => {
+const invalidateUsers = (queryClient: QueryClient, userId: string) => {
   // noinspection Annotator
   void queryClient.invalidateQueries({ queryKey: ['users'] })
   // noinspection Annotator
-  void queryClient.invalidateQueries({ queryKey: ['user', String(userId)] })
+  void queryClient.invalidateQueries({ queryKey: ['user', userId] })
 }
 
 const invalidateCardsAndUsers = (
-  cardId: number,
-  userId?: number,
+  cardId: string,
+  userId?: string,
   shouldInvalidateCategories?: boolean,
 ) => {
   const queryClient = getQueryClient()

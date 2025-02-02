@@ -53,15 +53,15 @@ export const editCard = ({ id, ...json }: EditCardArgs) =>
 
 export const deleteCards = () => cardsApi.delete<DeleteCardsResponse>('').json()
 
-export const deleteCard = (id: number) => cardsApi.delete(String(id)).json()
+export const deleteCard = (id: string) => cardsApi.delete(id).json()
 
-export const likeCard = (id: number) =>
+export const likeCard = (id: string) =>
   cardsApi.patch<LikeResponse>(`${id}/like`).json()
 
-export const dislikeCard = (id: number) =>
+export const dislikeCard = (id: string) =>
   cardsApi.patch<DislikeResponse>(`${id}/dislike`).json()
 
-export const favoriteCard = (id: number) =>
+export const favoriteCard = (id: string) =>
   cardsApi.patch<FavoriteResponse>(`${id}/favorite`).json()
 
 export const importCards = (json: ImportCardsArgs) =>

@@ -1,12 +1,12 @@
 export type CardModel = {
-  id: number
+  id: string
   title: string
   content: string
   categories: string[]
-  favorites: number
-  likes: number
-  dislikes: number
-  authorId: number
+  favorites: string
+  likes: string
+  dislikes: string
+  authorId: string
   authorUsername: string
   createdAt: string
   updatedAt: string
@@ -21,7 +21,7 @@ export type CardArgs = {
 }
 
 export type RandomCardArgs = {
-  currentCardId: number
+  currentCardId: string
   categories: string[]
 }
 
@@ -29,7 +29,7 @@ export type CreateCardArgs = {
   title: string
   content: string
   categories: string[]
-  authorId: number
+  authorId: string
 }
 
 export type EditCardArgs = {
@@ -38,20 +38,20 @@ export type EditCardArgs = {
 
 export type CardsArgs = {
   search: string
-  page: number
-  limit: number
+  page: string
+  limit: string
   order: string
   sort: string
   categories: string[]
-  userId?: number
+  userId?: string
   action?: string
 }
 
 export type CardResponse = {
   card: CardModel
-  cardPosition: number
-  prevCardId: number
-  nextCardId: number
+  cardPosition: string
+  prevCardId: string
+  nextCardId: string
   totalCards: number
 }
 
