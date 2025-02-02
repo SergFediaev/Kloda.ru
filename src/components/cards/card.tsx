@@ -101,9 +101,7 @@ export const Card = ({
   } = useFavoriteCard(meData?.id)
 
   const { theme } = useTheme()
-  const [isExpanded, setIsExpanded] = useState(
-    isCardAlwaysExpanded ? isCardAlwaysExpanded : false,
-  )
+  const [isExpanded, setIsExpanded] = useState(isCardAlwaysExpanded ?? false)
   const [isShown, setIsShown] = useState(isStudyMode)
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -241,7 +239,7 @@ export const Card = ({
         {isShown && (
           <CardContent
             content={content}
-            isMediaShown={isMediaAlwaysShown ? isMediaAlwaysShown : true}
+            isMediaShown={isMediaAlwaysShown ?? true}
           />
         )}
         <Wrapper as='div' hasGaps className='justify-between'>

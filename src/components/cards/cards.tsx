@@ -49,7 +49,7 @@ export const Cards = ({ categories, ...restProps }: Props) => {
     return <ErrorMessage isCentered>Cards not found 🙈</ErrorMessage>
   }
 
-  const pages = `${restProps.page ? restProps.page : '1'}/${restData.totalPages}`
+  const pages = `${restProps.page ?? '1'}/${restData.totalPages}`
   const playlistName = restProps.search
     ? `Search: ${restProps.search} (page ${pages})`
     : `Page ${pages}`
