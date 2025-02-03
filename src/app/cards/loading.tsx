@@ -4,7 +4,7 @@ import { Loader } from '@/components/loader'
 export default function Loading() {
   return (
     <Container>
-      <Loader>Fetching cards</Loader>
+      <Loader />
     </Container>
   )
 }
