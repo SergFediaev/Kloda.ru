@@ -4,7 +4,7 @@ import { CardControl } from '@/components/header/menu/cardControl'
 import { CategoriesSelect } from '@/components/header/menu/nav/categoriesSelect'
 import { usePaths } from '@/hooks/usePaths'
 
-export const SingleCardOptions = () => {
+export const CardPageControls = () => {
   const { isCardPath } = usePaths()
 
   if (!isCardPath) {

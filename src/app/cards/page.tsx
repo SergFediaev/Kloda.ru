@@ -3,7 +3,7 @@ import { Container } from '@/components/containers/container'
 import {
   CARDS_DEFAULT_PARAMS,
   type CardsSearchParams,
-} from '@/components/displayOptions/pageControls'
+} from '@/components/pageControls'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

@@ -42,6 +42,7 @@ import { toast } from 'react-toastify'
 type Props = {
   card: CardModel
   isOpen?: boolean
+  isStudyMode?: boolean
   cardToSpeechId?: string
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
@@ -329,9 +330,11 @@ export const Card = ({
             </Button>
             {isCardAuthor && (
               <>
-                <Link href={`/edit-card/${id}`} title='Edit card'>
-                  <SquarePen />
-                </Link>
+                <Button variant='text'>
+                  <Link href={`/edit-card/${id}`} title='Edit card'>
+                    <SquarePen />
+                  </Link>
+                </Button>
                 <Button
                   variant='text'
                   title='Delete card'

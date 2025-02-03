@@ -1,5 +1,5 @@
-import type { Key } from '@/components/displayOptions/pagination'
-import { Select } from '@/components/displayOptions/select'
+import { CategoriesSelect } from '@/components/header/menu/nav/categoriesSelect'
+import { type Key, Select } from '@/components/pageControls'
 import { SelectItem } from '@nextui-org/select'
 
 const QUANTITIES = ['5', '10', '20', '50', '100'] as const
@@ -53,7 +53,8 @@ export const SelectorsGroup = ({
   const lowNumberItems = currentItems < 2
 
   return (
-    <div className='m-3 flex gap-2'>
+    <div className='m-3 flex flex-wrap gap-2'>
+      {itemsName === 'Cards' && <CategoriesSelect />}
       <Select
         label={`${itemsName} per page`}
         selectedKeys={[limit]}

@@ -1,10 +1,9 @@
 'use client'
 
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
-import { ColumnsRadio } from '@/components/displayOptions'
-import { PageControls } from '@/components/displayOptions/pageControls'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
+import { ColumnsRadio, PageControls } from '@/components/pageControls'
 import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
 import { useState } from 'react'

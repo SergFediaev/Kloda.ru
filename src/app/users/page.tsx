@@ -2,7 +2,7 @@ import { Container } from '@/components/containers/container'
 import {
   USERS_DEFAULT_PARAMS,
   type UsersSearchParams,
-} from '@/components/displayOptions/pageControls'
+} from '@/components/pageControls'
 import { Users } from '@/components/users/users'
 import type { Metadata } from 'next'
 

@@ -1,9 +1,12 @@
 'use client'
 
 import { Button } from '@/components/buttons/button'
-import { ItemsPerPage } from '@/components/displayOptions/itemsPerPage'
-import { type Key, Pagination } from '@/components/displayOptions/pagination'
-import { SelectorsGroup } from '@/components/displayOptions/selectorsGroup'
+import {
+  ItemsPerPage,
+  type Key,
+  Pagination,
+  SelectorsGroup,
+} from '@/components/pageControls'
 import { usePaths } from '@/hooks/usePaths'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { useTransitionRouter } from 'next-view-transitions'
@@ -95,25 +98,29 @@ export const PageControls = ({
   )
 
   return (
-    <div className='flex items-center justify-around gap-3'>
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        onChangeParams={onChangeParams}
-      />
-      <ItemsPerPage
-        itemsName={itemsName}
-        totalItems={isUsersPath ? totalUsers : totalCards}
-        currentItems={currentItems}
-      />
-      <SelectorsGroup
-        itemsName={isUsersPath ? 'Users' : 'Cards'}
-        {...restParams}
-        onChangeParams={onChangeParams}
-        currentItems={currentItems}
-      />
-      {radioGroup}
-      {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
+    <div className='flex flex-col items-center justify-around gap-x-3'>
+      <div className='flex items-center justify-start gap-x-3'>
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onChangeParams={onChangeParams}
+        />
+        <ItemsPerPage
+          itemsName={itemsName}
+          totalItems={isUsersPath ? totalUsers : totalCards}
+          currentItems={currentItems}
+        />
+      </div>
+      <div className='flex flex-wrap items-center justify-start gap-x-3 py-3'>
+        <SelectorsGroup
+          itemsName={isUsersPath ? 'Users' : 'Cards'}
+          {...restParams}
+          onChangeParams={onChangeParams}
+          currentItems={currentItems}
+        />
+        {radioGroup}
+        {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
+      </div>
     </div>
   )
 }

@@ -3,10 +3,9 @@
 import type { CardModel } from '@/api/cards/cards.types'
 import { Card } from '@/components/cards/card'
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
-import { ColumnsRadio } from '@/components/displayOptions'
-import { PageControls } from '@/components/displayOptions/pageControls'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
+import { ColumnsRadio, PageControls } from '@/components/pageControls'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCards } from '@/hooks/useCards'
 import { useState } from 'react'
@@ -17,14 +16,19 @@ type Props = {
   limit: string
   order: string
   sort: string
-  categories: string[]
+  categories: string | string[]
   userId: string
   action: string
 }
 
 // ToDo: Refactor all search params to lower case
 export const Cards = ({ categories, ...restProps }: Props) => {
-  categories = categories?.map(category => category.toLowerCase())
+  categories =
+    typeof categories === 'string'
+      ? [categories.toLowerCase()]
+      : Array.isArray(categories)
+        ? categories.map(category => category.toLowerCase())
+        : []
 
   const { isPending, isError, data, error } = useGetCards({
     categories,
