@@ -42,7 +42,6 @@ import { toast } from 'react-toastify'
 type Props = {
   card: CardModel
   isOpen?: boolean
-  isStudyMode?: boolean
   cardToSpeechId?: string
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
@@ -102,7 +101,7 @@ export const Card = ({
   } = useFavoriteCard(meData?.id)
 
   const { theme } = useTheme()
-  const [isExpanded, setIsExpanded] = useState(isCardAlwaysExpanded ?? false)
+  const [isExpanded, setIsExpanded] = useState(isCardAlwaysExpanded)
   const [isShown, setIsShown] = useState(isStudyMode)
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -238,10 +237,7 @@ export const Card = ({
         {...restProps}
       >
         {isShown && (
-          <CardContent
-            content={content}
-            isMediaShown={isMediaAlwaysShown ?? true}
-          />
+          <CardContent content={content} isMediaShown={isMediaAlwaysShown} />
         )}
         <Wrapper as='div' hasGaps className='justify-between'>
           <Wrapper hasGaps>
