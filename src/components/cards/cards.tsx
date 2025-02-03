@@ -23,15 +23,18 @@ type Props = {
 
 // ToDo: Refactor all search params to lower case
 export const Cards = ({ categories, ...restProps }: Props) => {
-  categories =
-    typeof categories === 'string'
-      ? [categories.toLowerCase()]
-      : Array.isArray(categories)
-        ? categories.map(category => category.toLowerCase())
-        : []
+  const categoriesToArray = categories
+    ? Array.isArray(categories)
+      ? categories
+      : [categories]
+    : []
+
+  const normalizedCategories = categoriesToArray.map(category =>
+    category.toLowerCase(),
+  )
 
   const { isPending, isError, data, error } = useGetCards({
-    categories,
+    categories: normalizedCategories,
     ...restProps,
   })
 

@@ -11,7 +11,7 @@ import { usePaths } from '@/hooks/usePaths'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { type ReactNode, useCallback } from 'react'
 
 export const USERS_DEFAULT_PARAMS: Readonly<UsersSearchParams> = {
   search: '',
@@ -46,7 +46,7 @@ export type CardsSearchParams = {
   limit: string
   order: string
   sort: string
-  categories: string[]
+  categories: string | string[]
   userId: string
   action: string
 }
@@ -56,7 +56,7 @@ type Props = {
   totalUsers?: number
   totalCards?: number
   currentItems: number
-  radioGroup: JSX.Element
+  radioGroup: ReactNode
 }
 
 export const PageControls = ({
