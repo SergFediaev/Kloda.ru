@@ -43,7 +43,6 @@ type Props = {
   card: CardModel
   isOpen?: boolean
   isCardToSpeech?: boolean
-  cardToSpeechId?: string
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
   pagePosition?: number
