@@ -12,7 +12,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Select, {
   components,
   type GroupBase,
-  type MultiValue,
   type PlaceholderProps,
 } from 'react-select'
 import colors from 'tailwindcss/colors'
@@ -36,10 +35,10 @@ const CustomPlaceholder = (
     </div>
   </components.Placeholder>
 )
-type Option = {
+type Option = Readonly<{
   label: string
   value: string
-}
+}>
 
 type Props = {
   totalItems?: number
@@ -79,7 +78,7 @@ export const CategoriesSelect = ({ totalItems }: Props) => {
     selectedCategories.includes(value),
   )
 
-  const onChangeCategories = (categories: MultiValue<Option>) => {
+  const onChangeCategories = (categories: readonly Option[]) => {
     const params = new URLSearchParams(searchParams)
     params.delete(CATEGORIES_PARAM)
     setFirstPage(params)
