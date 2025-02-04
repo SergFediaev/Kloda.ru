@@ -1,6 +1,5 @@
 export * from './selectorsGroup'
 export * from './pagination'
-export * from './select'
 export * from './cardPageControls'
 export * from './pageControls'
 export * from './columnsRadio'

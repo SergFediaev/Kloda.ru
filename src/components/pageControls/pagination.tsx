@@ -9,7 +9,7 @@ export type Key = 'page' | 'limit' | 'order' | 'sort'
 type Props = {
   page: string
   totalPages: number
-  onChangeParams: (key: Key, value: string) => void
+  onChangeParams(key: Key, value: string): void
 }
 
 export const Pagination = ({ page, totalPages, onChangeParams }: Props) => {

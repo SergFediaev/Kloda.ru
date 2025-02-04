@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import { Button } from '@/components/buttons/button'
 import { useVoice } from '@/hooks/useVoice'

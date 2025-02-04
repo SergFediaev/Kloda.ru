@@ -13,7 +13,7 @@ import { useTransitionRouter } from 'next-view-transitions'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useCallback } from 'react'
 
-export const USERS_DEFAULT_PARAMS: Readonly<UsersSearchParams> = {
+export const USERS_DEFAULT_PARAMS: UsersSearchParams = {
   search: '',
   page: '1',
   limit: '10',
@@ -30,7 +30,7 @@ export const CARDS_DEFAULT_PARAMS: CardsSearchParams = {
   categories: [],
   userId: '',
   action: '',
-}
+} as const
 
 export type UsersSearchParams = {
   search: string
@@ -67,24 +67,16 @@ export const PageControls = ({
   radioGroup,
 }: Props) => {
   const { pathname, isUsersPath, isCardsPath } = usePaths()
-
   const { replace } = useTransitionRouter()
-
   const searchParams = useSearchParams()
-
   const currentParams = {
     ...(isUsersPath ? USERS_DEFAULT_PARAMS : CARDS_DEFAULT_PARAMS),
     ...Object.fromEntries(searchParams.entries()),
   }
-
   const { page, search, ...restParams } = currentParams
-
   const hasSearchParams = searchParams.toString() !== ''
-
   const itemsName = isUsersPath ? 'Users' : isCardsPath ? 'Cards' : 'Items'
-
   const onReset = () => replace(pathname)
-
   const onChangeParams = useCallback(
     (key: Key, value: string) => {
       const params = new URLSearchParams(searchParams)
@@ -117,6 +109,7 @@ export const PageControls = ({
           {...restParams}
           onChangeParams={onChangeParams}
           currentItems={currentItems}
+          totalItems={isUsersPath ? totalUsers : totalCards}
         />
         {radioGroup}
         {hasSearchParams && <Button onClick={onReset}>Reset</Button>}

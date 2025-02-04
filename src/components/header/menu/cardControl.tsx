@@ -3,7 +3,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { useGetCard, useGetRandomCard } from '@/hooks/useCards'
-import { CircleChevronLeft, CircleChevronRight, Dices } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Dices } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import Link from 'next/link'
 import { useParams, useSearchParams } from 'next/navigation'
@@ -17,7 +17,7 @@ export const CardControl = () => {
   const { data, isPending, isError, error } = useGetCard({ id, categories })
 
   const { refetch } = useGetRandomCard({
-    currentCardId: Number(id),
+    currentCardId: id,
     categories,
   })
 
@@ -40,14 +40,17 @@ export const CardControl = () => {
     })
 
   return (
-    <Wrapper as='div' hasGaps>
+    <Wrapper as='div' hasGaps className='flex items-center justify-center'>
       {hasCards && (
-        <Link
+        <Button
+          as={Link}
+          variant='round'
           href={{ pathname: `/card/${prevCardId}`, query: { categories } }}
           title={`Previous card ID ${prevCardId}`}
+          className='pr-1 text-primary-dark hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
         >
-          <CircleChevronLeft />
-        </Link>
+          <ChevronLeft />
+        </Button>
       )}
       <Wrapper as='p'>
         <span title='Current card'>{cardPosition}</span>
@@ -55,16 +58,19 @@ export const CardControl = () => {
         <span title='Cards in selected categories'>{totalCards}</span>
       </Wrapper>
       {hasCards && (
-        <Link
+        <Button
+          as={Link}
+          variant='round'
           href={{ pathname: `/card/${nextCardId}`, query: { categories } }}
           title={`Next card ID ${nextCardId}`}
+          className='pl-1 text-primary-dark hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
         >
-          <CircleChevronRight />
-        </Link>
+          <ChevronRight />
+        </Button>
       )}
       {hasRandomCards && (
         <Button variant='text' onClick={onRandom} title='Random card'>
-          <Dices />
+          <Dices size={44} />
         </Button>
       )}
     </Wrapper>

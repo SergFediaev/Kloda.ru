@@ -9,7 +9,12 @@ import { cn } from '@/utils/mergeClasses'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { sortCategories } from '@/utils/sortCategories'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Select, { components } from 'react-select'
+import Select, {
+  components,
+  type GroupBase,
+  type MultiValue,
+  type PlaceholderProps,
+} from 'react-select'
 import colors from 'tailwindcss/colors'
 
 const CATEGORIES_PARAM = 'categories'
@@ -17,26 +22,31 @@ const ALL_CATEGORIES = 'All'
 const COLOR_ACCENT = '#f15b00'
 const COLOR_ACCENT_DARK = '#ff8800'
 
-const CustomPlaceholder = (props: any) => (
+const CustomPlaceholder = (
+  props: PlaceholderProps<Option, true, GroupBase<Option>>,
+) => (
   <components.Placeholder {...props}>
     <div className='flex flex-col gap-0.5'>
-      <span className='text-[#545459] text-xs dark:text-primary-dark'>
+      <span className='text-gray-600 text-xs dark:text-primary-dark'>
         Categories (cards)
       </span>
-      <span className='text-black text-sm dark:text-primary-dark '>
+      <span className='text-black text-sm dark:text-primary-dark'>
         {props.children}
       </span>
     </div>
   </components.Placeholder>
 )
-
-type Options = readonly {
+type Option = {
   label: string
   value: string
-}[]
+}
+
+type Props = {
+  totalItems?: number
+}
 
 // ToDo: Refactor select theme custom colors
-export const CategoriesSelect = () => {
+export const CategoriesSelect = ({ totalItems }: Props) => {
   const { data, isPending, isSuccess, isError, error } = useGetCategories()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
@@ -55,21 +65,21 @@ export const CategoriesSelect = () => {
   const placeholder = isPending
     ? 'Loading categories'
     : isSuccess
-      ? `${ALL_CATEGORIES} (${data.length})`
+      ? `${ALL_CATEGORIES} (${totalItems})`
       : ALL_CATEGORIES
 
-  const options: Options = categoriesSorted.map(
+  const options: Option[] = categoriesSorted.map(
     ({ name, displayName, cardsCount }) => ({
       label: `${displayName} (${cardsCount})`,
       value: name,
     }),
   )
 
-  const selectedOptions: Options = options.filter(({ value }) =>
+  const selectedOptions: Option[] = options.filter(({ value }) =>
     selectedCategories.includes(value),
   )
 
-  const onChangeCategories = (categories: Options) => {
+  const onChangeCategories = (categories: MultiValue<Option>) => {
     const params = new URLSearchParams(searchParams)
     params.delete(CATEGORIES_PARAM)
     setFirstPage(params)
@@ -105,6 +115,7 @@ export const CategoriesSelect = () => {
           borderRadius: '12px',
           height: '70px',
           minHeight: '70px',
+          boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         }),
         option: (baseStyles, { isFocused }) => ({
           ...baseStyles,
@@ -146,7 +157,7 @@ export const CategoriesSelect = () => {
           neutral10: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Selected option BG
           neutral20: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Select border
           neutral80: isDarkTheme ? colors.stone['50'] : colors.white, // Selected option text
-          primary: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Focus select outline
+          primary: isDarkTheme ? colors.stone['50'] : colors.black, // Focus select outline
           primary25: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Hover option BG
           primary50: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Active option BG
         },
