@@ -6,7 +6,6 @@ import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCard } from '@/hooks/useCards'
-import { cardsModeStore } from '@/stores/cardsModeStore'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
@@ -18,7 +17,6 @@ export const CardDetails = ({ id }: Props) => {
   const categories = useSearchParams().getAll('categories')
   const { isPending, isError, error, data } = useGetCard({ id, categories })
   const [cardToSpeech, setCardToSpeech] = useState<CardModel>()
-  const { isStudyMode } = cardsModeStore()
 
   if (isPending) {
     return <Loader>Fetching card #{id}</Loader>
@@ -34,11 +32,9 @@ export const CardDetails = ({ id }: Props) => {
   return (
     <div className='flex flex-col items-center'>
       <Card
-        id={String(card.id)}
         card={card}
         isOpen
         setCardToSpeech={setCardToSpeech}
-        isStudyMode={isStudyMode}
         className='max-w-2xl'
       />
       <aside className='sticky bottom-6 mt-6'>

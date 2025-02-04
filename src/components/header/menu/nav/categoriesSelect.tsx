@@ -1,3 +1,5 @@
+'use client'
+
 import { ErrorMessage } from '@/components/errorMessage'
 import { useGetCategories } from '@/hooks/useCategories'
 import { usePaths } from '@/hooks/usePaths'
@@ -7,13 +9,26 @@ import { cn } from '@/utils/mergeClasses'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { sortCategories } from '@/utils/sortCategories'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Select from 'react-select'
+import Select, { components } from 'react-select'
 import colors from 'tailwindcss/colors'
 
 const CATEGORIES_PARAM = 'categories'
-const ALL_CATEGORIES = 'All categories'
+const ALL_CATEGORIES = 'All'
 const COLOR_ACCENT = '#f15b00'
 const COLOR_ACCENT_DARK = '#ff8800'
+
+const CustomPlaceholder = (props: any) => (
+  <components.Placeholder {...props}>
+    <div className='flex flex-col gap-0.5'>
+      <span className='text-[#545459] text-xs dark:text-primary-dark'>
+        Categories (cards)
+      </span>
+      <span className='text-black text-sm dark:text-primary-dark '>
+        {props.children}
+      </span>
+    </div>
+  </components.Placeholder>
+)
 
 type Options = readonly {
   label: string
@@ -87,24 +102,50 @@ export const CategoriesSelect = () => {
         control: baseStyles => ({
           ...baseStyles,
           borderWidth: '2px',
+          borderRadius: '12px',
+          height: '70px',
+          minHeight: '70px',
         }),
         option: (baseStyles, { isFocused }) => ({
           ...baseStyles,
-          color: isFocused ? colors.stone['50'] : baseStyles.color, // Color of text on Option in focus (during hover)
+          color: isFocused ? colors.white : baseStyles.color,
         }),
         multiValueRemove: baseStyles => ({
           ...baseStyles,
-          color: colors.stone['50'], // Color of cancelling X in selected Options in multi-select
+          color: 'white',
+        }),
+        menu: baseStyles => ({
+          ...baseStyles,
+          zIndex: '100',
+        }),
+        clearIndicator: baseStyles => ({
+          ...baseStyles,
+          color: COLOR_ACCENT_DARK,
+          '&:hover': {
+            color: 'gray',
+          },
+        }),
+        indicatorSeparator: () => ({
+          display: 'none',
+        }),
+        dropdownIndicator: baseStyles => ({
+          ...baseStyles,
+          paddingRight: '15px',
+          color: COLOR_ACCENT_DARK,
+          '&:hover': {
+            color: COLOR_ACCENT_DARK,
+          },
         }),
       }}
+      components={{ Placeholder: CustomPlaceholder }}
       theme={theme => ({
         ...theme,
         colors: {
           ...theme.colors,
-          neutral0: isDarkTheme ? colors.stone['950'] : colors.stone['50'], // Select BG
+          neutral0: isDarkTheme ? colors.stone['950'] : colors.white, // Select BG
           neutral10: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Selected option BG
           neutral20: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Select border
-          neutral80: isDarkTheme ? colors.stone['50'] : colors.stone['50'], // Selected option text
+          neutral80: isDarkTheme ? colors.stone['50'] : colors.white, // Selected option text
           primary: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Focus select outline
           primary25: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Hover option BG
           primary50: isDarkTheme ? COLOR_ACCENT_DARK : COLOR_ACCENT, // Active option BG

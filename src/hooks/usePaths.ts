@@ -29,6 +29,7 @@ export const usePaths = () => {
     notFoundPath,
     isHomePath: pathname === homePath,
     isMapPath: pathname === mapPath,
+    isCardPath,
     isCardsPath,
     isCreateCardPath: pathname === createCardPath,
     isUsersPath: pathname === usersPath,

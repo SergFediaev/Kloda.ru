@@ -1,10 +1,12 @@
+'use client'
+
 import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/buttons/button'
 import { ShareButton } from '@/components/buttons/shareButton'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
+import { Select } from '@/components/pageControls'
 import { RangeInput } from '@/components/rangeInput'
-import { Select } from '@/components/select'
 import { textToSpeechStore } from '@/stores/textToSpeechStore'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'
@@ -32,24 +34,6 @@ import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import { type ChangeEvent, type ReactElement, useEffect, useState } from 'react'
 
-type Props = {
-  cards: CardModel[]
-  cardToSpeech?: CardModel
-  setCardToSpeech: (card?: CardModel) => void
-  setIsCardPlaying?: (isPlaying: boolean) => void
-  playlistName?: string
-}
-
-export type PlayMode = 'once' | 'repeat' | 'playlist' | 'shuffle'
-
-let speechSynth: Nullable<SpeechSynthesis> = null
-let utterance: Nullable<SpeechSynthesisUtterance> = null
-
-if (typeof window !== 'undefined' && window.speechSynthesis) {
-  speechSynth = speechSynthesis
-  utterance = new SpeechSynthesisUtterance()
-}
-
 const DEFAULT_VOICE = 0
 const DEFAULT_LANG = 'en-US'
 const LANG_MAP: Record<string, string> = {
@@ -60,10 +44,29 @@ const LANG_MAP: Record<string, string> = {
   deu: 'de-DE',
 } as const
 
+export type PlayMode = 'once' | 'repeat' | 'playlist' | 'shuffle'
+
+let speechSynth: Nullable<SpeechSynthesis> = null
+
+let utterance: Nullable<SpeechSynthesisUtterance> = null
+
+if (typeof window !== 'undefined' && window.speechSynthesis) {
+  speechSynth = speechSynthesis
+  utterance = new SpeechSynthesisUtterance()
+}
+
 const getCardText = ({ title, content }: CardModel) => `${title}\n${content}`
 
-const getCardIndex = (cards: CardModel[], cardId: number) =>
+const getCardIndex = (cards: CardModel[], cardId: string) =>
   cards.findIndex(({ id }) => id === cardId)
+
+type Props = {
+  cards: CardModel[]
+  cardToSpeech?: CardModel
+  setCardToSpeech: (card?: CardModel) => void
+  setIsCardPlaying?: (isPlaying: boolean) => void
+  playlistName?: string
+}
 
 export const TextToSpeech = ({
   cards,

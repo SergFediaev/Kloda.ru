@@ -1,10 +1,11 @@
+'use client'
+
 import { Button } from '@/components/buttons/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { VoiceSearch } from '@/components/header/menu/search/voiceSearch'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useGenerateId } from '@/hooks/useGenerateId'
 import { usePaths } from '@/hooks/usePaths'
-import { useVoice } from '@/hooks/useVoice'
 import { useWidth } from '@/hooks/useWidth'
 import { Search as SearchIcon, X } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -19,18 +20,17 @@ import {
 const SEARCH_PARAM = 'search'
 
 export const Search = () => {
-  const { pathname, isCardsPath } = usePaths()
+  const { pathname, isUsersPath } = usePaths()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
   const searchId = useGenerateId()
   const initialSearch = searchParams.get(SEARCH_PARAM)
   const [search, setSearch] = useState(initialSearch ?? '')
   const debouncedSearch = useDebounce(search, 500)
-  const { isListening, onListen, transcript, isVoiceSupported } = useVoice()
   const searchRef = useRef<HTMLInputElement>(null)
   const { isDesktopWidth } = useWidth()
 
-  const searchPlaceholder = `Search ${isCardsPath ? 'cards' : 'users'}${isDesktopWidth ? ' (Ctrl + K)' : ''}`
+  const searchPlaceholder = `Search ${isUsersPath ? 'users' : 'cards'}${isDesktopWidth ? ' (Ctrl + K)' : ''}`
 
   const onSearch = ({
     currentTarget: { value },
@@ -64,12 +64,6 @@ export const Search = () => {
   }, [searchParams, onReset])
 
   useEffect(() => {
-    if (transcript) {
-      setSearch(transcript)
-    }
-  }, [transcript])
-
-  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey) {
         if (event.key.toLowerCase() === 'k') {
@@ -82,10 +76,6 @@ export const Search = () => {
     addEventListener('keydown', onKeyDown)
     return () => removeEventListener('keydown', onKeyDown)
   }, [])
-
-  if (usePaths().isNotSearchPath) {
-    return null
-  }
 
   return (
     <Wrapper as='div' className='flex-nowrap gap-2 truncate'>
@@ -114,11 +104,7 @@ export const Search = () => {
           </Button>
         )}
       </div>
-      <VoiceSearch
-        isVoiceSupported={isVoiceSupported}
-        onListen={onListen}
-        isListening={isListening}
-      />
+      <VoiceSearch setSearch={setSearch} />
     </Wrapper>
   )
 }

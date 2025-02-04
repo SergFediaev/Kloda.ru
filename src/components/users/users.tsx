@@ -3,35 +3,24 @@
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
-import { Pagination } from '@/components/pagination'
+import { ColumnsRadio, PageControls } from '@/components/pageControls'
 import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
 import { useState } from 'react'
 
-const SORTS_USERS = {
-  createdCardsCount: 'Created cards',
-  dislikedCardsCount: 'Disliked cards',
-  email: 'Email',
-  favoriteCardsCount: 'Favorite cards',
-  id: 'ID',
-  lastLoginAt: 'Last login',
-  likedCardsCount: 'Liked cards',
-  registeredAt: 'Registered',
-  username: 'Username',
-} as const
-
 type Props = {
   search: string
-  page: number
-  limit: number
+  page: string
+  limit: string
   order: string
   sort: string
 }
 
 // ToDo: Refactor columns style, error message size, break-inside-avoid if not open
+
 export const Users = (props: Props) => {
   const { isPending, isError, data, error } = useGetUsers(props)
-  const [columnsCount, setColumnsCount] = useState<ColumnsCount>('3') // ToDo: Users pagination
+  const [columnsCount, setColumnsCount] = useState<ColumnsCount>('2') // ToDo: Users pagination
 
   if (isPending) {
     return <Loader>Fetching users</Loader>
@@ -41,36 +30,31 @@ export const Users = (props: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
-  const { users, totalUsers, totalPages } = data
+  const { users, ...restData } = data
 
-  const usersElement = users.length ? (
-    <Columns count={columnsCount}>
-      {users.map(user => (
-        <User key={user.id} user={user} inColumns />
-      ))}
-    </Columns>
-  ) : (
-    <ErrorMessage>Users not found 🙈</ErrorMessage>
+  if (!users.length) {
+    return <ErrorMessage>Users not found 🙈</ErrorMessage>
+  }
+
+  const radioGroup = (
+    <ColumnsRadio
+      columnsCount={columnsCount}
+      setColumnsCount={setColumnsCount}
+    />
   )
-
-  const { page, limit, order, sort } = props
 
   return (
     <>
-      <Pagination
-        itemsName='Users'
-        page={page}
-        limit={limit}
-        order={order}
-        sort={sort}
-        sorts={SORTS_USERS}
-        totalItems={totalUsers}
-        totalPages={totalPages}
-        itemsCount={users.length}
-        columnsCount={columnsCount}
-        setColumnsCount={setColumnsCount}
+      <PageControls
+        {...restData}
+        currentItems={users.length}
+        radioGroup={radioGroup}
       />
-      {usersElement}
+      <Columns count={columnsCount}>
+        {users.map(user => (
+          <User key={user.id} user={user} inColumns />
+        ))}
+      </Columns>
     </>
   )
 }

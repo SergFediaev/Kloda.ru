@@ -45,7 +45,7 @@ const removeCardContent = () => localStorage.removeItem(CARD_CONTENT)
 type Props = {
   username: string
   email: string
-  authorId: number
+  authorId: string
 }
 
 export const CreateCardForm = ({ username, email, authorId }: Props) => {

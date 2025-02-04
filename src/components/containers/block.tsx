@@ -18,7 +18,7 @@ export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
   heading,
   isHeadingCentered,
   isConstrained,
-  inColumns,
+  inColumns = true,
   className,
   ...restProps
 }: BlockProps<T>) => {
