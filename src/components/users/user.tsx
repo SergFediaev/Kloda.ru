@@ -126,7 +126,7 @@ export const User = ({
   const isCurrentUser = isMeSuccess && id === meData.id
   const isCurrentUserOpen = isCurrentUser && isOpen
   const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
-  const hasNotCreatedCards = createdCardsCount === 0
+  const hasNotCreatedCards = createdCardsCount === '0'
   const cardsActionTitle = hasNotCreatedCards ? 'No created cards' : undefined
   const isPending = isDeletePending || isImportPending || isExportFetching
   const deleteCardsText = isDeletePending

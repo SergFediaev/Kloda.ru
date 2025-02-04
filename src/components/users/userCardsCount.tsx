@@ -5,8 +5,8 @@ import Link from 'next/link'
 
 type Props = {
   cardsType: string
-  cardsCount: number
-  userId: number
+  cardsCount: string
+  userId: string
   action: 'created' | 'favorite' | 'liked' | 'disliked'
 }
 
@@ -19,7 +19,7 @@ export const UserCardsCount = ({
   const pathname = usePaths().cardsPath
 
   const element =
-    cardsCount === 0 ? (
+    cardsCount === '0' ? (
       cardsCount
     ) : (
       <Wrapper

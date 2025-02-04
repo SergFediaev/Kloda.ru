@@ -76,28 +76,25 @@ export const useDeleteCard = (userId?: string) =>
   useMutation({
     mutationFn: deleteCard,
     onSuccess: (_, variables) =>
-      invalidateCardsAndUsers(String(variables), userId, true),
+      invalidateCardsAndUsers(variables, userId, true),
   })
 
 export const useLikeCard = (userId?: string) =>
   useMutation({
     mutationFn: likeCard,
-    onSuccess: (_, variables) =>
-      invalidateCardsAndUsers(String(variables), userId),
+    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
 export const useDislikeCard = (userId?: string) =>
   useMutation({
     mutationFn: dislikeCard,
-    onSuccess: (_, variables) =>
-      invalidateCardsAndUsers(String(variables), userId),
+    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
 export const useFavoriteCard = (userId?: string) =>
   useMutation({
     mutationFn: favoriteCard,
-    onSuccess: (_, variables) =>
-      invalidateCardsAndUsers(String(variables), userId),
+    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
 // ToDo: Refactor invalidating, duplicated with create card, also invalidate only one user
