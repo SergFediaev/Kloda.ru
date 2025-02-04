@@ -3,7 +3,7 @@
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
-import { ColumnsRadio, PageControls } from '@/components/pageControls'
+import { PageControls } from '@/components/pageControls'
 import { User } from '@/components/users/user'
 import { useGetUsers } from '@/hooks/useUsers'
 import { useState } from 'react'
@@ -36,19 +36,13 @@ export const Users = (props: Props) => {
     return <ErrorMessage>Users not found 🙈</ErrorMessage>
   }
 
-  const radioGroup = (
-    <ColumnsRadio
-      columnsCount={columnsCount}
-      setColumnsCount={setColumnsCount}
-    />
-  )
-
   return (
     <>
       <PageControls
         {...restData}
         currentItems={users.length}
-        radioGroup={radioGroup}
+        columnsCount={columnsCount}
+        setColumnsCount={setColumnsCount}
       />
       <Columns count={columnsCount}>
         {users.map(user => (

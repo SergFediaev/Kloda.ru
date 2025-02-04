@@ -5,7 +5,7 @@ import { Card } from '@/components/cards/card'
 import { Columns, type ColumnsCount } from '@/components/containers/columns'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
-import { ColumnsRadio, PageControls } from '@/components/pageControls'
+import { PageControls } from '@/components/pageControls'
 import { TextToSpeech } from '@/components/textToSpeech'
 import { useGetCards } from '@/hooks/useCards'
 import { useState } from 'react'
@@ -61,19 +61,13 @@ export const Cards = ({ categories, ...restProps }: Props) => {
     ? `Search: ${restProps.search} (page ${pages})`
     : `Page ${pages}`
 
-  const radioGroup = (
-    <ColumnsRadio
-      columnsCount={columnsCount}
-      setColumnsCount={setColumnsCount}
-    />
-  )
-
   return (
     <>
       <PageControls
         {...restData}
         currentItems={cards.length}
-        radioGroup={radioGroup}
+        columnsCount={columnsCount}
+        setColumnsCount={setColumnsCount}
       />
       <Columns count={columnsCount}>
         {cards.map((card, index) => {

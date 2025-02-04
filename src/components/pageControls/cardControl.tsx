@@ -1,9 +1,11 @@
+'use client'
+
 import { Button } from '@/components/buttons/button'
 import { Wrapper } from '@/components/containers/wrapper'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { useGetCard, useGetRandomCard } from '@/hooks/useCards'
-import { ChevronLeft, ChevronRight, Dices } from 'lucide-react'
+import { CircleChevronLeft, CircleChevronRight, Dices } from 'lucide-react'
 import { useTransitionRouter } from 'next-view-transitions'
 import Link from 'next/link'
 import { useParams, useSearchParams } from 'next/navigation'
@@ -44,12 +46,12 @@ export const CardControl = () => {
       {hasCards && (
         <Button
           as={Link}
-          variant='round'
+          variant='text'
           href={{ pathname: `/card/${prevCardId}`, query: { categories } }}
           title={`Previous card ID ${prevCardId}`}
-          className='pr-1 text-primary-dark hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
+          className='hover:text-accent-dark dark:hover:text-accent'
         >
-          <ChevronLeft />
+          <CircleChevronLeft />
         </Button>
       )}
       <Wrapper as='p'>
@@ -60,17 +62,17 @@ export const CardControl = () => {
       {hasCards && (
         <Button
           as={Link}
-          variant='round'
+          variant='text'
           href={{ pathname: `/card/${nextCardId}`, query: { categories } }}
           title={`Next card ID ${nextCardId}`}
-          className='pl-1 text-primary-dark hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
+          className='hover:text-accent-dark dark:hover:text-accent'
         >
-          <ChevronRight />
+          <CircleChevronRight />
         </Button>
       )}
       {hasRandomCards && (
         <Button variant='text' onClick={onRandom} title='Random card'>
-          <Dices size={44} />
+          <Dices />
         </Button>
       )}
     </Wrapper>

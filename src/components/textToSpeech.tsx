@@ -1,5 +1,3 @@
-// 'use client'
-
 import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/buttons/button'
 import { ShareButton } from '@/components/buttons/shareButton'
