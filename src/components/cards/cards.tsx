@@ -76,16 +76,20 @@ export const Cards = ({ categories, ...restProps }: Props) => {
         radioGroup={radioGroup}
       />
       <Columns count={columnsCount}>
-        {cards.map((card, index) => (
-          <Card
-            key={card.id}
-            card={card}
-            cardToSpeechId={cardToSpeech?.id}
-            setCardToSpeech={setCardToSpeech}
-            isCardPlaying={card.id === cardToSpeech?.id && isCardPlaying}
-            pagePosition={index + 1}
-          />
-        ))}
+        {cards.map((card, index) => {
+          const isCardToSpeech = card.id === cardToSpeech?.id
+
+          return (
+            <Card
+              key={card.id}
+              card={card}
+              isCardToSpeech={isCardToSpeech}
+              setCardToSpeech={setCardToSpeech}
+              isCardPlaying={isCardToSpeech && isCardPlaying}
+              pagePosition={index + 1}
+            />
+          )
+        })}
       </Columns>
       <TextToSpeech
         playlistName={playlistName}

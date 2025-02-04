@@ -42,6 +42,7 @@ import { toast } from 'react-toastify'
 type Props = {
   card: CardModel
   isOpen?: boolean
+  isCardToSpeech?: boolean
   cardToSpeechId?: string
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
@@ -53,7 +54,7 @@ type Props = {
 export const Card = ({
   card,
   isOpen,
-  cardToSpeechId,
+  isCardToSpeech,
   setCardToSpeech,
   isCardPlaying,
   pagePosition,
@@ -63,7 +64,6 @@ export const Card = ({
   const { data: meData, isSuccess: isMeSuccess } = useMe()
   const { isCardAlwaysExpanded, isMediaAlwaysShown } = cardsSettingsStore()
   const { isStudyMode } = cardsModeStore()
-  const isCardToSpeech = card.id === cardToSpeechId
 
   const {
     mutate: deleteCard,
