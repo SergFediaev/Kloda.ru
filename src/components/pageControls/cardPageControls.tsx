@@ -1,7 +1,7 @@
 'use client'
 
-import { CardControl } from '@/components/header/menu/cardControl'
-import { CategoriesSelect } from '@/components/select/categoriesSelect'
+import { CardControl } from '@/components/pageControls'
+import { CategoriesSelect } from '@/components/selects/categoriesSelect'
 import { usePaths } from '@/hooks/usePaths'
 
 export const CardPageControls = () => {

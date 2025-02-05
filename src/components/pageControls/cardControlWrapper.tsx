@@ -1,4 +1,4 @@
-import { CardControl } from '@/components/header/menu/cardControl'
+import { CardControl } from '@/components/pageControls'
 import { usePaths } from '@/hooks/usePaths'
 
 export const CardControlWrapper = () =>

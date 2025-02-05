@@ -1,6 +1,6 @@
 import { CheckBox } from '@/components/checkBox'
 import { Block } from '@/components/containers/block'
-import { Select } from '@/components/select/select'
+import { Select } from '@/components/selects/select'
 import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import { SelectItem } from '@nextui-org/select'
 import { Dumbbell, GraduationCap } from 'lucide-react'

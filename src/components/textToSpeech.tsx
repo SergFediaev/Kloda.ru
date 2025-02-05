@@ -1,12 +1,10 @@
-// 'use client'
-
 import type { CardModel } from '@/api/cards/cards.types'
 import { Button } from '@/components/buttons/button'
 import { ShareButton } from '@/components/buttons/shareButton'
 import { Wrapper } from '@/components/containers/wrapper'
 import { Heading } from '@/components/heading'
 import { RangeInput } from '@/components/rangeInput'
-import { Select } from '@/components/select/select'
+import { Select } from '@/components/selects/select'
 import { textToSpeechStore } from '@/stores/textToSpeechStore'
 import type { Nullable } from '@/types/nullable'
 import { cn } from '@/utils/mergeClasses'

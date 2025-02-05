@@ -1,7 +1,9 @@
 'use client'
 
 import { Button } from '@/components/buttons/button'
+import type { ColumnsCount } from '@/components/containers/columns'
 import {
+  ColumnsRadio,
   ItemsPerPage,
   type Key,
   Pagination,
@@ -11,7 +13,7 @@ import { usePaths } from '@/hooks/usePaths'
 import { setFirstPage } from '@/utils/setFirstPage'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useSearchParams } from 'next/navigation'
-import { type ReactNode, useCallback } from 'react'
+import { useCallback } from 'react'
 
 export const USERS_DEFAULT_PARAMS: UsersSearchParams = {
   search: '',
@@ -56,7 +58,8 @@ type Props = {
   totalUsers?: number
   totalCards?: number
   currentItems: number
-  radioGroup: ReactNode
+  columnsCount: ColumnsCount
+  setColumnsCount(columns: ColumnsCount): void
 }
 
 export const PageControls = ({
@@ -64,7 +67,8 @@ export const PageControls = ({
   totalUsers,
   totalCards,
   currentItems,
-  radioGroup,
+  columnsCount,
+  setColumnsCount,
 }: Props) => {
   const { pathname, isUsersPath, isCardsPath } = usePaths()
   const { replace } = useTransitionRouter()
@@ -111,7 +115,10 @@ export const PageControls = ({
           currentItems={currentItems}
           totalItems={isUsersPath ? totalUsers : totalCards}
         />
-        {radioGroup}
+        <ColumnsRadio
+          columnsCount={columnsCount}
+          setColumnsCount={setColumnsCount}
+        />
         {hasSearchParams && <Button onClick={onReset}>Reset</Button>}
       </div>
     </div>

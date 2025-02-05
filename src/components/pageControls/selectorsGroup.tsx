@@ -1,6 +1,6 @@
 import type { Key } from '@/components/pageControls'
-import { CategoriesSelect } from '@/components/select/categoriesSelect'
-import { Select } from '@/components/select/select'
+import { CategoriesSelect } from '@/components/selects/categoriesSelect'
+import { Select } from '@/components/selects/select'
 import { SelectItem } from '@nextui-org/select'
 
 const QUANTITIES = ['5', '10', '20', '50', '100'] as const

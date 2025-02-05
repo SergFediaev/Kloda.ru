@@ -1,5 +1,4 @@
 import { Wrapper } from '@/components/containers/wrapper'
-import { CardControlWrapper } from '@/components/header/menu/cardControlWrapper'
 import type { MenuProps } from '@/components/header/menu/desktopMenu'
 import { MenuButton } from '@/components/header/menu/menuButton'
 import { CardsLink } from '@/components/header/menu/nav/cardsLInk'
@@ -12,6 +11,7 @@ import { SettingsLink } from '@/components/header/menu/nav/settingsLink'
 import { ThemeButton } from '@/components/header/menu/nav/themeButton'
 import { UsersLink } from '@/components/header/menu/nav/usersLink'
 import { Search } from '@/components/header/menu/search/search'
+import { CardControlWrapper } from '@/components/pageControls'
 
 export const MobileMenu = ({ collapseMenu, ...restProps }: MenuProps) => (
   <Wrapper as='nav' hasGaps className='justify-evenly'>
