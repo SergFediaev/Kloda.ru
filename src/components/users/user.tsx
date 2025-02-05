@@ -233,7 +233,7 @@ export const User = ({
       <Block
         as='article'
         heading={username}
-        isConstrained={isOpen}
+        isFullWidth={isOpen}
         className='max-w-xl'
         {...restProps}
       >

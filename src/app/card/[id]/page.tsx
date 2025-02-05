@@ -1,4 +1,4 @@
-import { CardDetails } from '@/components/cards/cardDetails'
+import { CardDetails } from '@/components/cards/card/cardDetails'
 import { Container } from '@/components/containers/container'
 import { CardPageControls } from '@/components/pageControls'
 import type { ParamsIdProps } from '@/types/paramsIdProps'

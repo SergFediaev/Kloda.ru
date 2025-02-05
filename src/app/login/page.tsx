@@ -17,7 +17,7 @@ export default function LoginPage() {
       <Block
         heading={title}
         isHeadingCentered
-        isConstrained
+        isFullWidth
         className='max-w-md'
       >
         <LoginForm />

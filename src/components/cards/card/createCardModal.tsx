@@ -11,7 +11,7 @@ type Props = {
   heading: string
 }
 
-export const CreateCard = (props: Props) => {
+export const CreateCardModal = (props: Props) => {
   const { data, isPending, isError, error } = useMe()
 
   if (isPending) {
@@ -25,7 +25,7 @@ export const CreateCard = (props: Props) => {
   const { username, email, id } = data
 
   return (
-    <Block isHeadingCentered isConstrained className='max-w-xl' {...props}>
+    <Block isHeadingCentered isFullWidth className='max-w-xl' {...props}>
       <CreateCardForm username={username} email={email} authorId={id} />
       <ReturnToCards />
     </Block>

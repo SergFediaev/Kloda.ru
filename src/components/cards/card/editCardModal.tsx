@@ -12,7 +12,7 @@ type Props = {
 }
 
 // ToDo: Refactor block style max-w-xl
-export const EditCard = ({ id, ...restProps }: Props) => {
+export const EditCardModal = ({ id, ...restProps }: Props) => {
   const { data, isPending, isError, error } = useGetCard({ id })
 
   if (isPending) {
@@ -24,7 +24,7 @@ export const EditCard = ({ id, ...restProps }: Props) => {
   }
 
   return (
-    <Block isHeadingCentered isConstrained className='max-w-xl' {...restProps}>
+    <Block isHeadingCentered isFullWidth className='max-w-xl' {...restProps}>
       <EditCardForm card={data.card} />
     </Block>
   )
