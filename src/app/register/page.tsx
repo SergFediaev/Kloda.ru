@@ -17,7 +17,7 @@ export default function RegisterPage() {
       <Block
         heading={title}
         isHeadingCentered
-        isFullWidth
+        isConstrained
         className='max-w-md'
       >
         <RegisterForm />

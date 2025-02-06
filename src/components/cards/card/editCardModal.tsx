@@ -24,7 +24,7 @@ export const EditCardModal = ({ id, ...restProps }: Props) => {
   }
 
   return (
-    <Block isHeadingCentered isFullWidth className='max-w-xl' {...restProps}>
+    <Block isHeadingCentered isConstrained className='max-w-xl' {...restProps}>
       <EditCardForm card={data.card} />
     </Block>
   )

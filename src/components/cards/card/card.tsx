@@ -35,7 +35,7 @@ export const Card = ({
       <Block
         as='article'
         heading={title}
-        isFullWidth={showContent}
+        isConstrained={showContent}
         className={cn(
           isCardToSpeech &&
             'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',

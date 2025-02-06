@@ -8,7 +8,7 @@ export type BlockProps<T extends ElementType = typeof DEFAULT_TYPE> = {
   as?: T
   heading?: ReactNode
   isHeadingCentered?: boolean
-  isFullWidth?: boolean
+  isConstrained?: boolean
   inColumns?: boolean
 } & ComponentPropsWithoutRef<T>
 
@@ -17,7 +17,7 @@ export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
   children,
   heading,
   isHeadingCentered,
-  isFullWidth,
+  isConstrained,
   inColumns = true,
   className,
   ...restProps
@@ -28,7 +28,7 @@ export const Block = <T extends ElementType = typeof DEFAULT_TYPE>({
     <Component
       className={cn(
         'flex flex-col gap-8 rounded-3xl bg-surface-light p-6 text-primary shadow-inner dark:bg-surface-dark dark:text-primary-dark',
-        isFullWidth && 'w-full',
+        isConstrained && 'w-full',
         inColumns && 'break-inside-avoid',
         className,
       )}

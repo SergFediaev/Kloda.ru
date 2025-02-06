@@ -25,7 +25,7 @@ export const CreateCardModal = (props: Props) => {
   const { username, email, id } = data
 
   return (
-    <Block isHeadingCentered isFullWidth className='max-w-xl' {...props}>
+    <Block isHeadingCentered isConstrained className='max-w-xl' {...props}>
       <CreateCardForm username={username} email={email} authorId={id} />
       <ReturnToCards />
     </Block>
