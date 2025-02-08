@@ -1,14 +1,19 @@
 'use client'
 
+import { Button } from '@/components/buttons/button'
 import { Wrapper } from '@/components/containers/wrapper'
-import { usePaths } from '@/hooks/usePaths'
 import { ArrowLeft } from 'lucide-react'
-import { Link } from 'next-view-transitions'
+import { useRouter } from 'next/navigation'
 
-export const ReturnToCards = () => (
-  <Wrapper className='self-center'>
-    <ArrowLeft size={16} />
-    &nbsp;
-    <Link href={usePaths().cardsPath}>Return to cards</Link>
-  </Wrapper>
-)
+export const ReturnToCards = () => {
+  const router = useRouter()
+
+  return (
+    <Wrapper className='gap-1 self-center'>
+      <ArrowLeft size={16} />
+      <Button variant='text' onClick={() => router.back()}>
+        Go back
+      </Button>
+    </Wrapper>
+  )
+}
