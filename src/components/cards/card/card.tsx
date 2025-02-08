@@ -8,7 +8,7 @@ import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
 
 type Props = {
   card: CardModel
-  isOpen: boolean
+  isOpen?: boolean
   isCardToSpeech?: boolean
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
@@ -19,7 +19,11 @@ type Props = {
 // ToDo: Uncategorized
 export const Card = ({
   card,
+  isOpen,
   isCardToSpeech,
+  setCardToSpeech,
+  isCardPlaying,
+  pagePosition,
   className,
   ...restProps
 }: Props) => {
@@ -41,11 +45,15 @@ export const Card = ({
             'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
           className,
         )}
+        {...restProps}
       >
         {showContent && <CardContent content={content} />}
         <CardActionBar
           card={card}
-          {...restProps}
+          isOpen={isOpen}
+          setCardToSpeech={setCardToSpeech}
+          isCardPlaying={isCardPlaying}
+          pagePosition={pagePosition}
           isShown={showContent}
           setIsShown={setShowContent}
         />
