@@ -54,8 +54,8 @@ export const Card = ({
           setCardToSpeech={setCardToSpeech}
           isCardPlaying={isCardPlaying}
           pagePosition={pagePosition}
-          isShown={showContent}
-          setIsShown={setShowContent}
+          showContent={showContent}
+          setShowContent={setShowContent}
         />
       </Block>
     </>

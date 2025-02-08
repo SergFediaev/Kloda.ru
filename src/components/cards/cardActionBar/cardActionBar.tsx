@@ -17,6 +17,7 @@ import {
 import { Wrapper } from '@/components/containers/wrapper'
 import { UnauthorizedDialog } from '@/components/dialogs/unauthorizedDialog'
 import { useMe } from '@/hooks/useAuth'
+import { usePaths } from '@/hooks/usePaths'
 import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import { useTheme } from 'next-themes'
 import { useState } from 'react'
@@ -27,8 +28,8 @@ type Props = {
   setCardToSpeech?: (card: CardModel) => void
   isCardPlaying?: boolean
   pagePosition?: number
-  isShown: boolean
-  setIsShown: (isShown: boolean) => void
+  showContent: boolean
+  setShowContent: (isShown: boolean) => void
 }
 
 export const CardActionBar = ({
@@ -37,13 +38,14 @@ export const CardActionBar = ({
   setCardToSpeech,
   isCardPlaying,
   pagePosition,
-  isShown,
-  setIsShown,
+  showContent,
+  setShowContent,
 }: Props) => {
   const { data: meData, isSuccess: isMeSuccess } = useMe()
   const { theme } = useTheme()
+  const { pathname } = usePaths()
   const { isCardAlwaysExpanded } = cardsSettingsStore()
-  const [isExpanded, setIsExpanded] = useState(isCardAlwaysExpanded)
+  const [showExtraData, setShowExtraData] = useState(isCardAlwaysExpanded)
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
 
   const {
@@ -69,10 +71,13 @@ export const CardActionBar = ({
     <>
       <Wrapper as='div' hasGaps className='justify-between'>
         <Wrapper hasGaps>
-          <ExpandCard isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+          <ExpandCard
+            isExpanded={showExtraData}
+            setIsExpanded={setShowExtraData}
+          />
           <LikeCard
             userId={meData?.id}
-            isUserRegistered={isMeSuccess}
+            isUserLoggedIn={isMeSuccess}
             cardId={id}
             likes={likes}
             isLiked={isLiked}
@@ -81,7 +86,7 @@ export const CardActionBar = ({
           />
           <DislikeCard
             userId={meData?.id}
-            isUserRegistered={isMeSuccess}
+            isUserLoggedIn={isMeSuccess}
             openUnauthorized={openUnauthorized}
             cardId={id}
             dislikes={dislikes}
@@ -90,7 +95,7 @@ export const CardActionBar = ({
           />
           <FavorCard
             userId={meData?.id}
-            isUserRegistered={isMeSuccess}
+            isUserLoggedIn={isMeSuccess}
             openUnauthorized={openUnauthorized}
             cardId={id}
             favorites={favorites}
@@ -106,8 +111,8 @@ export const CardActionBar = ({
               setCardToSpeech={setCardToSpeech}
             />
           )}
-          <ShowCard isShown={isShown} setIsShown={setIsShown} />
-          {isCardAuthor && (
+          <ShowCard showContent={showContent} setShowContent={setShowContent} />
+          {isMeSuccess && isCardAuthor && (
             <>
               <EditCard cardId={id} />
               <DeleteCard cardId={id} userId={meData?.id} theme={theme} />
@@ -116,7 +121,7 @@ export const CardActionBar = ({
         </Wrapper>
         <FocusCard cardId={id} isOpen={isOpen} />
       </Wrapper>
-      {isExpanded && (
+      {showExtraData && (
         <CardExtraData
           pagePosition={pagePosition}
           authorId={authorId}
@@ -124,7 +129,11 @@ export const CardActionBar = ({
           {...restCard}
         />
       )}
-      <UnauthorizedDialog open={isUnauthorizedOpen} close={closeUnauthorized} />
+      <UnauthorizedDialog
+        open={isUnauthorizedOpen}
+        close={closeUnauthorized}
+        returnPath={pathname}
+      />
     </>
   )
 }

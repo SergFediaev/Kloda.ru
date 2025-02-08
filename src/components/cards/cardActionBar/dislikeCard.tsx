@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 
 type Props = {
   userId?: string
-  isUserRegistered: boolean
+  isUserLoggedIn: boolean
   openUnauthorized: () => void
   cardId: string
   dislikes: string
@@ -18,7 +18,7 @@ type Props = {
 
 export const DislikeCard = ({
   userId,
-  isUserRegistered,
+  isUserLoggedIn,
   openUnauthorized,
   cardId,
   dislikes,
@@ -35,7 +35,7 @@ export const DislikeCard = ({
   } = useDislikeCard(userId)
 
   const onDislike = () =>
-    isUserRegistered ? dislike(cardId) : openUnauthorized()
+    isUserLoggedIn ? dislike(cardId) : openUnauthorized()
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
@@ -57,7 +57,7 @@ export const DislikeCard = ({
         variant='text'
         title='Dislike'
         onClick={onDislike}
-        isBlocked={!isUserRegistered}
+        isBlocked={!isUserLoggedIn}
         disabled={isDislikePending}
         isLoading={isDislikePending}
       >
