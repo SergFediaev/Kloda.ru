@@ -5,6 +5,7 @@ import Link from 'next/link'
 type Props = {
   cardId: string
 }
+
 export const EditCard = ({ cardId }: Props) => {
   return (
     <Button variant='text'>

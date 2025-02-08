@@ -15,6 +15,7 @@ export const CopyCard = ({ content, theme, title }: Props) => {
       'Card content copied to clipboard',
       theme,
     )
+
   return (
     <Button
       variant='text'
