@@ -8,7 +8,7 @@ const makeQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1_000,
+        //staleTime: 60 * 1_000,
       },
       dehydrate: {
         shouldDehydrateQuery: query =>

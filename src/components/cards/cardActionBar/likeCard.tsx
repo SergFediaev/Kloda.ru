@@ -3,7 +3,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { FillIcon } from '@/components/fillIcon'
 import { useLikeCard } from '@/hooks/useCards'
 import { ThumbsUp } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -25,6 +25,9 @@ export const LikeCard = ({
   openUnauthorized,
   theme,
 }: Props) => {
+  const [likesCount, setLikesCount] = useState(Number(likes))
+  const [isIconFilled, setIsIconFilled] = useState(isLiked)
+
   const {
     mutate: like,
     isPending: isLikePending,
@@ -32,23 +35,34 @@ export const LikeCard = ({
     data: likeData,
     isError: isLikeError,
     error: likeError,
-  } = useLikeCard(userId)
+  } = useLikeCard(cardId, userId)
 
-  const onLike = () => (isUserLoggedIn ? like(cardId) : openUnauthorized())
+  const handleLike = () => {
+    setIsIconFilled(prev => !prev)
+    setLikesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
+    like(cardId)
+  }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  const onLike = () => (isUserLoggedIn ? handleLike() : openUnauthorized())
+
   useEffect(() => {
-    if (isLikeError) toast(likeError.message, { theme, type: 'error' })
-  }, [isLikeError, likeError])
+    setIsIconFilled(isLiked)
+    setLikesCount(Number(likes))
+  }, [isLiked, likes])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
+    if (isLikeError) {
+      setIsIconFilled(prev => !prev)
+      setLikesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
+      toast(likeError.message, { theme, type: 'error' })
+    }
+
     if (isLikeSuccess)
       toast(likeData.isLiked ? 'Card liked' : 'Like removed', {
         theme,
         type: 'success',
       })
-  }, [isLikeSuccess, likeData])
+  }, [isLikeError, likeError, isLikeSuccess, likeData, isIconFilled, theme])
 
   return (
     <Wrapper>
@@ -62,12 +76,12 @@ export const LikeCard = ({
       >
         <FillIcon
           icon={ThumbsUp}
-          isFilled={isLiked}
+          isFilled={isIconFilled}
           isDisabled={isLikePending}
         />
       </Button>
       &nbsp;
-      {likes}
+      {likesCount}
     </Wrapper>
   )
 }
