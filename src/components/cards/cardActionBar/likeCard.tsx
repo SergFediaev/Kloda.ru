@@ -53,7 +53,7 @@ export const LikeCard = ({
   useEffect(() => {
     if (isLikeError) {
       setIsIconFilled(prev => !prev)
-      setLikesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
+      setLikesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
       toast(likeError.message, { theme, type: 'error' })
     }
 
