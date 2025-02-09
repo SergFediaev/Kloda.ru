@@ -3,7 +3,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { FillIcon } from '@/components/fillIcon'
 import { useFavoriteCard } from '@/hooks/useCards'
 import { Star } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -25,6 +25,9 @@ export const FavorCard = ({
   isFavorite,
   theme,
 }: Props) => {
+  const [favoritesCount, setFavoritesCount] = useState(Number(favorites))
+  const [isIconFilled, setIsIconFilled] = useState(isFavorite)
+
   const {
     mutate: favorite,
     isPending: isFavoritePending,
@@ -32,18 +35,29 @@ export const FavorCard = ({
     data: favoriteData,
     isError: isFavoriteError,
     error: favoriteError,
-  } = useFavoriteCard(userId)
+  } = useFavoriteCard(cardId, userId)
+
+  const handleFavorite = () => {
+    setIsIconFilled(prev => !prev)
+    setFavoritesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
+    favorite(cardId)
+  }
 
   const onFavorite = () =>
-    isUserLoggedIn ? favorite(cardId) : openUnauthorized()
+    isUserLoggedIn ? handleFavorite() : openUnauthorized()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isFavoriteError) toast(favoriteError.message, { theme, type: 'error' })
-  }, [isFavoriteError, favoriteError])
+    setIsIconFilled(isFavorite)
+    setFavoritesCount(Number(favorites))
+  }, [isFavorite, favorites])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
+    if (isFavoriteError) {
+      setIsIconFilled(prev => !prev)
+      setFavoritesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
+      toast(favoriteError.message, { theme, type: 'error' })
+    }
+
     if (isFavoriteSuccess)
       toast(
         favoriteData.isFavorite
@@ -51,7 +65,15 @@ export const FavorCard = ({
           : 'Card removed from favorites',
         { theme, type: 'success' },
       )
-  }, [isFavoriteSuccess, favoriteData])
+  }, [
+    isFavoriteError,
+    favoriteError,
+    isFavoriteSuccess,
+    favoriteData,
+    isIconFilled,
+    theme,
+  ])
+
   return (
     <Wrapper>
       <Button
@@ -64,12 +86,12 @@ export const FavorCard = ({
       >
         <FillIcon
           icon={Star}
-          isFilled={isFavorite}
+          isFilled={isIconFilled}
           isDisabled={isFavoritePending}
         />
       </Button>
       &nbsp;
-      {favorites}
+      {favoritesCount}
     </Wrapper>
   )
 }

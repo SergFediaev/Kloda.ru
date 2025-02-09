@@ -94,10 +94,10 @@ export const useDislikeCard = (userId?: string) =>
     onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
   })
 
-export const useFavoriteCard = (userId?: string) =>
+export const useFavoriteCard = (cardId: string, userId?: string) =>
   useMutation({
     mutationFn: favoriteCard,
-    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+    onSuccess: (_, cardId) => invalidateCardsAndUsers(cardId, userId),
   })
 
 // ToDo: Refactor invalidating, duplicated with create card, also invalidate only one user

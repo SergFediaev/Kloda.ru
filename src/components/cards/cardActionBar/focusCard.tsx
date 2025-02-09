@@ -1,23 +1,20 @@
 import { Button } from '@/components/buttons/button'
-import { usePaths } from '@/hooks/usePaths'
-import Link from 'next/link'
+import { useTransitionRouter } from 'next-view-transitions'
 
 type Props = {
   cardId: string
   isOpen?: boolean
 }
 export const FocusCard = ({ cardId, isOpen }: Props) => {
-  const { cardsPath } = usePaths()
+  const router = useTransitionRouter()
 
-  const cardDetailsLink = isOpen ? cardsPath : `/card/${cardId}`
+  const handleFocus = () => {
+    !isOpen ? router.push(`/card/${cardId}`) : router.back()
+  }
   const cardDetailsText = isOpen ? 'Close focus view' : 'Open focus view'
 
   return (
-    <Button
-      as={Link}
-      href={cardDetailsLink}
-      className='bg-accent hover:bg-accent-dark hover:text-primary-dark dark:bg-accent-dark dark:hover:bg-accent'
-    >
+    <Button variant='primary' onClick={handleFocus}>
       {cardDetailsText}
     </Button>
   )
