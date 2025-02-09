@@ -82,10 +82,9 @@ export const useDeleteCard = (userId?: string) =>
 export const useLikeCard = (cardId: string, userId?: string) =>
   useMutation({
     mutationFn: likeCard,
-    onSuccess: (_, variables) => {
-      const queryClient = getQueryClient()
-      void queryClient.invalidateQueries({ queryKey: ['card', cardId] })
-      invalidateCardsAndUsers(variables, userId)
+    onSuccess: () => {
+      void getQueryClient().invalidateQueries({ queryKey: ['card', cardId] })
+      invalidateCardsAndUsers(cardId, userId)
     },
   })
 
