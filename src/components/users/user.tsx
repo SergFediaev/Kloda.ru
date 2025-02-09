@@ -321,7 +321,7 @@ export const User = ({
               className='mb-10'
             >
               <Details>
-                <Summary>Instructions</Summary>
+                <Summary className='text-lg'>Instructions</Summary>
                 <List hasIndent hasDisc>
                   <li>
                     <Wrapper>
@@ -364,58 +364,63 @@ export const User = ({
                   </li>
                 </List>
               </Details>
-              <FormInput
-                control={control}
-                name='spreadsheetId'
-                label='Spreadsheet ID'
-                placeholder='Example: 13ZGk6-TwWIrnI12EZf0d0-Yi1CMyMiyHuvZUWuxRdPA'
-                error={errors.spreadsheetId?.message}
-                minLength={SHEET_MIN_LENGTH}
-                required
-                disabled={isPending}
-              />
-              <FormInput
-                control={control}
-                name='sheetName'
-                label='Sheet name'
-                placeholder='Example: Sheet1'
-                error={errors.sheetName?.message}
-                minLength={SHEET_MIN_LENGTH}
-                required
-                disabled={isPending}
-              />
-              <FormCheckBox
-                control={control}
-                name='skipFirstRow'
-                isDisabled={isPending}
-              >
-                Skip first row in sheet
-              </FormCheckBox>
-              <FormCheckBox
-                control={control}
-                name='skipFirstColumn'
-                isDisabled={isPending}
-              >
-                Skip first column in sheet
-              </FormCheckBox>
-              <ButtonsContainer>
-                <Button
-                  isLoading={isImportPending}
-                  isStretched
-                  disabled={isPending}
-                >
-                  {importCardsText}
-                </Button>
-                <Button
-                  type='reset'
-                  onClick={onReset}
-                  isStretched
-                  isDanger
-                  disabled={isPending || !isDirty}
-                >
-                  Reset
-                </Button>
-              </ButtonsContainer>
+              <Details>
+                <Summary className='text-lg'>Start import</Summary>
+                <div className='flex flex-col justify-center gap-y-5 pt-5'>
+                  <FormInput
+                    control={control}
+                    name='spreadsheetId'
+                    label='Spreadsheet ID'
+                    placeholder='Example: 13ZGk6-TwWIrnI12EZf0d0-Yi1CMyMiyHuvZUWuxRdPA'
+                    error={errors.spreadsheetId?.message}
+                    minLength={SHEET_MIN_LENGTH}
+                    required
+                    disabled={isPending}
+                  />
+                  <FormInput
+                    control={control}
+                    name='sheetName'
+                    label='Sheet name'
+                    placeholder='Example: Sheet1'
+                    error={errors.sheetName?.message}
+                    minLength={SHEET_MIN_LENGTH}
+                    required
+                    disabled={isPending}
+                  />
+                  <FormCheckBox
+                    control={control}
+                    name='skipFirstRow'
+                    isDisabled={isPending}
+                  >
+                    Skip first row in sheet
+                  </FormCheckBox>
+                  <FormCheckBox
+                    control={control}
+                    name='skipFirstColumn'
+                    isDisabled={isPending}
+                  >
+                    Skip first column in sheet
+                  </FormCheckBox>
+                  <ButtonsContainer>
+                    <Button
+                      isLoading={isImportPending}
+                      isStretched
+                      disabled={isPending}
+                    >
+                      {importCardsText}
+                    </Button>
+                    <Button
+                      type='reset'
+                      onClick={onReset}
+                      isStretched
+                      isDanger
+                      disabled={isPending || !isDirty}
+                    >
+                      Reset
+                    </Button>
+                  </ButtonsContainer>
+                </div>
+              </Details>
             </Form>
           </>
         )}

@@ -4,7 +4,9 @@ import { Button } from '@/components/buttons/button'
 import { Form } from '@/components/forms/form'
 import { FormInput } from '@/components/forms/formInput'
 import { useLogin } from '@/hooks/useAuth'
+import { usePaths } from '@/hooks/usePaths'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -21,6 +23,8 @@ type Props = {
 
 export const LoginForm = ({ onSuccess }: Props) => {
   const { mutate, isPending, error, isSuccess } = useLogin()
+  const router = useTransitionRouter()
+  const { cardsPath } = usePaths()
 
   const {
     control,
@@ -41,7 +45,7 @@ export const LoginForm = ({ onSuccess }: Props) => {
   })
 
   if (isSuccess) {
-    if (onSuccess) onSuccess()
+    onSuccess ? onSuccess() : router.push(cardsPath)
   }
 
   return (
