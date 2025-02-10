@@ -51,13 +51,17 @@ export const FavorCard = ({
     setFavoritesCount(Number(favorites))
   }, [isFavorite, favorites])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isFavoriteError) {
       setIsIconFilled(prev => !prev)
       setFavoritesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
       toast(favoriteError.message, { theme, type: 'error' })
     }
+  }, [isFavoriteError, favoriteError, isIconFilled])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
     if (isFavoriteSuccess)
       toast(
         favoriteData.isFavorite
@@ -65,14 +69,7 @@ export const FavorCard = ({
           : 'Card removed from favorites',
         { theme, type: 'success' },
       )
-  }, [
-    isFavoriteError,
-    favoriteError,
-    isFavoriteSuccess,
-    favoriteData,
-    isIconFilled,
-    theme,
-  ])
+  }, [isFavoriteSuccess, favoriteData, isIconFilled])
 
   return (
     <Wrapper>

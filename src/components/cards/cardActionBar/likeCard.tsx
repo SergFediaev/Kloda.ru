@@ -50,19 +50,23 @@ export const LikeCard = ({
     setLikesCount(Number(likes))
   }, [isLiked, likes])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isLikeError) {
       setIsIconFilled(prev => !prev)
       setLikesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
       toast(likeError.message, { theme, type: 'error' })
     }
+  }, [isLikeError, likeError, isIconFilled])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
+  useEffect(() => {
     if (isLikeSuccess)
       toast(likeData.isLiked ? 'Card liked' : 'Like removed', {
         theme,
         type: 'success',
       })
-  }, [isLikeError, likeError, isLikeSuccess, likeData, isIconFilled, theme])
+  }, [isLikeSuccess, likeData, isIconFilled])
 
   return (
     <Wrapper>
