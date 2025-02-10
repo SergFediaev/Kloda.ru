@@ -71,11 +71,11 @@ export const Cards = ({ categories, ...restProps }: Props) => {
       />
       <Columns count={columnsCount}>
         {cards.map((card, index) => {
-          const isCardToSpeech = card.id === cardToSpeech?.id
+          const isCardToSpeech = card.cardId === cardToSpeech?.cardId
 
           return (
             <Card
-              key={card.id}
+              key={card.cardId}
               card={card}
               isCardToSpeech={isCardToSpeech}
               setCardToSpeech={setCardToSpeech}

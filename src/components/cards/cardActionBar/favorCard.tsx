@@ -35,7 +35,7 @@ export const FavorCard = ({
     data: favoriteData,
     isError: isFavoriteError,
     error: favoriteError,
-  } = useFavoriteCard(cardId, userId)
+  } = useFavoriteCard(userId)
 
   const handleFavorite = () => {
     setIsIconFilled(prev => !prev)
@@ -82,7 +82,7 @@ export const FavorCard = ({
         onClick={onFavorite}
         isBlocked={!isUserLoggedIn}
         disabled={isFavoritePending}
-        isLoading={isFavoritePending}
+        //isLoading={isFavoritePending}
       >
         <FillIcon
           icon={Star}

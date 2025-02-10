@@ -1,5 +1,5 @@
 export type CardModel = {
-  id: string
+  cardId: string
   title: string
   content: string
   categories: string[]
@@ -16,7 +16,7 @@ export type CardModel = {
 }
 
 export type CardArgs = {
-  id: string
+  cardId: string
   categories?: string[]
 }
 
@@ -33,7 +33,7 @@ export type CreateCardArgs = {
 }
 
 export type EditCardArgs = {
-  id: string
+  cardId: string
 } & Omit<CreateCardArgs, 'authorId'>
 
 export type CardsArgs = {

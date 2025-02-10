@@ -46,17 +46,18 @@ export const useCreateCard = (authorId: string) =>
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
       void invalidateCategories(queryClient)
-      invalidateUsers(queryClient, authorId)
+      invalidateUser(queryClient, authorId)
+      invalidateUsers(queryClient)
     },
   })
 
 export const useEditCard = () =>
   useMutation({
     mutationFn: editCard,
-    onSuccess: ({ id }) => {
+    onSuccess: ({ cardId }) => {
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
-      void invalidateCard(queryClient, id)
+      void invalidateCard(queryClient, cardId)
       void invalidateCategories(queryClient)
     },
   })
@@ -68,36 +69,57 @@ export const useDeleteCards = (userId: string) =>
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
       void invalidateCategories(queryClient)
-      invalidateUsers(queryClient, userId)
+      invalidateUsers(queryClient)
+      invalidateUser(queryClient, userId)
     },
   })
 
 export const useDeleteCard = (userId?: string) =>
   useMutation({
     mutationFn: deleteCard,
-    onSuccess: (_, variables) =>
-      invalidateCardsAndUsers(variables, userId, true),
+    onSuccess: () => {
+      const queryClient = getQueryClient()
+      void invalidateCards(queryClient)
+      void invalidateCategories(queryClient)
+      invalidateUsers(queryClient)
+      userId ? invalidateUser(queryClient, userId) : null
+    },
   })
 
-export const useLikeCard = (cardId: string, userId?: string) =>
+export const useLikeCard = (userId?: string) =>
   useMutation({
     mutationFn: likeCard,
-    onSuccess: () => {
-      void getQueryClient().invalidateQueries({ queryKey: ['card', cardId] })
-      invalidateCardsAndUsers(cardId, userId)
+    onSuccess: (_, cardId) => {
+      const queryClient = getQueryClient()
+      void invalidateCard(queryClient, cardId)
+      void invalidateCards(queryClient)
+      invalidateUsers(queryClient)
+      userId ? invalidateUser(queryClient, userId) : null
     },
   })
 
 export const useDislikeCard = (userId?: string) =>
   useMutation({
     mutationFn: dislikeCard,
-    onSuccess: (_, variables) => invalidateCardsAndUsers(variables, userId),
+    onSuccess: (_, cardId) => {
+      const queryClient = getQueryClient()
+      void invalidateCard(queryClient, cardId)
+      void invalidateCards(queryClient)
+      invalidateUsers(queryClient)
+      userId ? invalidateUser(queryClient, userId) : null
+    },
   })
 
-export const useFavoriteCard = (cardId: string, userId?: string) =>
+export const useFavoriteCard = (userId?: string) =>
   useMutation({
     mutationFn: favoriteCard,
-    onSuccess: (_, cardId) => invalidateCardsAndUsers(cardId, userId),
+    onSuccess: (_, cardId) => {
+      const queryClient = getQueryClient()
+      void invalidateCard(queryClient, cardId)
+      void invalidateCards(queryClient)
+      invalidateUsers(queryClient)
+      userId ? invalidateUser(queryClient, userId) : null
+    },
   })
 
 // ToDo: Refactor invalidating, duplicated with create card, also invalidate only one user
@@ -108,7 +130,8 @@ export const useImportCards = (userId: string) =>
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
       void invalidateCategories(queryClient)
-      invalidateUsers(queryClient, userId)
+      invalidateUser(queryClient, userId)
+      invalidateUsers(queryClient)
     },
   })
 
@@ -131,23 +154,12 @@ const invalidateCard = (queryClient: QueryClient, cardId: string) =>
 const invalidateCategories = (queryClient: QueryClient) =>
   queryClient.invalidateQueries({ queryKey: ['categories'] })
 
-const invalidateUsers = (queryClient: QueryClient, userId: string) => {
-  // noinspection Annotator
-  void queryClient.invalidateQueries({ queryKey: ['users'] })
+const invalidateUser = (queryClient: QueryClient, userId: string) => {
   // noinspection Annotator
   void queryClient.invalidateQueries({ queryKey: ['user', userId] })
 }
 
-const invalidateCardsAndUsers = (
-  cardId: string,
-  userId?: string,
-  shouldInvalidateCategories?: boolean,
-) => {
-  const queryClient = getQueryClient()
-  void invalidateCards(queryClient)
-  void invalidateCard(queryClient, cardId)
-
-  if (userId) invalidateUsers(queryClient, userId)
-
-  if (shouldInvalidateCategories) void invalidateCategories(queryClient)
+const invalidateUsers = (queryClient: QueryClient) => {
+  // noinspection Annotator
+  void queryClient.invalidateQueries({ queryKey: ['users'] })
 }

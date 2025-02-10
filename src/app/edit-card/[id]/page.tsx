@@ -12,7 +12,7 @@ export const generateMetadata = ({
 export default function EditCardPage({ params: { id } }: ParamsIdProps) {
   return (
     <Container isCentered>
-      <EditCardModal heading={`Edit card #${id}`} id={id} />
+      <EditCardModal heading={`Edit card #${id}`} cardId={id} />
     </Container>
   )
 }

@@ -35,8 +35,8 @@ export const getCards = (searchParams: CardsArgs) =>
     searchParams: queryString.stringify(searchParams),
   }).json()
 
-export const getCard = ({ id, ...restCategories }: CardArgs) =>
-  cardsApi<CardResponse>(id, {
+export const getCard = ({ cardId, ...restCategories }: CardArgs) =>
+  cardsApi<CardResponse>(cardId, {
     searchParams: queryString.stringify(restCategories),
   }).json()
 
@@ -48,21 +48,21 @@ export const getRandomCard = (searchParams: RandomCardArgs) =>
 export const createCard = (json: CreateCardArgs) =>
   cardsApi.post<CardModel>('', { json }).json()
 
-export const editCard = ({ id, ...json }: EditCardArgs) =>
-  cardsApi.patch<CardModel>(id, { json }).json()
+export const editCard = ({ cardId, ...json }: EditCardArgs) =>
+  cardsApi.patch<CardModel>(cardId, { json }).json()
 
 export const deleteCards = () => cardsApi.delete<DeleteCardsResponse>('').json()
 
-export const deleteCard = (id: string) => cardsApi.delete(id).json()
+export const deleteCard = (cardId: string) => cardsApi.delete(cardId).json()
 
-export const likeCard = (id: string) =>
-  cardsApi.patch<LikeResponse>(`${id}/like`).json()
+export const likeCard = (cardId: string) =>
+  cardsApi.patch<LikeResponse>(`${cardId}/like`).json()
 
-export const dislikeCard = (id: string) =>
-  cardsApi.patch<DislikeResponse>(`${id}/dislike`).json()
+export const dislikeCard = (cardId: string) =>
+  cardsApi.patch<DislikeResponse>(`${cardId}/dislike`).json()
 
-export const favoriteCard = (id: string) =>
-  cardsApi.patch<FavoriteResponse>(`${id}/favorite`).json()
+export const favoriteCard = (cardId: string) =>
+  cardsApi.patch<FavoriteResponse>(`${cardId}/favorite`).json()
 
 export const importCards = (json: ImportCardsArgs) =>
   cardsApi.post<ImportCardsResponse>('import', { json }).json()

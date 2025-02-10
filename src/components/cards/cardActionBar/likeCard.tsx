@@ -35,7 +35,7 @@ export const LikeCard = ({
     data: likeData,
     isError: isLikeError,
     error: likeError,
-  } = useLikeCard(cardId, userId)
+  } = useLikeCard(userId)
 
   const handleLike = () => {
     setIsIconFilled(prev => !prev)

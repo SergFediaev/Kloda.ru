@@ -3,7 +3,7 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { FillIcon } from '@/components/fillIcon'
 import { useDislikeCard } from '@/hooks/useCards'
 import { ThumbsDown } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -25,6 +25,9 @@ export const DislikeCard = ({
   isDisliked,
   theme,
 }: Props) => {
+  const [dislikesCount, setDislikesCount] = useState(Number(dislikes))
+  const [isIconFilled, setIsIconFilled] = useState(isDisliked)
+
   const {
     mutate: dislike,
     isPending: isDislikePending,
@@ -34,22 +37,40 @@ export const DislikeCard = ({
     error: dislikeError,
   } = useDislikeCard(userId)
 
+  const handleDisLike = () => {
+    setIsIconFilled(prev => !prev)
+    setDislikesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
+    dislike(cardId)
+  }
+
   const onDislike = () =>
-    isUserLoggedIn ? dislike(cardId) : openUnauthorized()
+    isUserLoggedIn ? handleDisLike() : openUnauthorized()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
-    if (isDislikeError) toast(dislikeError.message, { theme, type: 'error' })
-  }, [isDislikeError, dislikeError])
+    setIsIconFilled(isDisliked)
+    setDislikesCount(Number(dislikes))
+  }, [isDisliked, dislikes])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
+    if (isDislikeError) {
+      setIsIconFilled(prev => !prev)
+      setDislikesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
+      toast(dislikeError?.message, { theme, type: 'error' })
+    }
+
     if (isDislikeSuccess)
       toast(dislikeData.isDisliked ? 'Card disliked' : 'Dislike removed', {
         theme,
         type: 'success',
       })
-  }, [isDislikeSuccess, dislikeData])
+  }, [
+    isDislikeSuccess,
+    dislikeData,
+    isDislikeError,
+    dislikeError,
+    isIconFilled,
+    theme,
+  ])
 
   return (
     <Wrapper>
@@ -59,16 +80,16 @@ export const DislikeCard = ({
         onClick={onDislike}
         isBlocked={!isUserLoggedIn}
         disabled={isDislikePending}
-        isLoading={isDislikePending}
+        // isLoading={isDislikePending}
       >
         <FillIcon
           icon={ThumbsDown}
-          isFilled={isDisliked}
+          isFilled={isIconFilled}
           isDisabled={isDislikePending}
         />
       </Button>
       &nbsp;
-      {dislikes}
+      {dislikesCount}
     </Wrapper>
   )
 }
