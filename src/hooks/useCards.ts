@@ -54,10 +54,10 @@ export const useCreateCard = (authorId: string) =>
 export const useEditCard = () =>
   useMutation({
     mutationFn: editCard,
-    onSuccess: ({ cardId }) => {
+    onSuccess: ({ id }) => {
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
-      void invalidateCard(queryClient, cardId)
+      void invalidateCard(queryClient, id)
       void invalidateCategories(queryClient)
     },
   })

@@ -49,7 +49,7 @@ export const CardActionBar = ({
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
 
   const {
-    cardId,
+    id,
     title,
     content,
     isDisliked,
@@ -78,7 +78,7 @@ export const CardActionBar = ({
           <LikeCard
             userId={meData?.id}
             isUserLoggedIn={isMeSuccess}
-            cardId={cardId}
+            cardId={id}
             likes={likes}
             isLiked={isLiked}
             openUnauthorized={openUnauthorized}
@@ -88,7 +88,7 @@ export const CardActionBar = ({
             userId={meData?.id}
             isUserLoggedIn={isMeSuccess}
             openUnauthorized={openUnauthorized}
-            cardId={cardId}
+            cardId={id}
             dislikes={dislikes}
             isDisliked={isDisliked}
             theme={theme}
@@ -97,13 +97,13 @@ export const CardActionBar = ({
             userId={meData?.id}
             isUserLoggedIn={isMeSuccess}
             openUnauthorized={openUnauthorized}
-            cardId={cardId}
+            cardId={id}
             favorites={favorites}
             isFavorite={isFavorite}
             theme={theme}
           />
           <CopyCard theme={theme} content={content} title={title} />
-          <ShareCard cardId={cardId} theme={theme} />
+          <ShareCard cardId={id} theme={theme} />
           {setCardToSpeech && (
             <PlayCard
               isCardPlaying={isCardPlaying}
@@ -114,18 +114,18 @@ export const CardActionBar = ({
           <ShowCard showContent={showContent} setShowContent={setShowContent} />
           {isMeSuccess && isCardAuthor && (
             <>
-              <EditCard cardId={cardId} />
-              <DeleteCard cardId={cardId} userId={meData?.id} theme={theme} />
+              <EditCard cardId={id} />
+              <DeleteCard cardId={id} userId={meData?.id} theme={theme} />
             </>
           )}
         </Wrapper>
-        <FocusCard cardId={cardId} isOpen={isOpen} />
+        <FocusCard cardId={id} isOpen={isOpen} />
       </Wrapper>
       {showExtraData && (
         <CardExtraData
           pagePosition={pagePosition}
           authorId={authorId}
-          cardId={cardId}
+          cardId={id}
           {...restCard}
         />
       )}

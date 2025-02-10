@@ -35,8 +35,8 @@ export const getCards = (searchParams: CardsArgs) =>
     searchParams: queryString.stringify(searchParams),
   }).json()
 
-export const getCard = ({ cardId, ...restCategories }: CardArgs) =>
-  cardsApi<CardResponse>(cardId, {
+export const getCard = ({ id, ...restCategories }: CardArgs) =>
+  cardsApi<CardResponse>(id, {
     searchParams: queryString.stringify(restCategories),
   }).json()
 
@@ -48,8 +48,8 @@ export const getRandomCard = (searchParams: RandomCardArgs) =>
 export const createCard = (json: CreateCardArgs) =>
   cardsApi.post<CardModel>('', { json }).json()
 
-export const editCard = ({ cardId, ...json }: EditCardArgs) =>
-  cardsApi.patch<CardModel>(cardId, { json }).json()
+export const editCard = ({ id, ...json }: EditCardArgs) =>
+  cardsApi.patch<CardModel>(id, { json }).json()
 
 export const deleteCards = () => cardsApi.delete<DeleteCardsResponse>('').json()
 

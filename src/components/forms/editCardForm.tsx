@@ -33,7 +33,7 @@ type Props = {
 
 // ToDo: Duplicated logic, constants, schema and inputs (create card form)
 export const EditCardForm = ({
-  card: { cardId, title, content, categories },
+  card: { id, title, content, categories },
 }: Props) => {
   const router = useTransitionRouter()
   const { data, mutate, isPending, error, isSuccess } = useEditCard()
@@ -55,7 +55,7 @@ export const EditCardForm = ({
 
   const onSubmit = handleSubmit(({ categories, ...restData }) =>
     mutate({
-      cardId,
+      id: String(id),
       ...restData,
       categories: handleCategories(categories),
     }),
@@ -63,7 +63,7 @@ export const EditCardForm = ({
 
   const onCancel = () => router.back()
 
-  if (isSuccess) router.push(`/card/${data.cardId}`)
+  if (isSuccess) router.push(`/card/${data.id}`)
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>

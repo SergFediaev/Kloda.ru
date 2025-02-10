@@ -14,7 +14,7 @@ export default function CardPage({ params: { id } }: ParamsIdProps) {
   return (
     <Container isCentered className='flex-col justify-start'>
       <CardPageControls />
-      <CardDetails cardId={id} />
+      <CardDetails id={id} />
     </Container>
   )
 }

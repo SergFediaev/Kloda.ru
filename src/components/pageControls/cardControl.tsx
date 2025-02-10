@@ -13,18 +13,18 @@ import queryString from 'query-string'
 
 export const CardControl = () => {
   const router = useTransitionRouter()
-  const { id: cardId } = useParams<{ id: string }>()
+  const { id } = useParams<{ id: string }>()
   const categories = useSearchParams().getAll('categories')
 
-  const { data, isPending, isError, error } = useGetCard({ cardId, categories })
+  const { data, isPending, isError, error } = useGetCard({ id, categories })
 
   const { refetch } = useGetRandomCard({
-    currentCardId: cardId,
+    currentCardId: id,
     categories,
   })
 
   if (isPending) {
-    return <Loader>Fetching card #{cardId}</Loader>
+    return <Loader>Fetching card #{id}</Loader>
   }
 
   if (isError) {
@@ -38,9 +38,7 @@ export const CardControl = () => {
   const onRandom = () =>
     refetch().then(({ data, isSuccess }) => {
       if (isSuccess)
-        router.push(
-          `/card/${data.cardId}?${queryString.stringify({ categories })}`,
-        )
+        router.push(`/card/${data.id}?${queryString.stringify({ categories })}`)
     })
 
   return (

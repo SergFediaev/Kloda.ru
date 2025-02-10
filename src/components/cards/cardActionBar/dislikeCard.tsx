@@ -51,23 +51,26 @@ export const DislikeCard = ({
     setDislikesCount(Number(dislikes))
   }, [isDisliked, dislikes])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
   useEffect(() => {
     if (isDislikeError) {
       setIsIconFilled(prev => !prev)
       setDislikesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
       toast(dislikeError?.message, { theme, type: 'error' })
     }
-  }, [isDislikeError, dislikeError, isIconFilled])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
-  useEffect(() => {
     if (isDislikeSuccess)
       toast(dislikeData.isDisliked ? 'Card disliked' : 'Dislike removed', {
         theme,
         type: 'success',
       })
-  }, [isDislikeSuccess, dislikeData, isIconFilled])
+  }, [
+    isDislikeSuccess,
+    dislikeData,
+    isDislikeError,
+    dislikeError,
+    isIconFilled,
+    theme,
+  ])
 
   return (
     <Wrapper>

@@ -8,15 +8,15 @@ import { useGetCard } from '@/hooks/useCards'
 
 type Props = {
   heading: string
-  cardId: string
+  id: string
 }
 
 // ToDo: Refactor block style max-w-xl
-export const EditCardModal = ({ cardId, ...restProps }: Props) => {
-  const { data, isPending, isError, error } = useGetCard({ cardId })
+export const EditCardModal = ({ id, ...restProps }: Props) => {
+  const { data, isPending, isError, error } = useGetCard({ id })
 
   if (isPending) {
-    return <Loader>Fetching card #{cardId}</Loader>
+    return <Loader>Fetching card #{id}</Loader>
   }
 
   if (isError) {

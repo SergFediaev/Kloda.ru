@@ -97,7 +97,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
 
   if (isSuccess) {
     removeCardContent()
-    router.push(`/card/${data.cardId}`)
+    router.push(`/card/${data.id}`)
   }
 
   return (

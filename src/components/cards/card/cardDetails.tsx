@@ -10,16 +10,16 @@ import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 type Props = {
-  cardId: string
+  id: string
 }
 
-export const CardDetails = ({ cardId }: Props) => {
+export const CardDetails = ({ id }: Props) => {
   const categories = useSearchParams().getAll('categories')
-  const { isPending, isError, error, data } = useGetCard({ cardId, categories })
+  const { isPending, isError, error, data } = useGetCard({ id, categories })
   const [cardToSpeech, setCardToSpeech] = useState<CardModel>()
 
   if (isPending) {
-    return <Loader>Fetching card #{cardId}</Loader>
+    return <Loader>Fetching card #{id}</Loader>
   }
 
   if (isError) {

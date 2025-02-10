@@ -56,7 +56,7 @@ if (typeof window !== 'undefined' && window.speechSynthesis) {
 const getCardText = ({ title, content }: CardModel) => `${title}\n${content}`
 
 const getCardIndex = (cards: CardModel[], cardId: string) =>
-  cards.findIndex(card => card.cardId === cardId)
+  cards.findIndex(({ id }) => id === cardId)
 
 type Props = {
   cards: CardModel[]
@@ -227,7 +227,7 @@ export const TextToSpeech = ({
     setIsPlaying(true)
     setIsPaused(false)
 
-    const cardToSpeechIndex = getCardIndex(cards, cardToSpeech.cardId)
+    const cardToSpeechIndex = getCardIndex(cards, cardToSpeech.id)
 
     if (cardToSpeechIndex === -1) {
       return
@@ -273,7 +273,7 @@ export const TextToSpeech = ({
     setIsPlaying(true)
     setIsPaused(false)
 
-    const cardToSpeechIndex = getCardIndex(cards, cardToSpeech.cardId)
+    const cardToSpeechIndex = getCardIndex(cards, cardToSpeech.id)
 
     if (cardToSpeechIndex === -1) {
       return
@@ -293,7 +293,7 @@ export const TextToSpeech = ({
   const onShuffle = () => {
     const shuffledCard = cards[Math.floor(Math.random() * cards.length)]
 
-    if (shuffledCard.cardId === cardToSpeech.cardId) {
+    if (shuffledCard.id === cardToSpeech.id) {
       return onShuffle()
     }
 
@@ -372,10 +372,10 @@ export const TextToSpeech = ({
           Text to speech:&nbsp;
           <Button
             variant='text'
-            onClick={() => scrollToElement(String(cardToSpeech.cardId))}
+            onClick={() => scrollToElement(String(cardToSpeech.id))}
             title='Scroll to card'
           >
-            Card #{cardToSpeech.cardId}
+            Card #{cardToSpeech.id}
           </Button>
         </Heading>
         <Wrapper className='gap-4'>
@@ -454,12 +454,12 @@ export const TextToSpeech = ({
             </Wrapper>
             <ul className='max-h-96 overflow-y-auto'>
               {cards.map(card => (
-                <li key={card.cardId}>
-                  {card.cardId === cardToSpeech.cardId ? (
+                <li key={card.id}>
+                  {card.id === cardToSpeech.id ? (
                     <Wrapper>
                       <Play size={16} />
                       &nbsp;
-                      {`#${card.cardId} ${card.title}`}
+                      {`#${card.id} ${card.title}`}
                     </Wrapper>
                   ) : (
                     <Button
@@ -467,7 +467,7 @@ export const TextToSpeech = ({
                       onClick={() => onChangeCard(card)}
                       title='Play card'
                       isTextLeft
-                    >{`#${card.cardId} ${card.title}`}</Button>
+                    >{`#${card.id} ${card.title}`}</Button>
                   )}
                 </li>
               ))}
