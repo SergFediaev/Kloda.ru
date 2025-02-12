@@ -3,7 +3,6 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { FillIcon } from '@/components/fillIcon'
 import { useLikeCard } from '@/hooks/useCards'
 import { ThumbsUp } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -25,44 +24,23 @@ export const LikeCard = ({
   openUnauthorized,
   theme,
 }: Props) => {
-  const [likesCount, setLikesCount] = useState(Number(likes))
-  const [isIconFilled, setIsIconFilled] = useState(isLiked)
+  const { mutate: like, isPending: isLikePending } = useLikeCard(userId)
 
-  const {
-    mutate: like,
-    isPending: isLikePending,
-    isSuccess: isLikeSuccess,
-    data: likeData,
-    isError: isLikeError,
-    error: likeError,
-  } = useLikeCard(userId)
-
-  const handleLike = () => {
-    setIsIconFilled(prev => !prev)
-    setLikesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
-    like(cardId)
+  const onLike = () => {
+    return !isUserLoggedIn
+      ? openUnauthorized()
+      : like(cardId, {
+          onSuccess: data => {
+            toast(data.isLiked ? 'Card liked' : 'Like removed', {
+              theme,
+              type: 'success',
+            })
+          },
+          onError: likeError => {
+            toast(likeError.message, { theme, type: 'error' })
+          },
+        })
   }
-
-  const onLike = () => (isUserLoggedIn ? handleLike() : openUnauthorized())
-
-  useEffect(() => {
-    setIsIconFilled(isLiked)
-    setLikesCount(Number(likes))
-  }, [isLiked, likes])
-
-  useEffect(() => {
-    if (isLikeError) {
-      setIsIconFilled(prev => !prev)
-      setLikesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
-      toast(likeError.message, { theme, type: 'error' })
-    }
-
-    if (isLikeSuccess)
-      toast(likeData.isLiked ? 'Card liked' : 'Like removed', {
-        theme,
-        type: 'success',
-      })
-  }, [isLikeError, likeError, isLikeSuccess, likeData, isIconFilled, theme])
 
   return (
     <Wrapper>
@@ -76,12 +54,12 @@ export const LikeCard = ({
       >
         <FillIcon
           icon={ThumbsUp}
-          isFilled={isIconFilled}
+          isFilled={isLiked}
           isDisabled={isLikePending}
         />
       </Button>
       &nbsp;
-      {likesCount}
+      {likes}
     </Wrapper>
   )
 }

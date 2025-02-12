@@ -5,6 +5,7 @@ type Props = {
   cardId: string
   isOpen?: boolean
 }
+
 export const FocusCard = ({ cardId, isOpen }: Props) => {
   const router = useTransitionRouter()
 

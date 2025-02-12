@@ -49,19 +49,24 @@ export const CardActionBar = ({
   const [isUnauthorizedOpen, setIsUnauthorizedOpen] = useState(false)
 
   const {
-    id,
+    id: cardId,
     title,
     content,
     isDisliked,
-    dislikes,
-    favorites,
+    dislikes: dislikesCount,
+    favorites: favoritesCount,
     isFavorite,
     isLiked,
-    likes,
-    authorId,
+    likes: likesCount,
+    authorId: authorID,
     ...restCard
   } = card
 
+  const id = String(cardId)
+  const likes = String(likesCount)
+  const dislikes = String(dislikesCount)
+  const favorites = String(favoritesCount)
+  const authorId = String(authorID)
   const isCardAuthor = authorId === meData?.id
 
   const openUnauthorized = () => setIsUnauthorizedOpen(true)

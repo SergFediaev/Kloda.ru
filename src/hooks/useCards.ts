@@ -15,6 +15,9 @@ import {
 import type {
   CardArgs,
   CardsArgs,
+  DislikeResponse,
+  FavoriteResponse,
+  LikeResponse,
   RandomCardArgs,
 } from '@/api/cards/cards.types'
 import { getQueryClient } from '@/app/getQueryClient'
@@ -57,7 +60,7 @@ export const useEditCard = () =>
     onSuccess: ({ id }) => {
       const queryClient = getQueryClient()
       void invalidateCards(queryClient)
-      void invalidateCard(queryClient, id)
+      void invalidateCard(queryClient, String(id))
       void invalidateCategories(queryClient)
     },
   })
@@ -70,7 +73,7 @@ export const useDeleteCards = (userId: string) =>
       void invalidateCards(queryClient)
       void invalidateCategories(queryClient)
       invalidateUsers(queryClient)
-      invalidateUser(queryClient, userId)
+      invalidateUser(queryClient, String(userId))
     },
   })
 
@@ -82,45 +85,147 @@ export const useDeleteCard = (userId?: string) =>
       void invalidateCards(queryClient)
       void invalidateCategories(queryClient)
       invalidateUsers(queryClient)
-      userId ? invalidateUser(queryClient, userId) : null
+
+      if (userId) {
+        invalidateUser(queryClient, String(userId))
+      }
     },
   })
 
-export const useLikeCard = (userId?: string) =>
-  useMutation({
+export const useLikeCard = (userId?: string) => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
     mutationFn: likeCard,
-    onSuccess: (_, cardId) => {
-      const queryClient = getQueryClient()
-      void invalidateCard(queryClient, cardId)
-      void invalidateCards(queryClient)
+    onMutate: async id => {
+      await queryClient.cancelQueries({
+        queryKey: ['card', String(id)],
+      })
+
+      const prevCard = queryClient.getQueryData<LikeResponse>([
+        'card',
+        String(id),
+      ])
+
+      queryClient.setQueryData<LikeResponse, string[], LikeResponse>(
+        ['card', id],
+        old => {
+          return {
+            isLiked: !old?.isLiked,
+          }
+        },
+      )
+
+      return { prevCard }
+    },
+    onError: (error, cardId, context) => {
+      queryClient.setQueryData(['card', String(cardId)], context?.prevCard)
+      throw error
+    },
+    onSuccess: (data, cardId) => {
+      queryClient.setQueryData(['card', String(cardId)], data)
+    },
+    onSettled: (_data, _error, cardId: string) => {
+      void queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+      void queryClient.invalidateQueries({ queryKey: ['cards'] })
       invalidateUsers(queryClient)
-      userId ? invalidateUser(queryClient, userId) : null
+
+      if (userId) {
+        invalidateUser(queryClient, String(userId))
+      }
     },
   })
+}
 
-export const useDislikeCard = (userId?: string) =>
-  useMutation({
+export const useDislikeCard = (userId?: string) => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
     mutationFn: dislikeCard,
-    onSuccess: (_, cardId) => {
-      const queryClient = getQueryClient()
-      void invalidateCard(queryClient, cardId)
-      void invalidateCards(queryClient)
-      invalidateUsers(queryClient)
-      userId ? invalidateUser(queryClient, userId) : null
-    },
-  })
+    onMutate: async id => {
+      await queryClient.cancelQueries({
+        queryKey: ['card', String(id)],
+      })
 
-export const useFavoriteCard = (userId?: string) =>
-  useMutation({
-    mutationFn: favoriteCard,
-    onSuccess: (_, cardId) => {
-      const queryClient = getQueryClient()
-      void invalidateCard(queryClient, cardId)
-      void invalidateCards(queryClient)
+      const prevCard = queryClient.getQueryData<DislikeResponse>([
+        'card',
+        String(id),
+      ])
+
+      queryClient.setQueryData<DislikeResponse, string[], DislikeResponse>(
+        ['card', id],
+        old => {
+          return {
+            isDisliked: !old?.isDisliked,
+          }
+        },
+      )
+
+      return { prevCard }
+    },
+    onError: (error, cardId, context) => {
+      queryClient.setQueryData(['card', String(cardId)], context?.prevCard)
+      throw error
+    },
+    onSuccess: (data, cardId) => {
+      queryClient.setQueryData(['card', String(cardId)], data)
+    },
+    onSettled: (_data, _error, cardId: string) => {
+      void queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+      void queryClient.invalidateQueries({ queryKey: ['cards'] })
       invalidateUsers(queryClient)
-      userId ? invalidateUser(queryClient, userId) : null
+
+      if (userId) {
+        invalidateUser(queryClient, String(userId))
+      }
     },
   })
+}
+
+export const useFavoriteCard = (userId?: string) => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: favoriteCard,
+    onMutate: async id => {
+      await queryClient.cancelQueries({
+        queryKey: ['card', String(id)],
+      })
+
+      const prevCard = queryClient.getQueryData<FavoriteResponse>([
+        'card',
+        String(id),
+      ])
+
+      queryClient.setQueryData<FavoriteResponse, string[], FavoriteResponse>(
+        ['card', id],
+        old => {
+          return {
+            isFavorite: !old?.isFavorite,
+          }
+        },
+      )
+
+      return { prevCard }
+    },
+    onError: (error, cardId, context) => {
+      queryClient.setQueryData(['card', String(cardId)], context?.prevCard)
+      throw error
+    },
+    onSuccess: (data, cardId) => {
+      queryClient.setQueryData(['card', String(cardId)], data)
+    },
+    onSettled: (_data, _error, cardId: string) => {
+      void queryClient.invalidateQueries({ queryKey: ['card', String(cardId)] })
+      void queryClient.invalidateQueries({ queryKey: ['cards'] })
+      invalidateUsers(queryClient)
+
+      if (userId) {
+        invalidateUser(queryClient, String(userId))
+      }
+    },
+  })
+}
 
 // ToDo: Refactor invalidating, duplicated with create card, also invalidate only one user
 export const useImportCards = (userId: string) =>

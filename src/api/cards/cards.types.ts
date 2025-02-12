@@ -1,12 +1,12 @@
 export type CardModel = {
-  id: string
+  id: number
   title: string
   content: string
   categories: string[]
-  favorites: string
-  likes: string
-  dislikes: string
-  authorId: string
+  favorites: number
+  likes: number
+  dislikes: number
+  authorId: number
   authorUsername: string
   createdAt: string
   updatedAt: string

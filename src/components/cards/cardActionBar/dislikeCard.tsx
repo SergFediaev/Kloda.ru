@@ -3,7 +3,6 @@ import { Wrapper } from '@/components/containers/wrapper'
 import { FillIcon } from '@/components/fillIcon'
 import { useDislikeCard } from '@/hooks/useCards'
 import { ThumbsDown } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {
@@ -25,52 +24,23 @@ export const DislikeCard = ({
   isDisliked,
   theme,
 }: Props) => {
-  const [dislikesCount, setDislikesCount] = useState(Number(dislikes))
-  const [isIconFilled, setIsIconFilled] = useState(isDisliked)
-
-  const {
-    mutate: dislike,
-    isPending: isDislikePending,
-    isSuccess: isDislikeSuccess,
-    data: dislikeData,
-    isError: isDislikeError,
-    error: dislikeError,
-  } = useDislikeCard(userId)
-
-  const handleDisLike = () => {
-    setIsIconFilled(prev => !prev)
-    setDislikesCount(prev => (isIconFilled ? prev - 1 : prev + 1))
-    dislike(cardId)
-  }
+  const { mutate: dislike, isPending: isDislikePending } =
+    useDislikeCard(userId)
 
   const onDislike = () =>
-    isUserLoggedIn ? handleDisLike() : openUnauthorized()
-
-  useEffect(() => {
-    setIsIconFilled(isDisliked)
-    setDislikesCount(Number(dislikes))
-  }, [isDisliked, dislikes])
-
-  useEffect(() => {
-    if (isDislikeError) {
-      setIsIconFilled(prev => !prev)
-      setDislikesCount(prev => (isIconFilled ? prev + 1 : prev - 1))
-      toast(dislikeError?.message, { theme, type: 'error' })
-    }
-
-    if (isDislikeSuccess)
-      toast(dislikeData.isDisliked ? 'Card disliked' : 'Dislike removed', {
-        theme,
-        type: 'success',
-      })
-  }, [
-    isDislikeSuccess,
-    dislikeData,
-    isDislikeError,
-    dislikeError,
-    isIconFilled,
-    theme,
-  ])
+    !isUserLoggedIn
+      ? openUnauthorized()
+      : dislike(cardId, {
+          onSuccess: data => {
+            toast(data.isDisliked ? 'Card disliked' : 'Dislike removed', {
+              theme,
+              type: 'success',
+            })
+          },
+          onError: dislikeError => {
+            toast(dislikeError.message, { theme, type: 'error' })
+          },
+        })
 
   return (
     <Wrapper>
@@ -80,16 +50,16 @@ export const DislikeCard = ({
         onClick={onDislike}
         isBlocked={!isUserLoggedIn}
         disabled={isDislikePending}
-        // isLoading={isDislikePending}
+        isLoading={isDislikePending}
       >
         <FillIcon
           icon={ThumbsDown}
-          isFilled={isIconFilled}
+          isFilled={isDisliked}
           isDisabled={isDislikePending}
         />
       </Button>
       &nbsp;
-      {dislikesCount}
+      {dislikes}
     </Wrapper>
   )
 }

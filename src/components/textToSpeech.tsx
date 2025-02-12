@@ -55,7 +55,7 @@ if (typeof window !== 'undefined' && window.speechSynthesis) {
 
 const getCardText = ({ title, content }: CardModel) => `${title}\n${content}`
 
-const getCardIndex = (cards: CardModel[], cardId: string) =>
+const getCardIndex = (cards: CardModel[], cardId: number) =>
   cards.findIndex(({ id }) => id === cardId)
 
 type Props = {
