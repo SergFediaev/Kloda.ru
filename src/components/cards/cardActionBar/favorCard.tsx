@@ -27,7 +27,7 @@ export const FavorCard = ({
   const { mutate: favorite, isPending: isFavoritePending } =
     useFavoriteCard(userId)
 
-  const onFavorite = () =>
+  const onFavorite = () => {
     !isUserLoggedIn
       ? openUnauthorized()
       : favorite(cardId, {
@@ -43,6 +43,7 @@ export const FavorCard = ({
             toast(favoriteError.message, { theme, type: 'error' })
           },
         })
+  }
 
   return (
     <Wrapper>

@@ -9,10 +9,11 @@ type Props = {
 export const FocusCard = ({ cardId, isOpen }: Props) => {
   const router = useTransitionRouter()
 
+  const cardDetailsText = isOpen ? 'Close focus view' : 'Open focus view'
+
   const handleFocus = () => {
     !isOpen ? router.push(`/card/${cardId}`) : router.back()
   }
-  const cardDetailsText = isOpen ? 'Close focus view' : 'Open focus view'
 
   return (
     <Button variant='primary' onClick={handleFocus}>

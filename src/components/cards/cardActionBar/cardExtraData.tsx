@@ -4,6 +4,7 @@ import { User } from 'lucide-react'
 import Link from 'next/link'
 
 type Props = {
+  showExtraData: boolean
   cardId: string
   categories: string[]
   authorId: string
@@ -14,6 +15,7 @@ type Props = {
 }
 
 export const CardExtraData = ({
+  showExtraData,
   cardId,
   categories,
   createdAt,
@@ -22,6 +24,10 @@ export const CardExtraData = ({
   authorUsername,
   pagePosition,
 }: Props) => {
+  if (!showExtraData) {
+    return null
+  }
+
   return (
     <aside>
       <p>

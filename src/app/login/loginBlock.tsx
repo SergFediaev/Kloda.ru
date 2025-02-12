@@ -12,6 +12,7 @@ import { useState } from 'react'
 type Props = {
   title?: string
 }
+
 export const LoginBlock = ({ title }: Props) => {
   const { usersPath, cardsPath, settingsPath } = usePaths()
   const [loginSuccess, setLoginSuccess] = useState(false)

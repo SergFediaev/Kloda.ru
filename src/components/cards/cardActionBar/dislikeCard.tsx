@@ -27,7 +27,7 @@ export const DislikeCard = ({
   const { mutate: dislike, isPending: isDislikePending } =
     useDislikeCard(userId)
 
-  const onDislike = () =>
+  const onDislike = () => {
     !isUserLoggedIn
       ? openUnauthorized()
       : dislike(cardId, {
@@ -41,6 +41,7 @@ export const DislikeCard = ({
             toast(dislikeError.message, { theme, type: 'error' })
           },
         })
+  }
 
   return (
     <Wrapper>

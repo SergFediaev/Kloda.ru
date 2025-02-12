@@ -35,29 +35,27 @@ export const Card = ({
   useEffect(() => setShowContent(isStudyMode), [isStudyMode])
 
   return (
-    <>
-      <Block
-        as='article'
-        heading={title}
-        isConstrained={showContent}
-        className={cn(
-          isCardToSpeech &&
-            'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
-          className,
-        )}
-        {...restProps}
-      >
-        {showContent && <CardContent content={content} />}
-        <CardActionBar
-          card={card}
-          isOpen={isOpen}
-          setCardToSpeech={setCardToSpeech}
-          isCardPlaying={isCardPlaying}
-          pagePosition={pagePosition}
-          showContent={showContent}
-          setShowContent={setShowContent}
-        />
-      </Block>
-    </>
+    <Block
+      as='article'
+      heading={title}
+      isConstrained={showContent}
+      className={cn(
+        isCardToSpeech &&
+          'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
+        className,
+      )}
+      {...restProps}
+    >
+      {showContent && <CardContent content={content} />}
+      <CardActionBar
+        card={card}
+        isOpen={isOpen}
+        setCardToSpeech={setCardToSpeech}
+        isCardPlaying={isCardPlaying}
+        pagePosition={pagePosition}
+        showContent={showContent}
+        setShowContent={setShowContent}
+      />
+    </Block>
   )
 }

@@ -34,8 +34,8 @@ export const Cards = ({ categories, ...restProps }: Props) => {
   )
 
   const { isPending, isError, data, error } = useGetCards({
-    ...restProps,
     categories: normalizedCategories,
+    ...restProps,
   })
 
   const [cardToSpeech, setCardToSpeech] = useState<CardModel>()

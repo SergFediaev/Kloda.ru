@@ -6,11 +6,15 @@ import { Speech } from 'lucide-react'
 type Props = {
   card: CardModel
   isCardPlaying?: boolean
-  setCardToSpeech: (card: CardModel) => void
+  setCardToSpeech?: (card: CardModel) => void
 }
 
 export const PlayCard = ({ card, isCardPlaying, setCardToSpeech }: Props) => {
-  const onCardToSpeech = () => setCardToSpeech?.(card)
+  if (!setCardToSpeech) {
+    return null
+  }
+
+  const onCardToSpeech = () => setCardToSpeech(card)
 
   return (
     <Button variant='text' onClick={onCardToSpeech}>

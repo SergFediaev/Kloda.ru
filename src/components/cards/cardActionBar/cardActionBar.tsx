@@ -109,13 +109,11 @@ export const CardActionBar = ({
           />
           <CopyCard theme={theme} content={content} title={title} />
           <ShareCard cardId={id} theme={theme} />
-          {setCardToSpeech && (
-            <PlayCard
-              isCardPlaying={isCardPlaying}
-              card={card}
-              setCardToSpeech={setCardToSpeech}
-            />
-          )}
+          <PlayCard
+            isCardPlaying={isCardPlaying}
+            card={card}
+            setCardToSpeech={setCardToSpeech}
+          />
           <ShowCard showContent={showContent} setShowContent={setShowContent} />
           {isMeSuccess && isCardAuthor && (
             <>
@@ -126,14 +124,13 @@ export const CardActionBar = ({
         </Wrapper>
         <FocusCard cardId={id} isOpen={isOpen} />
       </Wrapper>
-      {showExtraData && (
-        <CardExtraData
-          pagePosition={pagePosition}
-          authorId={authorId}
-          cardId={id}
-          {...restCard}
-        />
-      )}
+      <CardExtraData
+        showExtraData={showExtraData}
+        pagePosition={pagePosition}
+        authorId={authorId}
+        cardId={id}
+        {...restCard}
+      />
       <UnauthorizedDialog
         open={isUnauthorizedOpen}
         close={closeUnauthorized}

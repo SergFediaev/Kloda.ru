@@ -27,7 +27,7 @@ export const LikeCard = ({
   const { mutate: like, isPending: isLikePending } = useLikeCard(userId)
 
   const onLike = () => {
-    return !isUserLoggedIn
+    !isUserLoggedIn
       ? openUnauthorized()
       : like(cardId, {
           onSuccess: data => {

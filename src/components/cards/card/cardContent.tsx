@@ -162,6 +162,7 @@ type Props = {
 
 export const CardContent = ({ content }: Props) => {
   const { isMediaAlwaysShown } = cardsSettingsStore()
+
   return (
     <Text as='p' isUnformatted>
       {isMediaAlwaysShown ? parseContent(content).map(renderElement) : content}
