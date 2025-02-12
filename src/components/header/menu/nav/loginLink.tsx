@@ -7,7 +7,11 @@ import { Link } from 'next-view-transitions'
 export const LoginLink = ({ isLoggedIn }: LoggedInProps) => {
   const { loginPath, isLoginPath } = usePaths()
 
-  return !isLoggedIn ? (
+  if (isLoggedIn) {
+    return null
+  }
+
+  return (
     <Button
       as={Link}
       variant='text'
@@ -17,5 +21,5 @@ export const LoginLink = ({ isLoggedIn }: LoggedInProps) => {
     >
       <LogIn />
     </Button>
-  ) : null
+  )
 }

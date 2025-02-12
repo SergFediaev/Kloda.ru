@@ -1,8 +1,4 @@
-import { Block } from '@/components/containers/block'
-import { Container } from '@/components/containers/container'
-import { RegisterForm } from '@/components/forms/registerForm'
-import { LoginLink } from '@/components/links/loginLink'
-import { ReturnToCards } from '@/components/returnToCards'
+import { RegisterBlock } from '@/app/register/registerBlock'
 import type { Metadata } from 'next'
 
 const title = 'Register'
@@ -12,18 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function RegisterPage() {
-  return (
-    <Container isCentered>
-      <Block
-        heading={title}
-        isHeadingCentered
-        isConstrained
-        className='max-w-md'
-      >
-        <RegisterForm />
-        <LoginLink />
-        <ReturnToCards />
-      </Block>
-    </Container>
-  )
+  return <RegisterBlock title={title} />
 }

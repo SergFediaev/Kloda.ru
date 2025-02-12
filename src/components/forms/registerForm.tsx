@@ -42,7 +42,11 @@ const defaultValues: RegisterSchema = {
   confirmPassword: '',
 }
 
-export const RegisterForm = () => {
+type Props = {
+  onSuccess?: () => void
+}
+
+export const RegisterForm = ({ onSuccess }: Props) => {
   const router = useTransitionRouter()
   const { data, mutate, isPending, error, isSuccess } = useRegister()
 
@@ -63,7 +67,10 @@ export const RegisterForm = () => {
 
   const onReset = () => reset(defaultValues)
 
-  if (isSuccess) router.push(`/user/${data.userId}`)
+  if (isSuccess) {
+    if (onSuccess) onSuccess()
+    router.push(`/user/${data.userId}`)
+  }
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>

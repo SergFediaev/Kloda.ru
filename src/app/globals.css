@@ -97,8 +97,4 @@ body {
   input[type="number"] {
     -moz-appearance: textfield;
   }
-
-  .react-tooltip {
-    @apply max-w-[300px] rounded-lg px-3 py-2 text-sm shadow-lg transition-opacity;
-  }
 }

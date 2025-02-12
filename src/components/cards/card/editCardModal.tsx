@@ -12,7 +12,7 @@ type Props = {
 }
 
 // ToDo: Refactor block style max-w-xl
-export const EditCard = ({ id, ...restProps }: Props) => {
+export const EditCardModal = ({ id, ...restProps }: Props) => {
   const { data, isPending, isError, error } = useGetCard({ id })
 
   if (isPending) {

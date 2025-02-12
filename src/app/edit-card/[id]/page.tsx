@@ -1,4 +1,4 @@
-import { EditCard } from '@/components/cards/editCard'
+import { EditCardModal } from '@/components/cards/card/editCardModal'
 import { Container } from '@/components/containers/container'
 import type { ParamsIdProps } from '@/types/paramsIdProps'
 import type { Metadata } from 'next'
@@ -12,7 +12,7 @@ export const generateMetadata = ({
 export default function EditCardPage({ params: { id } }: ParamsIdProps) {
   return (
     <Container isCentered>
-      <EditCard heading={`Edit card #${id}`} id={id} />
+      <EditCardModal heading={`Edit card #${id}`} id={id} />
     </Container>
   )
 }

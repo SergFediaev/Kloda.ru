@@ -1,4 +1,5 @@
 import { Text } from '@/components/containers/text'
+import { cardsSettingsStore } from '@/stores/cardsSettingsStore'
 import type { Nullable } from '@/types/nullable'
 import { useRef } from 'react'
 
@@ -157,11 +158,14 @@ const renderElement = (element: ParsedElement, index: number) => {
 
 type Props = {
   content: string
-  isMediaShown: boolean
 }
 
-export const CardContent = ({ content, isMediaShown }: Props) => (
-  <Text as='p' isUnformatted>
-    {isMediaShown ? parseContent(content).map(renderElement) : content}
-  </Text>
-)
+export const CardContent = ({ content }: Props) => {
+  const { isMediaAlwaysShown } = cardsSettingsStore()
+
+  return (
+    <Text as='p' isUnformatted>
+      {isMediaAlwaysShown ? parseContent(content).map(renderElement) : content}
+    </Text>
+  )
+}

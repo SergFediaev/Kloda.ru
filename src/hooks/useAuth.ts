@@ -16,7 +16,7 @@ export const useLogin = () =>
     mutationFn: login,
     onSuccess: ({ accessToken }) => {
       sessionStorage.setItem('access_token', accessToken)
-
+      void getQueryClient().invalidateQueries({ queryKey: ['me'] })
       void invalidateCards(getQueryClient())
     },
   })

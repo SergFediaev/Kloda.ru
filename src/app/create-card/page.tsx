@@ -1,4 +1,4 @@
-import { CreateCard } from '@/components/cards/createCard'
+import { CreateCardModal } from '@/components/cards/card/createCardModal'
 import { Container } from '@/components/containers/container'
 import type { Metadata } from 'next'
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function CreateCardPage() {
   return (
     <Container isCentered>
-      <CreateCard heading={title} />
+      <CreateCardModal heading={title} />
     </Container>
   )
 }

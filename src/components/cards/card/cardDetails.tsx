@@ -1,7 +1,7 @@
 'use client'
 
 import type { CardModel } from '@/api/cards/cards.types'
-import { Card } from '@/components/cards/card'
+import { Card } from '@/components/cards/card/card'
 import { ErrorMessage } from '@/components/errorMessage'
 import { Loader } from '@/components/loader'
 import { TextToSpeech } from '@/components/textToSpeech'
