@@ -2,7 +2,7 @@ import { FeaturesContainer } from '@/components/carousel'
 import { List } from '@/components/containers/list'
 import { Heading } from '@/components/heading'
 
-export const HandsfreeSlide = () => {
+export const HandsFreeSlide = () => {
   return (
     <FeaturesContainer>
       <Heading as='h3' isSemiBold className='font-bold text-2xl'>

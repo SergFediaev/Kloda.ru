@@ -16,7 +16,7 @@ export const CoreFeaturesSection = () => {
           <p>
             Maximize the versatility of study methods and media support. Benefit
             from the experience of others or craft your own path to success.
-            Utilize custom audio playlists, randomizer, study-timer and quizz.
+            Utilize custom audio playlists, randomizer, study-timer and quiz.
           </p>
         </Article>
         <Article>

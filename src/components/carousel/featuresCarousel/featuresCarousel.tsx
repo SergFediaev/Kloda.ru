@@ -5,7 +5,7 @@ import {
   CustomizationSlide,
   DotButton,
   FeaturesSlide,
-  HandsfreeSlide,
+  HandsFreeSlide,
   ManagementSlide,
   MediaSlide,
   ModesSlide,
@@ -41,7 +41,7 @@ export const FeaturesCarousel = ({ options }: Props) => {
       <div ref={emblaRef} className='overflow-hidden'>
         <div className='flex touch-pan-y touch-pinch-zoom items-end'>
           <FeaturesSlide>
-            <HandsfreeSlide />
+            <HandsFreeSlide />
           </FeaturesSlide>
           <FeaturesSlide>
             <PlaylistsSlide />

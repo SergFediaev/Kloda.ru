@@ -1,5 +1,5 @@
 export * from './modesSlide'
-export * from './handsfreeSlide'
+export * from './handsFreeSlide'
 export * from './mediaSlide'
 export * from './managementSlide'
 export * from './customizationSlide'
