@@ -8,9 +8,9 @@ import { type ComponentPropsWithoutRef, useEffect, useState } from 'react'
 
 type Props = {
   card: CardModel
+  cardToSpeechId?: number
   isOpen?: boolean
-  isCardToSpeech?: boolean
-  setCardToSpeech?: (card: CardModel) => void
+  setCardToSpeech: (card: CardModel) => void
   isCardPlaying?: boolean
   pagePosition?: number
 } & ComponentPropsWithoutRef<'article'> &
@@ -19,8 +19,8 @@ type Props = {
 // ToDo: Uncategorized
 export const Card = ({
   card,
+  cardToSpeechId,
   isOpen,
-  isCardToSpeech,
   setCardToSpeech,
   isCardPlaying,
   pagePosition,
@@ -30,7 +30,10 @@ export const Card = ({
   const { isStudyMode } = cardsModeStore()
   const [showContent, setShowContent] = useState(isStudyMode)
 
-  const { title, content } = card
+  const { title, content, id } = card
+
+  const isCardToSpeech = id === cardToSpeechId
+  const showOutline = isCardToSpeech && isCardPlaying
 
   useEffect(() => setShowContent(isStudyMode), [isStudyMode])
 
@@ -40,7 +43,7 @@ export const Card = ({
       heading={title}
       isConstrained={showContent}
       className={cn(
-        isCardToSpeech &&
+        showOutline &&
           'shadow-inner outline outline-2 outline-accent dark:outline-accent-dark',
         className,
       )}

@@ -2,12 +2,12 @@ import { Button } from '@/components/buttons/button'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
 import { useDeleteCard } from '@/hooks/useCards'
 import { Trash2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 type Props = {
-  userId?: string
-  cardId: string
+  userId?: number
+  cardId: number
   theme?: string
 }
 
@@ -16,32 +16,24 @@ export const DeleteCard = ({ userId, cardId, theme }: Props) => {
   const openConfirmation = () => setIsConfirmationOpen(true)
   const closeConfirmation = () => setIsConfirmationOpen(false)
 
-  const {
-    mutate: deleteCard,
-    isPending: isDeletePending,
-    isSuccess: isDeleteSuccess,
-    isError: isDeleteError,
-    error: deleteError,
-  } = useDeleteCard(userId)
+  const { mutate: deleteCard, isPending: isDeletePending } = useDeleteCard(
+    String(userId),
+  )
 
   const onDelete = () => {
     closeConfirmation()
-    deleteCard(cardId)
+    deleteCard(String(cardId), {
+      onError: deleteError => {
+        toast(deleteError.message, { theme, type: 'error' })
+      },
+      onSuccess: () => {
+        toast('Card deleted', {
+          theme,
+          type: 'success',
+        })
+      },
+    })
   }
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
-  useEffect(() => {
-    if (isDeleteError) toast(deleteError.message, { theme, type: 'error' })
-  }, [isDeleteError, deleteError])
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Toast duplication
-  useEffect(() => {
-    if (isDeleteSuccess)
-      toast('Card deleted', {
-        theme,
-        type: 'success',
-      })
-  }, [isDeleteSuccess])
 
   return (
     <>

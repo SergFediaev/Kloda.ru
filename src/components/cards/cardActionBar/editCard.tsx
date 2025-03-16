@@ -3,7 +3,7 @@ import { SquarePen } from 'lucide-react'
 import Link from 'next/link'
 
 type Props = {
-  cardId: string
+  cardId: number
 }
 
 export const EditCard = ({ cardId }: Props) => {

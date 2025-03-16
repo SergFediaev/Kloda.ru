@@ -71,15 +71,13 @@ export const Cards = ({ categories, ...restProps }: Props) => {
       />
       <Columns count={columnsCount}>
         {cards.map((card, index) => {
-          const isCardToSpeech = card.id === cardToSpeech?.id
-
           return (
             <Card
               key={card.id}
               card={card}
-              isCardToSpeech={isCardToSpeech}
+              cardToSpeechId={cardToSpeech?.id}
               setCardToSpeech={setCardToSpeech}
-              isCardPlaying={isCardToSpeech && isCardPlaying}
+              isCardPlaying={isCardPlaying}
               pagePosition={index + 1}
             />
           )
