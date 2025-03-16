@@ -5,9 +5,9 @@ import Link from 'next/link'
 
 type Props = {
   showExtraData: boolean
-  cardId: string
+  cardId: number
   categories: string[]
-  authorId: string
+  authorId: number
   authorUsername: string
   createdAt: string
   updatedAt: string

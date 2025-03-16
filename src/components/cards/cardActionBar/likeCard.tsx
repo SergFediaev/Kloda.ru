@@ -6,11 +6,11 @@ import { ThumbsUp } from 'lucide-react'
 import { toast } from 'react-toastify'
 
 type Props = {
-  userId?: string
+  userId?: number
   isUserLoggedIn: boolean
   openUnauthorized: () => void
-  cardId: string
-  likes: string
+  cardId: number
+  likes: number
   isLiked: boolean
   theme?: string
 }
@@ -29,7 +29,7 @@ export const LikeCard = ({
   const onLike = () => {
     !isUserLoggedIn
       ? openUnauthorized()
-      : like(cardId, {
+      : like(String(cardId), {
           onSuccess: data => {
             toast(data.isLiked ? 'Card liked' : 'Like removed', {
               theme,

@@ -5,16 +5,16 @@ import type { ParamsIdProps } from '@/types/paramsIdProps'
 import type { Metadata } from 'next'
 
 export const generateMetadata = ({
-  params: { id },
+  params: { id: cardId },
 }: ParamsIdProps): Metadata => ({
-  title: `Card #${id}`,
+  title: `Card #${cardId}`,
 })
 
-export default function CardPage({ params: { id } }: ParamsIdProps) {
+export default function CardPage({ params: { id: cardId } }: ParamsIdProps) {
   return (
     <Container isCentered className='flex-col justify-start'>
       <CardPageControls />
-      <CardDetails id={id} />
+      <CardDetails cardId={cardId} />
     </Container>
   )
 }

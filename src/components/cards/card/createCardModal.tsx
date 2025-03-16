@@ -22,11 +22,15 @@ export const CreateCardModal = (props: Props) => {
     return <ErrorMessage isError>{error.message}</ErrorMessage>
   }
 
-  const { username, email, id } = data
+  const { username, email, id: authorId } = data
 
   return (
     <Block isHeadingCentered isConstrained className='max-w-xl' {...props}>
-      <CreateCardForm username={username} email={email} authorId={id} />
+      <CreateCardForm
+        username={username}
+        email={email}
+        authorId={String(authorId)}
+      />
       <GoBack />
     </Block>
   )

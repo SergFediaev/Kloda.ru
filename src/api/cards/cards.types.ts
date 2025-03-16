@@ -21,7 +21,7 @@ export type CardArgs = {
 }
 
 export type RandomCardArgs = {
-  currentCardId: string
+  currentCardId: number
   categories: string[]
 }
 
@@ -29,7 +29,7 @@ export type CreateCardArgs = {
   title: string
   content: string
   categories: string[]
-  authorId: string
+  authorId: number
 }
 
 export type EditCardArgs = {

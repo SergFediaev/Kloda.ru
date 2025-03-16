@@ -1,11 +1,11 @@
 export type UserResponse = {
-  id: string
+  id: number
   username: string
   email: string
-  createdCardsCount: string
-  favoriteCardsCount: string
-  likedCardsCount: string
-  dislikedCardsCount: string
+  createdCardsCount: number
+  favoriteCardsCount: number
+  likedCardsCount: number
+  dislikedCardsCount: number
   registeredAt: string
   lastLoginAt: string
 }

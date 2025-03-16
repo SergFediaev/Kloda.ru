@@ -2,7 +2,7 @@ import { Button } from '@/components/buttons/button'
 import { useTransitionRouter } from 'next-view-transitions'
 
 type Props = {
-  cardId: string
+  cardId: number
   isOpen?: boolean
 }
 

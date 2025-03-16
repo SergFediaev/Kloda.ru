@@ -4,15 +4,17 @@ import type { ParamsIdProps } from '@/types/paramsIdProps'
 import type { Metadata } from 'next'
 
 export const generateMetadata = ({
-  params: { id },
+  params: { id: cardId },
 }: ParamsIdProps): Metadata => ({
-  title: `Edit card #${id}`,
+  title: `Edit card #${cardId}`,
 })
 
-export default function EditCardPage({ params: { id } }: ParamsIdProps) {
+export default function EditCardPage({
+  params: { id: cardId },
+}: ParamsIdProps) {
   return (
     <Container isCentered>
-      <EditCardModal heading={`Edit card #${id}`} id={id} />
+      <EditCardModal heading={`Edit card #${cardId}`} cardId={cardId} />
     </Container>
   )
 }

@@ -2,6 +2,7 @@ import { Button } from '@/components/buttons/button'
 import { Dialog, type DialogProps } from '@/components/dialogs/dialog/dialog'
 import { LoginForm } from '@/components/forms/loginForm'
 import { RegisterForm } from '@/components/forms/registerForm'
+import { usePaths } from '@/hooks/usePaths'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useState } from 'react'
 
@@ -11,13 +12,14 @@ type Props = DialogProps & {
 
 export const UnauthorizedDialog = ({
   close,
-  returnPath,
+  // ToDo: returnPath,
   ...restProps
 }: Props) => {
   const [showMessage, setShowMessage] = useState<boolean>(true)
   const [showLogin, setShowLogin] = useState<boolean>(false)
   const [showRegister, setShowRegister] = useState<boolean>(false)
   const router = useTransitionRouter()
+  const { pathname } = usePaths()
 
   const dialogTitle = showMessage
     ? 'Unauthorized'
@@ -33,7 +35,8 @@ export const UnauthorizedDialog = ({
   }
 
   const onSuccess = () => {
-    if (returnPath) router.push(returnPath)
+    // ToDo: if (returnPath) router.push(returnPath)
+    if (pathname) router.push(pathname)
     handleClose()
   }
 

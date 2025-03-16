@@ -14,7 +14,7 @@ import { Search } from '@/components/header/menu/search/search'
 
 export type LoggedInProps = { isLoggedIn: boolean }
 
-export type UserIdProps = { userId?: string }
+export type UserIdProps = { userId?: number }
 
 export type CollapseMenuProps = {
   collapseMenu: () => void

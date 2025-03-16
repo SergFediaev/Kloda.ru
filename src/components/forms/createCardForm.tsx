@@ -86,7 +86,7 @@ export const CreateCardForm = ({ username, email, authorId }: Props) => {
       mutate({
         ...restData,
         categories: handleCategories(categories),
-        authorId,
+        authorId: Number(authorId),
       }),
   )
 

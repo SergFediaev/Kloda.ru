@@ -19,7 +19,7 @@ export const CardControl = () => {
   const { data, isPending, isError, error } = useGetCard({ id, categories })
 
   const { refetch } = useGetRandomCard({
-    currentCardId: id,
+    currentCardId: Number(id),
     categories,
   })
 

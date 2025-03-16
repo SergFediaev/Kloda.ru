@@ -27,6 +27,7 @@ const cardsApi = ky.create({
   },
   retry: {
     statusCodes: [401, 403],
+    methods: ['get', 'post', 'put', 'patch', 'delete'],
   },
 })
 

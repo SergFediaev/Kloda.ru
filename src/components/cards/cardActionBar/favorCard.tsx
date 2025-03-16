@@ -6,11 +6,11 @@ import { Star } from 'lucide-react'
 import { toast } from 'react-toastify'
 
 type Props = {
-  userId?: string
+  userId?: number
   isUserLoggedIn: boolean
   openUnauthorized: () => void
-  cardId: string
-  favorites: string
+  cardId: number
+  favorites: number
   isFavorite: boolean
   theme?: string
 }
@@ -30,7 +30,7 @@ export const FavorCard = ({
   const onFavorite = () => {
     !isUserLoggedIn
       ? openUnauthorized()
-      : favorite(cardId, {
+      : favorite(String(cardId), {
           onSuccess: data => {
             toast(
               data.isFavorite

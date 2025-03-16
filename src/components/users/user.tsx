@@ -57,7 +57,7 @@ type Props = {
 // ToDo: Import/export custom hooks
 export const User = ({
   user: {
-    id,
+    id: userId,
     username,
     email,
     createdCardsCount,
@@ -80,7 +80,7 @@ export const User = ({
     isPending: isDeletePending,
     isError: isDeleteError,
     error: deleteError,
-  } = useDeleteCards(id)
+  } = useDeleteCards(userId)
 
   const {
     mutate: importCards,
@@ -88,7 +88,7 @@ export const User = ({
     data: importData,
     isPending: isImportPending,
     error: importError,
-  } = useImportCards(id)
+  } = useImportCards(userId)
 
   const {
     refetch: exportCards,
@@ -121,12 +121,12 @@ export const User = ({
   const [fileLink, setFileLink] = useState<string>()
   const [fileName, setFileName] = useState<string>()
 
-  const userProfileLink = isOpen ? usersPath : `/user/${id}`
+  const userProfileLink = isOpen ? usersPath : `/user/${userId}`
   const userProfileText = isOpen ? 'Close user profile' : 'Open user profile'
-  const isCurrentUser = isMeSuccess && id === meData.id
+  const isCurrentUser = isMeSuccess && userId === meData.id
   const isCurrentUserOpen = isCurrentUser && isOpen
   const logoutText = isLogoutPending ? 'Logging out' : 'Logout'
-  const hasNotCreatedCards = createdCardsCount === '0'
+  const hasNotCreatedCards = createdCardsCount === 0
   const cardsActionTitle = hasNotCreatedCards ? 'No created cards' : undefined
   const isPending = isDeletePending || isImportPending || isExportFetching
   const deleteCardsText = isDeletePending
@@ -238,7 +238,7 @@ export const User = ({
         {...restProps}
       >
         <div>
-          <p>User ID: {id}</p>
+          <p>User ID: {userId}</p>
           <Wrapper as='p'>
             Email:&nbsp;<a href={`mailto:${email}`}>{email}</a>
             &nbsp;
@@ -255,25 +255,25 @@ export const User = ({
           <UserCardsCount
             cardsType='Created'
             cardsCount={createdCardsCount}
-            userId={id}
+            userId={userId}
             action='created'
           />
           <UserCardsCount
             cardsType='Favorite'
             cardsCount={favoriteCardsCount}
-            userId={id}
+            userId={userId}
             action='favorite'
           />
           <UserCardsCount
             cardsType='Liked'
             cardsCount={likedCardsCount}
-            userId={id}
+            userId={userId}
             action='liked'
           />
           <UserCardsCount
             cardsType='Disliked'
             cardsCount={dislikedCardsCount}
-            userId={id}
+            userId={userId}
             action='disliked'
           />
         </div>
