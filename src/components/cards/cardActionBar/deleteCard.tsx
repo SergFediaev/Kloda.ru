@@ -1,7 +1,9 @@
 import { Button } from '@/components/buttons/button'
 import { ConfirmationDialog } from '@/components/dialogs/confirmationDialog'
 import { useDeleteCard } from '@/hooks/useCards'
+import { usePaths } from '@/hooks/usePaths'
 import { Trash2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -15,6 +17,8 @@ export const DeleteCard = ({ userId, cardId, theme }: Props) => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const openConfirmation = () => setIsConfirmationOpen(true)
   const closeConfirmation = () => setIsConfirmationOpen(false)
+  const router = useRouter()
+  const { cardsPath } = usePaths()
 
   const { mutate: deleteCard, isPending: isDeletePending } = useDeleteCard(
     String(userId),
@@ -22,6 +26,7 @@ export const DeleteCard = ({ userId, cardId, theme }: Props) => {
 
   const onDelete = () => {
     closeConfirmation()
+
     deleteCard(String(cardId), {
       onError: deleteError => {
         toast(deleteError.message, { theme, type: 'error' })
@@ -31,6 +36,8 @@ export const DeleteCard = ({ userId, cardId, theme }: Props) => {
           theme,
           type: 'success',
         })
+
+        router.push(cardsPath)
       },
     })
   }

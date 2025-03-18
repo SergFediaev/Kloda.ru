@@ -33,7 +33,7 @@ type Props = {
 
 // ToDo: Duplicated logic, constants, schema and inputs (create card form)
 export const EditCardForm = ({
-  card: { id: cardId, title, content, categories }, // id = undefined
+  card: { id: cardId, title, content, categories },
 }: Props) => {
   const router = useTransitionRouter()
   const { data, mutate, isPending, error, isSuccess } = useEditCard()
