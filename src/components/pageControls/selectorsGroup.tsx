@@ -37,7 +37,6 @@ const SORTS_CARDS = {
 type Props = {
   itemsName: string
   currentItems: number
-  totalItems?: number
   sort: string
   order: string
   limit: string
@@ -47,7 +46,6 @@ type Props = {
 export const SelectorsGroup = ({
   itemsName,
   currentItems,
-  totalItems,
   sort,
   order,
   limit,
@@ -57,7 +55,7 @@ export const SelectorsGroup = ({
 
   return (
     <div className='m-3 flex flex-wrap gap-2'>
-      {itemsName === 'Cards' && <CategoriesSelect totalItems={totalItems} />}
+      {itemsName === 'Cards' && <CategoriesSelect />}
       <Select
         label={`${itemsName} per page`}
         selectedKeys={[limit]}
