@@ -127,13 +127,13 @@ export const useLikeCard = (userId?: number) => {
     mutationFn: likeCard,
     onMutate: async cardId => {
       await queryClient.cancelQueries({
-        queryKey: ['card', cardId],
+        queryKey: ['like', cardId],
       })
 
-      const prevCard = queryClient.getQueryData<LikeResponse>(['card', cardId])
+      const prevCard = queryClient.getQueryData<LikeResponse>(['like', cardId])
 
       queryClient.setQueryData<LikeResponse, string[], LikeResponse>(
-        ['card', cardId],
+        ['like', cardId],
         old => {
           return {
             isLiked: !old?.isLiked,
@@ -144,11 +144,11 @@ export const useLikeCard = (userId?: number) => {
       return { prevCard }
     },
     onError: (error, cardId, context) => {
-      queryClient.setQueryData(['card', cardId], context?.prevCard)
+      queryClient.setQueryData(['like', cardId], context?.prevCard)
       throw error
     },
     onSuccess: (data, cardId) => {
-      queryClient.setQueryData(['card', cardId], data)
+      queryClient.setQueryData(['like', cardId], data)
     },
     onSettled: (_data, _error, cardId: string) => {
       void invalidateCard(queryClient, cardId)
@@ -169,16 +169,16 @@ export const useDislikeCard = (userId?: number) => {
     mutationFn: dislikeCard,
     onMutate: async cardId => {
       await queryClient.cancelQueries({
-        queryKey: ['card', cardId],
+        queryKey: ['dislike', cardId],
       })
 
       const prevCard = queryClient.getQueryData<DislikeResponse>([
-        'card',
+        'dislike',
         cardId,
       ])
 
       queryClient.setQueryData<DislikeResponse, string[], DislikeResponse>(
-        ['card', cardId],
+        ['dislike', cardId],
         old => {
           return {
             isDisliked: !old?.isDisliked,
@@ -189,11 +189,11 @@ export const useDislikeCard = (userId?: number) => {
       return { prevCard }
     },
     onError: (error, cardId, context) => {
-      queryClient.setQueryData(['card', cardId], context?.prevCard)
+      queryClient.setQueryData(['dislike', cardId], context?.prevCard)
       throw error
     },
     onSuccess: (data, cardId) => {
-      queryClient.setQueryData(['card', cardId], data)
+      queryClient.setQueryData(['dislike', cardId], data)
     },
     onSettled: (_data, _error, cardId: string) => {
       void invalidateCard(queryClient, cardId)
@@ -214,16 +214,16 @@ export const useFavoriteCard = (userId?: number) => {
     mutationFn: favoriteCard,
     onMutate: async cardId => {
       await queryClient.cancelQueries({
-        queryKey: ['card', String(cardId)],
+        queryKey: ['favorite', String(cardId)],
       })
 
       const prevCard = queryClient.getQueryData<FavoriteResponse>([
-        'card',
+        'favorite',
         String(cardId),
       ])
 
       queryClient.setQueryData<FavoriteResponse, string[], FavoriteResponse>(
-        ['card', String(cardId)],
+        ['favorite', String(cardId)],
         old => {
           return {
             isFavorite: !old?.isFavorite,
@@ -234,11 +234,11 @@ export const useFavoriteCard = (userId?: number) => {
       return { prevCard }
     },
     onError: (error, cardId, context) => {
-      queryClient.setQueryData(['card', String(cardId)], context?.prevCard)
+      queryClient.setQueryData(['favorite', String(cardId)], context?.prevCard)
       throw error
     },
     onSuccess: (data, cardId) => {
-      queryClient.setQueryData(['card', String(cardId)], data)
+      queryClient.setQueryData(['favorite', String(cardId)], data)
     },
     onSettled: (_data, _error, cardId: string) => {
       void invalidateCard(queryClient, String(cardId))

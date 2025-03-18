@@ -113,7 +113,6 @@ export const PageControls = ({
           {...restParams}
           onChangeParams={onChangeParams}
           currentItems={currentItems}
-          totalItems={isUsersPath ? totalUsers : totalCards}
         />
         <ColumnsRadio
           columnsCount={columnsCount}

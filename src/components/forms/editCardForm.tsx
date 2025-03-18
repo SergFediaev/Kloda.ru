@@ -63,7 +63,7 @@ export const EditCardForm = ({
 
   const onCancel = () => router.back()
 
-  if (isSuccess) router.push(`/card/${data.id}`)
+  if (isSuccess) router.push(`/card/${cardId}`)
 
   return (
     <Form onSubmit={onSubmit} error={error?.message}>

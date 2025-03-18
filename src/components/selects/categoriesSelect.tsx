@@ -1,6 +1,7 @@
 'use client'
 
 import { ErrorMessage } from '@/components/errorMessage'
+import { TotalCardsCount } from '@/components/selects/totalCardsCount'
 import { useGetCategories } from '@/hooks/useCategories'
 import { usePaths } from '@/hooks/usePaths'
 import { useThemes } from '@/hooks/useThemes'
@@ -17,7 +18,6 @@ import Select, {
 import colors from 'tailwindcss/colors'
 
 const CATEGORIES_PARAM = 'categories'
-const ALL_CATEGORIES = 'All'
 const COLOR_ACCENT = '#f15b00'
 const COLOR_ACCENT_DARK = '#ff8800'
 
@@ -40,12 +40,8 @@ type Option = Readonly<{
   value: string
 }>
 
-type Props = {
-  totalItems?: number
-}
-
 // ToDo: Refactor select theme custom colors
-export const CategoriesSelect = ({ totalItems }: Props) => {
+export const CategoriesSelect = () => {
   const { data, isPending, isSuccess, isError, error } = useGetCategories()
   const searchParams = useSearchParams()
   const { replace } = useRouter()
@@ -61,11 +57,13 @@ export const CategoriesSelect = ({ totalItems }: Props) => {
   const hasNotCategories = data?.length === 0
   const selectedCategories = searchParams.getAll('categories')
 
-  const placeholder = isPending
-    ? 'Loading categories'
-    : isSuccess
-      ? `${ALL_CATEGORIES} (${totalItems})`
-      : ALL_CATEGORIES
+  const placeholder = isPending ? (
+    'Loading categories'
+  ) : isSuccess ? (
+    <TotalCardsCount />
+  ) : (
+    'All'
+  )
 
   const options: Option[] = categoriesSorted.map(
     ({ name, displayName, cardsCount }) => ({
