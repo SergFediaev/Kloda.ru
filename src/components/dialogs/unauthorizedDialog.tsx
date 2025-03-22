@@ -6,15 +6,7 @@ import { usePaths } from '@/hooks/usePaths'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useState } from 'react'
 
-type Props = DialogProps & {
-  returnPath?: string
-}
-
-export const UnauthorizedDialog = ({
-  close,
-  // ToDo: returnPath,
-  ...restProps
-}: Props) => {
+export const UnauthorizedDialog = ({ close, ...restProps }: DialogProps) => {
   const [showMessage, setShowMessage] = useState<boolean>(true)
   const [showLogin, setShowLogin] = useState<boolean>(false)
   const [showRegister, setShowRegister] = useState<boolean>(false)
@@ -35,8 +27,7 @@ export const UnauthorizedDialog = ({
   }
 
   const onSuccess = () => {
-    // ToDo: if (returnPath) router.push(returnPath)
-    if (pathname) router.push(pathname)
+    router.push(pathname)
     handleClose()
   }
 
