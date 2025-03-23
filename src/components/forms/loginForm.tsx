@@ -66,7 +66,7 @@ export const LoginForm = ({ onSuccess }: Props) => {
         name='password'
         label='Password'
         placeholder='Password'
-        withIcon
+        hasIcon
         required
         error={errors.password?.message}
         disabled={isPending}
