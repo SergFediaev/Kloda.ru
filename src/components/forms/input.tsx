@@ -63,7 +63,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         >
           {label}
         </label>
-        <div className={'flex items-center'}>
+        <div className='flex items-center'>
           <input
             ref={ref}
             id={inputId}
@@ -72,7 +72,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             maxLength={maxLength}
             type={currentType}
             className={cn(
-              'w-full flex-1 rounded-xl pr-12',
+              'w-full flex-1 pr-12',
               'truncate rounded-xl py-2 pl-4 shadow-inner',
               hasBorder && 'border-2 border-accent dark:border-accent-dark',
               type === 'number' && 'text-right',
