@@ -101,6 +101,7 @@ export const RegisterForm = ({ onSuccess }: Props) => {
         name='password'
         label='Password'
         type='password'
+        withIcon
         autoComplete='on'
         placeholder='Password'
         required
@@ -117,6 +118,7 @@ export const RegisterForm = ({ onSuccess }: Props) => {
         name='confirmPassword'
         label='Confirm password'
         placeholder='Confirm password'
+        withIcon
         required
         error={errors.confirmPassword?.message}
         characterCount={watch('confirmPassword')?.length}

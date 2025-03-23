@@ -18,7 +18,7 @@ export const GoBack = () => {
         className={cn(
           'text-primary dark:text-primary-dark ',
           'hover:enabled:text-accent dark:enabled:hover:text-accent-dark',
-          'underline decoration-accent dark:decoration-accent-dark',
+          'underline decoration-accent underline-offset-4 dark:decoration-accent-dark',
         )}
       >
         Go back
