@@ -8,7 +8,6 @@ import {
 
 type Props<T extends FieldValues> = {
   control: Control<T>
-  hasIcon?: boolean
 } & Omit<InputProps, 'value' | 'onChange'> &
   Omit<UseControllerProps<T>, 'control' | 'defaultValue' | 'rules'>
 

@@ -15,7 +15,6 @@ export type InputProps = {
   characterCount?: number
   isHorizontal?: boolean
   hasBorder?: boolean
-  hasIcon?: boolean
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -26,7 +25,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       characterCount,
       isHorizontal,
       hasBorder,
-      hasIcon,
       id,
       type,
       name,
@@ -44,8 +42,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       setShowPassword(!showPassword)
     }
 
-    const currentIcon = showPassword ? <Eye /> : <EyeOff />
-    const currentType = !hasIcon ? type : showPassword ? 'text' : 'password'
+    const isPassword = type === 'password'
+    const passwordIcon = showPassword ? <Eye /> : <EyeOff />
+    const currentType = !isPassword ? type : showPassword ? 'text' : 'password'
 
     return (
       <div
@@ -71,7 +70,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             name={name}
             required={required}
             maxLength={maxLength}
-            type={currentType ?? type}
+            type={currentType}
             className={cn(
               'w-full flex-1 rounded-xl pr-12',
               'truncate rounded-xl py-2 pl-4 shadow-inner',
@@ -80,13 +79,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
             {...restProps}
           />
-          {hasIcon && (
+          {isPassword && (
             <button
               type='button'
               onClick={toggleShowPassword}
               className='-ml-12 px-3 outline-none'
             >
-              {currentIcon}
+              {passwordIcon}
             </button>
           )}
         </div>
